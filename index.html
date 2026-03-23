@@ -799,9 +799,8 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
           </select>
         </div>
         <div>
-          <div class="field-label">Créé par</div>
-          <div id="assignee-display" style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:11px 13px;color:var(--text3);font-size:0.88rem;font-family:DM Sans,sans-serif;cursor:default">—</div>
-          <input type="hidden" id="input-assignee" value="">
+          <div class="field-label">Assigner à</div>
+          <select class="field-input" id="input-assignee"></select>
         </div>
       </div>
       <div class="field-label">Échéance</div>
@@ -1525,12 +1524,10 @@ function selectNotePrio(prio) {
 
 function updateMemberSelects() {
   const assigneeEl = document.getElementById('input-assignee');
-  const assigneeDisplay = document.getElementById('assignee-display');
   const validateEl = document.getElementById('input-validate-by');
-  if (assigneeEl) assigneeEl.value = currentUser;
-  if (assigneeDisplay) {
-    const memberName = MEMBERS.find(m => m.id === currentUser)?.name || currentUser;
-    assigneeDisplay.textContent = memberName;
+  if (assigneeEl) {
+    assigneeEl.innerHTML = MEMBERS.map(m => `<option value="${m.id}">${m.name}</option>`).join('');
+    assigneeEl.value = currentUser;
   }
   if (validateEl) {
     validateEl.innerHTML = `<option value="">Aucune validation requise</option>` +
@@ -1660,10 +1657,6 @@ function openCreateModal() {
   document.getElementById('input-todo-link').value = '';
   document.getElementById('input-todo-content').value = '';
   document.getElementById('input-prio').value = 'normal';
-  document.getElementById('input-assignee').value = currentUser;
-  const memberName = MEMBERS.find(m => m.id === currentUser)?.name || currentUser;
-  const assigneeDisplay = document.getElementById('assignee-display');
-  if (assigneeDisplay) assigneeDisplay.textContent = memberName;
   document.getElementById('input-due').value = '';
   document.getElementById('input-validate-by').value = '';
   document.getElementById('field-checklist').style.display = 'none';
@@ -2080,10 +2073,6 @@ function editItem(id) {
   if (item.prio) document.getElementById('input-prio').value = item.prio;
   if (item.assignee) {
     document.getElementById('input-assignee').value = item.assignee;
-    const assigneeDisplay = document.getElementById('assignee-display');
-    if (assigneeDisplay) {
-      assigneeDisplay.textContent = MEMBERS.find(m => m.id === item.assignee)?.name || item.assignee;
-    }
   }
   if (item.due) document.getElementById('input-due').value = item.due;
   document.getElementById('input-validate-by').value = item.validateBy || '';
