@@ -12,7 +12,7 @@
 <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjogIkxVTUlJQSBXb3Jrc3BhY2UiLCAic2hvcnRfbmFtZSI6ICJXb3Jrc3BhY2UiLCAic3RhcnRfdXJsIjogIi4iLCAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwgImJhY2tncm91bmRfY29sb3IiOiAiIzBkMGQwZiIsICJ0aGVtZV9jb2xvciI6ICIjMGQwZDBmIiwgImljb25zIjogW3sic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzl6ZG1jaUlIWnBaWGRDYjNnOUlqQWdNQ0F5T1RBZ01qa3dJajQ4Y21WamRDQjNhV1IwYUQwaU1qa3dJaUJvWldsbmFIUTlJakk1TUNJZ2NuZzlJall3SWlCbWFXeHNQU0lqTUdRd1pEQm1JaTgrUEhSbGVIUWdlRDBpTlRBbElpQjVQU0kxTlNVaUlHWnZiblF0YzJsNlpUMGlNVFl3SWlCMFpYaDBMV0Z1WTJodmNqMGliV2xrWkd4bElpQmtiMjFwYm1GdWRDMWlZWE5sYkdsdVpUMGliV2xrWkd4bElqN3duNXFnUEM5MFpYaDBQand2YzNablBnPT0iLCAic2l6ZXMiOiAiMTkyeDE5MiA1MTJ4NTEyIiwgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
 <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOTAgMjkwIj48cmVjdCB3aWR0aD0iMjkwIiBoZWlnaHQ9IjI5MCIgcng9IjYwIiBmaWxsPSIjMGQwZDBmIi8+PHRleHQgeD0iNTAlIiB5PSI1NSUiIGZvbnQtc2l6ZT0iMTYwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn5qgPC90ZXh0Pjwvc3ZnPg==">
 
-<!-- LUMIIA Workspace v1.6 -->
+<!-- LUMIIA Workspace v1.8 -->
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 
@@ -660,6 +660,14 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
   border-color: rgba(251,191,36,0.4);
   background: rgba(251,191,36,0.06);
 }
+.projet-card {
+  cursor: pointer;
+}
+.projet-card:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: 0 10px 35px rgba(0,0,0,0.5) !important;
+}
+
 .overdue-banner {
   display: flex; align-items: center; gap: 8px;
   background: rgba(244,63,94,0.1);
@@ -710,8 +718,9 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
 <div class="tabs" id="tabs">
   <button class="tab active" data-tab="notes" onclick="switchTab('notes')">Notes</button>
   <button class="tab" data-tab="todo" onclick="switchTab('todo')">To-do</button>
+  <button class="tab" data-tab="projets" onclick="switchTab('projets')">Projets</button>
   <div style="flex:1"></div>
-  <div style="font-size:0.6rem;color:var(--text3);font-family:Syne,sans-serif;letter-spacing:0.06em;align-self:center;padding-right:8px">v1.6</div>
+  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v1.8</div>
 </div>
 
 <main id="main-content">
@@ -732,8 +741,8 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
     </div>
 
     <div class="type-toggle" id="type-toggle">
-      <button class="type-btn" data-type="todo" onclick="setType('todo')">✅ To-do</button>
       <button class="type-btn active" data-type="note" onclick="setType('note')">📝 Note</button>
+      <button class="type-btn" data-type="todo" onclick="setType('todo')">➡️ Envoyer vers To-do</button>
     </div>
 
     <div class="field-label">Titre</div>
@@ -810,7 +819,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
     <div style="height:20px"></div>
     <div class="field-label">Catégorie</div>
     <div class="cat-picker" id="cat-picker">
-      <button class="cat-btn selected" data-cat="lumiia" onclick="selectCat('lumiia')" style="background:var(--cat-lumiia)">
+      <button class="cat-btn selected" data-cat="lumiia" onclick="selectCat('lumiia')" style="background:var(--cat-lumiia);color:#000;border-color:transparent">
         <span class="dot dot-lumiia"></span>LUMIIA
       </button>
       <button class="cat-btn" data-cat="signal" onclick="selectCat('signal')">
@@ -824,6 +833,9 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
       </button>
       <button class="cat-btn" data-cat="admin" onclick="selectCat('admin')">
         <span class="dot dot-admin"></span>Admin
+      </button>
+      <button class="cat-btn" data-cat="courant" onclick="selectCat('courant')">
+        <span class="dot" style="width:8px;height:8px;border-radius:50%;background:#6b7280"></span>Courant
       </button>
     </div>
 
@@ -876,7 +888,22 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
     <div class="field-label">Catégories</div>
     <div id="cat-list-editor" style="display:flex;flex-direction:column;gap:8px;margin-bottom:14px"></div>
     <button class="add-cl-item" onclick="addCat()">+ Nouvelle catégorie</button>
-    <div style="height:20px"></div>
+    <div style="height:24px"></div>
+    <div class="field-label">Inviter quelqu'un</div>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:14px">
+      <div style="display:flex;gap:8px">
+        <input type="text" id="invite-name" placeholder="Prénom..." style="flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:var(--text);font-family:DM Sans,sans-serif;font-size:0.88rem;outline:none">
+        <select id="invite-space" style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:var(--text);font-family:DM Sans,sans-serif;font-size:0.88rem;outline:none;cursor:pointer">
+          <option value="em">Espace Emmanuel</option>
+          <option value="au">Espace Aurélie</option>
+          <option value="ma">Espace Marion</option>
+        </select>
+      </div>
+      <button onclick="shareInvite()" style="display:flex;align-items:center;justify-content:center;gap:8px;background:var(--cat-lumiia);border:none;border-radius:8px;padding:10px;color:#000;font-family:Syne,sans-serif;font-weight:700;font-size:0.82rem;cursor:pointer;width:100%">
+        🔗 Copier le lien d'invitation
+      </button>
+      <div id="invite-feedback" style="font-size:0.78rem;color:var(--cat-perso);text-align:center;display:none">✓ Lien copié !</div>
+    </div>
     <div class="modal-actions">
       <button class="btn-secondary" onclick="closeModal('modal-settings')">Fermer</button>
       <button class="btn-primary" onclick="saveCats()">Enregistrer</button>
@@ -929,12 +956,12 @@ async function removeItem(id) {
 // STATE
 // ─────────────────────────────────────────────
 const CATS = {
-  lumiia:   { label: 'LUMIIA',   color: '#ff6b35' },
-  signal:   { label: 'SIGNAL',   color: '#00e5ff' },
-  raffines: { label: 'Raffinés', color: '#c084fc' },
-  perso:    { label: 'Perso',    color: '#4ade80' },
-  admin:    { label: 'Admin',    color: '#fbbf24' },
-  urgent:   { label: 'Urgent',   color: '#f43f5e' },
+  lumiia:   { label: 'LUMIIA',   color: '#ff6b35', isProject: true },
+  signal:   { label: 'SIGNAL',   color: '#00e5ff', isProject: true },
+  raffines: { label: 'Raffinés', color: '#c084fc', isProject: true },
+  perso:    { label: 'Perso',    color: '#4ade80', isProject: false },
+  admin:    { label: 'Admin',    color: '#fbbf24', isProject: false },
+  courant:  { label: 'Courant',  color: '#6b7280', isProject: false },
 };
 
 const USERS = {
@@ -956,7 +983,14 @@ let items = [];
 
 // Restaurer l'utilisateur depuis localStorage (juste la préférence de session)
 const savedUser = localStorage.getItem('lumiia-workspace-user');
-if (savedUser) currentUser = savedUser;
+// Vérifier aussi le paramètre URL ?user= (lien d'invitation)
+const urlUser = new URLSearchParams(window.location.search).get('user');
+if (urlUser && ['em','au','ma'].includes(urlUser)) {
+  currentUser = urlUser;
+  localStorage.setItem('lumiia-workspace-user', urlUser);
+} else if (savedUser) {
+  currentUser = savedUser;
+}
 
 function genId() {
   return Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
@@ -982,6 +1016,7 @@ function showUserPicker() {
 // ─────────────────────────────────────────────
 function switchTab(tab) {
   currentTab = tab;
+  currentProject = null;
   document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
   filterCat = 'all';
   render();
@@ -990,10 +1025,16 @@ function switchTab(tab) {
 // ─────────────────────────────────────────────
 // RENDER
 // ─────────────────────────────────────────────
+let currentProject = null; // id de la catégorie projet sélectionnée
+
 function render() {
   const el = document.getElementById('main-content');
   if (currentTab === 'notes') el.innerHTML = renderNotes();
-  else el.innerHTML = renderTodos();
+  else if (currentTab === 'todo') el.innerHTML = renderTodos();
+  else if (currentTab === 'projets') el.innerHTML = renderProjets();
+  // Masquer/afficher le FAB
+  const fab = document.getElementById('fab');
+  if (fab) fab.style.display = currentTab === 'projets' && !currentProject ? 'none' : '';
 }
 
 function renderNotes() {
@@ -1001,7 +1042,7 @@ function renderNotes() {
     (i.type === 'note' || i.type === 'checklist') &&
     (i.owner === currentUser || i.shared)
   );
-  const filtered = applySortOrder(filterCat === 'all' ? myNotes : myNotes.filter(i => i.cat === filterCat));
+  const filtered = applySortOrder(applyFilterCat(myNotes));
 
   let html = `<div class="section-head">
     <div class="section-title">${filtered.length} note${filtered.length !== 1 ? 's' : ''}</div>
@@ -1078,7 +1119,7 @@ function renderTodos() {
     todos = items.filter(i => i.type === 'todo' && (i.assignee === currentUser || i.owner === currentUser));
   }
 
-  const filtered = applySortOrder(filterCat === 'all' ? todos : todos.filter(i => i.cat === filterCat));
+  const filtered = applySortOrder(applyFilterCat(todos));
   const active = filtered.filter(i => !i.done);
   const done = filtered.filter(i => i.done);
   const overdue = active.filter(i => i.due && new Date(i.due) < new Date());
@@ -1141,8 +1182,8 @@ function renderTodoItem(item, idx) {
   const assigneeLabel = item.assignee ? item.assignee.toUpperCase() : '';
   const needsValidation = item.validateBy && !item.done && !item.validated;
   const canValidate = item.validateBy === currentUser;
-  // Tâche assignée à quelqu'un d'autre = en attente
-  const isWaiting = item.assignee && item.assignee !== currentUser && item.owner === currentUser && !item.done;
+  // Tâche assignée à quelqu'un d'autre et pas encore faite = en attente
+  const isWaiting = item.assignee && item.assignee !== currentUser && !item.done;
 
   let validationBadge = '';
   if (needsValidation) {
@@ -1178,18 +1219,34 @@ function renderTodoItem(item, idx) {
 }
 
 function renderFilterBar(allItems) {
-  const usedCats = [...new Set(allItems.map(i => i.cat))];
-  if (usedCats.length <= 1) return '';
-  
+  const usedCats = [...new Set(allItems.map(i => i.cat).filter(Boolean))];
+  const hasToValidate = currentTab === 'todo' && allItems.some(i => i.validateBy === currentUser && !i.done && !i.validated);
+  const hasWaiting = currentTab === 'todo' && allItems.some(i => i.assignee && i.assignee !== currentUser && !i.done);
+
+  if (usedCats.length <= 1 && !hasToValidate && !hasWaiting) return '';
+
   let html = `<div class="filter-bar">
     <button class="filter-chip${filterCat === 'all' ? ' active' : ''}" onclick="setFilter('all')">Tout</button>`;
+
   usedCats.forEach(cat => {
-    const c = CATS[cat] || CATS.lumiia;
+    const c = CATS[cat] || { label: cat, color: '#888' };
     html += `<button class="filter-chip${filterCat === cat ? ' active' : ''}" onclick="setFilter('${cat}')">
       <span style="width:6px;height:6px;border-radius:50%;background:${c.color};display:inline-block"></span>
       ${c.label}
     </button>`;
   });
+
+  if (hasToValidate) {
+    html += `<button class="filter-chip${filterCat === '__validate__' ? ' active' : ''}" onclick="setFilter('__validate__')" style="color:var(--cat-lumiia);border-color:rgba(255,107,53,0.4)">
+      ⏳ À valider
+    </button>`;
+  }
+  if (hasWaiting) {
+    html += `<button class="filter-chip${filterCat === '__waiting__' ? ' active' : ''}" onclick="setFilter('__waiting__')" style="color:var(--cat-admin);border-color:rgba(251,191,36,0.4)">
+      ⌛ En attente
+    </button>`;
+  }
+
   html += `</div>`;
   return html;
 }
@@ -1199,14 +1256,133 @@ function setFilter(cat) {
   render();
 }
 
+function applyFilterCat(arr) {
+  if (filterCat === 'all') return arr;
+  if (filterCat === '__validate__') return arr.filter(i => i.validateBy === currentUser && !i.done && !i.validated);
+  if (filterCat === '__waiting__') return arr.filter(i => i.assignee && i.assignee !== currentUser && !i.done);
+  return arr.filter(i => i.cat === filterCat);
+}
+
 // ─────────────────────────────────────────────
-// RÉGLAGES CATÉGORIES
+// PROJETS
+// ─────────────────────────────────────────────
+function renderProjets() {
+  if (currentProject) return renderProjetDetail(currentProject);
+
+  const projectCats = Object.entries(CATS).filter(([id, c]) => c.isProject);
+
+  if (projectCats.length === 0) {
+    return `<div class="empty">
+      <div class="empty-icon">📁</div>
+      <div class="empty-text">Aucun projet configuré.<br>Dans ⚙️ Réglages, coche "Projet" sur les catégories souhaitées.</div>
+    </div>`;
+  }
+
+  let html = `<div class="section-head"><div class="section-title">${projectCats.length} projet${projectCats.length > 1 ? 's' : ''}</div></div>`;
+  html += `<div class="cards-grid">`;
+
+  projectCats.forEach(([catId, cat], idx) => {
+    const notes = items.filter(i => i.cat === catId && (i.type === 'note' || i.type === 'checklist'));
+    const todos = items.filter(i => i.cat === catId && i.type === 'todo');
+    const activeTodos = todos.filter(i => !i.done);
+    const urgentCount = activeTodos.filter(i => i.prio === 'urgent').length;
+
+    html += `<div class="card projet-card" data-cat="${catId}" onclick="openProject('${catId}')" style="animation-delay:${idx*0.05}s;min-height:140px">
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <div class="card-dot" style="background:${cat.color}"></div>
+        ${urgentCount > 0 ? `<div style="font-size:0.7rem;color:var(--cat-urgent);font-family:Syne,sans-serif;font-weight:700">🔴 ${urgentCount}</div>` : ''}
+      </div>
+      <div class="card-title" style="font-size:1.05rem">${cat.label}</div>
+      <div style="display:flex;gap:10px;margin-top:auto">
+        <div style="font-size:0.78rem;color:var(--text2)">📝 ${notes.length} note${notes.length !== 1 ? 's' : ''}</div>
+        <div style="font-size:0.78rem;color:${activeTodos.length > 0 ? cat.color : 'var(--text3)'}">✅ ${activeTodos.length} tâche${activeTodos.length !== 1 ? 's' : ''}</div>
+      </div>
+    </div>`;
+  });
+
+  html += `</div>`;
+  return html;
+}
+
+function renderProjetDetail(catId) {
+  const cat = CATS[catId];
+  if (!cat) return '';
+
+  const notes = items.filter(i => i.cat === catId && (i.type === 'note' || i.type === 'checklist'));
+  const todos = items.filter(i => i.cat === catId && i.type === 'todo');
+  const activeTodos = todos.filter(i => !i.done);
+  const doneTodos = todos.filter(i => i.done);
+
+  let html = `
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px">
+      <button onclick="closeProject()" style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:6px 12px;color:var(--text2);font-size:0.8rem;font-family:Syne,sans-serif;font-weight:600;cursor:pointer">← Projets</button>
+      <div style="width:12px;height:12px;border-radius:50%;background:${cat.color}"></div>
+      <div style="font-family:Syne,sans-serif;font-weight:800;font-size:1.1rem;color:${cat.color}">${cat.label}</div>
+    </div>`;
+
+  // ── Notes du projet
+  html += `<div class="section-head">
+    <div class="section-title">📝 Notes · ${notes.length}</div>
+    <button onclick="openCreateModalForProject('${catId}','note')" style="font-size:0.72rem;color:var(--cat-lumiia);background:none;border:none;cursor:pointer;font-family:Syne,sans-serif;font-weight:700">+ Note</button>
+  </div>`;
+
+  if (notes.length === 0) {
+    html += `<div style="color:var(--text3);font-size:0.82rem;margin-bottom:20px;padding:12px;background:var(--bg2);border-radius:10px;border:1px dashed var(--border)">Aucune note dans ce projet</div>`;
+  } else {
+    html += `<div class="cards-grid" style="margin-bottom:24px">`;
+    notes.forEach((item, idx) => { html += renderCard(item, idx); });
+    html += `</div>`;
+  }
+
+  // ── Tâches actives
+  html += `<div class="section-head">
+    <div class="section-title">✅ Tâches · ${activeTodos.length}</div>
+    <button onclick="openCreateModalForProject('${catId}','todo')" style="font-size:0.72rem;color:var(--cat-lumiia);background:none;border:none;cursor:pointer;font-family:Syne,sans-serif;font-weight:700">+ Tâche</button>
+  </div>`;
+
+  if (activeTodos.length === 0) {
+    html += `<div style="color:var(--text3);font-size:0.82rem;margin-bottom:20px;padding:12px;background:var(--bg2);border-radius:10px;border:1px dashed var(--border)">Aucune tâche active</div>`;
+  } else {
+    // Trier par priorité dans la vue projet
+    const sorted = [...activeTodos].sort((a,b) => ({'urgent':0,'normal':1,'later':2}[a.prio]??1) - ({'urgent':0,'normal':1,'later':2}[b.prio]??1));
+    html += `<div class="todo-list" style="margin-bottom:24px">`;
+    sorted.forEach((item, idx) => { html += renderTodoItem(item, idx); });
+    html += `</div>`;
+  }
+
+  // ── Tâches terminées (collapsible)
+  if (doneTodos.length > 0) {
+    html += `<div class="section-head"><div class="section-title" style="opacity:0.5">Terminées · ${doneTodos.length}</div></div>`;
+    html += `<div class="todo-list" style="opacity:0.5;margin-bottom:24px">`;
+    doneTodos.slice(0, 5).forEach((item, idx) => { html += renderTodoItem(item, idx); });
+    html += `</div>`;
+  }
+
+  return html;
+}
+
+function openProject(catId) {
+  currentProject = catId;
+  render();
+}
+
+function closeProject() {
+  currentProject = null;
+  render();
+}
+
+function openCreateModalForProject(catId, type) {
+  openCreateModal();
+  currentCat = catId;
+  selectCat(catId);
+  setType(type);
+}
 // ─────────────────────────────────────────────
 const COLORS_PALETTE = ['#ff6b35','#00e5ff','#c084fc','#4ade80','#fbbf24','#f43f5e','#38bdf8','#fb923c','#a3e635','#e879f9'];
 let editingCats = null;
 
 function openSettings() {
-  editingCats = Object.entries(CATS).map(([id, c]) => ({ id, label: c.label, color: c.color }));
+  editingCats = Object.entries(CATS).map(([id, c]) => ({ id, label: c.label, color: c.color, isProject: !!c.isProject }));
   renderCatEditor();
   openModal('modal-settings');
 }
@@ -1219,6 +1395,11 @@ function renderCatEditor() {
       <div style="width:20px;height:20px;border-radius:50%;background:${cat.color};flex-shrink:0;cursor:pointer" onclick="cycleCatColor(${i})" title="Changer la couleur"></div>
       <input type="text" value="${cat.label}" oninput="editingCats[${i}].label=this.value"
         style="flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:8px 11px;color:var(--text);font-family:DM Sans,sans-serif;font-size:0.85rem;outline:none">
+      <label style="display:flex;align-items:center;gap:5px;font-size:0.72rem;color:var(--text3);font-family:Syne,sans-serif;white-space:nowrap;cursor:pointer">
+        <input type="checkbox" ${cat.isProject ? 'checked' : ''} onchange="editingCats[${i}].isProject=this.checked"
+          style="width:14px;height:14px;cursor:pointer;accent-color:var(--cat-lumiia)">
+        Projet
+      </label>
       <button onclick="removeCat(${i})" style="background:none;border:none;color:var(--text3);font-size:1rem;cursor:pointer;padding:4px;transition:color 0.15s" onmouseover="this.style.color='var(--cat-urgent)'" onmouseout="this.style.color='var(--text3)'">✕</button>
     </div>
   `).join('');
@@ -1242,17 +1423,39 @@ function addCat() {
 
 function saveCats() {
   if (!editingCats) return;
-  // Mettre à jour CATS
   Object.keys(CATS).forEach(k => delete CATS[k]);
-  editingCats.forEach(c => { CATS[c.id] = { label: c.label, color: c.color }; });
-  // Mettre à jour les CSS variables
+  editingCats.forEach(c => { CATS[c.id] = { label: c.label, color: c.color, isProject: !!c.isProject }; });
   Object.entries(CATS).forEach(([id, c]) => {
     document.documentElement.style.setProperty(`--cat-${id}`, c.color);
   });
-  // Reconstruire le cat-picker dans la modale create
   rebuildCatPicker();
   closeModal('modal-settings');
   render();
+}
+
+function shareInvite() {
+  const space = document.getElementById('invite-space')?.value || 'em';
+  const name = document.getElementById('invite-name')?.value?.trim();
+  const url = `https://i-immersion.github.io/lumiia-workspace/?user=${space}`;
+  const text = name ? `${name}, voici l'accès à LUMIIA Workspace :` : 'Accès LUMIIA Workspace :';
+
+  // Web Share API (Android / mobile)
+  if (navigator.share) {
+    navigator.share({ title: 'LUMIIA Workspace', text, url })
+      .catch(() => fallbackCopy(url));
+  } else {
+    fallbackCopy(url);
+  }
+}
+
+function fallbackCopy(url) {
+  navigator.clipboard.writeText(url).then(() => {
+    const fb = document.getElementById('invite-feedback');
+    if (fb) { fb.style.display = 'block'; setTimeout(() => fb.style.display = 'none', 3000); }
+  }).catch(() => {
+    // Dernier recours : prompt
+    window.prompt('Copie ce lien :', url);
+  });
 }
 
 function rebuildCatPicker() {
@@ -1329,6 +1532,20 @@ function setType(t) {
   document.getElementById('field-content').style.display = t === 'note' ? '' : 'none';
   document.getElementById('field-todo').style.display = t === 'todo' ? '' : 'none';
   if (t === 'todo') { document.getElementById('field-checklist').style.display = 'none'; }
+  // Adapter les labels du toggle selon le type actif
+  const btns = document.querySelectorAll('.type-btn');
+  btns.forEach(b => {
+    if (t === 'note') {
+      if (b.dataset.type === 'note') b.textContent = '📝 Note';
+      if (b.dataset.type === 'todo') b.textContent = '➡️ Envoyer vers To-do';
+    } else {
+      if (b.dataset.type === 'todo') b.textContent = '✅ To-do';
+      if (b.dataset.type === 'note') b.textContent = '📋 Envoyer vers Note';
+    }
+  });
+  // Titre de la modale
+  const title = document.getElementById('modal-title');
+  if (title) title.textContent = t === 'note' ? (editingId ? 'Modifier' : 'Nouvelle note') : (editingId ? 'Modifier' : 'Nouvelle tâche');
 }
 
 function toggleChecklist() {
@@ -1706,6 +1923,11 @@ document.getElementById('user-badge').textContent = currentUser.toUpperCase();
 // render() et seedDemo() sont appelés par onValue Firebase
 
 // Exposer les fonctions globalement (nécessaire pour les onclick HTML avec type="module")
+window.openProject = openProject;
+window.closeProject = closeProject;
+window.openCreateModalForProject = openCreateModalForProject;
+window.shareInvite = shareInvite;
+window.applyFilterCat = applyFilterCat;
 window.cycleSortOrder = cycleSortOrder;
 window.toggleSortDate = toggleSortDate;
 window.toggleSortPrio = toggleSortPrio;
