@@ -1,0 +1,1353 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>LUMIIA Workspace</title>
+<meta name="theme-color" content="#0d0d0f">
+<meta name="mobile-web-app-capable" content="true">
+<meta name="apple-mobile-web-app-capable" content="true">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="LUMIIA Workspace">
+<link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiTFVNSUlBIE5vdGVzIiwic2hvcnRfbmFtZSI6Ik5vdGVzIiwic3RhcnRfdXJsIjoiLiIsImRpc3BsYXkiOiJzdGFuZGFsb25lIiwiYmFja2dyb3VuZF9jb2xvciI6IiMwZDBkMGYiLCJ0aGVtZV9jb2xvciI6IiMwZDBkMGYiLCJpY29ucyI6W3sic3JjIjoiZGF0YTppbWFnZS9zdmcreG1sO2Jhc2U2NCxQSE4yWnlCNGJXeHVjejBpYUhSMGNEb3ZMM2QzZHk1M015NXZjbWN2TWpBd01DOHpkbWNpSUhacFpYZENiM2c5SWpBZ01DQXlPVEFnTWprd0lpQjNhV1IwYUQwaU1qQXdJaUJvWldsbmFIUTlJakl3TUNJZ1ptbHNiRDBpSTJRd1pEQmtNQ0lnWm1sc2JDMXZjR0ZqYVhwbGJEMGlNQ0l2UGc9PSIsInNpemVzIjoiMTkyek1TIDUxMng1MTIiLCJ0eXBlIjoiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
+<link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOTAgMjkwIj48cmVjdCB3aWR0aD0iMjkwIiBoZWlnaHQ9IjI5MCIgcng9IjYwIiBmaWxsPSIjMGQwZDBmIi8+PHRleHQgeD0iNTAlIiB5PSI1NSUiIGZvbnQtc2l6ZT0iMTYwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn5qgPC90ZXh0Pjwvc3ZnPg==">
+
+<!-- LUMIIA Workspace v1.0 -->
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
+
+:root {
+  --bg: #0d0d0f;
+  --bg2: #141417;
+  --bg3: #1c1c21;
+  --border: rgba(255,255,255,0.07);
+  --text: #f0f0f2;
+  --text2: #888890;
+  --text3: #555560;
+
+  --cat-lumiia:   #ff6b35;
+  --cat-signal:   #00e5ff;
+  --cat-raffines: #c084fc;
+  --cat-perso:    #4ade80;
+  --cat-admin:    #fbbf24;
+  --cat-urgent:   #f43f5e;
+
+  --radius: 16px;
+  --radius-sm: 10px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100dvh;
+  overflow-x: hidden;
+}
+
+/* ── HEADER ── */
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 20px 14px;
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  background: rgba(13,13,15,0.92);
+  backdrop-filter: blur(12px);
+  z-index: 100;
+}
+
+.header-left { display: flex; align-items: center; gap: 10px; }
+
+.logo {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 1.1rem;
+  letter-spacing: 0.08em;
+  color: var(--text);
+}
+.logo span { color: var(--cat-lumiia); }
+
+.user-badge {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  color: var(--text2);
+}
+
+.header-actions { display: flex; gap: 8px; }
+
+.btn-icon {
+  width: 38px; height: 38px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--bg3);
+  color: var(--text2);
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s;
+}
+.btn-icon:hover { background: var(--bg3); color: var(--text); border-color: rgba(255,255,255,0.15); }
+
+/* ── TABS ── */
+.tabs {
+  display: flex;
+  gap: 4px;
+  padding: 12px 20px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.tabs::-webkit-scrollbar { display: none; }
+
+.tab {
+  flex-shrink: 0;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 7px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text3);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.tab.active {
+  background: var(--accent, var(--cat-lumiia));
+  border-color: transparent;
+  color: #000;
+}
+.tab:hover:not(.active) { color: var(--text2); border-color: rgba(255,255,255,0.15); }
+
+/* ── MAIN ── */
+main {
+  padding: 16px 20px 100px;
+}
+
+/* ── SECTION TITLE ── */
+.section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  margin-top: 8px;
+}
+.section-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text3);
+}
+
+/* ── CARDS GRID ── */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.card {
+  border-radius: var(--radius);
+  padding: 14px;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+  position: relative;
+  overflow: hidden;
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+.card:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,0.4); }
+.card:active { transform: scale(0.97); }
+
+.card-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.card-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--text);
+  flex: 1;
+}
+
+.card-meta {
+  font-size: 0.72rem;
+  color: var(--text3);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.card-checklist-preview {
+  font-size: 0.72rem;
+  color: var(--text2);
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.cl-item-preview {
+  display: flex; align-items: center; gap: 5px;
+  text-decoration: none;
+}
+.cl-item-preview.done { color: var(--text3); text-decoration: line-through; }
+.cl-checkbox-mini {
+  width: 10px; height: 10px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+/* Category color accents */
+.card[data-cat="lumiia"]   { background: linear-gradient(135deg, rgba(255,107,53,0.12) 0%, rgba(20,20,23,0.9) 60%); }
+.card[data-cat="signal"]   { background: linear-gradient(135deg, rgba(0,229,255,0.1) 0%, rgba(20,20,23,0.9) 60%); }
+.card[data-cat="raffines"] { background: linear-gradient(135deg, rgba(192,132,252,0.12) 0%, rgba(20,20,23,0.9) 60%); }
+.card[data-cat="perso"]    { background: linear-gradient(135deg, rgba(74,222,128,0.1) 0%, rgba(20,20,23,0.9) 60%); }
+.card[data-cat="admin"]    { background: linear-gradient(135deg, rgba(251,191,36,0.1) 0%, rgba(20,20,23,0.9) 60%); }
+.card[data-cat="urgent"]   { background: linear-gradient(135deg, rgba(244,63,94,0.12) 0%, rgba(20,20,23,0.9) 60%); }
+
+.dot-lumiia   { background: var(--cat-lumiia); }
+.dot-signal   { background: var(--cat-signal); }
+.dot-raffines { background: var(--cat-raffines); }
+.dot-perso    { background: var(--cat-perso); }
+.dot-admin    { background: var(--cat-admin); }
+.dot-urgent   { background: var(--cat-urgent); }
+
+/* ── TODO LIST ── */
+.todo-section { margin-bottom: 24px; }
+
+.todo-cat-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.todo-cat-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.todo-cat-label {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.todo-cat-count {
+  font-size: 0.7rem;
+  color: var(--text3);
+  margin-left: auto;
+}
+
+.todo-list { display: flex; flex-direction: column; gap: 6px; }
+
+.todo-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 11px 13px;
+  transition: all 0.15s;
+  cursor: pointer;
+}
+.todo-item:hover { border-color: rgba(255,255,255,0.12); }
+.todo-item.done { opacity: 0.4; }
+.todo-item.done .todo-text { text-decoration: line-through; color: var(--text3); }
+
+.todo-check {
+  width: 20px; height: 20px;
+  border-radius: 6px;
+  border: 2px solid var(--text3);
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s;
+  font-size: 0.75rem;
+}
+.todo-item.done .todo-check {
+  background: var(--text3);
+  border-color: transparent;
+  color: var(--bg);
+}
+
+.todo-text {
+  flex: 1;
+  font-size: 0.85rem;
+  line-height: 1.35;
+}
+
+.todo-right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.priority-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+}
+.prio-urgent { background: var(--cat-urgent); }
+.prio-normal { background: var(--text3); }
+.prio-later  { background: var(--bg3); border: 1px solid var(--text3); }
+
+.assignee-tag {
+  font-size: 0.65rem;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 10px;
+  background: var(--bg3);
+  color: var(--text2);
+  font-family: 'Syne', sans-serif;
+  letter-spacing: 0.05em;
+}
+
+.due-tag {
+  font-size: 0.68rem;
+  color: var(--text3);
+}
+.due-tag.overdue { color: var(--cat-urgent); }
+
+/* ── FAB ── */
+.fab {
+  position: fixed;
+  bottom: 24px;
+  right: 20px;
+  width: 56px; height: 56px;
+  border-radius: 18px;
+  background: var(--cat-lumiia);
+  border: none;
+  color: #000;
+  font-size: 1.5rem;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(255,107,53,0.4);
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+  z-index: 200;
+}
+.fab:hover { transform: scale(1.08); box-shadow: 0 6px 28px rgba(255,107,53,0.55); }
+.fab:active { transform: scale(0.94); }
+
+/* ── MODAL ── */
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(6px);
+  z-index: 300;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+.modal-overlay.open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.modal {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 24px 24px 0 0;
+  width: 100%;
+  max-width: 600px;
+  padding: 20px 20px 40px;
+  transform: translateY(30px);
+  transition: transform 0.25s cubic-bezier(.22,.68,0,1.2);
+  max-height: 90dvh;
+  overflow-y: auto;
+}
+.modal-overlay.open .modal {
+  transform: translateY(0);
+}
+
+.modal-handle {
+  width: 40px; height: 4px;
+  border-radius: 2px;
+  background: var(--text3);
+  margin: 0 auto 20px;
+}
+
+.modal-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 18px;
+}
+
+.field-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-bottom: 7px;
+  font-family: 'Syne', sans-serif;
+}
+
+.field-input {
+  width: 100%;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 11px 13px;
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.15s;
+  margin-bottom: 14px;
+}
+.field-input:focus { border-color: rgba(255,255,255,0.25); }
+textarea.field-input { resize: none; min-height: 80px; }
+
+.cat-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.cat-btn {
+  display: flex; align-items: center; gap: 6px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text2);
+  font-size: 0.78rem;
+  font-family: 'Syne', sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.cat-btn.selected {
+  border-color: transparent;
+  color: #000;
+}
+.cat-btn .dot { width: 8px; height: 8px; border-radius: 50%; }
+
+.type-toggle {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.type-btn {
+  flex: 1;
+  padding: 9px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text2);
+  font-size: 0.8rem;
+  font-family: 'Syne', sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.type-btn.active { background: var(--bg3); border-color: rgba(255,255,255,0.2); color: var(--text); }
+
+/* checklist editor */
+.cl-editor { margin-bottom: 14px; }
+.cl-row {
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 6px;
+}
+.cl-row input {
+  flex: 1;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 11px;
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  outline: none;
+}
+.cl-row input:focus { border-color: rgba(255,255,255,0.2); }
+.cl-del {
+  background: none; border: none;
+  color: var(--text3); font-size: 1rem;
+  cursor: pointer; padding: 4px;
+  transition: color 0.15s;
+}
+.cl-del:hover { color: var(--cat-urgent); }
+.add-cl-item {
+  display: flex; align-items: center; gap: 6px;
+  background: none; border: 1px dashed var(--border);
+  border-radius: 8px;
+  padding: 8px 11px;
+  color: var(--text3);
+  font-size: 0.8rem;
+  cursor: pointer;
+  width: 100%;
+  transition: all 0.15s;
+  font-family: 'DM Sans', sans-serif;
+}
+.add-cl-item:hover { border-color: rgba(255,255,255,0.2); color: var(--text2); }
+
+/* prio & assignee row */
+.row-fields { display: flex; gap: 10px; margin-bottom: 14px; }
+.row-fields > div { flex: 1; }
+select.field-input { margin-bottom: 0; cursor: pointer; }
+
+.modal-actions { display: flex; gap: 10px; margin-top: 6px; }
+.btn-primary {
+  flex: 1;
+  padding: 13px;
+  border-radius: var(--radius-sm);
+  border: none;
+  background: var(--cat-lumiia);
+  color: #000;
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+.btn-primary:hover { opacity: 0.85; }
+.btn-secondary {
+  padding: 13px 18px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text2);
+  font-family: 'Syne', sans-serif;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.btn-secondary:hover { background: var(--bg3); }
+
+/* ── NOTE DETAIL MODAL ── */
+.note-detail { padding: 0; }
+.note-detail-header {
+  display: flex; align-items: flex-start; gap: 10px;
+  margin-bottom: 16px;
+}
+.note-detail-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  flex: 1;
+  line-height: 1.3;
+}
+.note-detail-content {
+  font-size: 0.9rem;
+  color: var(--text2);
+  line-height: 1.6;
+  margin-bottom: 16px;
+  white-space: pre-wrap;
+}
+.checklist-full { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+.cl-item-full {
+  display: flex; align-items: center; gap: 10px;
+  cursor: pointer;
+}
+.cl-check-full {
+  width: 22px; height: 22px;
+  border-radius: 7px;
+  border: 2px solid var(--text3);
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.8rem;
+  transition: all 0.15s;
+}
+.cl-item-full.done .cl-check-full { background: var(--text2); border-color: transparent; color: var(--bg); }
+.cl-item-full.done .cl-item-text { text-decoration: line-through; color: var(--text3); }
+.cl-item-text { font-size: 0.88rem; }
+
+.note-footer {
+  display: flex; justify-content: space-between; align-items: center;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+.btn-delete {
+  background: none; border: none;
+  color: var(--text3);
+  font-size: 0.8rem;
+  cursor: pointer;
+  padding: 6px;
+  transition: color 0.15s;
+  display: flex; align-items: center; gap: 5px;
+}
+.btn-delete:hover { color: var(--cat-urgent); }
+
+/* ── EMPTY STATE ── */
+.empty {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--text3);
+}
+.empty-icon { font-size: 2.5rem; margin-bottom: 10px; }
+.empty-text { font-size: 0.85rem; line-height: 1.6; }
+
+/* ── FILTER BAR ── */
+.filter-bar {
+  display: flex; gap: 6px;
+  margin-bottom: 14px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.filter-bar::-webkit-scrollbar { display: none; }
+.filter-chip {
+  flex-shrink: 0;
+  font-size: 0.72rem;
+  font-family: 'Syne', sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  padding: 5px 11px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text3);
+  cursor: pointer;
+  transition: all 0.15s;
+  display: flex; align-items: center; gap: 5px;
+}
+.filter-chip.active { color: var(--text); border-color: rgba(255,255,255,0.2); background: var(--bg3); }
+
+/* ── VIEW SWITCHER ── */
+.view-toggle {
+  display: flex; gap: 4px;
+}
+.view-btn {
+  width: 30px; height: 30px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text3);
+  font-size: 0.85rem;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s;
+}
+.view-btn.active { background: var(--bg3); color: var(--text); border-color: rgba(255,255,255,0.15); }
+
+/* ── TODO LIST VIEW ── */
+.todo-list-view { display: flex; flex-direction: column; gap: 6px; }
+
+/* ── OVERDUE BANNER ── */
+.overdue-banner {
+  display: flex; align-items: center; gap: 8px;
+  background: rgba(244,63,94,0.1);
+  border: 1px solid rgba(244,63,94,0.25);
+  border-radius: var(--radius-sm);
+  padding: 10px 13px;
+  margin-bottom: 14px;
+  font-size: 0.8rem;
+  color: var(--cat-urgent);
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--bg3); border-radius: 2px; }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.card, .todo-item { animation: fadeIn 0.2s ease both; }
+
+/* ── DESKTOP ── */
+@media (min-width: 640px) {
+  header { padding: 18px 32px 14px; }
+  main { padding: 20px 32px 100px; }
+  .tabs { padding: 12px 32px; }
+  .filter-bar { margin-bottom: 16px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <div class="logo">LUMIIA <span>●</span> Workspace</div>
+    <div class="user-badge" id="user-badge">EM</div>
+  </div>
+  <div class="header-actions">
+    <button class="btn-icon" onclick="showUserPicker()" title="Changer d'espace">⇄</button>
+  </div>
+</header>
+
+<div class="tabs" id="tabs">
+  <button class="tab active" data-tab="notes" onclick="switchTab('notes')">Notes</button>
+  <button class="tab" data-tab="todo" onclick="switchTab('todo')">To-do</button>
+</div>
+
+<main id="main-content">
+  <div class="empty" style="padding-top:80px">
+    <div class="empty-icon">⚡</div>
+    <div class="empty-text">Connexion Firebase…</div>
+  </div>
+</main>
+
+<button class="fab" id="fab" onclick="openCreateModal()">+</button>
+
+<!-- CREATE / EDIT MODAL -->
+<div class="modal-overlay" id="modal-create">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title" id="modal-title">Nouvelle note</div>
+
+    <div class="type-toggle" id="type-toggle">
+      <button class="type-btn active" data-type="note" onclick="setType('note')">📝 Note</button>
+      <button class="type-btn" data-type="checklist" onclick="setType('checklist')">☑️ Checklist</button>
+      <button class="type-btn" data-type="todo" onclick="setType('todo')">✅ Tâche</button>
+    </div>
+
+    <div class="field-label">Titre</div>
+    <input type="text" class="field-input" id="input-title" placeholder="Titre...">
+
+    <!-- Note content -->
+    <div id="field-content">
+      <div class="field-label">Contenu</div>
+      <textarea class="field-input" id="input-content" placeholder="Contenu libre..."></textarea>
+    </div>
+
+    <!-- Checklist editor -->
+    <div id="field-checklist" style="display:none">
+      <div class="field-label">Éléments</div>
+      <div class="cl-editor" id="cl-editor"></div>
+      <button class="add-cl-item" onclick="addClItem()">+ Ajouter un élément</button>
+    </div>
+
+    <!-- Todo fields -->
+    <div id="field-todo" style="display:none">
+      <div class="row-fields">
+        <div>
+          <div class="field-label">Priorité</div>
+          <select class="field-input" id="input-prio">
+            <option value="urgent">🔴 Urgent</option>
+            <option value="normal" selected>🟡 Normal</option>
+            <option value="later">⚪ Plus tard</option>
+          </select>
+        </div>
+        <div>
+          <div class="field-label">Assigner à</div>
+          <select class="field-input" id="input-assignee">
+            <option value="em">Emmanuel</option>
+            <option value="au">Aurélie</option>
+            <option value="ma">Marion</option>
+          </select>
+        </div>
+      </div>
+      <div class="field-label">Échéance</div>
+      <input type="date" class="field-input" id="input-due">
+    </div>
+
+    <div class="field-label">Catégorie</div>
+    <div class="cat-picker" id="cat-picker">
+      <button class="cat-btn selected" data-cat="lumiia" onclick="selectCat('lumiia')" style="background:var(--cat-lumiia)">
+        <span class="dot dot-lumiia"></span>LUMIIA
+      </button>
+      <button class="cat-btn" data-cat="signal" onclick="selectCat('signal')">
+        <span class="dot dot-signal"></span>SIGNAL
+      </button>
+      <button class="cat-btn" data-cat="raffines" onclick="selectCat('raffines')">
+        <span class="dot dot-raffines"></span>Raffinés
+      </button>
+      <button class="cat-btn" data-cat="perso" onclick="selectCat('perso')">
+        <span class="dot dot-perso"></span>Perso
+      </button>
+      <button class="cat-btn" data-cat="admin" onclick="selectCat('admin')">
+        <span class="dot dot-admin"></span>Admin
+      </button>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="closeModal('modal-create')">Annuler</button>
+      <button class="btn-primary" onclick="saveItem()">Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<!-- NOTE DETAIL MODAL -->
+<div class="modal-overlay" id="modal-detail">
+  <div class="modal note-detail">
+    <div class="modal-handle"></div>
+    <div id="detail-content"></div>
+  </div>
+</div>
+
+<!-- USER PICKER MODAL -->
+<div class="modal-overlay" id="modal-user">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title">Changer d'espace</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <button class="todo-item" onclick="setUser('em')" style="cursor:pointer;justify-content:space-between">
+        <span style="font-family:Syne,sans-serif;font-weight:700">Emmanuel</span>
+        <span class="assignee-tag">EM</span>
+      </button>
+      <button class="todo-item" onclick="setUser('au')" style="cursor:pointer;justify-content:space-between">
+        <span style="font-family:Syne,sans-serif;font-weight:700">Aurélie</span>
+        <span class="assignee-tag">AU</span>
+      </button>
+      <button class="todo-item" onclick="setUser('ma')" style="cursor:pointer;justify-content:space-between">
+        <span style="font-family:Syne,sans-serif;font-weight:700">Marion</span>
+        <span class="assignee-tag">MA</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+// ─────────────────────────────────────────────
+// FIREBASE
+// ─────────────────────────────────────────────
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { getDatabase, ref, onValue, set, remove } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBPgjVFKrP80qX_hlfUFqL168XONfNIBA4",
+  authDomain: "lumiia-live.firebaseapp.com",
+  databaseURL: "https://lumiia-live-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "lumiia-live",
+  storageBucket: "lumiia-live.firebasestorage.app",
+  messagingSenderId: "823919513931",
+  appId: "1:823919513931:web:6f6f3c7c6d1699457b18ce"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+const NOTES_REF = ref(db, 'workspace/items');
+
+// Sync temps réel Firebase → local
+onValue(NOTES_REF, (snapshot) => {
+  const data = snapshot.val();
+  items = data ? Object.values(data) : [];
+  // Seed demo si vide
+  if (items.length === 0) seedDemo();
+  else render();
+});
+
+async function save() {
+  // Convertit le tableau en objet keyed par id pour Firebase
+  const obj = {};
+  items.forEach(item => { obj[item.id] = item; });
+  await set(NOTES_REF, obj);
+}
+
+async function removeItem(id) {
+  await remove(ref(db, `notes/items/${id}`));
+}
+
+// ─────────────────────────────────────────────
+// STATE
+// ─────────────────────────────────────────────
+const CATS = {
+  lumiia:   { label: 'LUMIIA',   color: '#ff6b35' },
+  signal:   { label: 'SIGNAL',   color: '#00e5ff' },
+  raffines: { label: 'Raffinés', color: '#c084fc' },
+  perso:    { label: 'Perso',    color: '#4ade80' },
+  admin:    { label: 'Admin',    color: '#fbbf24' },
+  urgent:   { label: 'Urgent',   color: '#f43f5e' },
+};
+
+const USERS = {
+  em: 'Emmanuel',
+  au: 'Aurélie',
+  ma: 'Marion',
+};
+
+let currentUser = 'em';
+let currentTab = 'notes';
+let currentType = 'note';
+let currentCat = 'lumiia';
+let filterCat = 'all';
+let editingId = null;
+let clItems = [];
+let items = [];
+
+// Restaurer l'utilisateur depuis localStorage (juste la préférence de session)
+const savedUser = localStorage.getItem('lumiia-workspace-user');
+if (savedUser) currentUser = savedUser;
+
+function genId() {
+  return Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+}
+
+// ─────────────────────────────────────────────
+// USER
+// ─────────────────────────────────────────────
+function setUser(u) {
+  currentUser = u;
+  localStorage.setItem('lumiia-workspace-user', u);
+  document.getElementById('user-badge').textContent = u.toUpperCase();
+  closeModal('modal-user');
+  render();
+}
+
+function showUserPicker() {
+  openModal('modal-user');
+}
+
+// ─────────────────────────────────────────────
+// TAB
+// ─────────────────────────────────────────────
+function switchTab(tab) {
+  currentTab = tab;
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
+  filterCat = 'all';
+  render();
+}
+
+// ─────────────────────────────────────────────
+// RENDER
+// ─────────────────────────────────────────────
+function render() {
+  const el = document.getElementById('main-content');
+  if (currentTab === 'notes') el.innerHTML = renderNotes();
+  else el.innerHTML = renderTodos();
+}
+
+function renderNotes() {
+  const myNotes = items.filter(i => 
+    (i.type === 'note' || i.type === 'checklist') &&
+    (i.owner === currentUser || i.shared)
+  );
+  const filtered = filterCat === 'all' ? myNotes : myNotes.filter(i => i.cat === filterCat);
+
+  let html = `<div class="section-head">
+    <div class="section-title">${filtered.length} note${filtered.length !== 1 ? 's' : ''}</div>
+  </div>`;
+
+  // Filter bar
+  html += renderFilterBar(myNotes);
+
+  if (filtered.length === 0) {
+    html += `<div class="empty">
+      <div class="empty-icon">📝</div>
+      <div class="empty-text">Aucune note pour l'instant.<br>Appuie sur + pour commencer.</div>
+    </div>`;
+    return html;
+  }
+
+  html += `<div class="cards-grid">`;
+  filtered.forEach((item, idx) => {
+    html += renderCard(item, idx);
+  });
+  html += `</div>`;
+  return html;
+}
+
+function renderCard(item, idx) {
+  const cat = CATS[item.cat] || CATS.lumiia;
+  let preview = '';
+
+  if (item.type === 'checklist' && item.checklist?.length) {
+    const shown = item.checklist.slice(0, 3);
+    preview = `<div class="card-checklist-preview">` +
+      shown.map(ci => `
+        <div class="cl-item-preview${ci.done ? ' done' : ''}">
+          <div class="cl-checkbox-mini" style="background:${ci.done ? cat.color : 'transparent'};border:1.5px solid ${ci.done ? cat.color : '#555'}"></div>
+          ${ci.text}
+        </div>`).join('') +
+      (item.checklist.length > 3 ? `<div style="color:var(--text3);font-size:0.68rem">+${item.checklist.length - 3} autres</div>` : '') +
+    `</div>`;
+  } else if (item.content) {
+    preview = `<div class="card-meta">${item.content.slice(0, 60)}${item.content.length > 60 ? '…' : ''}</div>`;
+  }
+
+  const dateStr = item.created ? new Date(item.created).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' }) : '';
+
+  return `<div class="card" data-cat="${item.cat}" onclick="openDetail('${item.id}')" style="animation-delay:${idx * 0.03}s">
+    <div style="display:flex;align-items:center;justify-content:space-between">
+      <div class="card-dot dot-${item.cat}"></div>
+      <div class="card-meta">${cat.label}</div>
+    </div>
+    <div class="card-title">${item.title}</div>
+    ${preview}
+    <div class="card-meta" style="margin-top:auto">${dateStr}</div>
+  </div>`;
+}
+
+function renderTodos() {
+  const isEm = currentUser === 'em';
+  
+  // Em: see all tasks (owned or assigned to him) + those he assigned
+  // Au/Ma: see tasks assigned to them
+  let todos;
+  if (isEm) {
+    todos = items.filter(i => i.type === 'todo');
+  } else {
+    todos = items.filter(i => i.type === 'todo' && i.assignee === currentUser);
+  }
+
+  const filtered = filterCat === 'all' ? todos : todos.filter(i => i.cat === filterCat);
+  const active = filtered.filter(i => !i.done);
+  const done = filtered.filter(i => i.done);
+  const overdue = active.filter(i => i.due && new Date(i.due) < new Date());
+
+  let html = `<div class="section-head">
+    <div class="section-title">${active.length} tâche${active.length !== 1 ? 's' : ''} active${active.length !== 1 ? 's' : ''}</div>
+  </div>`;
+
+  html += renderFilterBar(todos);
+
+  if (overdue.length > 0) {
+    html += `<div class="overdue-banner">⚠️ ${overdue.length} tâche${overdue.length > 1 ? 's' : ''} en retard</div>`;
+  }
+
+  if (active.length === 0 && done.length === 0) {
+    html += `<div class="empty">
+      <div class="empty-icon">✅</div>
+      <div class="empty-text">Aucune tâche.<br>Appuie sur + pour en créer une.</div>
+    </div>`;
+    return html;
+  }
+
+  // Group by category
+  const cats = [...new Set(active.map(i => i.cat))];
+  cats.forEach(cat => {
+    const catItems = active.filter(i => i.cat === cat);
+    const c = CATS[cat] || CATS.lumiia;
+    html += `<div class="todo-section">
+      <div class="todo-cat-header">
+        <div class="todo-cat-dot" style="background:${c.color}"></div>
+        <div class="todo-cat-label" style="color:${c.color}">${c.label}</div>
+        <div class="todo-cat-count">${catItems.length}</div>
+      </div>
+      <div class="todo-list">`;
+    catItems.forEach((item, idx) => {
+      html += renderTodoItem(item, idx);
+    });
+    html += `</div></div>`;
+  });
+
+  if (done.length > 0) {
+    html += `<div class="todo-section">
+      <div class="todo-cat-header">
+        <div class="todo-cat-label" style="color:var(--text3)">Terminées (${done.length})</div>
+      </div>
+      <div class="todo-list">`;
+    done.slice(0, 5).forEach((item, idx) => {
+      html += renderTodoItem(item, idx);
+    });
+    html += `</div></div>`;
+  }
+
+  return html;
+}
+
+function renderTodoItem(item, idx) {
+  const isOverdue = item.due && !item.done && new Date(item.due) < new Date();
+  const dueStr = item.due ? new Date(item.due + 'T00:00:00').toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' }) : '';
+  const prioClass = { urgent: 'prio-urgent', normal: 'prio-normal', later: 'prio-later' }[item.prio] || 'prio-normal';
+  const assigneeLabel = item.assignee ? item.assignee.toUpperCase() : '';
+
+  return `<div class="todo-item${item.done ? ' done' : ''}" onclick="toggleTodo('${item.id}')" style="animation-delay:${idx*0.03}s">
+    <div class="todo-check">${item.done ? '✓' : ''}</div>
+    <div class="todo-text">${item.title}</div>
+    <div class="todo-right">
+      ${item.prio ? `<div class="priority-dot ${prioClass}"></div>` : ''}
+      ${assigneeLabel ? `<div class="assignee-tag">${assigneeLabel}</div>` : ''}
+      ${dueStr ? `<div class="due-tag${isOverdue ? ' overdue' : ''}">${dueStr}</div>` : ''}
+    </div>
+  </div>`;
+}
+
+function renderFilterBar(allItems) {
+  const usedCats = [...new Set(allItems.map(i => i.cat))];
+  if (usedCats.length <= 1) return '';
+  
+  let html = `<div class="filter-bar">
+    <button class="filter-chip${filterCat === 'all' ? ' active' : ''}" onclick="setFilter('all')">Tout</button>`;
+  usedCats.forEach(cat => {
+    const c = CATS[cat] || CATS.lumiia;
+    html += `<button class="filter-chip${filterCat === cat ? ' active' : ''}" onclick="setFilter('${cat}')">
+      <span style="width:6px;height:6px;border-radius:50%;background:${c.color};display:inline-block"></span>
+      ${c.label}
+    </button>`;
+  });
+  html += `</div>`;
+  return html;
+}
+
+function setFilter(cat) {
+  filterCat = cat;
+  render();
+}
+
+// ─────────────────────────────────────────────
+// MODAL CREATE
+// ─────────────────────────────────────────────
+function openCreateModal() {
+  editingId = null;
+  currentType = 'note';
+  currentCat = 'lumiia';
+  clItems = [];
+  document.getElementById('input-title').value = '';
+  document.getElementById('input-content').value = '';
+  document.getElementById('input-prio').value = 'normal';
+  document.getElementById('input-assignee').value = currentUser;
+  document.getElementById('input-due').value = '';
+  document.getElementById('modal-title').textContent = 'Nouvelle note';
+  setType(currentTab === 'todo' ? 'todo' : 'note');
+  selectCat(currentCat);
+  renderClEditor();
+  openModal('modal-create');
+}
+
+function setType(t) {
+  currentType = t;
+  document.querySelectorAll('.type-btn').forEach(b => b.classList.toggle('active', b.dataset.type === t));
+  document.getElementById('field-content').style.display = t === 'note' ? '' : 'none';
+  document.getElementById('field-checklist').style.display = t === 'checklist' ? '' : 'none';
+  document.getElementById('field-todo').style.display = t === 'todo' ? '' : 'none';
+}
+
+function selectCat(cat) {
+  currentCat = cat;
+  document.querySelectorAll('.cat-btn').forEach(b => {
+    const c = CATS[b.dataset.cat];
+    b.classList.toggle('selected', b.dataset.cat === cat);
+    b.style.background = b.dataset.cat === cat ? c.color : 'transparent';
+    b.style.color = b.dataset.cat === cat ? '#000' : '';
+  });
+}
+
+function addClItem(text = '') {
+  clItems.push({ id: genId(), text, done: false });
+  renderClEditor();
+  const inputs = document.querySelectorAll('#cl-editor input');
+  if (inputs.length) inputs[inputs.length - 1].focus();
+}
+
+function removeClItem(id) {
+  clItems = clItems.filter(i => i.id !== id);
+  renderClEditor();
+}
+
+function renderClEditor() {
+  const el = document.getElementById('cl-editor');
+  if (!el) return;
+  el.innerHTML = clItems.map(item => `
+    <div class="cl-row">
+      <input type="text" placeholder="Élément..." value="${item.text.replace(/"/g, '&quot;')}"
+        oninput="updateClItem('${item.id}', this.value)"
+        onkeydown="if(event.key==='Enter'){event.preventDefault();addClItem()}"
+      >
+      <button class="cl-del" onclick="removeClItem('${item.id}')">✕</button>
+    </div>
+  `).join('');
+}
+
+function updateClItem(id, val) {
+  const i = clItems.find(x => x.id === id);
+  if (i) i.text = val;
+}
+
+function saveItem() {
+  const title = document.getElementById('input-title').value.trim();
+  if (!title) { document.getElementById('input-title').focus(); return; }
+
+  const item = {
+    id: editingId || genId(),
+    type: currentType,
+    cat: currentCat,
+    title,
+    owner: currentUser,
+    created: editingId ? (items.find(i => i.id === editingId)?.created || Date.now()) : Date.now(),
+    updated: Date.now(),
+  };
+
+  if (currentType === 'note') {
+    item.content = document.getElementById('input-content').value.trim();
+  }
+  if (currentType === 'checklist') {
+    item.checklist = clItems.filter(i => i.text.trim());
+  }
+  if (currentType === 'todo') {
+    item.prio = document.getElementById('input-prio').value;
+    item.assignee = document.getElementById('input-assignee').value;
+    item.due = document.getElementById('input-due').value || null;
+    item.done = editingId ? (items.find(i => i.id === editingId)?.done || false) : false;
+    item.shared = item.assignee !== currentUser;
+  }
+
+  if (editingId) {
+    const idx = items.findIndex(i => i.id === editingId);
+    if (idx !== -1) items[idx] = item;
+  } else {
+    items.unshift(item);
+  }
+
+  save();
+  closeModal('modal-create');
+  render();
+}
+
+// ─────────────────────────────────────────────
+// DETAIL
+// ─────────────────────────────────────────────
+function openDetail(id) {
+  const item = items.find(i => i.id === id);
+  if (!item) return;
+
+  const cat = CATS[item.cat] || CATS.lumiia;
+  let html = `<div class="note-detail-header">
+    <div class="card-dot dot-${item.cat}" style="margin-top:4px"></div>
+    <div class="note-detail-title">${item.title}</div>
+  </div>`;
+
+  html += `<div style="font-size:0.72rem;color:var(--text3);margin-bottom:14px;font-family:Syne,sans-serif;letter-spacing:0.08em;text-transform:uppercase">${cat.label}</div>`;
+
+  if (item.content) {
+    html += `<div class="note-detail-content">${item.content}</div>`;
+  }
+
+  if (item.type === 'checklist' && item.checklist?.length) {
+    const done = item.checklist.filter(i => i.done).length;
+    html += `<div style="font-size:0.72rem;color:var(--text3);margin-bottom:10px">${done}/${item.checklist.length} complétés</div>`;
+    html += `<div class="checklist-full">`;
+    item.checklist.forEach(ci => {
+      html += `<div class="cl-item-full${ci.done ? ' done' : ''}" onclick="toggleClItem('${item.id}','${ci.id}')">
+        <div class="cl-check-full">${ci.done ? '✓' : ''}</div>
+        <div class="cl-item-text">${ci.text}</div>
+      </div>`;
+    });
+    html += `</div>`;
+  }
+
+  html += `<div class="note-footer">
+    <button class="btn-delete" onclick="deleteItem('${item.id}')">🗑 Supprimer</button>
+    <button class="btn-secondary" onclick="editItem('${item.id}')">Modifier</button>
+  </div>`;
+
+  document.getElementById('detail-content').innerHTML = html;
+  openModal('modal-detail');
+}
+
+function toggleClItem(itemId, ciId) {
+  const item = items.find(i => i.id === itemId);
+  if (!item?.checklist) return;
+  const ci = item.checklist.find(c => c.id === ciId);
+  if (ci) { ci.done = !ci.done; save(); openDetail(itemId); render(); }
+}
+
+function toggleTodo(id) {
+  const item = items.find(i => i.id === id);
+  if (item) { item.done = !item.done; save(); render(); }
+}
+
+async function deleteItem(id) {
+  if (!confirm('Supprimer cette note ?')) return;
+  closeModal('modal-detail');
+  await removeItem(id);
+  // render sera appelé automatiquement par onValue
+}
+
+function editItem(id) {
+  const item = items.find(i => i.id === id);
+  if (!item) return;
+  closeModal('modal-detail');
+  editingId = id;
+  currentType = item.type;
+  currentCat = item.cat;
+  clItems = item.checklist ? [...item.checklist] : [];
+  document.getElementById('input-title').value = item.title;
+  document.getElementById('input-content').value = item.content || '';
+  if (item.prio) document.getElementById('input-prio').value = item.prio;
+  if (item.assignee) document.getElementById('input-assignee').value = item.assignee;
+  if (item.due) document.getElementById('input-due').value = item.due;
+  document.getElementById('modal-title').textContent = 'Modifier';
+  setType(currentType);
+  selectCat(currentCat);
+  renderClEditor();
+  openModal('modal-create');
+}
+
+// ─────────────────────────────────────────────
+// MODAL HELPERS
+// ─────────────────────────────────────────────
+function openModal(id) {
+  document.getElementById(id).classList.add('open');
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+}
+
+// Close on overlay click
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+  overlay.addEventListener('click', e => {
+    if (e.target === overlay) overlay.classList.remove('open');
+  });
+});
+
+// ─────────────────────────────────────────────
+// SEED DATA (demo)
+// ─────────────────────────────────────────────
+function seedDemo() {
+  if (items.length > 0) return;
+  items = [
+    { id: genId(), type: 'note', cat: 'raffines', title: 'Soirée des Lauréats REDA', content: 'Séquence 1 : vidéo pré-enregistrée au studio\nSéquence 2 : scène de bar live\nSéquence 3 : vidéo de transition\nSéquence 4 : adresse directe au public', owner: 'em', created: Date.now() - 86400000*2 },
+    { id: genId(), type: 'checklist', cat: 'lumiia', title: 'Ouverture étage LUMIIA', checklist: [
+      { id: genId(), text: 'Plans architecte finalisés', done: true },
+      { id: genId(), text: 'Devis électricité', done: true },
+      { id: genId(), text: 'Dépôt demande ERP', done: false },
+      { id: genId(), text: 'Commande mobilier', done: false },
+    ], owner: 'em', created: Date.now() - 86400000 },
+    { id: genId(), type: 'todo', cat: 'signal', title: 'Finaliser GDD SIGNAL V2', prio: 'urgent', assignee: 'em', due: new Date(Date.now() + 86400000*3).toISOString().split('T')[0], done: false, owner: 'em', shared: false, created: Date.now() },
+    { id: genId(), type: 'todo', cat: 'lumiia', title: 'Préparer visuels Aoustock avril', prio: 'normal', assignee: 'au', due: new Date(Date.now() + 86400000*7).toISOString().split('T')[0], done: false, owner: 'em', shared: true, created: Date.now() },
+    { id: genId(), type: 'todo', cat: 'admin', title: 'Envoyer contrats Hiboutik', prio: 'later', assignee: 'em', due: null, done: false, owner: 'em', shared: false, created: Date.now() },
+    { id: genId(), type: 'note', cat: 'perso', title: 'Idée set DJ samedi', content: 'Ouvrir sur techno atmosphérique, monter progressive jusqu\'à 1h, finir sur quelque chose de plus émotionnel', owner: 'em', created: Date.now() - 3600000 },
+  ];
+  save();
+}
+
+// ─────────────────────────────────────────────
+// INIT
+// ─────────────────────────────────────────────
+// Afficher le bon badge user dès le départ
+document.getElementById('user-badge').textContent = currentUser.toUpperCase();
+// render() et seedDemo() sont appelés par onValue Firebase
+
+// Exposer les fonctions globalement (nécessaire pour les onclick HTML avec type="module")
+window.setUser = setUser;
+window.showUserPicker = showUserPicker;
+window.switchTab = switchTab;
+window.openCreateModal = openCreateModal;
+window.setType = setType;
+window.selectCat = selectCat;
+window.addClItem = addClItem;
+window.removeClItem = removeClItem;
+window.updateClItem = updateClItem;
+window.saveItem = saveItem;
+window.toggleTodo = toggleTodo;
+window.toggleClItem = toggleClItem;
+window.openDetail = openDetail;
+window.deleteItem = deleteItem;
+window.editItem = editItem;
+window.setFilter = setFilter;
+window.closeModal = closeModal;
+window.openModal = openModal;
+</script>
+</body>
+</html>
