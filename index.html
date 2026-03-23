@@ -12,7 +12,7 @@
 <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjogIkxVTUlJQSBXb3Jrc3BhY2UiLCAic2hvcnRfbmFtZSI6ICJXb3Jrc3BhY2UiLCAic3RhcnRfdXJsIjogIi4iLCAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwgImJhY2tncm91bmRfY29sb3IiOiAiIzBkMGQwZiIsICJ0aGVtZV9jb2xvciI6ICIjMGQwZDBmIiwgImljb25zIjogW3sic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzl6ZG1jaUlIWnBaWGRDYjNnOUlqQWdNQ0F5T1RBZ01qa3dJajQ4Y21WamRDQjNhV1IwYUQwaU1qa3dJaUJvWldsbmFIUTlJakk1TUNJZ2NuZzlJall3SWlCbWFXeHNQU0lqTUdRd1pEQm1JaTgrUEhSbGVIUWdlRDBpTlRBbElpQjVQU0kxTlNVaUlHWnZiblF0YzJsNlpUMGlNVFl3SWlCMFpYaDBMV0Z1WTJodmNqMGliV2xrWkd4bElpQmtiMjFwYm1GdWRDMWlZWE5sYkdsdVpUMGliV2xrWkd4bElqN3duNXFnUEM5MFpYaDBQand2YzNablBnPT0iLCAic2l6ZXMiOiAiMTkyeDE5MiA1MTJ4NTEyIiwgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
 <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOTAgMjkwIj48cmVjdCB3aWR0aD0iMjkwIiBoZWlnaHQ9IjI5MCIgcng9IjYwIiBmaWxsPSIjMGQwZDBmIi8+PHRleHQgeD0iNTAlIiB5PSI1NSUiIGZvbnQtc2l6ZT0iMTYwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn5qgPC90ZXh0Pjwvc3ZnPg==">
 
-<!-- LUMIIA Workspace v3.2 -->
+<!-- LUMIIA Workspace v3.3 -->
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 
@@ -73,15 +73,19 @@ header {
 
 .user-badge {
   font-family: 'Syne', sans-serif;
-  font-size: 0.7rem;
-  font-weight: 600;
+  font-size: 0.72rem;
+  font-weight: 800;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  padding: 4px 10px;
+  padding: 6px 12px;
   border-radius: 20px;
-  border: 1px solid var(--border);
-  color: var(--text2);
+  border: 1px solid rgba(255,255,255,0.2);
+  background: var(--bg3);
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.15s;
 }
+.user-badge:hover { background: #38bdf8; color: #000; border-color: transparent; }
 
 .header-actions { display: flex; gap: 8px; }
 
@@ -724,12 +728,11 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
 <header>
   <div class="header-left">
     <div class="logo">LUMIIA <span>●</span> Workspace</div>
-    <div class="user-badge" id="user-badge">EM</div>
+    <div class="user-badge" id="user-badge" onclick="showUserPicker()" title="Changer d'espace">EM</div>
   </div>
   <div class="header-actions">
     <button class="btn-icon" id="sort-date-btn" onclick="toggleSortDate()" title="↓ Plus récent">📅</button>
     <button class="btn-icon" id="sort-prio-btn" onclick="toggleSortPrio()" title="Trier par priorité">⚡</button>
-    <button class="btn-icon" onclick="showUserPicker()" title="Changer d'espace">⇄</button>
     <button class="btn-icon" onclick="openSettings()" title="Réglages">⚙️</button>
   </div>
 </header>
@@ -738,8 +741,9 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
   <button class="tab active" data-tab="notes" onclick="switchTab('notes')">Notes</button>
   <button class="tab" data-tab="todo" onclick="switchTab('todo')">To-do</button>
   <button class="tab" data-tab="projets" onclick="switchTab('projets')">Projets</button>
+  <button class="tab" data-tab="semaine" onclick="switchTab('semaine')">Semaine</button>
   <div style="flex:1"></div>
-  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v3.2</div>
+  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v3.3</div>
 </div>
 
 <main id="main-content">
@@ -805,7 +809,10 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
         </div>
       </div>
       <div class="field-label">Échéance</div>
-      <input type="date" class="field-input" id="input-due" style="cursor:pointer" onclick="this.showPicker && this.showPicker()">
+      <div style="display:flex;gap:8px">
+        <input type="date" class="field-input" id="input-due" style="cursor:pointer;flex:1" onclick="this.showPicker && this.showPicker()">
+        <input type="time" class="field-input" id="input-time" style="cursor:pointer;width:110px" title="Heure (optionnel)" placeholder="--:--">
+      </div>
       <div class="field-label">Contenu (optionnel)</div>
       <textarea class="field-input" id="input-todo-content" placeholder="Description, contexte..." style="min-height:80px;resize:vertical"></textarea>
       <div class="field-label">Lien (optionnel)</div>
@@ -1131,6 +1138,7 @@ function render() {
   if (currentTab === 'notes') el.innerHTML = renderNotes();
   else if (currentTab === 'todo') el.innerHTML = renderTodos();
   else if (currentTab === 'projets') el.innerHTML = renderProjets();
+  else if (currentTab === 'semaine') el.innerHTML = renderSemaine();
   // Masquer/afficher le FAB
   const fab = document.getElementById('fab');
   if (fab) fab.style.display = currentTab === 'projets' && !currentProject ? 'none' : '';
@@ -1289,7 +1297,7 @@ function renderTodos() {
 
 function renderTodoItem(item, idx, showDelete = false) {
   const isOverdue = item.due && !item.done && new Date(item.due) < new Date();
-  const dueStr = item.due ? new Date(item.due + 'T00:00:00').toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' }) : '';
+  const dueStr = item.due ? new Date(item.due + 'T00:00:00').toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' }) + (item.dueTime ? ' ' + item.dueTime : '') : '';
   const prioIcon = { urgent: '🔴', normal: '🟡', later: '⚪' }[item.prio] || '';
   const assigneeLabel = item.assignee ? item.assignee.toUpperCase() : '';
   const needsValidation = item.validateBy && !item.done && !item.validated;
@@ -1304,8 +1312,9 @@ function renderTodoItem(item, idx, showDelete = false) {
       : `<div style="font-size:0.7rem;color:var(--cat-admin);font-family:Syne,sans-serif;font-weight:600;white-space:nowrap">⏳ ${item.validateBy.toUpperCase()}</div>`;
   }
   if (item.validated) {
-    const validatorName = MEMBERS.find(m => m.id === item.validatedBy)?.name || item.validatedBy || '?';
-    validationBadge = `<div style="font-size:0.7rem;color:var(--cat-perso);font-family:Syne,sans-serif;font-weight:600;display:flex;align-items:center;gap:3px">✓ validé par ${validatorName}</div>`;
+    const validator = MEMBERS.find(m => m.id === item.validatedBy);
+    const initials = validator ? validator.name.slice(0,3).toUpperCase() : (item.validatedBy||'?').toUpperCase();
+    validationBadge = `<div style="font-size:0.7rem;color:var(--cat-perso);font-family:Syne,sans-serif;font-weight:700;white-space:nowrap">✓ ${initials}</div>`;
   }
 
   let extraClass = '';
@@ -1385,7 +1394,99 @@ function applyFilterCat(arr) {
 // ─────────────────────────────────────────────
 // PROJETS
 // ─────────────────────────────────────────────
-function renderProjets() {
+function renderSemaine() {
+  const today = new Date();
+  today.setHours(0,0,0,0);
+  const jours = ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'];
+  const mois = ['jan','fév','mar','avr','mai','jun','jul','aoû','sep','oct','nov','déc'];
+  const isAdmin = currentUser === MEMBERS[0]?.id;
+
+  // Tâches visibles par l'utilisateur courant
+  const myTodos = isAdmin
+    ? items.filter(i => i.type === 'todo' && !i.done)
+    : items.filter(i => i.type === 'todo' && !i.done && (i.assignee === currentUser || i.validateBy === currentUser || i.owner === currentUser));
+
+  // Notes visibles
+  const myNotes = items.filter(i => (i.type === 'note' || i.type === 'checklist') && (i.owner === currentUser || i.shared));
+
+  let html = '';
+
+  for (let d = 0; d < 7; d++) {
+    const day = new Date(today);
+    day.setDate(today.getDate() + d);
+    const isToday = d === 0;
+    const dayStr = day.toISOString().split('T')[0];
+    const jourLabel = jours[day.getDay()];
+    const dateLabel = day.getDate() + ' ' + mois[day.getMonth()];
+
+    // Tâches du jour
+    const dayTodos = myTodos.filter(i => i.due === dayStr);
+    // Notes créées ce jour
+    const dayNotes = myNotes.filter(i => {
+      const noteDay = new Date(i.created);
+      noteDay.setHours(0,0,0,0);
+      return noteDay.getTime() === day.getTime();
+    });
+
+    if (!isToday && dayTodos.length === 0 && dayNotes.length === 0) {
+      // Afficher quand même les jours vides mais en compact
+      html += `<div style="margin-bottom:8px;padding:10px 14px;background:var(--bg2);border-radius:12px;border:1px solid var(--border);opacity:0.5">
+        <div style="font-family:Syne,sans-serif;font-size:0.72rem;font-weight:700;color:var(--text3)">${jourLabel} · ${dateLabel}</div>
+      </div>`;
+      continue;
+    }
+
+    const accentColor = isToday ? '#38bdf8' : 'var(--text3)';
+    const bgStyle = isToday
+      ? 'background:rgba(56,189,248,0.06);border:1px solid rgba(56,189,248,0.25);'
+      : 'background:var(--bg2);border:1px solid var(--border);';
+
+    html += `<div style="margin-bottom:${isToday ? '20px' : '10px'};padding:${isToday ? '16px' : '12px 14px'};border-radius:${isToday ? '16px' : '12px'};${bgStyle}">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:${(dayTodos.length || dayNotes.length) ? '12px' : '0'}">
+        <div style="font-family:Syne,sans-serif;font-size:${isToday ? '0.95rem' : '0.78rem'};font-weight:800;color:${accentColor}">${jourLabel}</div>
+        <div style="font-family:Syne,sans-serif;font-size:${isToday ? '0.85rem' : '0.72rem'};font-weight:600;color:${isToday ? 'var(--text2)' : 'var(--text3)'}">${dateLabel}</div>
+        ${isToday ? '<div style="font-size:0.65rem;background:#38bdf8;color:#000;font-family:Syne,sans-serif;font-weight:800;padding:2px 7px;border-radius:10px;letter-spacing:0.08em">AUJOURD\'HUI</div>' : ''}
+        <div style="margin-left:auto;font-size:0.7rem;color:var(--text3)">${dayTodos.length + dayNotes.length > 0 ? (dayTodos.length + dayNotes.length) + ' élém.' : ''}</div>
+      </div>`;
+
+    // Tâches
+    if (dayTodos.length) {
+      dayTodos.sort((a,b) => ({'urgent':0,'normal':1,'later':2}[a.prio]??1) - ({'urgent':0,'normal':1,'later':2}[b.prio]??1));
+      dayTodos.forEach(item => {
+        const catInfo = getCatInfo(item);
+        const prioIcon = {'urgent':'🔴','normal':'🟡','later':'⚪'}[item.prio] || '';
+        const timeStr = item.dueTime ? `<span style="font-size:0.7rem;color:#38bdf8;font-weight:700;font-family:Syne,sans-serif"> ${item.dueTime}</span>` : '';
+        html += `<div onclick="openDetail('${item.id}')" style="display:flex;align-items:center;gap:8px;padding:${isToday ? '10px 12px' : '7px 10px'};background:var(--bg3);border-radius:10px;margin-bottom:6px;cursor:pointer;border-left:3px solid ${catInfo.color}">
+          <div style="font-size:0.75rem">${prioIcon}</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:${isToday ? '0.88rem' : '0.82rem'};font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${item.title}${timeStr}</div>
+          </div>
+          <div style="width:6px;height:6px;border-radius:50%;background:${catInfo.color};flex-shrink:0"></div>
+        </div>`;
+      });
+    }
+
+    // Notes
+    if (dayNotes.length) {
+      dayNotes.forEach(item => {
+        const catInfo = getCatInfo(item);
+        html += `<div onclick="openDetail('${item.id}')" style="display:flex;align-items:center;gap:8px;padding:${isToday ? '10px 12px' : '7px 10px'};background:var(--bg3);border-radius:10px;margin-bottom:6px;cursor:pointer;border-left:3px solid ${catInfo.color};opacity:0.85">
+          <div style="font-size:0.75rem">📝</div>
+          <div style="flex:1;min-width:0;font-size:${isToday ? '0.88rem' : '0.82rem'};color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${item.title}</div>
+          <div style="width:6px;height:6px;border-radius:50%;background:${catInfo.color};flex-shrink:0"></div>
+        </div>`;
+      });
+    }
+
+    html += `</div>`;
+  }
+
+  if (html === '' || myTodos.filter(i => i.due).length === 0 && myNotes.length === 0) {
+    return `<div class="empty"><div class="empty-icon">📅</div><div class="empty-text">Aucune tâche planifiée cette semaine.</div></div>`;
+  }
+
+  return html;
+}
   if (currentProject) return renderProjetDetail(currentProject);
 
   if (PROJECTS.length === 0) {
@@ -1943,6 +2044,8 @@ function openCreateModal() {
   document.getElementById('input-todo-content').value = '';
   document.getElementById('input-prio').value = 'normal';
   document.getElementById('input-due').value = '';
+  const timeEl = document.getElementById('input-time');
+  if (timeEl) timeEl.value = '';
   document.getElementById('input-validate-by').value = '';
   document.getElementById('field-checklist').style.display = 'none';
   document.getElementById('field-checklist-todo').style.display = 'none';
@@ -2098,6 +2201,7 @@ function saveItem() {
     item.prio = document.getElementById('input-prio').value;
     item.assignee = document.getElementById('input-assignee').value;
     item.due = document.getElementById('input-due').value || null;
+    item.dueTime = document.getElementById('input-time').value || null;
     item.content = document.getElementById('input-todo-content').value.trim();
     item.link = document.getElementById('input-todo-link').value.trim();
     item.done = editingId ? (items.find(i => i.id === editingId)?.done || false) : false;
@@ -2381,6 +2485,8 @@ function editItem(id) {
     document.getElementById('input-assignee').value = item.assignee;
   }
   if (item.due) document.getElementById('input-due').value = item.due;
+  const timeEl = document.getElementById('input-time');
+  if (timeEl) timeEl.value = item.dueTime || '';
   document.getElementById('input-validate-by').value = item.validateBy || '';
   document.getElementById('modal-title').textContent = 'Modifier';
   // Afficher checklist note
