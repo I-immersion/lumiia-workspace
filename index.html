@@ -12,7 +12,7 @@
 <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjogIkxVTUlJQSBXb3Jrc3BhY2UiLCAic2hvcnRfbmFtZSI6ICJXb3Jrc3BhY2UiLCAic3RhcnRfdXJsIjogIi4iLCAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwgImJhY2tncm91bmRfY29sb3IiOiAiIzBkMGQwZiIsICJ0aGVtZV9jb2xvciI6ICIjMGQwZDBmIiwgImljb25zIjogW3sic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzl6ZG1jaUlIWnBaWGRDYjNnOUlqQWdNQ0F5T1RBZ01qa3dJajQ4Y21WamRDQjNhV1IwYUQwaU1qa3dJaUJvWldsbmFIUTlJakk1TUNJZ2NuZzlJall3SWlCbWFXeHNQU0lqTUdRd1pEQm1JaTgrUEhSbGVIUWdlRDBpTlRBbElpQjVQU0kxTlNVaUlHWnZiblF0YzJsNlpUMGlNVFl3SWlCMFpYaDBMV0Z1WTJodmNqMGliV2xrWkd4bElpQmtiMjFwYm1GdWRDMWlZWE5sYkdsdVpUMGliV2xrWkd4bElqN3duNXFnUEM5MFpYaDBQand2YzNablBnPT0iLCAic2l6ZXMiOiAiMTkyeDE5MiA1MTJ4NTEyIiwgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
 <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOTAgMjkwIj48cmVjdCB3aWR0aD0iMjkwIiBoZWlnaHQ9IjI5MCIgcng9IjYwIiBmaWxsPSIjMGQwZDBmIi8+PHRleHQgeD0iNTAlIiB5PSI1NSUiIGZvbnQtc2l6ZT0iMTYwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn5qgPC90ZXh0Pjwvc3ZnPg==">
 
-<!-- LUMIIA Workspace v2.6 -->
+<!-- LUMIIA Workspace v2.7 -->
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 
@@ -739,7 +739,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
   <button class="tab" data-tab="todo" onclick="switchTab('todo')">To-do</button>
   <button class="tab" data-tab="projets" onclick="switchTab('projets')">Projets</button>
   <div style="flex:1"></div>
-  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v2.6</div>
+  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v2.7</div>
 </div>
 
 <main id="main-content">
@@ -1143,7 +1143,11 @@ function renderTodos() {
   if (isAdmin) {
     todos = items.filter(i => i.type === 'todo');
   } else {
-    todos = items.filter(i => i.type === 'todo' && (i.assignee === currentUser || i.validateBy === currentUser));
+    todos = items.filter(i => i.type === 'todo' && (
+      i.assignee === currentUser ||
+      i.validateBy === currentUser ||
+      i.owner === currentUser
+    ));
   }
 
   const filtered = applySortOrder(applyFilterCat(todos));
@@ -1216,8 +1220,8 @@ function renderTodoItem(item, idx, showDelete = false) {
   const assigneeLabel = item.assignee ? item.assignee.toUpperCase() : '';
   const needsValidation = item.validateBy && !item.done && !item.validated;
   const canValidate = item.validateBy === currentUser;
-  // Tâche assignée à quelqu'un d'autre et pas encore faite = en attente
-  const isWaiting = item.assignee && item.assignee !== currentUser && !item.done;
+  // En attente = assignée à quelqu'un d'autre (pas à moi), non terminée
+  const isWaiting = item.assignee && item.assignee !== currentUser && !item.done && !needsValidation;
 
   let validationBadge = '';
   if (needsValidation) {
@@ -1684,7 +1688,10 @@ function setType(t) {
   document.getElementById('field-content').style.display = t === 'note' ? '' : 'none';
   document.getElementById('field-todo').style.display = t === 'todo' ? '' : 'none';
   document.getElementById('field-note-prio').style.display = t === 'note' ? '' : 'none';
-  if (t === 'todo') { document.getElementById('field-checklist').style.display = 'none'; }
+  if (t === 'todo') {
+    document.getElementById('field-checklist').style.display = 'none';
+    updateMemberSelects(); // Peupler le select assignee à ce moment
+  }
   // Adapter les labels du toggle selon le type actif
   const btns = document.querySelectorAll('.type-btn');
   btns.forEach(b => {
@@ -1919,7 +1926,7 @@ function openDetail(id) {
 
     // Bouton valider si nécessaire
     if (needsMyValidation) {
-      html += `<button onclick="validateTask('${item.id}')" style="width:100%;padding:12px;background:rgba(255,107,53,0.15);border:1px solid rgba(255,107,53,0.4);border-radius:12px;color:var(--cat-lumiia);font-family:Syne,sans-serif;font-weight:700;font-size:0.88rem;cursor:pointer;margin-bottom:16px;transition:all 0.15s">
+      html += `<button id="btn-validate-${item.id}" onclick="validateTaskAndUpdate('${item.id}')" style="width:100%;padding:12px;background:rgba(255,107,53,0.15);border:1px solid rgba(255,107,53,0.4);border-radius:12px;color:var(--cat-lumiia);font-family:Syne,sans-serif;font-weight:700;font-size:0.88rem;cursor:pointer;margin-bottom:16px;transition:all 0.3s">
         ✓ Valider cette tâche
       </button>`;
     }
@@ -2058,6 +2065,18 @@ async function toggleTodo(id) {
   render();
 }
 
+async function validateTaskAndUpdate(id) {
+  const btn = document.getElementById(`btn-validate-${id}`);
+  if (btn) {
+    btn.textContent = '✓ Tâche validée';
+    btn.style.background = 'rgba(74,222,128,0.15)';
+    btn.style.borderColor = 'rgba(74,222,128,0.4)';
+    btn.style.color = 'var(--cat-perso)';
+    btn.disabled = true;
+  }
+  await validateTask(id);
+}
+
 async function validateTask(id) {
   const item = items.find(i => i.id === id);
   if (!item) return;
@@ -2173,6 +2192,7 @@ window.addClItemTodo = addClItemTodo;
 window.removeClItemTodo = removeClItemTodo;
 window.updateClItemTodo = updateClItemTodo;
 window.validateTask = validateTask;
+window.validateTaskAndUpdate = validateTaskAndUpdate;
 window.openSettings = openSettings;
 window.addCat = addCat;
 window.removeCat = removeCat;
