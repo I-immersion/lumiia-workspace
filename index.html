@@ -12,7 +12,7 @@
 <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjogIkxVTUlJQSBXb3Jrc3BhY2UiLCAic2hvcnRfbmFtZSI6ICJXb3Jrc3BhY2UiLCAic3RhcnRfdXJsIjogIi4iLCAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwgImJhY2tncm91bmRfY29sb3IiOiAiIzBkMGQwZiIsICJ0aGVtZV9jb2xvciI6ICIjMGQwZDBmIiwgImljb25zIjogW3sic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzl6ZG1jaUlIWnBaWGRDYjNnOUlqQWdNQ0F5T1RBZ01qa3dJajQ4Y21WamRDQjNhV1IwYUQwaU1qa3dJaUJvWldsbmFIUTlJakk1TUNJZ2NuZzlJall3SWlCbWFXeHNQU0lqTUdRd1pEQm1JaTgrUEhSbGVIUWdlRDBpTlRBbElpQjVQU0kxTlNVaUlHWnZiblF0YzJsNlpUMGlNVFl3SWlCMFpYaDBMV0Z1WTJodmNqMGliV2xrWkd4bElpQmtiMjFwYm1GdWRDMWlZWE5sYkdsdVpUMGliV2xrWkd4bElqN3duNXFnUEM5MFpYaDBQand2YzNablBnPT0iLCAic2l6ZXMiOiAiMTkyeDE5MiA1MTJ4NTEyIiwgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
 <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOTAgMjkwIj48cmVjdCB3aWR0aD0iMjkwIiBoZWlnaHQ9IjI5MCIgcng9IjYwIiBmaWxsPSIjMGQwZDBmIi8+PHRleHQgeD0iNTAlIiB5PSI1NSUiIGZvbnQtc2l6ZT0iMTYwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn5qgPC90ZXh0Pjwvc3ZnPg==">
 
-<!-- LUMIIA Workspace v1.9 -->
+<!-- LUMIIA Workspace v2.0 -->
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 
@@ -656,9 +656,24 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
   border-color: rgba(255,107,53,0.5);
   background: rgba(255,107,53,0.08);
 }
+/* ── URGENCE — trait gauche ── */
+.card.urgent-card::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: var(--cat-urgent);
+  border-radius: var(--radius) 0 0 var(--radius);
+}
+.todo-item.urgent-item {
+  border-left: 3px solid var(--cat-urgent);
+  padding-left: 11px;
+}
 .todo-item.waiting-assigned {
-  border-color: rgba(251,191,36,0.4);
+  border-left: 3px solid rgba(251,191,36,0.7);
   background: rgba(251,191,36,0.06);
+  padding-left: 11px;
+  opacity: 0.9;
 }
 .projet-card {
   cursor: pointer;
@@ -720,7 +735,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
   <button class="tab" data-tab="todo" onclick="switchTab('todo')">To-do</button>
   <button class="tab" data-tab="projets" onclick="switchTab('projets')">Projets</button>
   <div style="flex:1"></div>
-  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v1.9</div>
+  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v2.0</div>
 </div>
 
 <main id="main-content">
@@ -887,9 +902,13 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
       <button onclick="closeModal('modal-settings')" style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;width:32px;height:32px;color:var(--text2);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center">✕</button>
     </div>
 
-    <div class="field-label">Catégories &amp; Projets</div>
-    <div id="cat-list-editor" style="display:flex;flex-direction:column;gap:8px;margin-bottom:14px"></div>
-    <button class="add-cl-item" onclick="addCat()">+ Nouvelle catégorie</button>
+    <div class="field-label">Projets</div>
+    <div id="cat-list-editor-projects" style="display:flex;flex-direction:column;gap:8px;margin-bottom:10px"></div>
+    <button class="add-cl-item" onclick="addCat(true)" style="margin-bottom:16px">+ Nouveau projet</button>
+
+    <div class="field-label">Catégories</div>
+    <div id="cat-list-editor-cats" style="display:flex;flex-direction:column;gap:8px;margin-bottom:10px"></div>
+    <button class="add-cl-item" onclick="addCat(false)">+ Nouvelle catégorie</button>
 
     <div style="height:24px"></div>
     <div class="field-label">Membres</div>
@@ -1099,7 +1118,9 @@ function renderCard(item, idx) {
   const dateStr = item.created ? new Date(item.created).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' }) : '';
   const linkBadge = item.link ? `<div style="font-size:0.72rem;color:var(--cat-signal)">🔗</div>` : '';
 
-  return `<div class="card" data-cat="${item.cat}" onclick="openDetail('${item.id}')" style="animation-delay:${idx * 0.03}s">
+  const urgentClass = item.prio === 'urgent' ? ' urgent-card' : '';
+
+  return `<div class="card${urgentClass}" data-cat="${item.cat}" onclick="openDetail('${item.id}')" style="animation-delay:${idx * 0.03}s">
     <div style="display:flex;align-items:center;justify-content:space-between">
       <div class="card-dot dot-${item.cat}"></div>
       <div style="display:flex;align-items:center;gap:6px">${linkBadge}<div class="card-meta" style="font-size:0.72rem">${cat.label}</div></div>
@@ -1201,6 +1222,7 @@ function renderTodoItem(item, idx) {
   let extraClass = '';
   if (needsValidation && canValidate) extraClass = ' needs-validation';
   else if (isWaiting) extraClass = ' waiting-assigned';
+  else if (item.prio === 'urgent' && !item.done) extraClass = ' urgent-item';
 
   let waitingLabel = '';
   if (isWaiting) {
@@ -1392,21 +1414,26 @@ function openSettings() {
 }
 
 function renderCatEditor() {
-  const el = document.getElementById('cat-list-editor');
-  if (!el || !editingCats) return;
-  el.innerHTML = editingCats.map((cat, i) => `
+  if (!editingCats) return;
+  const projEl = document.getElementById('cat-list-editor-projects');
+  const catEl = document.getElementById('cat-list-editor-cats');
+
+  const renderRow = (cat, i) => `
     <div style="display:flex;align-items:center;gap:8px">
       <div style="width:20px;height:20px;border-radius:50%;background:${cat.color};flex-shrink:0;cursor:pointer" onclick="cycleCatColor(${i})" title="Changer la couleur"></div>
       <input type="text" value="${cat.label}" oninput="editingCats[${i}].label=this.value"
         style="flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:8px 11px;color:var(--text);font-family:DM Sans,sans-serif;font-size:0.85rem;outline:none">
-      <label style="display:flex;align-items:center;gap:5px;font-size:0.72rem;color:var(--text3);font-family:Syne,sans-serif;white-space:nowrap;cursor:pointer">
-        <input type="checkbox" ${cat.isProject ? 'checked' : ''} onchange="editingCats[${i}].isProject=this.checked"
-          style="width:14px;height:14px;cursor:pointer;accent-color:var(--cat-lumiia)">
-        Projet
-      </label>
-      <button onclick="removeCat(${i})" style="background:none;border:none;color:var(--text3);font-size:1rem;cursor:pointer;padding:4px;transition:color 0.15s" onmouseover="this.style.color='var(--cat-urgent)'" onmouseout="this.style.color='var(--text3)'">✕</button>
-    </div>
-  `).join('');
+      <button onclick="removeCat(${i})" style="background:none;border:none;color:var(--text3);font-size:1rem;cursor:pointer;padding:4px;" onmouseover="this.style.color='var(--cat-urgent)'" onmouseout="this.style.color='var(--text3)'">✕</button>
+    </div>`;
+
+  if (projEl) {
+    const projects = editingCats.map((c, i) => ({...c, _idx: i})).filter(c => c.isProject);
+    projEl.innerHTML = projects.length ? projects.map(c => renderRow(c, c._idx)).join('') : `<div style="font-size:0.8rem;color:var(--text3);padding:6px 0">Aucun projet</div>`;
+  }
+  if (catEl) {
+    const cats = editingCats.map((c, i) => ({...c, _idx: i})).filter(c => !c.isProject);
+    catEl.innerHTML = cats.length ? cats.map(c => renderRow(c, c._idx)).join('') : `<div style="font-size:0.8rem;color:var(--text3);padding:6px 0">Aucune catégorie</div>`;
+  }
 }
 
 function cycleCatColor(idx) {
@@ -1420,8 +1447,8 @@ function removeCat(idx) {
   renderCatEditor();
 }
 
-function addCat() {
-  editingCats.push({ id: 'cat_' + Date.now(), label: 'Nouvelle catégorie', color: COLORS_PALETTE[editingCats.length % COLORS_PALETTE.length] });
+function addCat(isProject = false) {
+  editingCats.push({ id: 'cat_' + Date.now(), label: isProject ? 'Nouveau projet' : 'Nouvelle catégorie', color: COLORS_PALETTE[editingCats.length % COLORS_PALETTE.length], isProject });
   renderCatEditor();
 }
 
@@ -1502,15 +1529,19 @@ function updateMemberSelects() {
 function renderMembersList() {
   const el = document.getElementById('members-list');
   if (!el) return;
+  const colors = ['var(--cat-lumiia)','var(--cat-signal)','var(--cat-raffines)','var(--cat-perso)'];
   el.innerHTML = MEMBERS.map((m, i) => `
-    <div style="display:flex;align-items:center;gap:8px">
-      <div style="width:28px;height:28px;border-radius:50%;background:var(--cat-lumiia);display:flex;align-items:center;justify-content:center;font-family:Syne,sans-serif;font-weight:700;font-size:0.75rem;color:#000;flex-shrink:0">${m.name.slice(0,2).toUpperCase()}</div>
-      <div style="flex:1">
-        <div style="font-size:0.85rem;font-weight:600">${m.name}</div>
-        <div style="font-size:0.7rem;color:var(--text3)">i-immersion.github.io/lumiia-workspace/?user=${m.id}</div>
+    <div style="display:flex;align-items:center;gap:10px;background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:10px 12px">
+      <div style="width:32px;height:32px;border-radius:50%;background:${colors[i%4]};display:flex;align-items:center;justify-content:center;font-family:Syne,sans-serif;font-weight:800;font-size:0.72rem;color:#000;flex-shrink:0">${m.name.slice(0,2).toUpperCase()}</div>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:0.88rem;font-weight:600;font-family:Syne,sans-serif">${m.name}</div>
+        <div style="font-size:0.65rem;color:var(--text3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">?user=${m.id}</div>
       </div>
-      <button onclick="copyMemberLink('${m.id}')" style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:5px 10px;color:var(--text2);font-size:0.72rem;font-family:Syne,sans-serif;font-weight:700;cursor:pointer">🔗</button>
-      ${i > 0 ? `<button onclick="removeMember(${i})" style="background:none;border:none;color:var(--text3);font-size:1rem;cursor:pointer;padding:4px">✕</button>` : ''}
+      <button id="copy-btn-${m.id}" onclick="copyMemberLink('${m.id}')"
+        style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:6px 10px;color:var(--text2);font-size:0.75rem;font-family:Syne,sans-serif;font-weight:700;cursor:pointer;white-space:nowrap;transition:all 0.2s">
+        🔗 Copier
+      </button>
+      ${i > 0 ? `<button onclick="removeMember(${i})" style="background:none;border:none;color:var(--text3);font-size:1rem;cursor:pointer;padding:4px" onmouseover="this.style.color='var(--cat-urgent)'" onmouseout="this.style.color='var(--text3)'">✕</button>` : ''}
     </div>
   `).join('');
 }
@@ -1535,20 +1566,35 @@ function removeMember(idx) {
 function copyMemberLink(memberId) {
   const url = `https://i-immersion.github.io/lumiia-workspace/?user=${memberId}`;
   const member = MEMBERS.find(m => m.id === memberId);
-  const text = member ? `${member.name}, voici ton accès LUMIIA Workspace :` : 'Accès LUMIIA Workspace :';
+  const text = member ? `${member.name}, voici ton accès LUMIIA Workspace : ${url}` : url;
+
+  const doFeedback = () => {
+    const btn = document.getElementById(`copy-btn-${memberId}`);
+    if (btn) {
+      btn.textContent = '✓ Copié !';
+      btn.style.color = 'var(--cat-perso)';
+      btn.style.borderColor = 'rgba(74,222,128,0.4)';
+      btn.style.background = 'rgba(74,222,128,0.08)';
+      setTimeout(() => {
+        btn.textContent = '🔗 Copier';
+        btn.style.color = '';
+        btn.style.borderColor = '';
+        btn.style.background = '';
+      }, 2500);
+    }
+  };
+
   if (navigator.share) {
-    navigator.share({ title: 'LUMIIA Workspace', text, url }).catch(() => fallbackCopy(url));
+    navigator.share({ title: 'LUMIIA Workspace', text, url }).then(doFeedback).catch(() => fallbackCopy(url, doFeedback));
   } else {
-    fallbackCopy(url);
+    fallbackCopy(url, doFeedback);
   }
 }
 
-function fallbackCopy(url) {
-  navigator.clipboard.writeText(url).then(() => {
-    // Feedback visuel temporaire
-    const els = document.querySelectorAll('[onclick*="copyMemberLink"]');
-    els.forEach(el => { const orig = el.textContent; el.textContent = '✓'; setTimeout(() => el.textContent = orig, 2000); });
-  }).catch(() => { window.prompt('Copie ce lien :', url); });
+function fallbackCopy(url, callback) {
+  navigator.clipboard.writeText(url)
+    .then(() => { if (callback) callback(); })
+    .catch(() => { window.prompt('Copie ce lien :', url); if (callback) callback(); });
 }
 
 function cycleSortOrder() {} // deprecated
