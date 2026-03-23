@@ -12,7 +12,7 @@
 <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjogIkxVTUlJQSBXb3Jrc3BhY2UiLCAic2hvcnRfbmFtZSI6ICJXb3Jrc3BhY2UiLCAic3RhcnRfdXJsIjogIi4iLCAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwgImJhY2tncm91bmRfY29sb3IiOiAiIzBkMGQwZiIsICJ0aGVtZV9jb2xvciI6ICIjMGQwZDBmIiwgImljb25zIjogW3sic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzl6ZG1jaUlIWnBaWGRDYjNnOUlqQWdNQ0F5T1RBZ01qa3dJajQ4Y21WamRDQjNhV1IwYUQwaU1qa3dJaUJvWldsbmFIUTlJakk1TUNJZ2NuZzlJall3SWlCbWFXeHNQU0lqTUdRd1pEQm1JaTgrUEhSbGVIUWdlRDBpTlRBbElpQjVQU0kxTlNVaUlHWnZiblF0YzJsNlpUMGlNVFl3SWlCMFpYaDBMV0Z1WTJodmNqMGliV2xrWkd4bElpQmtiMjFwYm1GdWRDMWlZWE5sYkdsdVpUMGliV2xrWkd4bElqN3duNXFnUEM5MFpYaDBQand2YzNablBnPT0iLCAic2l6ZXMiOiAiMTkyeDE5MiA1MTJ4NTEyIiwgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
 <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOTAgMjkwIj48cmVjdCB3aWR0aD0iMjkwIiBoZWlnaHQ9IjI5MCIgcng9IjYwIiBmaWxsPSIjMGQwZDBmIi8+PHRleHQgeD0iNTAlIiB5PSI1NSUiIGZvbnQtc2l6ZT0iMTYwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn5qgPC90ZXh0Pjwvc3ZnPg==">
 
-<!-- LUMIIA Workspace v2.2 -->
+<!-- LUMIIA Workspace v2.3 -->
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 
@@ -739,7 +739,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
   <button class="tab" data-tab="todo" onclick="switchTab('todo')">To-do</button>
   <button class="tab" data-tab="projets" onclick="switchTab('projets')">Projets</button>
   <div style="flex:1"></div>
-  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v2.2</div>
+  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v2.3</div>
 </div>
 
 <main id="main-content">
@@ -799,12 +799,9 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
           </select>
         </div>
         <div>
-          <div class="field-label">Assigner à</div>
-          <select class="field-input" id="input-assignee">
-            <option value="em">Emmanuel</option>
-            <option value="au">Aurélie</option>
-            <option value="ma">Marion</option>
-          </select>
+          <div class="field-label">Créé par</div>
+          <div id="assignee-display" style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:11px 13px;color:var(--text3);font-size:0.88rem;font-family:DM Sans,sans-serif;cursor:default">—</div>
+          <input type="hidden" id="input-assignee" value="">
         </div>
       </div>
       <div class="field-label">Échéance</div>
@@ -1192,13 +1189,20 @@ function renderTodos() {
   });
 
   if (done.length > 0) {
+    // Trier : validées d'abord, puis par date de mise à jour
+    const sortedDone = [...done].sort((a, b) => {
+      if (a.validated && !b.validated) return -1;
+      if (!a.validated && b.validated) return 1;
+      return (b.updated || b.created || 0) - (a.updated || a.created || 0);
+    });
+
     html += `<div class="todo-section">
       <div class="todo-cat-header">
         <div class="todo-cat-label" style="color:var(--text3)">Terminées (${done.length})</div>
       </div>
       <div class="todo-list">`;
-    done.slice(0, 5).forEach((item, idx) => {
-      html += renderTodoItem(item, idx);
+    sortedDone.forEach((item, idx) => {
+      html += renderTodoItem(item, idx, true); // true = showDelete
     });
     html += `</div></div>`;
   }
@@ -1206,7 +1210,7 @@ function renderTodos() {
   return html;
 }
 
-function renderTodoItem(item, idx) {
+function renderTodoItem(item, idx, showDelete = false) {
   const isOverdue = item.due && !item.done && new Date(item.due) < new Date();
   const dueStr = item.due ? new Date(item.due + 'T00:00:00').toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' }) : '';
   const prioIcon = { urgent: '🔴', normal: '🟡', later: '⚪' }[item.prio] || '';
@@ -1247,6 +1251,7 @@ function renderTodoItem(item, idx) {
       ${isWaiting ? waitingLabel : (assigneeLabel ? `<div class="assignee-tag">${assigneeLabel}</div>` : '')}
       ${dueStr ? `<div class="due-tag${isOverdue ? ' overdue' : ''}">${dueStr}</div>` : ''}
       ${validationBadge}
+      ${showDelete ? `<button onclick="event.stopPropagation();deleteItem('${item.id}')" style="background:none;border:none;color:var(--text3);font-size:1rem;cursor:pointer;padding:2px 4px;line-height:1;transition:color 0.15s;flex-shrink:0" onmouseover="this.style.color='var(--cat-urgent)'" onmouseout="this.style.color='var(--text3)'">✕</button>` : ''}
     </div>
   </div>`;
 }
@@ -1521,12 +1526,11 @@ function selectNotePrio(prio) {
 function updateMemberSelects() {
   // Reconstruire les selects assignee et validate-by depuis MEMBERS
   const assigneeEl = document.getElementById('input-assignee');
-  const validateEl = document.getElementById('input-validate-by');
-  if (assigneeEl) {
-    assigneeEl.innerHTML = MEMBERS.map(m =>
-      `<option value="${m.id}">${m.name}</option>`
-    ).join('');
-    assigneeEl.value = currentUser;
+  const assigneeDisplay = document.getElementById('assignee-display');
+  if (assigneeEl) assigneeEl.value = currentUser;
+  if (assigneeDisplay) {
+    const memberName = MEMBERS.find(m => m.id === currentUser)?.name || currentUser;
+    assigneeDisplay.textContent = memberName;
   }
   if (validateEl) {
     validateEl.innerHTML = `<option value="">Aucune validation requise</option>` +
@@ -1657,6 +1661,9 @@ function openCreateModal() {
   document.getElementById('input-todo-content').value = '';
   document.getElementById('input-prio').value = 'normal';
   document.getElementById('input-assignee').value = currentUser;
+  const memberName = MEMBERS.find(m => m.id === currentUser)?.name || currentUser;
+  const assigneeDisplay = document.getElementById('assignee-display');
+  if (assigneeDisplay) assigneeDisplay.textContent = memberName;
   document.getElementById('input-due').value = '';
   document.getElementById('input-validate-by').value = '';
   document.getElementById('field-checklist').style.display = 'none';
@@ -2050,11 +2057,10 @@ async function validateTask(id) {
   render();
 }
 
-async function deleteItem(id) {
-  if (!confirm('Supprimer cette note ?')) return;
+async function deleteItem(id, skipConfirm = false) {
+  if (!skipConfirm && !confirm('Supprimer ?')) return;
   closeModal('modal-detail');
   await removeItem(id);
-  // render sera appelé automatiquement par onValue
 }
 
 function editItem(id) {
@@ -2072,7 +2078,13 @@ function editItem(id) {
   document.getElementById('input-todo-content').value = (item.type === 'todo' ? item.content : '') || '';
   document.getElementById('input-todo-link').value = (item.type === 'todo' ? item.link : '') || '';
   if (item.prio) document.getElementById('input-prio').value = item.prio;
-  if (item.assignee) document.getElementById('input-assignee').value = item.assignee;
+  if (item.assignee) {
+    document.getElementById('input-assignee').value = item.assignee;
+    const assigneeDisplay = document.getElementById('assignee-display');
+    if (assigneeDisplay) {
+      assigneeDisplay.textContent = MEMBERS.find(m => m.id === item.assignee)?.name || item.assignee;
+    }
+  }
   if (item.due) document.getElementById('input-due').value = item.due;
   document.getElementById('input-validate-by').value = item.validateBy || '';
   document.getElementById('modal-title').textContent = 'Modifier';
