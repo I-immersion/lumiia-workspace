@@ -12,7 +12,7 @@
 <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjogIkxVTUlJQSBXb3Jrc3BhY2UiLCAic2hvcnRfbmFtZSI6ICJXb3Jrc3BhY2UiLCAic3RhcnRfdXJsIjogIi4iLCAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwgImJhY2tncm91bmRfY29sb3IiOiAiIzBkMGQwZiIsICJ0aGVtZV9jb2xvciI6ICIjMGQwZDBmIiwgImljb25zIjogW3sic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzl6ZG1jaUlIWnBaWGRDYjNnOUlqQWdNQ0F5T1RBZ01qa3dJajQ4Y21WamRDQjNhV1IwYUQwaU1qa3dJaUJvWldsbmFIUTlJakk1TUNJZ2NuZzlJall3SWlCbWFXeHNQU0lqTUdRd1pEQm1JaTgrUEhSbGVIUWdlRDBpTlRBbElpQjVQU0kxTlNVaUlHWnZiblF0YzJsNlpUMGlNVFl3SWlCMFpYaDBMV0Z1WTJodmNqMGliV2xrWkd4bElpQmtiMjFwYm1GdWRDMWlZWE5sYkdsdVpUMGliV2xrWkd4bElqN3duNXFnUEM5MFpYaDBQand2YzNablBnPT0iLCAic2l6ZXMiOiAiMTkyeDE5MiA1MTJ4NTEyIiwgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
 <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOTAgMjkwIj48cmVjdCB3aWR0aD0iMjkwIiBoZWlnaHQ9IjI5MCIgcng9IjYwIiBmaWxsPSIjMGQwZDBmIi8+PHRleHQgeD0iNTAlIiB5PSI1NSUiIGZvbnQtc2l6ZT0iMTYwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn5qgPC90ZXh0Pjwvc3ZnPg==">
 
-<!-- LUMIIA Workspace v3.6 -->
+<!-- LUMIIA Workspace v3.7 -->
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 
@@ -743,7 +743,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
   <button class="tab" data-tab="projets" onclick="switchTab('projets')">Projets</button>
   <button class="tab" data-tab="semaine" onclick="switchTab('semaine')">Semaine</button>
   <div style="flex:1"></div>
-  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v3.6</div>
+  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v3.7</div>
 </div>
 
 <main id="main-content">
@@ -1254,19 +1254,33 @@ function renderTodos() {
     return html;
   }
 
-  // Group by category
-  const cats = [...new Set(active.map(i => i.cat))];
-  cats.forEach(cat => {
-    const catItems = active.filter(i => i.cat === cat);
-    const c = CATS[cat] || CATS.lumiia;
+  // Grouper par projet ou catégorie globale
+  const groups = new Map();
+  active.forEach(item => {
+    const key = item.projectId ? ('proj_' + item.projectId) : ('cat_' + (item.cat || 'courant'));
+    if (!groups.has(key)) groups.set(key, []);
+    groups.get(key).push(item);
+  });
+
+  groups.forEach((groupItems, key) => {
+    let groupColor, groupLabel;
+    if (key.startsWith('proj_')) {
+      const proj = getProject(key.slice(5));
+      groupColor = proj?.color || '#888';
+      groupLabel = proj?.label || key.slice(5);
+    } else {
+      const cat = CATS[key.slice(4)];
+      groupColor = cat?.color || '#888';
+      groupLabel = cat?.label || key.slice(4);
+    }
     html += `<div class="todo-section">
       <div class="todo-cat-header">
-        <div class="todo-cat-dot" style="background:${c.color}"></div>
-        <div class="todo-cat-label" style="color:${c.color}">${c.label}</div>
-        <div class="todo-cat-count">${catItems.length}</div>
+        <div class="todo-cat-dot" style="background:${groupColor}"></div>
+        <div class="todo-cat-label" style="color:${groupColor}">${groupLabel}</div>
+        <div class="todo-cat-count">${groupItems.length}</div>
       </div>
       <div class="todo-list">`;
-    catItems.forEach((item, idx) => {
+    groupItems.forEach((item, idx) => {
       html += renderTodoItem(item, idx);
     });
     html += `</div></div>`;
@@ -1346,44 +1360,54 @@ function renderTodoItem(item, idx, showDelete = false) {
 }
 
 function renderFilterBar(allItems) {
-  // Catégories globales utilisées
+  const usedProjectIds = [...new Set(allItems.map(i => i.projectId).filter(Boolean))];
   const usedCats = [...new Set(allItems.map(i => i.cat).filter(Boolean))];
-  // Projets utilisés
-  const usedProjects = [...new Set(allItems.map(i => i.projectId).filter(Boolean))];
   const hasToValidate = currentTab === 'todo' && allItems.some(i => i.validateBy === currentUser && !i.done && !i.validated);
   const hasWaiting = currentTab === 'todo' && allItems.some(i => i.owner === currentUser && i.validateBy && i.validateBy !== currentUser && !i.done && !i.validated);
 
-  if (usedCats.length + usedProjects.length <= 1 && !hasToValidate && !hasWaiting) return '';
+  const total = usedProjectIds.length + usedCats.length;
+  if (total <= 1 && !hasToValidate && !hasWaiting) return '';
 
-  let html = `<div class="filter-bar">
+  let html = `<div class="filter-bar" style="flex-wrap:wrap;gap:6px">
     <button class="filter-chip${filterCat === 'all' ? ' active' : ''}" onclick="setFilter('all')">Tout</button>`;
 
-  usedProjects.forEach(pid => {
-    const p = getProject(pid);
-    if (!p) return;
-    html += `<button class="filter-chip${filterCat === '__proj_'+pid ? ' active' : ''}" onclick="setFilter('__proj_${pid}')">
-      <span style="width:6px;height:6px;border-radius:50%;background:${p.color};display:inline-block"></span>
-      ${p.label}
-    </button>`;
-  });
-
-  usedCats.forEach(cat => {
-    const c = CATS[cat] || { label: cat, color: '#888' };
-    html += `<button class="filter-chip${filterCat === cat ? ' active' : ''}" onclick="setFilter('${cat}')">
-      <span style="width:6px;height:6px;border-radius:50%;background:${c.color};display:inline-block"></span>
-      ${c.label}
-    </button>`;
-  });
-
-  if (hasToValidate) {
-    html += `<button class="filter-chip${filterCat === '__validate__' ? ' active' : ''}" onclick="setFilter('__validate__')" style="color:#38bdf8;border-color:rgba(56,189,248,0.4)">
-      ⏳ À valider
-    </button>`;
+  // ── Projets (séparateur visuel si les deux groupes existent)
+  if (usedProjectIds.length > 0) {
+    if (usedCats.length > 0) {
+      html += `<span style="width:1px;height:20px;background:var(--border);align-self:center;margin:0 2px"></span>`;
+    }
+    usedProjectIds.forEach(pid => {
+      const p = getProject(pid);
+      if (!p) return;
+      const key = '__proj_' + pid;
+      html += `<button class="filter-chip${filterCat === key ? ' active' : ''}" onclick="setFilter('${key}')"
+        style="${filterCat === key ? 'background:'+p.color+';color:#000;border-color:transparent' : 'border-color:'+p.color+'60'}">
+        <span style="width:6px;height:6px;border-radius:50%;background:${p.color};display:inline-block"></span>
+        ${p.label}
+      </button>`;
+    });
   }
-  if (hasWaiting) {
-    html += `<button class="filter-chip${filterCat === '__waiting__' ? ' active' : ''}" onclick="setFilter('__waiting__')" style="color:var(--cat-admin);border-color:rgba(251,191,36,0.4)">
-      ⌛ En attente
-    </button>`;
+
+  // ── Catégories globales
+  if (usedCats.length > 0) {
+    if (usedProjectIds.length > 0) {
+      html += `<span style="width:1px;height:20px;background:var(--border);align-self:center;margin:0 2px"></span>`;
+    }
+    usedCats.forEach(catId => {
+      const c = CATS[catId];
+      if (!c) return;
+      html += `<button class="filter-chip${filterCat === catId ? ' active' : ''}" onclick="setFilter('${catId}')">
+        <span style="width:6px;height:6px;border-radius:50%;background:${c.color};display:inline-block"></span>
+        ${c.label}
+      </button>`;
+    });
+  }
+
+  // ── Filtres spéciaux To-do
+  if (hasToValidate || hasWaiting) {
+    html += `<span style="width:1px;height:20px;background:var(--border);align-self:center;margin:0 2px"></span>`;
+    if (hasToValidate) html += `<button class="filter-chip${filterCat === '__validate__' ? ' active' : ''}" onclick="setFilter('__validate__')" style="color:#38bdf8;border-color:rgba(56,189,248,0.4)">⏳ À valider</button>`;
+    if (hasWaiting) html += `<button class="filter-chip${filterCat === '__waiting__' ? ' active' : ''}" onclick="setFilter('__waiting__')" style="color:var(--cat-admin);border-color:rgba(251,191,36,0.4)">⌛ En attente</button>`;
   }
 
   html += `</div>`;
@@ -2248,7 +2272,7 @@ function openDetail(id) {
   const item = items.find(i => i.id === id);
   if (!item) return;
 
-  const cat = CATS[item.cat] || CATS.lumiia;
+  const cat = getCatInfo(item); // Gère projectId ET cat global
   let html = '';
 
   if (item.type === 'todo') {
@@ -2262,7 +2286,7 @@ function openDetail(id) {
     const validatorName = item.validated ? (MEMBERS.find(m => m.id === item.validatedBy)?.name || item.validatedBy || '?') : '';
     const dueStr = item.due ? new Date(item.due + 'T00:00:00').toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' }) : '';
     const isOverdue = item.due && !item.done && new Date(item.due) < new Date();
-    const catInfo = CATS[item.cat] || Object.values(CATS)[0] || { label: '', color: '#888' };
+    const catInfo = getCatInfo(item);
     const isAssignedToMe = item.assignee === currentUser;
     const needsMyValidation = item.validateBy === currentUser && !item.done && !item.validated;
 
