@@ -12,7 +12,7 @@
 <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjogIkxVTUlJQSBXb3Jrc3BhY2UiLCAic2hvcnRfbmFtZSI6ICJXb3Jrc3BhY2UiLCAic3RhcnRfdXJsIjogIi4iLCAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwgImJhY2tncm91bmRfY29sb3IiOiAiIzBkMGQwZiIsICJ0aGVtZV9jb2xvciI6ICIjMGQwZDBmIiwgImljb25zIjogW3sic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzl6ZG1jaUlIWnBaWGRDYjNnOUlqQWdNQ0F5T1RBZ01qa3dJajQ4Y21WamRDQjNhV1IwYUQwaU1qa3dJaUJvWldsbmFIUTlJakk1TUNJZ2NuZzlJall3SWlCbWFXeHNQU0lqTUdRd1pEQm1JaTgrUEhSbGVIUWdlRDBpTlRBbElpQjVQU0kxTlNVaUlHWnZiblF0YzJsNlpUMGlNVFl3SWlCMFpYaDBMV0Z1WTJodmNqMGliV2xrWkd4bElpQmtiMjFwYm1GdWRDMWlZWE5sYkdsdVpUMGliV2xrWkd4bElqN3duNXFnUEM5MFpYaDBQand2YzNablBnPT0iLCAic2l6ZXMiOiAiMTkyeDE5MiA1MTJ4NTEyIiwgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
 <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOTAgMjkwIj48cmVjdCB3aWR0aD0iMjkwIiBoZWlnaHQ9IjI5MCIgcng9IjYwIiBmaWxsPSIjMGQwZDBmIi8+PHRleHQgeD0iNTAlIiB5PSI1NSUiIGZvbnQtc2l6ZT0iMTYwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn5qgPC90ZXh0Pjwvc3ZnPg==">
 
-<!-- LUMIIA Workspace v1.5 -->
+<!-- LUMIIA Workspace v1.6 -->
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 
@@ -653,8 +653,12 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
 .todo-list-view { display: flex; flex-direction: column; gap: 6px; }
 
 .todo-item.needs-validation {
-  border-color: rgba(255,107,53,0.35);
-  background: rgba(255,107,53,0.05);
+  border-color: rgba(255,107,53,0.5);
+  background: rgba(255,107,53,0.08);
+}
+.todo-item.waiting-assigned {
+  border-color: rgba(251,191,36,0.4);
+  background: rgba(251,191,36,0.06);
 }
 .overdue-banner {
   display: flex; align-items: center; gap: 8px;
@@ -699,6 +703,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
     <button class="btn-icon" id="sort-date-btn" onclick="toggleSortDate()" title="Trier par date">📅</button>
     <button class="btn-icon" id="sort-prio-btn" onclick="toggleSortPrio()" title="Trier par priorité">⚡</button>
     <button class="btn-icon" onclick="showUserPicker()" title="Changer d'espace">⇄</button>
+    <button class="btn-icon" onclick="openSettings()" title="Réglages">⚙️</button>
   </div>
 </header>
 
@@ -706,7 +711,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
   <button class="tab active" data-tab="notes" onclick="switchTab('notes')">Notes</button>
   <button class="tab" data-tab="todo" onclick="switchTab('todo')">To-do</button>
   <div style="flex:1"></div>
-  <div style="font-size:0.6rem;color:var(--text3);font-family:Syne,sans-serif;letter-spacing:0.06em;align-self:center;padding-right:8px">v1.5</div>
+  <div style="font-size:0.6rem;color:var(--text3);font-family:Syne,sans-serif;letter-spacing:0.06em;align-self:center;padding-right:8px">v1.6</div>
 </div>
 
 <main id="main-content">
@@ -727,8 +732,8 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
     </div>
 
     <div class="type-toggle" id="type-toggle">
+      <button class="type-btn" data-type="todo" onclick="setType('todo')">✅ To-do</button>
       <button class="type-btn active" data-type="note" onclick="setType('note')">📝 Note</button>
-      <button class="type-btn" data-type="todo" onclick="setType('todo')">➡️ Déplacer vers To-do</button>
     </div>
 
     <div class="field-label">Titre</div>
@@ -738,6 +743,8 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
     <div id="field-content">
       <div class="field-label">Contenu</div>
       <textarea class="field-input" id="input-content" placeholder="Contenu libre..."></textarea>
+      <div class="field-label">Lien (optionnel)</div>
+      <input type="url" class="field-input" id="input-link" placeholder="https://...">
       <!-- Toggle checklist -->
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
         <button id="toggle-cl-btn" onclick="toggleChecklist()" style="display:flex;align-items:center;gap:6px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:7px 12px;color:var(--text2);font-size:0.78rem;font-family:Syne,sans-serif;font-weight:600;cursor:pointer;transition:all 0.15s">
@@ -773,9 +780,11 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
         </div>
       </div>
       <div class="field-label">Échéance</div>
-      <input type="date" class="field-input" id="input-due">
+      <input type="date" class="field-input" id="input-due" style="cursor:pointer" onclick="this.showPicker && this.showPicker()">
       <div class="field-label">Contenu (optionnel)</div>
-      <textarea class="field-input" id="input-todo-content" placeholder="Description, contexte..." style="min-height:60px"></textarea>
+      <textarea class="field-input" id="input-todo-content" placeholder="Description, contexte..." style="min-height:80px;resize:vertical"></textarea>
+      <div class="field-label">Lien (optionnel)</div>
+      <input type="url" class="field-input" id="input-todo-link" placeholder="https://...">
       <!-- Checklist dans to-do -->
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
         <button id="toggle-cl-todo-btn" onclick="toggleChecklistTodo()" style="display:flex;align-items:center;gap:6px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:7px 12px;color:var(--text2);font-size:0.78rem;font-family:Syne,sans-serif;font-weight:600;cursor:pointer;transition:all 0.15s">
@@ -798,6 +807,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
       </select>
     </div>
 
+    <div style="height:20px"></div>
     <div class="field-label">Catégorie</div>
     <div class="cat-picker" id="cat-picker">
       <button class="cat-btn selected" data-cat="lumiia" onclick="selectCat('lumiia')" style="background:var(--cat-lumiia)">
@@ -856,7 +866,23 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
   </div>
 </div>
 
-<script type="module">
+<!-- SETTINGS MODAL -->
+<div class="modal-overlay" id="modal-settings">
+  <div class="modal">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+      <div class="modal-title" style="margin-bottom:0">⚙️ Réglages</div>
+      <button onclick="closeModal('modal-settings')" style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;width:32px;height:32px;color:var(--text2);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center">✕</button>
+    </div>
+    <div class="field-label">Catégories</div>
+    <div id="cat-list-editor" style="display:flex;flex-direction:column;gap:8px;margin-bottom:14px"></div>
+    <button class="add-cl-item" onclick="addCat()">+ Nouvelle catégorie</button>
+    <div style="height:20px"></div>
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="closeModal('modal-settings')">Fermer</button>
+      <button class="btn-primary" onclick="saveCats()">Enregistrer</button>
+    </div>
+  </div>
+</div>
 // ─────────────────────────────────────────────
 // FIREBASE
 // ─────────────────────────────────────────────
@@ -1025,11 +1051,12 @@ function renderCard(item, idx) {
   }
 
   const dateStr = item.created ? new Date(item.created).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' }) : '';
+  const linkBadge = item.link ? `<div style="font-size:0.72rem;color:var(--cat-signal)">🔗</div>` : '';
 
   return `<div class="card" data-cat="${item.cat}" onclick="openDetail('${item.id}')" style="animation-delay:${idx * 0.03}s">
     <div style="display:flex;align-items:center;justify-content:space-between">
       <div class="card-dot dot-${item.cat}"></div>
-      <div class="card-meta" style="font-size:0.72rem">${cat.label}</div>
+      <div style="display:flex;align-items:center;gap:6px">${linkBadge}<div class="card-meta" style="font-size:0.72rem">${cat.label}</div></div>
     </div>
     <div class="card-title">${item.title}</div>
     ${preview}
@@ -1040,13 +1067,13 @@ function renderCard(item, idx) {
 function renderTodos() {
   const isEm = currentUser === 'em';
   
-  // Em: see all tasks (owned or assigned to him) + those he assigned
-  // Au/Ma: see tasks assigned to them
+  // Em: voit tout
+  // Au/Ma: voient les tâches qui leur sont assignées OU qu'elles ont créées
   let todos;
   if (isEm) {
     todos = items.filter(i => i.type === 'todo');
   } else {
-    todos = items.filter(i => i.type === 'todo' && i.assignee === currentUser);
+    todos = items.filter(i => i.type === 'todo' && (i.assignee === currentUser || i.owner === currentUser));
   }
 
   const filtered = applySortOrder(filterCat === 'all' ? todos : todos.filter(i => i.cat === filterCat));
@@ -1108,11 +1135,12 @@ function renderTodos() {
 function renderTodoItem(item, idx) {
   const isOverdue = item.due && !item.done && new Date(item.due) < new Date();
   const dueStr = item.due ? new Date(item.due + 'T00:00:00').toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' }) : '';
-  const prioClass = { urgent: 'prio-urgent', normal: 'prio-normal', later: 'prio-later' }[item.prio] || 'prio-normal';
   const prioIcon = { urgent: '🔴', normal: '🟡', later: '⚪' }[item.prio] || '';
   const assigneeLabel = item.assignee ? item.assignee.toUpperCase() : '';
   const needsValidation = item.validateBy && !item.done && !item.validated;
   const canValidate = item.validateBy === currentUser;
+  // Tâche assignée à quelqu'un d'autre = en attente
+  const isWaiting = item.assignee && item.assignee !== currentUser && item.owner === currentUser && !item.done;
 
   let validationBadge = '';
   if (needsValidation) {
@@ -1124,14 +1152,23 @@ function renderTodoItem(item, idx) {
     validationBadge = `<div style="font-size:0.7rem;color:var(--cat-perso);font-family:Syne,sans-serif;font-weight:600">✓ validé</div>`;
   }
 
-  return `<div class="todo-item${item.done ? ' done' : ''}${needsValidation && canValidate ? ' needs-validation' : ''}" style="animation-delay:${idx*0.03}s">
-    <div class="todo-check" onclick="toggleTodo('${item.id}')" style="cursor:pointer;flex-shrink:0;border-color:${needsValidation ? 'var(--cat-lumiia)' : ''}">${item.done ? '✓' : ''}</div>
+  let extraClass = '';
+  if (needsValidation && canValidate) extraClass = ' needs-validation';
+  else if (isWaiting) extraClass = ' waiting-assigned';
+
+  let waitingLabel = '';
+  if (isWaiting) {
+    waitingLabel = `<div style="font-size:0.7rem;color:var(--cat-admin);font-family:Syne,sans-serif;font-weight:600;white-space:nowrap">⏳ ${assigneeLabel}</div>`;
+  }
+
+  return `<div class="todo-item${item.done ? ' done' : ''}${extraClass}" style="animation-delay:${idx*0.03}s">
+    <div class="todo-check" onclick="toggleTodo('${item.id}')" style="cursor:pointer;flex-shrink:0">${item.done ? '✓' : ''}</div>
     <div style="flex:1;min-width:0">
       <div class="todo-text" onclick="openDetail('${item.id}')" style="cursor:pointer">${item.title}</div>
     </div>
     <div class="todo-right">
       ${prioIcon ? `<div style="font-size:0.75rem">${prioIcon}</div>` : ''}
-      ${assigneeLabel ? `<div class="assignee-tag">${assigneeLabel}</div>` : ''}
+      ${isWaiting ? waitingLabel : (assigneeLabel ? `<div class="assignee-tag">${assigneeLabel}</div>` : '')}
       ${dueStr ? `<div class="due-tag${isOverdue ? ' overdue' : ''}">${dueStr}</div>` : ''}
       ${validationBadge}
     </div>
@@ -1158,6 +1195,74 @@ function renderFilterBar(allItems) {
 function setFilter(cat) {
   filterCat = cat;
   render();
+}
+
+// ─────────────────────────────────────────────
+// RÉGLAGES CATÉGORIES
+// ─────────────────────────────────────────────
+const COLORS_PALETTE = ['#ff6b35','#00e5ff','#c084fc','#4ade80','#fbbf24','#f43f5e','#38bdf8','#fb923c','#a3e635','#e879f9'];
+let editingCats = null;
+
+function openSettings() {
+  editingCats = Object.entries(CATS).map(([id, c]) => ({ id, label: c.label, color: c.color }));
+  renderCatEditor();
+  openModal('modal-settings');
+}
+
+function renderCatEditor() {
+  const el = document.getElementById('cat-list-editor');
+  if (!el || !editingCats) return;
+  el.innerHTML = editingCats.map((cat, i) => `
+    <div style="display:flex;align-items:center;gap:8px">
+      <div style="width:20px;height:20px;border-radius:50%;background:${cat.color};flex-shrink:0;cursor:pointer" onclick="cycleCatColor(${i})" title="Changer la couleur"></div>
+      <input type="text" value="${cat.label}" oninput="editingCats[${i}].label=this.value"
+        style="flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:8px 11px;color:var(--text);font-family:DM Sans,sans-serif;font-size:0.85rem;outline:none">
+      <button onclick="removeCat(${i})" style="background:none;border:none;color:var(--text3);font-size:1rem;cursor:pointer;padding:4px;transition:color 0.15s" onmouseover="this.style.color='var(--cat-urgent)'" onmouseout="this.style.color='var(--text3)'">✕</button>
+    </div>
+  `).join('');
+}
+
+function cycleCatColor(idx) {
+  const current = COLORS_PALETTE.indexOf(editingCats[idx].color);
+  editingCats[idx].color = COLORS_PALETTE[(current + 1) % COLORS_PALETTE.length];
+  renderCatEditor();
+}
+
+function removeCat(idx) {
+  editingCats.splice(idx, 1);
+  renderCatEditor();
+}
+
+function addCat() {
+  editingCats.push({ id: 'cat_' + Date.now(), label: 'Nouvelle catégorie', color: COLORS_PALETTE[editingCats.length % COLORS_PALETTE.length] });
+  renderCatEditor();
+}
+
+function saveCats() {
+  if (!editingCats) return;
+  // Mettre à jour CATS
+  Object.keys(CATS).forEach(k => delete CATS[k]);
+  editingCats.forEach(c => { CATS[c.id] = { label: c.label, color: c.color }; });
+  // Mettre à jour les CSS variables
+  Object.entries(CATS).forEach(([id, c]) => {
+    document.documentElement.style.setProperty(`--cat-${id}`, c.color);
+  });
+  // Reconstruire le cat-picker dans la modale create
+  rebuildCatPicker();
+  closeModal('modal-settings');
+  render();
+}
+
+function rebuildCatPicker() {
+  const picker = document.getElementById('cat-picker');
+  if (!picker) return;
+  picker.innerHTML = Object.entries(CATS).map(([id, c], i) => `
+    <button class="cat-btn${i === 0 ? ' selected' : ''}" data-cat="${id}" onclick="selectCat('${id}')"
+      style="${i === 0 ? `background:${c.color};color:#000;border-color:transparent` : ''}">
+      <span class="dot" style="width:8px;height:8px;border-radius:50%;background:${c.color}"></span>
+      ${c.label}
+    </button>
+  `).join('');
 }
 
 function cycleSortOrder() {} // deprecated
@@ -1195,6 +1300,8 @@ function openCreateModal() {
   clItemsTodo = [];
   document.getElementById('input-title').value = '';
   document.getElementById('input-content').value = '';
+  document.getElementById('input-link').value = '';
+  document.getElementById('input-todo-link').value = '';
   document.getElementById('input-todo-content').value = '';
   document.getElementById('input-prio').value = 'normal';
   document.getElementById('input-assignee').value = currentUser;
@@ -1331,15 +1438,16 @@ function saveItem() {
 
   if (currentType === 'note') {
     item.content = document.getElementById('input-content').value.trim();
+    item.link = document.getElementById('input-link').value.trim();
     const clVisible = document.getElementById('field-checklist').style.display !== 'none';
     item.checklist = clVisible ? clItems.filter(i => i.text.trim()) : [];
-    item.type = item.checklist.length > 0 ? 'note' : 'note'; // toujours 'note'
   }
   if (currentType === 'todo') {
     item.prio = document.getElementById('input-prio').value;
     item.assignee = document.getElementById('input-assignee').value;
     item.due = document.getElementById('input-due').value || null;
     item.content = document.getElementById('input-todo-content').value.trim();
+    item.link = document.getElementById('input-todo-link').value.trim();
     item.done = editingId ? (items.find(i => i.id === editingId)?.done || false) : false;
     item.shared = item.assignee !== currentUser;
     item.validateBy = document.getElementById('input-validate-by').value || null;
@@ -1411,6 +1519,12 @@ function openDetail(id) {
       html += `</div>`;
     }
 
+    if (item.link) {
+      html += `<a href="${item.link}" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:8px;background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:10px 13px;color:var(--cat-signal);font-size:0.82rem;text-decoration:none;margin-top:12px;word-break:break-all">
+        🔗 <span>${item.link}</span>
+      </a>`;
+    }
+
   } else {
     // ── MODALE NOTE ──
     html += `<div class="note-detail-header">
@@ -1460,6 +1574,12 @@ function openDetail(id) {
         <img src="data:image/png;base64,${item.qrCode}" style="width:160px;height:160px;border-radius:12px;background:#fff;padding:8px">
         <div style="font-size:0.75rem;color:var(--text3);font-family:Syne,sans-serif;letter-spacing:0.06em">Scanner pour ouvrir l'app</div>
       </div>`;
+    }
+
+    if (item.link) {
+      html += `<a href="${item.link}" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:8px;background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:10px 13px;color:var(--cat-signal);font-size:0.82rem;text-decoration:none;margin-top:12px;word-break:break-all">
+        🔗 <span>${item.link}</span>
+      </a>`;
     }
   }
 
@@ -1513,7 +1633,9 @@ function editItem(id) {
   clItemsTodo = (item.type === 'todo' && item.checklist) ? [...item.checklist] : [];
   document.getElementById('input-title').value = item.title;
   document.getElementById('input-content').value = item.content || '';
+  document.getElementById('input-link').value = item.link || '';
   document.getElementById('input-todo-content').value = (item.type === 'todo' ? item.content : '') || '';
+  document.getElementById('input-todo-link').value = (item.type === 'todo' ? item.link : '') || '';
   if (item.prio) document.getElementById('input-prio').value = item.prio;
   if (item.assignee) document.getElementById('input-assignee').value = item.assignee;
   if (item.due) document.getElementById('input-due').value = item.due;
@@ -1591,6 +1713,11 @@ window.addClItemTodo = addClItemTodo;
 window.removeClItemTodo = removeClItemTodo;
 window.updateClItemTodo = updateClItemTodo;
 window.validateTask = validateTask;
+window.openSettings = openSettings;
+window.addCat = addCat;
+window.removeCat = removeCat;
+window.cycleCatColor = cycleCatColor;
+window.saveCats = saveCats;
 window.setUser = setUser;
 window.showUserPicker = showUserPicker;
 window.switchTab = switchTab;
