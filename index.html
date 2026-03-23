@@ -12,7 +12,7 @@
 <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjogIkxVTUlJQSBXb3Jrc3BhY2UiLCAic2hvcnRfbmFtZSI6ICJXb3Jrc3BhY2UiLCAic3RhcnRfdXJsIjogIi4iLCAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwgImJhY2tncm91bmRfY29sb3IiOiAiIzBkMGQwZiIsICJ0aGVtZV9jb2xvciI6ICIjMGQwZDBmIiwgImljb25zIjogW3sic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzl6ZG1jaUlIWnBaWGRDYjNnOUlqQWdNQ0F5T1RBZ01qa3dJajQ4Y21WamRDQjNhV1IwYUQwaU1qa3dJaUJvWldsbmFIUTlJakk1TUNJZ2NuZzlJall3SWlCbWFXeHNQU0lqTUdRd1pEQm1JaTgrUEhSbGVIUWdlRDBpTlRBbElpQjVQU0kxTlNVaUlHWnZiblF0YzJsNlpUMGlNVFl3SWlCMFpYaDBMV0Z1WTJodmNqMGliV2xrWkd4bElpQmtiMjFwYm1GdWRDMWlZWE5sYkdsdVpUMGliV2xrWkd4bElqN3duNXFnUEM5MFpYaDBQand2YzNablBnPT0iLCAic2l6ZXMiOiAiMTkyeDE5MiA1MTJ4NTEyIiwgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
 <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOTAgMjkwIj48cmVjdCB3aWR0aD0iMjkwIiBoZWlnaHQ9IjI5MCIgcng9IjYwIiBmaWxsPSIjMGQwZDBmIi8+PHRleHQgeD0iNTAlIiB5PSI1NSUiIGZvbnQtc2l6ZT0iMTYwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn5qgPC90ZXh0Pjwvc3ZnPg==">
 
-<!-- LUMIIA Workspace v3.5 -->
+<!-- LUMIIA Workspace v3.6 -->
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 
@@ -728,7 +728,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
 <header>
   <div class="header-left">
     <div class="logo">LUMIIA <span>●</span> Workspace</div>
-    <div class="user-badge" id="user-badge" onclick="showUserPicker()" title="Changer d'espace">EM</div>
+    <button class="user-badge" id="user-badge" onclick="showUserPicker()" title="Changer d'espace">EM</button>
   </div>
   <div class="header-actions">
     <button class="btn-icon" id="sort-date-btn" onclick="toggleSortDate()" title="↓ Plus récent">📅</button>
@@ -743,7 +743,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
   <button class="tab" data-tab="projets" onclick="switchTab('projets')">Projets</button>
   <button class="tab" data-tab="semaine" onclick="switchTab('semaine')">Semaine</button>
   <div style="flex:1"></div>
-  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v3.5</div>
+  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v3.6</div>
 </div>
 
 <main id="main-content">
@@ -1346,14 +1346,26 @@ function renderTodoItem(item, idx, showDelete = false) {
 }
 
 function renderFilterBar(allItems) {
+  // Catégories globales utilisées
   const usedCats = [...new Set(allItems.map(i => i.cat).filter(Boolean))];
+  // Projets utilisés
+  const usedProjects = [...new Set(allItems.map(i => i.projectId).filter(Boolean))];
   const hasToValidate = currentTab === 'todo' && allItems.some(i => i.validateBy === currentUser && !i.done && !i.validated);
   const hasWaiting = currentTab === 'todo' && allItems.some(i => i.owner === currentUser && i.validateBy && i.validateBy !== currentUser && !i.done && !i.validated);
 
-  if (usedCats.length <= 1 && !hasToValidate && !hasWaiting) return '';
+  if (usedCats.length + usedProjects.length <= 1 && !hasToValidate && !hasWaiting) return '';
 
   let html = `<div class="filter-bar">
     <button class="filter-chip${filterCat === 'all' ? ' active' : ''}" onclick="setFilter('all')">Tout</button>`;
+
+  usedProjects.forEach(pid => {
+    const p = getProject(pid);
+    if (!p) return;
+    html += `<button class="filter-chip${filterCat === '__proj_'+pid ? ' active' : ''}" onclick="setFilter('__proj_${pid}')">
+      <span style="width:6px;height:6px;border-radius:50%;background:${p.color};display:inline-block"></span>
+      ${p.label}
+    </button>`;
+  });
 
   usedCats.forEach(cat => {
     const c = CATS[cat] || { label: cat, color: '#888' };
@@ -1364,7 +1376,7 @@ function renderFilterBar(allItems) {
   });
 
   if (hasToValidate) {
-    html += `<button class="filter-chip${filterCat === '__validate__' ? ' active' : ''}" onclick="setFilter('__validate__')" style="color:var(--cat-lumiia);border-color:rgba(255,107,53,0.4)">
+    html += `<button class="filter-chip${filterCat === '__validate__' ? ' active' : ''}" onclick="setFilter('__validate__')" style="color:#38bdf8;border-color:rgba(56,189,248,0.4)">
       ⏳ À valider
     </button>`;
   }
@@ -1387,6 +1399,7 @@ function applyFilterCat(arr) {
   if (filterCat === 'all') return arr;
   if (filterCat === '__validate__') return arr.filter(i => i.validateBy === currentUser && !i.done && !i.validated);
   if (filterCat === '__waiting__') return arr.filter(i => i.owner === currentUser && i.validateBy && i.validateBy !== currentUser && !i.done && !i.validated);
+  if (filterCat.startsWith('__proj_')) return arr.filter(i => i.projectId === filterCat.slice(7));
   return arr.filter(i => i.cat === filterCat);
 }
 
@@ -2607,6 +2620,9 @@ window.openModal = openModal;
 window.addMember = addMember;
 window.removeMember = removeMember;
 window.copyMemberLink = copyMemberLink;
+window.render = render;
+window.renderSemaine = renderSemaine;
+window.toggleAsync = toggleTodo;
 </script>
 </body>
 </html>
