@@ -12,7 +12,7 @@
 <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjogIkxVTUlJQSBXb3Jrc3BhY2UiLCAic2hvcnRfbmFtZSI6ICJXb3Jrc3BhY2UiLCAic3RhcnRfdXJsIjogIi4iLCAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwgImJhY2tncm91bmRfY29sb3IiOiAiIzBkMGQwZiIsICJ0aGVtZV9jb2xvciI6ICIjMGQwZDBmIiwgImljb25zIjogW3sic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzl6ZG1jaUlIWnBaWGRDYjNnOUlqQWdNQ0F5T1RBZ01qa3dJajQ4Y21WamRDQjNhV1IwYUQwaU1qa3dJaUJvWldsbmFIUTlJakk1TUNJZ2NuZzlJall3SWlCbWFXeHNQU0lqTUdRd1pEQm1JaTgrUEhSbGVIUWdlRDBpTlRBbElpQjVQU0kxTlNVaUlHWnZiblF0YzJsNlpUMGlNVFl3SWlCMFpYaDBMV0Z1WTJodmNqMGliV2xrWkd4bElpQmtiMjFwYm1GdWRDMWlZWE5sYkdsdVpUMGliV2xrWkd4bElqN3duNXFnUEM5MFpYaDBQand2YzNablBnPT0iLCAic2l6ZXMiOiAiMTkyeDE5MiA1MTJ4NTEyIiwgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
 <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOTAgMjkwIj48cmVjdCB3aWR0aD0iMjkwIiBoZWlnaHQ9IjI5MCIgcng9IjYwIiBmaWxsPSIjMGQwZDBmIi8+PHRleHQgeD0iNTAlIiB5PSI1NSUiIGZvbnQtc2l6ZT0iMTYwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn5qgPC90ZXh0Pjwvc3ZnPg==">
 
-<!-- LUMIIA Workspace v4.2 -->
+<!-- LUMIIA Workspace v4.4 -->
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 
@@ -760,7 +760,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
   <button class="tab" data-tab="projets" onclick="switchTab('projets')">Projets</button>
   <button class="tab" data-tab="semaine" onclick="switchTab('semaine')">Semaine</button>
   <div style="flex:1"></div>
-  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v4.2</div>
+  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v4.4</div>
 </div>
 
 <main id="main-content">
@@ -1517,10 +1517,6 @@ function renderDayItem(item, isToday) {
     + '</div>';
 }
 
-function setSemaineFiltre(val) {
-  semaineFiltreProj = val;
-  render();
-}
 
 function renderSemaine() {
   const today = new Date();
@@ -1954,7 +1950,7 @@ function removeCat(idx) {
 }
 
 function addCat(isProject = false) {
-  editingCats.push({ id: 'cat_' + Date.now(), label: isProject ? 'Nouveau projet' : 'Nouvelle catégorie', color: COLORS_PALETTE[editingCats.length % COLORS_PALETTE.length], isProject });
+  editingCats.push({ id: 'cat_' + Date.now(), label: isProject ? 'Nouveau projet' : 'Nouvelle cat\u00e9gorie', color: COLORS_PALETTE[editingCats.length % COLORS_PALETTE.length], isProject });
   renderCatEditor();
 }
 
@@ -2205,12 +2201,12 @@ function copyMemberLink(memberId) {
   const doFeedback = () => {
     const btn = document.getElementById(`copy-btn-${memberId}`);
     if (btn) {
-      btn.textContent = '✓ Copié !';
+      btn.textContent = '\u2713 Copi\u00e9 !';
       btn.style.color = 'var(--cat-perso)';
       btn.style.borderColor = 'rgba(74,222,128,0.4)';
       btn.style.background = 'rgba(74,222,128,0.08)';
       setTimeout(() => {
-        btn.textContent = '🔗 Copier';
+        btn.textContent = '\U0001f517 Copier';
         btn.style.color = '';
         btn.style.borderColor = '';
         btn.style.background = '';
@@ -2235,7 +2231,7 @@ function fallbackCopy(url, callback) {
 function toggleSortDate() {
   sortOrder = sortOrder === 'recent' ? 'oldest' : 'recent';
   const btn = document.getElementById('sort-date-btn');
-  if (btn) { btn.style.color = 'var(--cat-lumiia)'; btn.title = sortOrder === 'recent' ? '↓ Plus récent' : '↑ Plus ancien'; setTimeout(() => btn.style.color = '', 600); }
+  if (btn) { btn.style.color = 'var(--cat-lumiia)'; btn.title = sortOrder === 'recent' ? 'Plus r\u00e9cent' : 'Plus ancien'; setTimeout(() => btn.style.color = '', 600); }
   render();
 }
 
@@ -2251,7 +2247,7 @@ function toggleSortPrio() {
   const btn = document.getElementById('sort-prio-btn');
   if (btn) {
     btn.style.color = sortOrder.startsWith('priority') ? 'var(--cat-lumiia)' : '';
-    btn.title = sortOrder === 'priority' ? '⚡ Urgent d\'abord' : sortOrder === 'priority-rev' ? '⚡ Plus tard d\'abord' : 'Trier par priorité';
+    btn.title = sortOrder === 'priority' ? 'Urgent d\'abord' : sortOrder === 'priority-rev' ? 'Plus tard d\'abord' : 'Trier par priorit\u00e9';
   }
   render();
 }
@@ -2297,9 +2293,9 @@ function openCreateModal() {
   document.getElementById('field-checklist').style.display = 'none';
   document.getElementById('field-checklist-todo').style.display = 'none';
   const btn = document.getElementById('toggle-cl-btn');
-  if (btn) { btn.textContent = '☑️ Ajouter une checklist'; btn.style.color = 'var(--text2)'; }
+  if (btn) { btn.textContent = '+ Checklist'; btn.style.color = 'var(--text2)'; }
   const btnTodo = document.getElementById('toggle-cl-todo-btn');
-  if (btnTodo) { btnTodo.textContent = '☑️ Ajouter une checklist'; btnTodo.style.color = 'var(--text2)'; }
+  if (btnTodo) { btnTodo.textContent = '+ Checklist'; btnTodo.style.color = 'var(--text2)'; }
   rebuildCatPicker();
   updateMemberSelects();
   setType(currentTab === 'todo' ? 'todo' : 'note');
@@ -2322,16 +2318,16 @@ function setType(t) {
   const btns = document.querySelectorAll('.type-btn');
   btns.forEach(b => {
     if (t === 'note') {
-      if (b.dataset.type === 'note') b.textContent = '📝 Note';
-      if (b.dataset.type === 'todo') b.textContent = '➡️ Envoyer vers Tâches';
+      if (b.dataset.type === 'note') b.textContent = 'Note';
+      if (b.dataset.type === 'todo') b.textContent = 'Envoyer vers T\u00e2ches';
     } else {
-      if (b.dataset.type === 'todo') b.textContent = '✅ Tâches';
-      if (b.dataset.type === 'note') b.textContent = '📋 Envoyer vers Note';
+      if (b.dataset.type === 'todo') b.textContent = 'T\u00e2ches';
+      if (b.dataset.type === 'note') b.textContent = 'Envoyer vers Note';
     }
   });
   // Titre de la modale
   const title = document.getElementById('modal-title');
-  if (title) title.textContent = t === 'note' ? (editingId ? 'Modifier' : 'Nouvelle note') : (editingId ? 'Modifier' : 'Nouvelle tâche');
+  if (title) title.textContent = t === 'note' ? (editingId ? 'Modifier' : 'Nouvelle note') : (editingId ? 'Modifier' : 'Nouvelle t\u00e2che');
 }
 
 function toggleChecklist() {
@@ -2339,7 +2335,7 @@ function toggleChecklist() {
   const btn = document.getElementById('toggle-cl-btn');
   const visible = el.style.display !== 'none';
   el.style.display = visible ? 'none' : '';
-  btn.textContent = visible ? '☑️ Ajouter une checklist' : '✕ Retirer la checklist';
+  btn.textContent = visible ? '+ Checklist' : '- Checklist';
   btn.style.color = visible ? 'var(--text2)' : 'var(--cat-urgent)';
   if (!visible && clItems.length === 0) addClItem();
 }
@@ -2350,7 +2346,7 @@ function toggleChecklistTodo() {
   if (!el || !btn) return;
   const visible = el.style.display !== 'none';
   el.style.display = visible ? 'none' : '';
-  btn.textContent = visible ? '☑️ Ajouter une checklist' : '✕ Retirer la checklist';
+  btn.textContent = visible ? '+ Checklist' : '- Checklist';
   btn.style.color = visible ? 'var(--text2)' : 'var(--cat-urgent)';
   if (!visible && clItemsTodo.length === 0) addClItemTodo();
 }
@@ -2689,7 +2685,7 @@ async function toggleTodo(id) {
 async function validateTaskAndUpdate(id) {
   const btn = document.getElementById(`btn-validate-${id}`);
   if (btn) {
-    btn.textContent = '✓ Tâche validée';
+    btn.textContent = 'Valid\u00e9e !';
     btn.style.background = 'rgba(74,222,128,0.15)';
     btn.style.borderColor = 'rgba(74,222,128,0.4)';
     btn.style.color = 'var(--cat-perso)';
@@ -2767,11 +2763,11 @@ function editItem(id) {
   const hasCl = currentType === 'note' && clItems.length > 0;
   document.getElementById('field-checklist').style.display = hasCl ? '' : 'none';
   const btn = document.getElementById('toggle-cl-btn');
-  if (btn) { btn.textContent = hasCl ? '✕ Retirer la checklist' : '☑️ Ajouter une checklist'; btn.style.color = hasCl ? 'var(--cat-urgent)' : 'var(--text2)'; }
+  if (btn) { btn.textContent = hasCl ? '- Checklist' : '+ Checklist'; btn.style.color = hasCl ? 'var(--cat-urgent)' : 'var(--text2)'; }
   const hasClTodo = currentType === 'todo' && clItemsTodo.length > 0;
   document.getElementById('field-checklist-todo').style.display = hasClTodo ? '' : 'none';
   const btnTodo = document.getElementById('toggle-cl-todo-btn');
-  if (btnTodo) { btnTodo.textContent = hasClTodo ? '✕ Retirer la checklist' : '☑️ Ajouter une checklist'; btnTodo.style.color = hasClTodo ? 'var(--cat-urgent)' : 'var(--text2)'; }
+  if (btnTodo) { btnTodo.textContent = hasClTodo ? '- Checklist' : '+ Checklist'; btnTodo.style.color = hasClTodo ? 'var(--cat-urgent)' : 'var(--text2)'; }
   setType(currentType);
   // Rebuilder le picker et restaurer la sélection
   rebuildCatPicker();
@@ -2805,17 +2801,17 @@ document.querySelectorAll('.modal-overlay').forEach(overlay => {
 function seedDemo() {
   if (items.length > 0) return;
   items = [
-    { id: genId(), type: 'note', cat: 'raffines', title: 'Soirée des Lauréats REDA', content: 'Séquence 1 : vidéo pré-enregistrée au studio\nSéquence 2 : scène de bar live\nSéquence 3 : vidéo de transition\nSéquence 4 : adresse directe au public', owner: 'em', created: Date.now() - 86400000*2 },
-    { id: genId(), type: 'checklist', cat: 'lumiia', title: 'Ouverture étage LUMIIA', checklist: [
-      { id: genId(), text: 'Plans architecte finalisés', done: true },
-      { id: genId(), text: 'Devis électricité', done: true },
-      { id: genId(), text: 'Dépôt demande ERP', done: false },
+    { id: genId(), type: 'note', cat: 'raffines', title: 'Soiree des Laureats REDA', content: 'Séquence 1 : vidéo pré-enregistrée au studio\nSéquence 2 : scène de bar live\nSéquence 3 : vidéo de transition\nSéquence 4 : adresse directe au public', owner: 'em', created: Date.now() - 86400000*2 },
+    { id: genId(), type: 'checklist', cat: 'lumiia', title: 'Ouverture \u00e9tage LUMIIA', checklist: [
+      { id: genId(), text: 'Plans architecte finalises', done: true },
+      { id: genId(), text: 'Devis electricite', done: true },
+      { id: genId(), text: 'D\u00e9p\u00f4t demande ERP', done: false },
       { id: genId(), text: 'Commande mobilier', done: false },
     ], owner: 'em', created: Date.now() - 86400000 },
     { id: genId(), type: 'todo', cat: 'signal', title: 'Finaliser GDD SIGNAL V2', prio: 'urgent', assignee: 'em', due: new Date(Date.now() + 86400000*3).toISOString().split('T')[0], done: false, owner: 'em', shared: false, created: Date.now() },
-    { id: genId(), type: 'todo', cat: 'lumiia', title: 'Préparer visuels Aoustock avril', prio: 'normal', assignee: 'au', due: new Date(Date.now() + 86400000*7).toISOString().split('T')[0], done: false, owner: 'em', shared: true, created: Date.now() },
+    { id: genId(), type: 'todo', cat: 'lumiia', title: 'Preparer visuels Aoustock avril', prio: 'normal', assignee: 'au', due: new Date(Date.now() + 86400000*7).toISOString().split('T')[0], done: false, owner: 'em', shared: true, created: Date.now() },
     { id: genId(), type: 'todo', cat: 'admin', title: 'Envoyer contrats Hiboutik', prio: 'later', assignee: 'em', due: null, done: false, owner: 'em', shared: false, created: Date.now() },
-    { id: genId(), type: 'note', cat: 'perso', title: 'Idée set DJ samedi', content: 'Ouvrir sur techno atmosphérique, monter progressive jusqu\'à 1h, finir sur quelque chose de plus émotionnel', owner: 'em', created: Date.now() - 3600000 },
+    { id: genId(), type: 'note', cat: 'perso', title: 'Id\u00e9e set DJ samedi', content: 'Ouvrir sur techno atmospherique, monter progressive jusqu\u0027a 1h, finir sur quelque chose de plus emotionnel', owner: 'em', created: Date.now() - 3600000 },
   ];
   save();
 }
