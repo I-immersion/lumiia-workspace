@@ -12,7 +12,7 @@
 <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjogIkxVTUlJQSBXb3Jrc3BhY2UiLCAic2hvcnRfbmFtZSI6ICJXb3Jrc3BhY2UiLCAic3RhcnRfdXJsIjogIi4iLCAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwgImJhY2tncm91bmRfY29sb3IiOiAiIzBkMGQwZiIsICJ0aGVtZV9jb2xvciI6ICIjMGQwZDBmIiwgImljb25zIjogW3sic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzl6ZG1jaUlIWnBaWGRDYjNnOUlqQWdNQ0F5T1RBZ01qa3dJajQ4Y21WamRDQjNhV1IwYUQwaU1qa3dJaUJvWldsbmFIUTlJakk1TUNJZ2NuZzlJall3SWlCbWFXeHNQU0lqTUdRd1pEQm1JaTgrUEhSbGVIUWdlRDBpTlRBbElpQjVQU0kxTlNVaUlHWnZiblF0YzJsNlpUMGlNVFl3SWlCMFpYaDBMV0Z1WTJodmNqMGliV2xrWkd4bElpQmtiMjFwYm1GdWRDMWlZWE5sYkdsdVpUMGliV2xrWkd4bElqN3duNXFnUEM5MFpYaDBQand2YzNablBnPT0iLCAic2l6ZXMiOiAiMTkyeDE5MiA1MTJ4NTEyIiwgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
 <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOTAgMjkwIj48cmVjdCB3aWR0aD0iMjkwIiBoZWlnaHQ9IjI5MCIgcng9IjYwIiBmaWxsPSIjMGQwZDBmIi8+PHRleHQgeD0iNTAlIiB5PSI1NSUiIGZvbnQtc2l6ZT0iMTYwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn5qgPC90ZXh0Pjwvc3ZnPg==">
 
-<!-- LUMIIA Workspace v3.0 -->
+<!-- LUMIIA Workspace v3.1 -->
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 
@@ -124,7 +124,7 @@ header {
   transition: all 0.2s;
 }
 .tab.active {
-  background: var(--accent, var(--cat-lumiia));
+  background: #38bdf8;
   border-color: transparent;
   color: #000;
 }
@@ -739,7 +739,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
   <button class="tab" data-tab="todo" onclick="switchTab('todo')">To-do</button>
   <button class="tab" data-tab="projets" onclick="switchTab('projets')">Projets</button>
   <div style="flex:1"></div>
-  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v3.0</div>
+  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v3.1</div>
 </div>
 
 <main id="main-content">
@@ -844,16 +844,20 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
       </div>
     </div>
 
-    <!-- Sélecteur Projets + Catégories séparés -->
+    <!-- Sélecteur Projets avec sous-catégories + Catégories globales -->
     <div id="cat-picker-projects" style="margin-bottom:8px">
       <div class="field-label">Projet</div>
-      <div class="cat-picker" id="cat-picker-proj-btns"></div>
+      <div id="cat-picker-proj-btns" class="cat-picker"></div>
+      <!-- Sous-catégories du projet sélectionné -->
+      <div id="subcat-picker-section" style="display:none;margin-top:8px">
+        <div class="field-label" style="font-size:0.65rem">Sous-catégorie</div>
+        <div id="subcat-picker-btns" class="cat-picker"></div>
+      </div>
     </div>
     <div>
       <div class="field-label" style="margin-top:10px">Catégorie</div>
       <div class="cat-picker" id="cat-picker-cats-btns"></div>
     </div>
-    <!-- Gardé pour compatibilité rebuildCatPicker -->
     <div id="cat-picker" style="display:none"></div>
 
     <div class="modal-actions">
@@ -884,6 +888,32 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
   </div>
 </div>
 
+<!-- PROJECT EDIT MODAL -->
+<div class="modal-overlay" id="modal-project">
+  <div class="modal">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+      <div class="modal-title" style="margin-bottom:0" id="project-modal-title">Nouveau projet</div>
+      <button onclick="closeModal('modal-project')" style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;width:32px;height:32px;color:var(--text2);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center">✕</button>
+    </div>
+
+    <div class="field-label">Nom du projet</div>
+    <input type="text" class="field-input" id="proj-input-name" placeholder="Nom du projet...">
+
+    <div class="field-label" style="margin-top:12px">Couleur</div>
+    <div id="proj-color-picker" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px"></div>
+
+    <div class="field-label">Sous-catégories</div>
+    <div id="proj-subcats-list" style="display:flex;flex-direction:column;gap:8px;margin-bottom:10px"></div>
+    <button class="add-cl-item" id="proj-add-subcat-btn">+ Ajouter une sous-catégorie</button>
+
+    <div class="modal-actions" style="margin-top:20px">
+      <button class="btn-secondary" id="proj-delete-btn" style="color:var(--cat-urgent);border-color:rgba(244,63,94,0.3);display:none" onclick="deleteCurrentProject()">Supprimer</button>
+      <button class="btn-secondary" onclick="closeModal('modal-project')">Annuler</button>
+      <button class="btn-primary" onclick="saveProject()">Enregistrer</button>
+    </div>
+  </div>
+</div>
+
 <!-- SETTINGS MODAL -->
 <div class="modal-overlay" id="modal-settings">
   <div class="modal">
@@ -892,11 +922,8 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
       <button onclick="closeModal('modal-settings')" style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;width:32px;height:32px;color:var(--text2);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center">✕</button>
     </div>
 
-    <div class="field-label">Projets</div>
-    <div id="cat-list-editor-projects" style="display:flex;flex-direction:column;gap:8px;margin-bottom:10px"></div>
-    <button class="add-cl-item" onclick="addCat(true)" style="margin-bottom:16px">+ Nouveau projet</button>
-
-    <div class="field-label">Catégories</div>
+    <div class="field-label">Catégories globales</div>
+    <div style="font-size:0.75rem;color:var(--text3);margin-bottom:10px">Perso, Admin, Courant… Les projets se gèrent depuis l'onglet Projets.</div>
     <div id="cat-list-editor-cats" style="display:flex;flex-direction:column;gap:8px;margin-bottom:10px"></div>
     <button class="add-cl-item" onclick="addCat(false)">+ Nouvelle catégorie</button>
 
@@ -960,13 +987,54 @@ async function removeItem(id) {
 // STATE
 // ─────────────────────────────────────────────
 const CATS = {
-  lumiia:   { label: 'LUMIIA',   color: '#ff6b35', isProject: true },
-  signal:   { label: 'SIGNAL',   color: '#00e5ff', isProject: true },
-  raffines: { label: 'Raffinés', color: '#c084fc', isProject: true },
   perso:    { label: 'Perso',    color: '#4ade80', isProject: false },
   admin:    { label: 'Admin',    color: '#fbbf24', isProject: false },
   courant:  { label: 'Courant',  color: '#6b7280', isProject: false },
 };
+
+// Projets avec leurs sous-catégories propres
+let PROJECTS = JSON.parse(localStorage.getItem('lumiia-projects') || 'null') || [
+  { id: 'lumiia', label: 'LUMIIA', color: '#ff6b35', subcats: [
+    { id: 'lumiia_scene', label: 'Scénographie', color: '#ff6b35' },
+    { id: 'lumiia_comm', label: 'Communication', color: '#fb923c' },
+    { id: 'lumiia_admin', label: 'Admin', color: '#fbbf24' },
+  ]},
+  { id: 'signal', label: 'SIGNAL', color: '#00e5ff', subcats: [
+    { id: 'signal_game', label: 'Game Design', color: '#00e5ff' },
+    { id: 'signal_dev', label: 'Dev', color: '#38bdf8' },
+  ]},
+  { id: 'raffines', label: 'Raffinés', color: '#c084fc', subcats: [
+    { id: 'raffines_event', label: 'Événements', color: '#c084fc' },
+    { id: 'raffines_comm', label: 'Communication', color: '#e879f9' },
+  ]},
+];
+
+function saveProjects() {
+  localStorage.setItem('lumiia-projects', JSON.stringify(PROJECTS));
+}
+
+function getProject(id) {
+  return PROJECTS.find(p => p.id === id);
+}
+
+function getSubcat(projectId, subcatId) {
+  const p = getProject(projectId);
+  return p?.subcats?.find(s => s.id === subcatId);
+}
+
+function getCatInfo(item) {
+  // Retourne { label, color } selon que l'item est dans un projet ou une catégorie globale
+  if (item.projectId) {
+    const p = getProject(item.projectId);
+    if (item.subcat) {
+      const s = getSubcat(item.projectId, item.subcat);
+      return s ? { label: s.label, color: s.color } : { label: p?.label || '', color: p?.color || '#888' };
+    }
+    return { label: p?.label || '', color: p?.color || '#888' };
+  }
+  const c = CATS[item.cat];
+  return c ? { label: c.label, color: c.color } : { label: item.cat || '', color: '#888' };
+}
 
 const USERS = {
   em: 'Emmanuel',
@@ -977,10 +1045,13 @@ const USERS = {
 let currentUser = 'em';
 let currentTab = 'notes';
 let currentType = 'note';
-let currentCat = 'lumiia';
-let currentNotePrio = 'normal';
+let currentCat = 'perso';      // catégorie globale sélectionnée
+let currentProjectId = null;   // projet sélectionné dans la modale
+let currentSubcatId = null;    // sous-catégorie sélectionnée
+let currentNotePrio = 'later';
 let filterCat = 'all';
 let sortOrder = 'recent';
+let currentProject = null;     // projet ouvert dans la vue Projets
 let editingId = null;
 let clItems = [];
 let clItemsTodo = [];
@@ -1053,7 +1124,7 @@ function switchTab(tab) {
 // ─────────────────────────────────────────────
 // RENDER
 // ─────────────────────────────────────────────
-let currentProject = null; // id de la catégorie projet sélectionnée
+// currentProject défini dans le state ci-dessus
 
 function render() {
   const el = document.getElementById('main-content');
@@ -1096,10 +1167,11 @@ function renderNotes() {
 }
 
 function renderCard(item, idx) {
-  const cat = CATS[item.cat] || CATS.lumiia;
+  const catInfo = getCatInfo(item);
+  const cat = catInfo; // compatibilité
   let preview = '';
   const titleLen = item.title?.length || 0;
-  const shortTitle = titleLen < 25; // titre court = on peut montrer plus de contenu
+  const shortTitle = titleLen < 25;
 
   if (item.checklist?.length > 0) {
     const shown = item.checklist.slice(0, shortTitle ? 2 : 2);
@@ -1126,10 +1198,10 @@ function renderCard(item, idx) {
 
   const urgentClass = item.prio === 'urgent' ? ' urgent-card' : '';
 
-  return `<div class="card${urgentClass}" data-cat="${item.cat}" onclick="openDetail('${item.id}')" style="animation-delay:${idx * 0.03}s">
+  return `<div class="card${urgentClass}" data-cat="${item.cat || item.projectId}" onclick="openDetail('${item.id}')" style="animation-delay:${idx * 0.03}s;border-left:${item.prio === 'urgent' ? '3px solid var(--cat-urgent)' : ''}">
     <div style="display:flex;align-items:center;justify-content:space-between">
-      <div class="card-dot dot-${item.cat}"></div>
-      <div style="display:flex;align-items:center;gap:6px">${linkBadge}<div class="card-meta" style="font-size:0.72rem">${cat.label}</div></div>
+      <div class="card-dot" style="width:8px;height:8px;border-radius:50%;background:${catInfo.color};flex-shrink:0"></div>
+      <div style="display:flex;align-items:center;gap:6px">${linkBadge}<div class="card-meta" style="font-size:0.72rem">${catInfo.label}</div></div>
     </div>
     <div class="card-title">${item.title}</div>
     ${preview}
@@ -1316,33 +1388,37 @@ function applyFilterCat(arr) {
 function renderProjets() {
   if (currentProject) return renderProjetDetail(currentProject);
 
-  const projectCats = Object.entries(CATS).filter(([id, c]) => c.isProject);
-
-  if (projectCats.length === 0) {
+  if (PROJECTS.length === 0) {
     return `<div class="empty">
       <div class="empty-icon">📁</div>
-      <div class="empty-text">Aucun projet configuré.<br>Dans ⚙️ Réglages, coche "Projet" sur les catégories souhaitées.</div>
+      <div class="empty-text">Aucun projet.<br>
+        <button onclick="openNewProjectModal()" style="margin-top:12px;background:var(--cat-lumiia);border:none;border-radius:10px;padding:10px 18px;color:#000;font-family:Syne,sans-serif;font-weight:700;font-size:0.85rem;cursor:pointer">+ Créer un projet</button>
+      </div>
     </div>`;
   }
 
-  let html = `<div class="section-head"><div class="section-title">${projectCats.length} projet${projectCats.length > 1 ? 's' : ''}</div></div>`;
+  let html = `<div class="section-head">
+    <div class="section-title">${PROJECTS.length} projet${PROJECTS.length > 1 ? 's' : ''}</div>
+    <button onclick="openNewProjectModal()" style="font-size:0.72rem;color:#38bdf8;background:none;border:none;cursor:pointer;font-family:Syne,sans-serif;font-weight:700">+ Nouveau</button>
+  </div>`;
   html += `<div class="cards-grid">`;
 
-  projectCats.forEach(([catId, cat], idx) => {
-    const notes = items.filter(i => i.cat === catId && (i.type === 'note' || i.type === 'checklist'));
-    const todos = items.filter(i => i.cat === catId && i.type === 'todo');
+  PROJECTS.forEach((proj, idx) => {
+    const notes = items.filter(i => i.projectId === proj.id && (i.type === 'note' || i.type === 'checklist'));
+    const todos = items.filter(i => i.projectId === proj.id && i.type === 'todo');
     const activeTodos = todos.filter(i => !i.done);
     const urgentCount = activeTodos.filter(i => i.prio === 'urgent').length;
 
-    html += `<div class="card projet-card" data-cat="${catId}" onclick="openProject('${catId}')" style="animation-delay:${idx*0.05}s;min-height:140px">
+    html += `<div class="card projet-card" onclick="openProject('${proj.id}')" style="animation-delay:${idx*0.05}s;min-height:140px;border-left:3px solid ${proj.color}">
       <div style="display:flex;align-items:center;justify-content:space-between">
-        <div class="card-dot" style="background:${cat.color}"></div>
+        <div style="width:10px;height:10px;border-radius:50%;background:${proj.color}"></div>
         ${urgentCount > 0 ? `<div style="font-size:0.7rem;color:var(--cat-urgent);font-family:Syne,sans-serif;font-weight:700">🔴 ${urgentCount}</div>` : ''}
       </div>
-      <div class="card-title" style="font-size:1.05rem">${cat.label}</div>
+      <div class="card-title" style="font-size:1.05rem;color:${proj.color}">${proj.label}</div>
+      ${proj.subcats?.length ? `<div style="font-size:0.7rem;color:var(--text3)">${proj.subcats.map(s=>`<span style="background:rgba(255,255,255,0.06);border-radius:4px;padding:1px 5px">${s.label}</span>`).join(' ')}</div>` : ''}
       <div style="display:flex;gap:10px;margin-top:auto">
-        <div style="font-size:0.78rem;color:var(--text2)">📝 ${notes.length} note${notes.length !== 1 ? 's' : ''}</div>
-        <div style="font-size:0.78rem;color:${activeTodos.length > 0 ? cat.color : 'var(--text3)'}">✅ ${activeTodos.length} tâche${activeTodos.length !== 1 ? 's' : ''}</div>
+        <div style="font-size:0.78rem;color:var(--text2)">📝 ${notes.length}</div>
+        <div style="font-size:0.78rem;color:${activeTodos.length > 0 ? proj.color : 'var(--text3)'}">✅ ${activeTodos.length}</div>
       </div>
     </div>`;
   });
@@ -1351,65 +1427,90 @@ function renderProjets() {
   return html;
 }
 
-function renderProjetDetail(catId) {
-  const cat = CATS[catId];
-  if (!cat) return '';
+function renderProjetDetail(projectId) {
+  const proj = getProject(projectId);
+  if (!proj) return '';
 
-  const notes = items.filter(i => i.cat === catId && (i.type === 'note' || i.type === 'checklist'));
-  const todos = items.filter(i => i.cat === catId && i.type === 'todo');
+  const notes = items.filter(i => i.projectId === projectId && (i.type === 'note' || i.type === 'checklist'));
+  const todos = items.filter(i => i.projectId === projectId && i.type === 'todo');
   const activeTodos = todos.filter(i => !i.done);
   const doneTodos = todos.filter(i => i.done);
 
+  // Filtre par sous-catégorie
+  let filterSubcat = null; // peut être mis à jour par les chips
+
   let html = `
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
       <button onclick="closeProject()" style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:6px 12px;color:var(--text2);font-size:0.8rem;font-family:Syne,sans-serif;font-weight:600;cursor:pointer">← Projets</button>
-      <div style="width:12px;height:12px;border-radius:50%;background:${cat.color}"></div>
-      <div style="font-family:Syne,sans-serif;font-weight:800;font-size:1.1rem;color:${cat.color}">${cat.label}</div>
+      <div style="width:12px;height:12px;border-radius:50%;background:${proj.color}"></div>
+      <div style="font-family:Syne,sans-serif;font-weight:800;font-size:1.1rem;color:${proj.color}">${proj.label}</div>
+      <button onclick="editProject('${proj.id}')" style="margin-left:auto;background:none;border:none;color:var(--text3);font-size:0.8rem;cursor:pointer;font-family:Syne,sans-serif">⚙️</button>
     </div>`;
 
-  // ── Notes du projet
+  // Chips sous-catégories
+  if (proj.subcats?.length) {
+    html += `<div class="filter-bar" style="margin-bottom:16px">
+      <button class="filter-chip active" onclick="filterProjectSubcat('${projectId}', null, this)">Tout</button>
+      ${proj.subcats.map(s => `<button class="filter-chip" onclick="filterProjectSubcat('${projectId}','${s.id}',this)" style="border-color:${s.color}40">
+        <span style="width:6px;height:6px;border-radius:50%;background:${s.color};display:inline-block"></span> ${s.label}
+      </button>`).join('')}
+    </div>`;
+  }
+
+  // Notes
   html += `<div class="section-head">
     <div class="section-title">📝 Notes · ${notes.length}</div>
-    <button onclick="openCreateModalForProject('${catId}','note')" style="font-size:0.72rem;color:var(--cat-lumiia);background:none;border:none;cursor:pointer;font-family:Syne,sans-serif;font-weight:700">+ Note</button>
+    <button onclick="openCreateModalForProject('${projectId}','note')" style="font-size:0.72rem;color:#38bdf8;background:none;border:none;cursor:pointer;font-family:Syne,sans-serif;font-weight:700">+ Note</button>
   </div>`;
 
   if (notes.length === 0) {
     html += `<div style="color:var(--text3);font-size:0.82rem;margin-bottom:20px;padding:12px;background:var(--bg2);border-radius:10px;border:1px dashed var(--border)">Aucune note dans ce projet</div>`;
   } else {
-    html += `<div class="cards-grid" style="margin-bottom:24px">`;
+    html += `<div class="cards-grid" id="proj-notes-grid" style="margin-bottom:24px">`;
     notes.forEach((item, idx) => { html += renderCard(item, idx); });
     html += `</div>`;
   }
 
-  // ── Tâches actives
+  // Tâches actives
+  const sorted = [...activeTodos].sort((a,b) => ({'urgent':0,'normal':1,'later':2}[a.prio]??1) - ({'urgent':0,'normal':1,'later':2}[b.prio]??1));
   html += `<div class="section-head">
     <div class="section-title">✅ Tâches · ${activeTodos.length}</div>
-    <button onclick="openCreateModalForProject('${catId}','todo')" style="font-size:0.72rem;color:var(--cat-lumiia);background:none;border:none;cursor:pointer;font-family:Syne,sans-serif;font-weight:700">+ Tâche</button>
+    <button onclick="openCreateModalForProject('${projectId}','todo')" style="font-size:0.72rem;color:#38bdf8;background:none;border:none;cursor:pointer;font-family:Syne,sans-serif;font-weight:700">+ Tâche</button>
   </div>`;
 
   if (activeTodos.length === 0) {
     html += `<div style="color:var(--text3);font-size:0.82rem;margin-bottom:20px;padding:12px;background:var(--bg2);border-radius:10px;border:1px dashed var(--border)">Aucune tâche active</div>`;
   } else {
-    // Trier par priorité dans la vue projet
-    const sorted = [...activeTodos].sort((a,b) => ({'urgent':0,'normal':1,'later':2}[a.prio]??1) - ({'urgent':0,'normal':1,'later':2}[b.prio]??1));
-    html += `<div class="todo-list" style="margin-bottom:24px">`;
+    html += `<div class="todo-list" id="proj-todos-list" style="margin-bottom:24px">`;
     sorted.forEach((item, idx) => { html += renderTodoItem(item, idx); });
     html += `</div>`;
   }
 
-  // ── Tâches terminées (collapsible)
   if (doneTodos.length > 0) {
     html += `<div class="section-head"><div class="section-title" style="opacity:0.5">Terminées · ${doneTodos.length}</div></div>`;
-    html += `<div class="todo-list" style="opacity:0.5;margin-bottom:24px">`;
-    doneTodos.slice(0, 5).forEach((item, idx) => { html += renderTodoItem(item, idx); });
+    html += `<div class="todo-list" style="margin-bottom:24px">`;
+    doneTodos.forEach((item, idx) => { html += renderTodoItem(item, idx, true); });
     html += `</div>`;
   }
 
   return html;
 }
 
-function openProject(catId) {
-  currentProject = catId;
+function filterProjectSubcat(projectId, subcatId, btn) {
+  // Mettre à jour les chips visuellement
+  btn.closest('.filter-bar')?.querySelectorAll('.filter-chip').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  // Filtrer les cartes et tâches
+  const notes = items.filter(i => i.projectId === projectId && (i.type === 'note' || i.type === 'checklist') && (!subcatId || i.subcat === subcatId));
+  const todos = items.filter(i => i.projectId === projectId && i.type === 'todo' && !i.done && (!subcatId || i.subcat === subcatId));
+  const notesGrid = document.getElementById('proj-notes-grid');
+  const todosList = document.getElementById('proj-todos-list');
+  if (notesGrid) notesGrid.innerHTML = notes.map((item, idx) => renderCard(item, idx)).join('');
+  if (todosList) todosList.innerHTML = todos.sort((a,b) => ({'urgent':0,'normal':1,'later':2}[a.prio]??1) - ({'urgent':0,'normal':1,'later':2}[b.prio]??1)).map((item, idx) => renderTodoItem(item, idx)).join('');
+}
+
+function openProject(id) {
+  currentProject = id;
   render();
 }
 
@@ -1418,10 +1519,108 @@ function closeProject() {
   render();
 }
 
-function openCreateModalForProject(catId, type) {
+let _editingProjectId = null;
+let _editingProjectSubcats = [];
+const PROJ_COLORS = ['#ff6b35','#00e5ff','#c084fc','#4ade80','#fbbf24','#f43f5e','#38bdf8','#a3e635','#fb923c','#e879f9'];
+
+function openNewProjectModal() {
+  _editingProjectId = null;
+  _editingProjectSubcats = [];
+  document.getElementById('project-modal-title').textContent = 'Nouveau projet';
+  document.getElementById('proj-input-name').value = '';
+  document.getElementById('proj-delete-btn').style.display = 'none';
+  _renderProjColorPicker(PROJ_COLORS[0]);
+  _renderProjSubcats();
+  document.getElementById('proj-add-subcat-btn').onclick = () => {
+    _editingProjectSubcats.push({ id: 'sc_' + Date.now(), label: '', color: PROJ_COLORS[_editingProjectSubcats.length % PROJ_COLORS.length] });
+    _renderProjSubcats();
+  };
+  openModal('modal-project');
+  document.getElementById('proj-input-name').focus();
+}
+
+function editProject(id) {
+  const proj = getProject(id);
+  if (!proj) return;
+  _editingProjectId = id;
+  _editingProjectSubcats = proj.subcats ? JSON.parse(JSON.stringify(proj.subcats)) : [];
+  document.getElementById('project-modal-title').textContent = 'Modifier ' + proj.label;
+  document.getElementById('proj-input-name').value = proj.label;
+  document.getElementById('proj-delete-btn').style.display = '';
+  _renderProjColorPicker(proj.color);
+  _renderProjSubcats();
+  document.getElementById('proj-add-subcat-btn').onclick = () => {
+    _editingProjectSubcats.push({ id: 'sc_' + Date.now(), label: '', color: proj.color });
+    _renderProjSubcats();
+  };
+  openModal('modal-project');
+}
+
+function _renderProjColorPicker(selected) {
+  const el = document.getElementById('proj-color-picker');
+  if (!el) return;
+  el.innerHTML = PROJ_COLORS.map(c => `
+    <div onclick="_selectProjColor('${c}')" style="width:28px;height:28px;border-radius:50%;background:${c};cursor:pointer;border:3px solid ${c === selected ? '#fff' : 'transparent'};transition:border 0.15s;flex-shrink:0"></div>
+  `).join('');
+  el.dataset.selected = selected;
+}
+
+function _selectProjColor(color) {
+  document.getElementById('proj-color-picker').dataset.selected = color;
+  _renderProjColorPicker(color);
+}
+
+function _renderProjSubcats() {
+  const el = document.getElementById('proj-subcats-list');
+  if (!el) return;
+  el.innerHTML = _editingProjectSubcats.map((s, i) => `
+    <div style="display:flex;align-items:center;gap:8px">
+      <div style="width:18px;height:18px;border-radius:50%;background:${s.color};flex-shrink:0;cursor:pointer" onclick="_cycleSubcatColor(${i})"></div>
+      <input type="text" value="${s.label}" placeholder="Nom..." oninput="_editingProjectSubcats[${i}].label=this.value"
+        style="flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:8px 11px;color:var(--text);font-family:DM Sans,sans-serif;font-size:0.85rem;outline:none">
+      <button onclick="_editingProjectSubcats.splice(${i},1);_renderProjSubcats()" style="background:none;border:none;color:var(--text3);font-size:1rem;cursor:pointer;padding:4px" onmouseover="this.style.color='var(--cat-urgent)'" onmouseout="this.style.color='var(--text3)'">✕</button>
+    </div>
+  `).join('');
+}
+
+function _cycleSubcatColor(idx) {
+  const curr = PROJ_COLORS.indexOf(_editingProjectSubcats[idx].color);
+  _editingProjectSubcats[idx].color = PROJ_COLORS[(curr + 1) % PROJ_COLORS.length];
+  _renderProjSubcats();
+}
+
+function saveProject() {
+  const name = document.getElementById('proj-input-name').value.trim();
+  if (!name) { document.getElementById('proj-input-name').focus(); return; }
+  const color = document.getElementById('proj-color-picker').dataset.selected || PROJ_COLORS[0];
+  const subcats = _editingProjectSubcats.filter(s => s.label.trim());
+
+  if (_editingProjectId) {
+    const idx = PROJECTS.findIndex(p => p.id === _editingProjectId);
+    if (idx >= 0) PROJECTS[idx] = { ...PROJECTS[idx], label: name, color, subcats };
+  } else {
+    const id = name.toLowerCase().replace(/[^a-z0-9]/g, '_').slice(0, 12) + '_' + Date.now().toString(36).slice(-3);
+    PROJECTS.push({ id, label: name, color, subcats });
+  }
+  saveProjects();
+  closeModal('modal-project');
+  render();
+}
+
+function deleteCurrentProject() {
+  if (!_editingProjectId) return;
+  if (!confirm('Supprimer ce projet ? Les notes et tâches associées ne seront pas supprimées.')) return;
+  PROJECTS = PROJECTS.filter(p => p.id !== _editingProjectId);
+  saveProjects();
+  closeModal('modal-project');
+  currentProject = null;
+  render();
+}
   openCreateModal();
-  currentCat = catId;
-  selectCat(catId);
+  currentProjectId = projectId;
+  currentSubcatId = null;
+  currentCat = null;
+  selectProject(projectId);
   setType(type);
 }
 // ─────────────────────────────────────────────
@@ -1429,7 +1628,7 @@ const COLORS_PALETTE = ['#ff6b35','#00e5ff','#c084fc','#4ade80','#fbbf24','#f43f
 let editingCats = null;
 
 function openSettings() {
-  editingCats = Object.entries(CATS).map(([id, c]) => ({ id, label: c.label, color: c.color, isProject: !!c.isProject }));
+  editingCats = Object.entries(CATS).map(([id, c]) => ({ id, label: c.label, color: c.color }));
   renderCatEditor();
   renderMembersList();
   openModal('modal-settings');
@@ -1437,7 +1636,6 @@ function openSettings() {
 
 function renderCatEditor() {
   if (!editingCats) return;
-  const projEl = document.getElementById('cat-list-editor-projects');
   const catEl = document.getElementById('cat-list-editor-cats');
 
   const renderRow = (cat, i) => `
@@ -1448,13 +1646,8 @@ function renderCatEditor() {
       <button onclick="removeCat(${i})" style="background:none;border:none;color:var(--text3);font-size:1rem;cursor:pointer;padding:4px;" onmouseover="this.style.color='var(--cat-urgent)'" onmouseout="this.style.color='var(--text3)'">✕</button>
     </div>`;
 
-  if (projEl) {
-    const projects = editingCats.map((c, i) => ({...c, _idx: i})).filter(c => c.isProject);
-    projEl.innerHTML = projects.length ? projects.map(c => renderRow(c, c._idx)).join('') : `<div style="font-size:0.8rem;color:var(--text3);padding:6px 0">Aucun projet</div>`;
-  }
   if (catEl) {
-    const cats = editingCats.map((c, i) => ({...c, _idx: i})).filter(c => !c.isProject);
-    catEl.innerHTML = cats.length ? cats.map(c => renderRow(c, c._idx)).join('') : `<div style="font-size:0.8rem;color:var(--text3);padding:6px 0">Aucune catégorie</div>`;
+    catEl.innerHTML = editingCats.length ? editingCats.map((c, i) => renderRow(c, i)).join('') : `<div style="font-size:0.8rem;color:var(--text3);padding:6px 0">Aucune catégorie</div>`;
   }
 }
 
@@ -1477,10 +1670,7 @@ function addCat(isProject = false) {
 function saveCats() {
   if (!editingCats) return;
   Object.keys(CATS).forEach(k => delete CATS[k]);
-  editingCats.forEach(c => { CATS[c.id] = { label: c.label, color: c.color, isProject: !!c.isProject }; });
-  Object.entries(CATS).forEach(([id, c]) => {
-    document.documentElement.style.setProperty(`--cat-${id}`, c.color);
-  });
+  editingCats.forEach(c => { CATS[c.id] = { label: c.label, color: c.color }; });
   rebuildCatPicker();
   closeModal('modal-settings');
   render();
@@ -1489,37 +1679,116 @@ function saveCats() {
 function shareInvite() { copyMemberLink(document.getElementById('invite-space')?.value || 'em'); } // deprecated
 
 function rebuildCatPicker() {
-  // Picker caché (compatibilité)
-  const picker = document.getElementById('cat-picker');
-  if (picker) picker.innerHTML = '';
-
-  // Picker Projets
   const projPicker = document.getElementById('cat-picker-proj-btns');
-  // Picker Catégories
   const catPicker = document.getElementById('cat-picker-cats-btns');
-  if (!projPicker || !catPicker) return;
 
-  const projects = Object.entries(CATS).filter(([id, c]) => c.isProject);
-  const cats = Object.entries(CATS).filter(([id, c]) => !c.isProject);
+  // Projets
+  if (projPicker) {
+    projPicker.innerHTML = [
+      `<button class="cat-btn" data-type="none" onclick="selectProject(null)"
+        style="border:1px solid var(--border);background:transparent;color:var(--text3)">
+        Aucun
+      </button>`,
+      ...PROJECTS.map(p => `
+        <button class="cat-btn" data-proj="${p.id}" onclick="selectProject('${p.id}')"
+          style="border:1px solid var(--border);background:transparent;color:var(--text2)">
+          <span style="width:8px;height:8px;border-radius:50%;background:${p.color};display:inline-block;margin-right:4px"></span>
+          ${p.label}
+        </button>`)
+    ].join('');
+  }
 
-  projPicker.innerHTML = projects.map(([id, c]) => `
-    <button class="cat-btn" data-cat="${id}" onclick="selectCat('${id}')"
-      style="border:1px solid var(--border);background:transparent;color:var(--text2)">
-      <span class="dot" style="width:8px;height:8px;border-radius:50%;background:${c.color}"></span>
-      ${c.label}
-    </button>
-  `).join('');
+  // Catégories globales
+  if (catPicker) {
+    catPicker.innerHTML = Object.entries(CATS).map(([id, c]) => `
+      <button class="cat-btn" data-cat="${id}" onclick="selectGlobalCat('${id}')"
+        style="border:1px solid var(--border);background:transparent;color:var(--text2)">
+        <span style="width:8px;height:8px;border-radius:50%;background:${c.color};display:inline-block;margin-right:4px"></span>
+        ${c.label}
+      </button>`).join('');
+  }
 
-  catPicker.innerHTML = cats.map(([id, c]) => `
-    <button class="cat-btn" data-cat="${id}" onclick="selectCat('${id}')"
-      style="border:1px solid var(--border);background:transparent;color:var(--text2)">
-      <span class="dot" style="width:8px;height:8px;border-radius:50%;background:${c.color}"></span>
-      ${c.label}
-    </button>
-  `).join('');
+  // Restaurer la sélection courante
+  if (currentProjectId) selectProject(currentProjectId, currentSubcatId);
+  else selectGlobalCat(currentCat);
+}
 
-  // Sélectionner la catégorie courante
-  selectCat(currentCat);
+function selectProject(projectId, subcatId = null) {
+  currentProjectId = projectId;
+  currentSubcatId = subcatId;
+  currentCat = null;
+
+  // Visuels projets
+  document.querySelectorAll('[data-proj],[data-type="none"]').forEach(b => {
+    const isActive = projectId ? b.dataset.proj === projectId : b.dataset.type === 'none';
+    const proj = PROJECTS.find(p => p.id === b.dataset.proj);
+    b.style.background = isActive && proj ? proj.color : (isActive ? 'var(--bg3)' : 'transparent');
+    b.style.color = isActive ? '#000' : 'var(--text2)';
+    b.style.borderColor = isActive ? 'transparent' : 'var(--border)';
+  });
+  // Désélectionner catégories
+  document.querySelectorAll('[data-cat]').forEach(b => {
+    b.style.background = 'transparent';
+    b.style.color = 'var(--text2)';
+    b.style.borderColor = 'var(--border)';
+  });
+
+  // Afficher sous-catégories si projet sélectionné
+  const subcatSection = document.getElementById('subcat-picker-section');
+  const subcatBtns = document.getElementById('subcat-picker-btns');
+  if (projectId && subcatSection && subcatBtns) {
+    const proj = PROJECTS.find(p => p.id === projectId);
+    if (proj?.subcats?.length) {
+      subcatSection.style.display = '';
+      subcatBtns.innerHTML = proj.subcats.map(s => `
+        <button class="cat-btn" data-subcat="${s.id}" onclick="selectSubcat('${s.id}')"
+          style="border:1px solid var(--border);background:transparent;color:var(--text2);font-size:0.75rem">
+          <span style="width:7px;height:7px;border-radius:50%;background:${s.color};display:inline-block;margin-right:3px"></span>
+          ${s.label}
+        </button>`).join('');
+      // Auto-sélectionner la première
+      if (!subcatId && proj.subcats[0]) selectSubcat(proj.subcats[0].id);
+    } else {
+      subcatSection.style.display = 'none';
+    }
+  } else if (subcatSection) {
+    subcatSection.style.display = 'none';
+  }
+}
+
+function selectSubcat(subcatId) {
+  currentSubcatId = subcatId;
+  document.querySelectorAll('[data-subcat]').forEach(b => {
+    const proj = PROJECTS.find(p => p.id === currentProjectId);
+    const s = proj?.subcats?.find(sc => sc.id === b.dataset.subcat);
+    const isActive = b.dataset.subcat === subcatId;
+    b.style.background = isActive && s ? s.color : 'transparent';
+    b.style.color = isActive ? '#000' : 'var(--text2)';
+    b.style.borderColor = isActive ? 'transparent' : 'var(--border)';
+  });
+}
+
+function selectGlobalCat(catId) {
+  currentCat = catId;
+  currentProjectId = null;
+  currentSubcatId = null;
+  // Désélectionner projets
+  document.querySelectorAll('[data-proj],[data-type="none"]').forEach(b => {
+    b.style.background = 'transparent';
+    b.style.color = b.dataset.type === 'none' ? 'var(--text3)' : 'var(--text2)';
+    b.style.borderColor = 'var(--border)';
+  });
+  // Cacher sous-cats
+  const subcatSection = document.getElementById('subcat-picker-section');
+  if (subcatSection) subcatSection.style.display = 'none';
+  // Sélectionner catégorie
+  document.querySelectorAll('[data-cat]').forEach(b => {
+    const c = CATS[b.dataset.cat];
+    const isActive = b.dataset.cat === catId;
+    b.style.background = isActive && c ? c.color : 'transparent';
+    b.style.color = isActive ? '#000' : 'var(--text2)';
+    b.style.borderColor = isActive ? 'transparent' : 'var(--border)';
+  });
 }
 
 function selectNotePrio(prio) {
@@ -1661,7 +1930,9 @@ function applySortOrder(arr) {
 function openCreateModal() {
   editingId = null;
   currentType = 'note';
-  currentCat = Object.keys(CATS)[0] || 'lumiia';
+  currentCat = Object.keys(CATS)[0] || 'perso';
+  currentProjectId = null;
+  currentSubcatId = null;
   currentNotePrio = 'later';
   clItems = [];
   clItemsTodo = [];
@@ -1682,7 +1953,6 @@ function openCreateModal() {
   rebuildCatPicker();
   updateMemberSelects();
   setType(currentTab === 'todo' ? 'todo' : 'note');
-  selectCat(currentCat);
   renderClEditor();
   renderClEditorTodo();
   openModal('modal-create');
@@ -1767,17 +2037,7 @@ function renderClEditorTodo() {
 }
 
 function selectCat(cat) {
-  currentCat = cat;
-  // Mettre à jour tous les boutons cat-btn dans les deux pickers
-  document.querySelectorAll('.cat-btn').forEach(b => {
-    const c = CATS[b.dataset.cat];
-    if (!c) return;
-    const isSelected = b.dataset.cat === cat;
-    b.classList.toggle('selected', isSelected);
-    b.style.background = isSelected ? c.color : 'transparent';
-    b.style.color = isSelected ? '#000' : 'var(--text2)';
-    b.style.borderColor = isSelected ? 'transparent' : 'var(--border)';
-  });
+  selectGlobalCat(cat);
 }
 
 function addClItem(text = '') {
@@ -1818,7 +2078,9 @@ function saveItem() {
   const item = {
     id: editingId || genId(),
     type: currentType,
-    cat: currentCat,
+    cat: currentProjectId ? null : (currentCat || 'perso'),
+    projectId: currentProjectId || null,
+    subcat: currentSubcatId || null,
     title,
     owner: currentUser,
     created: editingId ? (items.find(i => i.id === editingId)?.created || Date.now()) : Date.now(),
@@ -2186,6 +2448,16 @@ document.getElementById('user-badge').textContent = currentUser.toUpperCase();
 // Exposer les fonctions globalement (nécessaire pour les onclick HTML avec type="module")
 window.openProject = openProject;
 window.closeProject = closeProject;
+window.openNewProjectModal = openNewProjectModal;
+window.editProject = editProject;
+window.saveProject = saveProject;
+window.deleteCurrentProject = deleteCurrentProject;
+window.filterProjectSubcat = filterProjectSubcat;
+window.selectProject = selectProject;
+window.selectSubcat = selectSubcat;
+window.selectGlobalCat = selectGlobalCat;
+window._selectProjColor = _selectProjColor;
+window._cycleSubcatColor = _cycleSubcatColor;
 window.openCreateModalForProject = openCreateModalForProject;
 window.shareInvite = shareInvite;
 window.applyFilterCat = applyFilterCat;
