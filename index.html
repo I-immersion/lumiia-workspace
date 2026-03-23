@@ -12,7 +12,7 @@
 <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiTFVNSUlBIE5vdGVzIiwic2hvcnRfbmFtZSI6Ik5vdGVzIiwic3RhcnRfdXJsIjoiLiIsImRpc3BsYXkiOiJzdGFuZGFsb25lIiwiYmFja2dyb3VuZF9jb2xvciI6IiMwZDBkMGYiLCJ0aGVtZV9jb2xvciI6IiMwZDBkMGYiLCJpY29ucyI6W3sic3JjIjoiZGF0YTppbWFnZS9zdmcreG1sO2Jhc2U2NCxQSE4yWnlCNGJXeHVjejBpYUhSMGNEb3ZMM2QzZHk1M015NXZjbWN2TWpBd01DOHpkbWNpSUhacFpYZENiM2c5SWpBZ01DQXlPVEFnTWprd0lpQjNhV1IwYUQwaU1qQXdJaUJvWldsbmFIUTlJakl3TUNJZ1ptbHNiRDBpSTJRd1pEQmtNQ0lnWm1sc2JDMXZjR0ZqYVhwbGJEMGlNQ0l2UGc9PSIsInNpemVzIjoiMTkyek1TIDUxMng1MTIiLCJ0eXBlIjoiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
 <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOTAgMjkwIj48cmVjdCB3aWR0aD0iMjkwIiBoZWlnaHQ9IjI5MCIgcng9IjYwIiBmaWxsPSIjMGQwZDBmIi8+PHRleHQgeD0iNTAlIiB5PSI1NSUiIGZvbnQtc2l6ZT0iMTYwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn5qgPC90ZXh0Pjwvc3ZnPg==">
 
-<!-- LUMIIA Workspace v1.1 -->
+<!-- LUMIIA Workspace v1.2 -->
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 
@@ -1222,7 +1222,29 @@ function openDetail(id) {
   html += `<div style="font-size:0.72rem;color:var(--text3);margin-bottom:14px;font-family:Syne,sans-serif;letter-spacing:0.08em;text-transform:uppercase">${cat.label}</div>`;
 
   if (item.content) {
-    html += `<div class="note-detail-content">${item.content}</div>`;
+    // Transformer le contenu texte en HTML riche :
+    // - mots en MAJUSCULES suivis de — → colorés avec la couleur de la catégorie
+    // - chaque ligne → item de liste avec puce
+    const lines = item.content.split('\n').filter(l => l.trim());
+    const isVocab = lines.some(l => /^[A-ZÀÉÈÊËÎÏÔÙÛÜ\s']+\s*—/.test(l));
+    let contentHtml;
+    if (isVocab) {
+      contentHtml = `<ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px">` +
+        lines.map(line => {
+          const match = line.match(/^([A-ZÀÉÈÊËÎÏÔÙÛÜ][A-ZÀÉÈÊËÎÏÔÙÛÜ\s']+?)\s*—\s*(.+)$/);
+          if (match) {
+            return `<li style="display:flex;gap:8px;align-items:baseline">
+              <span style="color:${cat.color};font-family:Syne,sans-serif;font-weight:700;font-size:0.8rem;letter-spacing:0.06em;white-space:nowrap;flex-shrink:0">${match[1]}</span>
+              <span style="color:var(--text2);font-size:0.88rem">— ${match[2]}</span>
+            </li>`;
+          }
+          return `<li style="color:var(--text2);font-size:0.88rem;padding-left:4px">${line}</li>`;
+        }).join('') +
+        `</ul>`;
+    } else {
+      contentHtml = `<p style="white-space:pre-wrap;color:var(--text2);font-size:0.88rem;line-height:1.7">${item.content}</p>`;
+    }
+    html += `<div class="note-detail-content" style="padding:4px 0">${contentHtml}</div>`;
   }
 
   if (item.type === 'checklist' && item.checklist?.length) {
@@ -1236,6 +1258,13 @@ function openDetail(id) {
       </div>`;
     });
     html += `</div>`;
+  }
+
+  if (item.qrCode) {
+    html += `<div style="margin:16px 0;display:flex;flex-direction:column;align-items:center;gap:10px">
+      <img src="data:image/png;base64,${item.qrCode}" style="width:160px;height:160px;border-radius:12px;background:#fff;padding:8px">
+      <div style="font-size:0.75rem;color:var(--text3);font-family:Syne,sans-serif;letter-spacing:0.06em">Scanner pour ouvrir l'app</div>
+    </div>`;
   }
 
   html += `<div class="note-footer">
