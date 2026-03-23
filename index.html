@@ -12,7 +12,7 @@
 <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiTFVNSUlBIE5vdGVzIiwic2hvcnRfbmFtZSI6Ik5vdGVzIiwic3RhcnRfdXJsIjoiLiIsImRpc3BsYXkiOiJzdGFuZGFsb25lIiwiYmFja2dyb3VuZF9jb2xvciI6IiMwZDBkMGYiLCJ0aGVtZV9jb2xvciI6IiMwZDBkMGYiLCJpY29ucyI6W3sic3JjIjoiZGF0YTppbWFnZS9zdmcreG1sO2Jhc2U2NCxQSE4yWnlCNGJXeHVjejBpYUhSMGNEb3ZMM2QzZHk1M015NXZjbWN2TWpBd01DOHpkbWNpSUhacFpYZENiM2c5SWpBZ01DQXlPVEFnTWprd0lpQjNhV1IwYUQwaU1qQXdJaUJvWldsbmFIUTlJakl3TUNJZ1ptbHNiRDBpSTJRd1pEQmtNQ0lnWm1sc2JDMXZjR0ZqYVhwbGJEMGlNQ0l2UGc9PSIsInNpemVzIjoiMTkyek1TIDUxMng1MTIiLCJ0eXBlIjoiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
 <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOTAgMjkwIj48cmVjdCB3aWR0aD0iMjkwIiBoZWlnaHQ9IjI5MCIgcng9IjYwIiBmaWxsPSIjMGQwZDBmIi8+PHRleHQgeD0iNTAlIiB5PSI1NSUiIGZvbnQtc2l6ZT0iMTYwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn5qgPC90ZXh0Pjwvc3ZnPg==">
 
-<!-- LUMIIA Workspace v1.0 -->
+<!-- LUMIIA Workspace v1.1 -->
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 
@@ -162,15 +162,15 @@ main {
 
 .card {
   border-radius: var(--radius);
-  padding: 14px;
+  padding: 18px;
   cursor: pointer;
   transition: transform 0.15s, box-shadow 0.15s;
   position: relative;
   overflow: hidden;
-  min-height: 120px;
+  min-height: 160px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
   border: 1px solid rgba(255,255,255,0.05);
 }
 .card:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,0.4); }
@@ -184,7 +184,7 @@ main {
 
 .card-title {
   font-family: 'Syne', sans-serif;
-  font-size: 0.88rem;
+  font-size: 0.95rem;
   font-weight: 700;
   line-height: 1.3;
   color: var(--text);
@@ -192,19 +192,20 @@ main {
 }
 
 .card-meta {
-  font-size: 0.72rem;
-  color: var(--text3);
+  font-size: 0.8rem;
+  color: var(--text2);
   display: flex;
   align-items: center;
   gap: 5px;
+  line-height: 1.5;
 }
 
 .card-checklist-preview {
-  font-size: 0.72rem;
+  font-size: 0.8rem;
   color: var(--text2);
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 5px;
 }
 .cl-item-preview {
   display: flex; align-items: center; gap: 5px;
@@ -212,7 +213,7 @@ main {
 }
 .cl-item-preview.done { color: var(--text3); text-decoration: line-through; }
 .cl-checkbox-mini {
-  width: 10px; height: 10px;
+  width: 11px; height: 11px;
   border-radius: 3px;
   flex-shrink: 0;
 }
@@ -356,8 +357,9 @@ main {
   backdrop-filter: blur(6px);
   z-index: 300;
   display: flex;
-  align-items: flex-end;
+  align-items: flex-start;
   justify-content: center;
+  padding-top: 20px;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.2s;
@@ -370,11 +372,11 @@ main {
 .modal {
   background: var(--bg2);
   border: 1px solid var(--border);
-  border-radius: 24px 24px 0 0;
-  width: 100%;
-  max-width: 600px;
-  padding: 20px 20px 40px;
-  transform: translateY(30px);
+  border-radius: 24px;
+  width: calc(100% - 32px);
+  max-width: 560px;
+  padding: 20px 20px 32px;
+  transform: translateY(-20px);
   transition: transform 0.25s cubic-bezier(.22,.68,0,1.2);
   max-height: 90dvh;
   overflow-y: auto;
