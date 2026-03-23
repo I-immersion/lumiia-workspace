@@ -12,7 +12,7 @@
 <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiTFVNSUlBIE5vdGVzIiwic2hvcnRfbmFtZSI6Ik5vdGVzIiwic3RhcnRfdXJsIjoiLiIsImRpc3BsYXkiOiJzdGFuZGFsb25lIiwiYmFja2dyb3VuZF9jb2xvciI6IiMwZDBkMGYiLCJ0aGVtZV9jb2xvciI6IiMwZDBkMGYiLCJpY29ucyI6W3sic3JjIjoiZGF0YTppbWFnZS9zdmcreG1sO2Jhc2U2NCxQSE4yWnlCNGJXeHVjejBpYUhSMGNEb3ZMM2QzZHk1M015NXZjbWN2TWpBd01DOHpkbWNpSUhacFpYZENiM2c5SWpBZ01DQXlPVEFnTWprd0lpQjNhV1IwYUQwaU1qQXdJaUJvWldsbmFIUTlJakl3TUNJZ1ptbHNiRDBpSTJRd1pEQmtNQ0lnWm1sc2JDMXZjR0ZqYVhwbGJEMGlNQ0l2UGc9PSIsInNpemVzIjoiMTkyek1TIDUxMng1MTIiLCJ0eXBlIjoiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
 <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOTAgMjkwIj48cmVjdCB3aWR0aD0iMjkwIiBoZWlnaHQ9IjI5MCIgcng9IjYwIiBmaWxsPSIjMGQwZDBmIi8+PHRleHQgeD0iNTAlIiB5PSI1NSUiIGZvbnQtc2l6ZT0iMTYwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn5qgPC90ZXh0Pjwvc3ZnPg==">
 
-<!-- LUMIIA Workspace v1.2 -->
+<!-- LUMIIA Workspace v1.3 -->
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 
@@ -719,24 +719,28 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
 
     <div class="type-toggle" id="type-toggle">
       <button class="type-btn active" data-type="note" onclick="setType('note')">📝 Note</button>
-      <button class="type-btn" data-type="checklist" onclick="setType('checklist')">☑️ Checklist</button>
       <button class="type-btn" data-type="todo" onclick="setType('todo')">✅ Tâche</button>
     </div>
 
     <div class="field-label">Titre</div>
     <input type="text" class="field-input" id="input-title" placeholder="Titre...">
 
-    <!-- Note content -->
+    <!-- Note content + checklist optionnelle -->
     <div id="field-content">
       <div class="field-label">Contenu</div>
       <textarea class="field-input" id="input-content" placeholder="Contenu libre..."></textarea>
-    </div>
-
-    <!-- Checklist editor -->
-    <div id="field-checklist" style="display:none">
-      <div class="field-label">Éléments</div>
-      <div class="cl-editor" id="cl-editor"></div>
-      <button class="add-cl-item" onclick="addClItem()">+ Ajouter un élément</button>
+      <!-- Toggle checklist -->
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+        <button id="toggle-cl-btn" onclick="toggleChecklist()" style="display:flex;align-items:center;gap:6px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:7px 12px;color:var(--text2);font-size:0.78rem;font-family:Syne,sans-serif;font-weight:600;cursor:pointer;transition:all 0.15s">
+          ☑️ Ajouter une checklist
+        </button>
+      </div>
+      <div id="field-checklist" style="display:none">
+        <div class="field-label">Checklist</div>
+        <div class="cl-editor" id="cl-editor"></div>
+        <button class="add-cl-item" onclick="addClItem()">+ Ajouter un élément</button>
+        <div style="height:12px"></div>
+      </div>
     </div>
 
     <!-- Todo fields -->
@@ -1064,9 +1068,9 @@ function renderTodoItem(item, idx) {
   const prioClass = { urgent: 'prio-urgent', normal: 'prio-normal', later: 'prio-later' }[item.prio] || 'prio-normal';
   const assigneeLabel = item.assignee ? item.assignee.toUpperCase() : '';
 
-  return `<div class="todo-item${item.done ? ' done' : ''}" onclick="toggleTodo('${item.id}')" style="animation-delay:${idx*0.03}s">
-    <div class="todo-check">${item.done ? '✓' : ''}</div>
-    <div class="todo-text">${item.title}</div>
+  return `<div class="todo-item${item.done ? ' done' : ''}" style="animation-delay:${idx*0.03}s">
+    <div class="todo-check" onclick="toggleTodo('${item.id}')" style="cursor:pointer;flex-shrink:0">${item.done ? '✓' : ''}</div>
+    <div class="todo-text" onclick="openDetail('${item.id}')" style="cursor:pointer;flex:1">${item.title}</div>
     <div class="todo-right">
       ${item.prio ? `<div class="priority-dot ${prioClass}"></div>` : ''}
       ${assigneeLabel ? `<div class="assignee-tag">${assigneeLabel}</div>` : ''}
@@ -1111,6 +1115,9 @@ function openCreateModal() {
   document.getElementById('input-assignee').value = currentUser;
   document.getElementById('input-due').value = '';
   document.getElementById('modal-title').textContent = 'Nouvelle note';
+  document.getElementById('field-checklist').style.display = 'none';
+  const btn = document.getElementById('toggle-cl-btn');
+  if (btn) { btn.textContent = '☑️ Ajouter une checklist'; btn.style.color = 'var(--text2)'; }
   setType(currentTab === 'todo' ? 'todo' : 'note');
   selectCat(currentCat);
   renderClEditor();
@@ -1121,8 +1128,18 @@ function setType(t) {
   currentType = t;
   document.querySelectorAll('.type-btn').forEach(b => b.classList.toggle('active', b.dataset.type === t));
   document.getElementById('field-content').style.display = t === 'note' ? '' : 'none';
-  document.getElementById('field-checklist').style.display = t === 'checklist' ? '' : 'none';
   document.getElementById('field-todo').style.display = t === 'todo' ? '' : 'none';
+  if (t === 'todo') { document.getElementById('field-checklist').style.display = 'none'; }
+}
+
+function toggleChecklist() {
+  const el = document.getElementById('field-checklist');
+  const btn = document.getElementById('toggle-cl-btn');
+  const visible = el.style.display !== 'none';
+  el.style.display = visible ? 'none' : '';
+  btn.textContent = visible ? '☑️ Ajouter une checklist' : '✕ Retirer la checklist';
+  btn.style.color = visible ? 'var(--text2)' : 'var(--cat-urgent)';
+  if (!visible && clItems.length === 0) addClItem();
 }
 
 function selectCat(cat) {
@@ -1182,9 +1199,9 @@ function saveItem() {
 
   if (currentType === 'note') {
     item.content = document.getElementById('input-content').value.trim();
-  }
-  if (currentType === 'checklist') {
-    item.checklist = clItems.filter(i => i.text.trim());
+    const clVisible = document.getElementById('field-checklist').style.display !== 'none';
+    item.checklist = clVisible ? clItems.filter(i => i.text.trim()) : [];
+    item.type = item.checklist.length > 0 ? 'note' : 'note'; // toujours 'note'
   }
   if (currentType === 'todo') {
     item.prio = document.getElementById('input-prio').value;
@@ -1300,7 +1317,8 @@ function editItem(id) {
   if (!item) return;
   closeModal('modal-detail');
   editingId = id;
-  currentType = item.type;
+  // compatibilité ancien type 'checklist' → traité comme 'note'
+  currentType = (item.type === 'checklist') ? 'note' : item.type;
   currentCat = item.cat;
   clItems = item.checklist ? [...item.checklist] : [];
   document.getElementById('input-title').value = item.title;
@@ -1309,6 +1327,14 @@ function editItem(id) {
   if (item.assignee) document.getElementById('input-assignee').value = item.assignee;
   if (item.due) document.getElementById('input-due').value = item.due;
   document.getElementById('modal-title').textContent = 'Modifier';
+  // Afficher checklist si elle existe
+  const hasCl = clItems.length > 0;
+  document.getElementById('field-checklist').style.display = hasCl ? '' : 'none';
+  const btn = document.getElementById('toggle-cl-btn');
+  if (btn) {
+    btn.textContent = hasCl ? '✕ Retirer la checklist' : '☑️ Ajouter une checklist';
+    btn.style.color = hasCl ? 'var(--cat-urgent)' : 'var(--text2)';
+  }
   setType(currentType);
   selectCat(currentCat);
   renderClEditor();
@@ -1361,6 +1387,7 @@ document.getElementById('user-badge').textContent = currentUser.toUpperCase();
 // render() et seedDemo() sont appelés par onValue Firebase
 
 // Exposer les fonctions globalement (nécessaire pour les onclick HTML avec type="module")
+window.toggleChecklist = toggleChecklist;
 window.setUser = setUser;
 window.showUserPicker = showUserPicker;
 window.switchTab = switchTab;
