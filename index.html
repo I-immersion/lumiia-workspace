@@ -9,10 +9,10 @@
 <meta name="apple-mobile-web-app-capable" content="true">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="LUMIIA Workspace">
-<link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiTFVNSUlBIE5vdGVzIiwic2hvcnRfbmFtZSI6Ik5vdGVzIiwic3RhcnRfdXJsIjoiLiIsImRpc3BsYXkiOiJzdGFuZGFsb25lIiwiYmFja2dyb3VuZF9jb2xvciI6IiMwZDBkMGYiLCJ0aGVtZV9jb2xvciI6IiMwZDBkMGYiLCJpY29ucyI6W3sic3JjIjoiZGF0YTppbWFnZS9zdmcreG1sO2Jhc2U2NCxQSE4yWnlCNGJXeHVjejBpYUhSMGNEb3ZMM2QzZHk1M015NXZjbWN2TWpBd01DOHpkbWNpSUhacFpYZENiM2c5SWpBZ01DQXlPVEFnTWprd0lpQjNhV1IwYUQwaU1qQXdJaUJvWldsbmFIUTlJakl3TUNJZ1ptbHNiRDBpSTJRd1pEQmtNQ0lnWm1sc2JDMXZjR0ZqYVhwbGJEMGlNQ0l2UGc9PSIsInNpemVzIjoiMTkyek1TIDUxMng1MTIiLCJ0eXBlIjoiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
+<link rel="manifest" href="data:application/json;base64,eyJuYW1lIjogIkxVTUlJQSBXb3Jrc3BhY2UiLCAic2hvcnRfbmFtZSI6ICJXb3Jrc3BhY2UiLCAic3RhcnRfdXJsIjogIi4iLCAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwgImJhY2tncm91bmRfY29sb3IiOiAiIzBkMGQwZiIsICJ0aGVtZV9jb2xvciI6ICIjMGQwZDBmIiwgImljb25zIjogW3sic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzl6ZG1jaUlIWnBaWGRDYjNnOUlqQWdNQ0F5T1RBZ01qa3dJajQ4Y21WamRDQjNhV1IwYUQwaU1qa3dJaUJvWldsbmFIUTlJakk1TUNJZ2NuZzlJall3SWlCbWFXeHNQU0lqTUdRd1pEQm1JaTgrUEhSbGVIUWdlRDBpTlRBbElpQjVQU0kxTlNVaUlHWnZiblF0YzJsNlpUMGlNVFl3SWlCMFpYaDBMV0Z1WTJodmNqMGliV2xrWkd4bElpQmtiMjFwYm1GdWRDMWlZWE5sYkdsdVpUMGliV2xrWkd4bElqN3duNXFnUEM5MFpYaDBQand2YzNablBnPT0iLCAic2l6ZXMiOiAiMTkyeDE5MiA1MTJ4NTEyIiwgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
 <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOTAgMjkwIj48cmVjdCB3aWR0aD0iMjkwIiBoZWlnaHQ9IjI5MCIgcng9IjYwIiBmaWxsPSIjMGQwZDBmIi8+PHRleHQgeD0iNTAlIiB5PSI1NSUiIGZvbnQtc2l6ZT0iMTYwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn5qgPC90ZXh0Pjwvc3ZnPg==">
 
-<!-- LUMIIA Workspace v1.3 -->
+<!-- LUMIIA Workspace v1.4 -->
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 
@@ -691,8 +691,10 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
   <div class="header-left">
     <div class="logo">LUMIIA <span>●</span> Workspace</div>
     <div class="user-badge" id="user-badge">EM</div>
+    <div style="font-size:0.62rem;color:var(--text3);font-family:Syne,sans-serif;letter-spacing:0.06em">v1.4</div>
   </div>
   <div class="header-actions">
+    <button class="btn-icon" id="sort-btn" onclick="cycleSortOrder()" title="Trier">↕</button>
     <button class="btn-icon" onclick="showUserPicker()" title="Changer d'espace">⇄</button>
   </div>
 </header>
@@ -714,8 +716,10 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
 <!-- CREATE / EDIT MODAL -->
 <div class="modal-overlay" id="modal-create">
   <div class="modal">
-    <div class="modal-handle"></div>
-    <div class="modal-title" id="modal-title">Nouvelle note</div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+      <div class="modal-title" id="modal-title" style="margin-bottom:0">Nouvelle note</div>
+      <button onclick="closeModal('modal-create')" style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;width:32px;height:32px;color:var(--text2);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center">✕</button>
+    </div>
 
     <div class="type-toggle" id="type-toggle">
       <button class="type-btn active" data-type="note" onclick="setType('note')">📝 Note</button>
@@ -796,7 +800,9 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
 <!-- NOTE DETAIL MODAL -->
 <div class="modal-overlay" id="modal-detail">
   <div class="modal note-detail">
-    <div class="modal-handle"></div>
+    <div style="display:flex;justify-content:flex-end;margin-bottom:4px">
+      <button onclick="closeModal('modal-detail')" style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;width:32px;height:32px;color:var(--text2);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center">✕</button>
+    </div>
     <div id="detail-content"></div>
   </div>
 </div>
@@ -861,7 +867,7 @@ async function save() {
 }
 
 async function removeItem(id) {
-  await remove(ref(db, `notes/items/${id}`));
+  await remove(ref(db, `workspace/items/${id}`));
 }
 
 // ─────────────────────────────────────────────
@@ -887,6 +893,7 @@ let currentTab = 'notes';
 let currentType = 'note';
 let currentCat = 'lumiia';
 let filterCat = 'all';
+let sortOrder = 'recent'; // recent | oldest | priority
 let editingId = null;
 let clItems = [];
 let items = [];
@@ -938,7 +945,7 @@ function renderNotes() {
     (i.type === 'note' || i.type === 'checklist') &&
     (i.owner === currentUser || i.shared)
   );
-  const filtered = filterCat === 'all' ? myNotes : myNotes.filter(i => i.cat === filterCat);
+  const filtered = applySortOrder(filterCat === 'all' ? myNotes : myNotes.filter(i => i.cat === filterCat));
 
   let html = `<div class="section-head">
     <div class="section-title">${filtered.length} note${filtered.length !== 1 ? 's' : ''}</div>
@@ -967,7 +974,7 @@ function renderCard(item, idx) {
   const cat = CATS[item.cat] || CATS.lumiia;
   let preview = '';
 
-  if (item.type === 'checklist' && item.checklist?.length) {
+  if ((item.type === 'checklist' || (item.type === 'note' && item.checklist?.length > 0)) && item.checklist?.length) {
     const shown = item.checklist.slice(0, 3);
     preview = `<div class="card-checklist-preview">` +
       shown.map(ci => `
@@ -1006,7 +1013,7 @@ function renderTodos() {
     todos = items.filter(i => i.type === 'todo' && i.assignee === currentUser);
   }
 
-  const filtered = filterCat === 'all' ? todos : todos.filter(i => i.cat === filterCat);
+  const filtered = applySortOrder(filterCat === 'all' ? todos : todos.filter(i => i.cat === filterCat));
   const active = filtered.filter(i => !i.done);
   const done = filtered.filter(i => i.done);
   const overdue = active.filter(i => i.due && new Date(i.due) < new Date());
@@ -1099,6 +1106,25 @@ function renderFilterBar(allItems) {
 function setFilter(cat) {
   filterCat = cat;
   render();
+}
+
+function cycleSortOrder() {
+  const orders = ['recent', 'oldest', 'priority'];
+  const icons  = { recent: '↓ Récent', oldest: '↑ Ancien', priority: '⚡ Priorité' };
+  sortOrder = orders[(orders.indexOf(sortOrder) + 1) % orders.length];
+  const btn = document.getElementById('sort-btn');
+  if (btn) btn.title = icons[sortOrder];
+  // Feedback visuel rapide
+  if (btn) { btn.style.color = 'var(--cat-lumiia)'; setTimeout(() => btn.style.color = '', 600); }
+  render();
+}
+
+function applySortOrder(arr) {
+  const priMap = { urgent: 0, normal: 1, later: 2 };
+  if (sortOrder === 'recent')   return [...arr].sort((a, b) => (b.created||0) - (a.created||0));
+  if (sortOrder === 'oldest')   return [...arr].sort((a, b) => (a.created||0) - (b.created||0));
+  if (sortOrder === 'priority') return [...arr].sort((a, b) => (priMap[a.prio]??1) - (priMap[b.prio]??1));
+  return arr;
 }
 
 // ─────────────────────────────────────────────
@@ -1231,57 +1257,98 @@ function openDetail(id) {
   if (!item) return;
 
   const cat = CATS[item.cat] || CATS.lumiia;
-  let html = `<div class="note-detail-header">
-    <div class="card-dot dot-${item.cat}" style="margin-top:4px"></div>
-    <div class="note-detail-title">${item.title}</div>
-  </div>`;
+  let html = '';
 
-  html += `<div style="font-size:0.72rem;color:var(--text3);margin-bottom:14px;font-family:Syne,sans-serif;letter-spacing:0.08em;text-transform:uppercase">${cat.label}</div>`;
+  if (item.type === 'todo') {
+    // ── MODALE TO-DO DÉDIÉE ──
+    const prioLabels = { urgent: '🔴 Urgent', normal: '🟡 Normal', later: '⚪ Plus tard' };
+    const prioLabel = prioLabels[item.prio] || '🟡 Normal';
+    const assigneeName = USERS[item.assignee] || item.assignee || '';
+    const dueStr = item.due ? new Date(item.due + 'T00:00:00').toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' }) : '';
+    const isOverdue = item.due && !item.done && new Date(item.due) < new Date();
 
-  if (item.content) {
-    // Transformer le contenu texte en HTML riche :
-    // - mots en MAJUSCULES suivis de — → colorés avec la couleur de la catégorie
-    // - chaque ligne → item de liste avec puce
-    const lines = item.content.split('\n').filter(l => l.trim());
-    const isVocab = lines.some(l => /^[A-ZÀÉÈÊËÎÏÔÙÛÜ\s']+\s*—/.test(l));
-    let contentHtml;
-    if (isVocab) {
-      contentHtml = `<ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px">` +
-        lines.map(line => {
-          const match = line.match(/^([A-ZÀÉÈÊËÎÏÔÙÛÜ][A-ZÀÉÈÊËÎÏÔÙÛÜ\s']+?)\s*—\s*(.+)$/);
-          if (match) {
-            return `<li style="display:flex;gap:8px;align-items:baseline">
-              <span style="color:${cat.color};font-family:Syne,sans-serif;font-weight:700;font-size:0.8rem;letter-spacing:0.06em;white-space:nowrap;flex-shrink:0">${match[1]}</span>
-              <span style="color:var(--text2);font-size:0.88rem">— ${match[2]}</span>
-            </li>`;
-          }
-          return `<li style="color:var(--text2);font-size:0.88rem;padding-left:4px">${line}</li>`;
-        }).join('') +
-        `</ul>`;
-    } else {
-      contentHtml = `<p style="white-space:pre-wrap;color:var(--text2);font-size:0.88rem;line-height:1.7">${item.content}</p>`;
-    }
-    html += `<div class="note-detail-content" style="padding:4px 0">${contentHtml}</div>`;
-  }
-
-  if (item.type === 'checklist' && item.checklist?.length) {
-    const done = item.checklist.filter(i => i.done).length;
-    html += `<div style="font-size:0.72rem;color:var(--text3);margin-bottom:10px">${done}/${item.checklist.length} complétés</div>`;
-    html += `<div class="checklist-full">`;
-    item.checklist.forEach(ci => {
-      html += `<div class="cl-item-full${ci.done ? ' done' : ''}" onclick="toggleClItem('${item.id}','${ci.id}')">
-        <div class="cl-check-full">${ci.done ? '✓' : ''}</div>
-        <div class="cl-item-text">${ci.text}</div>
-      </div>`;
-    });
-    html += `</div>`;
-  }
-
-  if (item.qrCode) {
-    html += `<div style="margin:16px 0;display:flex;flex-direction:column;align-items:center;gap:10px">
-      <img src="data:image/png;base64,${item.qrCode}" style="width:160px;height:160px;border-radius:12px;background:#fff;padding:8px">
-      <div style="font-size:0.75rem;color:var(--text3);font-family:Syne,sans-serif;letter-spacing:0.06em">Scanner pour ouvrir l'app</div>
+    html += `<div class="note-detail-header">
+      <div class="card-dot dot-${item.cat}" style="margin-top:4px"></div>
+      <div class="note-detail-title">${item.title}</div>
     </div>`;
+
+    // Infos priorité / assignation / échéance
+    html += `<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px">
+      <div style="padding:5px 12px;border-radius:20px;background:var(--bg3);font-size:0.78rem;font-family:Syne,sans-serif;font-weight:600">${prioLabel}</div>
+      ${assigneeName ? `<div style="padding:5px 12px;border-radius:20px;background:var(--bg3);font-size:0.78rem;font-family:Syne,sans-serif;font-weight:600;color:var(--text2)">👤 ${assigneeName}</div>` : ''}
+      ${dueStr ? `<div style="padding:5px 12px;border-radius:20px;background:${isOverdue ? 'rgba(244,63,94,0.15)' : 'var(--bg3)'};font-size:0.78rem;font-family:Syne,sans-serif;font-weight:600;color:${isOverdue ? 'var(--cat-urgent)' : 'var(--text2)'}">📅 ${dueStr}</div>` : ''}
+      <div style="padding:5px 12px;border-radius:20px;background:var(--bg3);font-size:0.78rem;color:var(--text3)">${(CATS[item.cat]||CATS.lumiia).label}</div>
+    </div>`;
+
+    // Contenu libre si présent
+    if (item.content) {
+      html += `<div style="color:var(--text2);font-size:0.88rem;line-height:1.7;margin-bottom:16px;white-space:pre-wrap">${item.content}</div>`;
+    }
+
+    // Checklist dans to-do
+    if (item.checklist?.length) {
+      const done = item.checklist.filter(i => i.done).length;
+      html += `<div style="font-size:0.72rem;color:var(--text3);margin-bottom:10px;font-family:Syne,sans-serif;letter-spacing:0.06em">${done}/${item.checklist.length} COMPLÉTÉS</div>`;
+      html += `<div class="checklist-full">`;
+      item.checklist.forEach(ci => {
+        html += `<div class="cl-item-full${ci.done ? ' done' : ''}" onclick="toggleClItem('${item.id}','${ci.id}')">
+          <div class="cl-check-full" style="border-color:${cat.color}">${ci.done ? '✓' : ''}</div>
+          <div class="cl-item-text">${ci.text}</div>
+        </div>`;
+      });
+      html += `</div>`;
+    }
+
+  } else {
+    // ── MODALE NOTE ──
+    html += `<div class="note-detail-header">
+      <div class="card-dot dot-${item.cat}" style="margin-top:4px"></div>
+      <div class="note-detail-title">${item.title}</div>
+    </div>`;
+    html += `<div style="font-size:0.72rem;color:var(--text3);margin-bottom:14px;font-family:Syne,sans-serif;letter-spacing:0.08em;text-transform:uppercase">${cat.label}</div>`;
+
+    if (item.content) {
+      const lines = item.content.split('\n').filter(l => l.trim());
+      const isVocab = lines.some(l => /^[A-ZÀÉÈÊËÎÏÔÙÛÜ\s']+\s*—/.test(l));
+      let contentHtml;
+      if (isVocab) {
+        contentHtml = `<ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px">` +
+          lines.map(line => {
+            const match = line.match(/^([A-ZÀÉÈÊËÎÏÔÙÛÜ][A-ZÀÉÈÊËÎÏÔÙÛÜ\s']+?)\s*—\s*(.+)$/);
+            if (match) {
+              return `<li style="display:flex;gap:8px;align-items:baseline">
+                <span style="color:${cat.color};font-family:Syne,sans-serif;font-weight:700;font-size:0.8rem;letter-spacing:0.06em;white-space:nowrap;flex-shrink:0">${match[1]}</span>
+                <span style="color:var(--text2);font-size:0.88rem">— ${match[2]}</span>
+              </li>`;
+            }
+            return `<li style="color:var(--text2);font-size:0.88rem;padding-left:4px">${line}</li>`;
+          }).join('') + `</ul>`;
+      } else {
+        contentHtml = `<p style="white-space:pre-wrap;color:var(--text2);font-size:0.88rem;line-height:1.7">${item.content}</p>`;
+      }
+      html += `<div class="note-detail-content" style="padding:4px 0">${contentHtml}</div>`;
+    }
+
+    // Checklist dans note fusionnée
+    if (item.checklist?.length) {
+      const done = item.checklist.filter(i => i.done).length;
+      html += `<div style="font-size:0.72rem;color:var(--text3);margin-bottom:10px;margin-top:12px;font-family:Syne,sans-serif;letter-spacing:0.06em">${done}/${item.checklist.length} COMPLÉTÉS</div>`;
+      html += `<div class="checklist-full">`;
+      item.checklist.forEach(ci => {
+        html += `<div class="cl-item-full${ci.done ? ' done' : ''}" onclick="toggleClItem('${item.id}','${ci.id}')">
+          <div class="cl-check-full">${ci.done ? '✓' : ''}</div>
+          <div class="cl-item-text">${ci.text}</div>
+        </div>`;
+      });
+      html += `</div>`;
+    }
+
+    if (item.qrCode) {
+      html += `<div style="margin:16px 0;display:flex;flex-direction:column;align-items:center;gap:10px">
+        <img src="data:image/png;base64,${item.qrCode}" style="width:160px;height:160px;border-radius:12px;background:#fff;padding:8px">
+        <div style="font-size:0.75rem;color:var(--text3);font-family:Syne,sans-serif;letter-spacing:0.06em">Scanner pour ouvrir l'app</div>
+      </div>`;
+    }
   }
 
   html += `<div class="note-footer">
@@ -1387,6 +1454,7 @@ document.getElementById('user-badge').textContent = currentUser.toUpperCase();
 // render() et seedDemo() sont appelés par onValue Firebase
 
 // Exposer les fonctions globalement (nécessaire pour les onclick HTML avec type="module")
+window.cycleSortOrder = cycleSortOrder;
 window.toggleChecklist = toggleChecklist;
 window.setUser = setUser;
 window.showUserPicker = showUserPicker;
