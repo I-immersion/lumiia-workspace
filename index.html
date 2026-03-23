@@ -12,7 +12,7 @@
 <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjogIkxVTUlJQSBXb3Jrc3BhY2UiLCAic2hvcnRfbmFtZSI6ICJXb3Jrc3BhY2UiLCAic3RhcnRfdXJsIjogIi4iLCAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwgImJhY2tncm91bmRfY29sb3IiOiAiIzBkMGQwZiIsICJ0aGVtZV9jb2xvciI6ICIjMGQwZDBmIiwgImljb25zIjogW3sic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzl6ZG1jaUlIWnBaWGRDYjNnOUlqQWdNQ0F5T1RBZ01qa3dJajQ4Y21WamRDQjNhV1IwYUQwaU1qa3dJaUJvWldsbmFIUTlJakk1TUNJZ2NuZzlJall3SWlCbWFXeHNQU0lqTUdRd1pEQm1JaTgrUEhSbGVIUWdlRDBpTlRBbElpQjVQU0kxTlNVaUlHWnZiblF0YzJsNlpUMGlNVFl3SWlCMFpYaDBMV0Z1WTJodmNqMGliV2xrWkd4bElpQmtiMjFwYm1GdWRDMWlZWE5sYkdsdVpUMGliV2xrWkd4bElqN3duNXFnUEM5MFpYaDBQand2YzNablBnPT0iLCAic2l6ZXMiOiAiMTkyeDE5MiA1MTJ4NTEyIiwgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
 <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOTAgMjkwIj48cmVjdCB3aWR0aD0iMjkwIiBoZWlnaHQ9IjI5MCIgcng9IjYwIiBmaWxsPSIjMGQwZDBmIi8+PHRleHQgeD0iNTAlIiB5PSI1NSUiIGZvbnQtc2l6ZT0iMTYwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn5qgPC90ZXh0Pjwvc3ZnPg==">
 
-<!-- LUMIIA Workspace v3.7 -->
+<!-- LUMIIA Workspace v3.8 -->
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 
@@ -743,7 +743,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
   <button class="tab" data-tab="projets" onclick="switchTab('projets')">Projets</button>
   <button class="tab" data-tab="semaine" onclick="switchTab('semaine')">Semaine</button>
   <div style="flex:1"></div>
-  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v3.7</div>
+  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v3.8</div>
 </div>
 
 <main id="main-content">
@@ -969,21 +969,35 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 const NOTES_REF = ref(db, 'workspace/items');
+const PROJECTS_REF = ref(db, 'workspace/projects');
 
-// Sync temps réel Firebase → local
+// Sync items temps réel
 onValue(NOTES_REF, (snapshot) => {
   const data = snapshot.val();
   items = data ? Object.values(data) : [];
-  // Seed demo si vide
   if (items.length === 0) seedDemo();
   else render();
 });
 
+// Sync projets temps réel
+onValue(PROJECTS_REF, (snapshot) => {
+  const data = snapshot.val();
+  if (data) {
+    PROJECTS = Object.values(data).sort((a, b) => (a.order||0) - (b.order||0));
+  }
+  render();
+});
+
 async function save() {
-  // Convertit le tableau en objet keyed par id pour Firebase
   const obj = {};
   items.forEach(item => { obj[item.id] = item; });
   await set(NOTES_REF, obj);
+}
+
+async function saveProjects() {
+  const obj = {};
+  PROJECTS.forEach((p, i) => { obj[p.id] = { ...p, order: i }; });
+  await set(PROJECTS_REF, obj);
 }
 
 async function removeItem(id) {
@@ -999,26 +1013,24 @@ const CATS = {
   courant:  { label: 'Courant',  color: '#6b7280' },
 };
 
-// Projets avec leurs sous-catégories propres
-let PROJECTS = JSON.parse(localStorage.getItem('lumiia-projects') || 'null') || [
-  { id: 'lumiia', label: 'LUMIIA', color: '#ff6b35', subcats: [
+// Projets — chargés depuis Firebase (onValue ci-dessus), défaut temporaire
+let PROJECTS = [
+  { id: 'lumiia',   label: 'LUMIIA',   color: '#ff6b35', subcats: [
     { id: 'lumiia_scene', label: 'Scenographie', color: '#ff6b35' },
-    { id: 'lumiia_comm', label: 'Communication', color: '#fb923c' },
-    { id: 'lumiia_admin', label: 'Admin', color: '#fbbf24' },
+    { id: 'lumiia_comm',  label: 'Communication', color: '#fb923c' },
+    { id: 'lumiia_admin', label: 'Admin',         color: '#fbbf24' },
   ]},
-  { id: 'signal', label: 'SIGNAL', color: '#00e5ff', subcats: [
+  { id: 'signal',   label: 'SIGNAL',   color: '#00e5ff', subcats: [
     { id: 'signal_game', label: 'Game Design', color: '#00e5ff' },
-    { id: 'signal_dev', label: 'Dev', color: '#38bdf8' },
+    { id: 'signal_dev',  label: 'Dev',         color: '#38bdf8' },
   ]},
   { id: 'raffines', label: 'Raffin\u00e9s', color: '#c084fc', subcats: [
     { id: 'raffines_event', label: '\u00c9v\u00e9nements', color: '#c084fc' },
-    { id: 'raffines_comm', label: 'Communication', color: '#e879f9' },
+    { id: 'raffines_comm',  label: 'Communication', color: '#e879f9' },
   ]},
 ];
 
-function saveProjects() {
-  localStorage.setItem('lumiia-projects', JSON.stringify(PROJECTS));
-}
+// saveProjects est maintenant définie dans le bloc Firebase ci-dessus
 
 function getProject(id) {
   return PROJECTS.find(p => p.id === id);
@@ -2386,7 +2398,7 @@ function openDetail(id) {
   } else {
     // ── MODALE NOTE ──
     html += `<div class="note-detail-header">
-      <div class="card-dot dot-${item.cat}" style="margin-top:4px"></div>
+      <div style="width:10px;height:10px;border-radius:50%;background:${cat.color};flex-shrink:0;margin-top:4px"></div>
       <div class="note-detail-title">${item.title}</div>
     </div>`;
     html += `<div style="font-size:0.72rem;color:var(--text3);margin-bottom:14px;font-family:Syne,sans-serif;letter-spacing:0.08em;text-transform:uppercase">${cat.label}</div>`;
@@ -2442,8 +2454,8 @@ function openDetail(id) {
   }
 
   html += `<div class="note-footer">
-    <button class="btn-delete" onclick="deleteItem('${item.id}')">🗑 Supprimer</button>
     <button class="btn-secondary" onclick="editItem('${item.id}')">Modifier</button>
+    <button class="btn-delete" onclick="deleteItem('${item.id}')">🗑 Supprimer</button>
   </div>`;
 
   document.getElementById('detail-content').innerHTML = html;
@@ -2512,7 +2524,11 @@ function editItem(id) {
   closeModal('modal-detail');
   editingId = id;
   currentType = (item.type === 'checklist') ? 'note' : item.type;
-  currentCat = item.cat;
+  // Restaurer le contexte projet ou catégorie
+  currentProjectId = item.projectId || null;
+  currentSubcatId = item.subcat || null;
+  currentCat = item.cat || null;
+  currentNotePrio = item.prio || 'later';
   clItems = (item.type !== 'todo' && item.checklist) ? [...item.checklist] : [];
   clItemsTodo = (item.type === 'todo' && item.checklist) ? [...item.checklist] : [];
   document.getElementById('input-title').value = item.title;
@@ -2521,26 +2537,25 @@ function editItem(id) {
   document.getElementById('input-todo-content').value = (item.type === 'todo' ? item.content : '') || '';
   document.getElementById('input-todo-link').value = (item.type === 'todo' ? item.link : '') || '';
   if (item.prio) document.getElementById('input-prio').value = item.prio;
-  if (item.assignee) {
-    document.getElementById('input-assignee').value = item.assignee;
-  }
+  if (item.assignee) document.getElementById('input-assignee').value = item.assignee;
   if (item.due) document.getElementById('input-due').value = item.due;
   const timeEl = document.getElementById('input-time');
   if (timeEl) timeEl.value = item.dueTime || '';
   document.getElementById('input-validate-by').value = item.validateBy || '';
   document.getElementById('modal-title').textContent = 'Modifier';
-  // Afficher checklist note
   const hasCl = currentType === 'note' && clItems.length > 0;
   document.getElementById('field-checklist').style.display = hasCl ? '' : 'none';
   const btn = document.getElementById('toggle-cl-btn');
   if (btn) { btn.textContent = hasCl ? '✕ Retirer la checklist' : '☑️ Ajouter une checklist'; btn.style.color = hasCl ? 'var(--cat-urgent)' : 'var(--text2)'; }
-  // Afficher checklist to-do
   const hasClTodo = currentType === 'todo' && clItemsTodo.length > 0;
   document.getElementById('field-checklist-todo').style.display = hasClTodo ? '' : 'none';
   const btnTodo = document.getElementById('toggle-cl-todo-btn');
   if (btnTodo) { btnTodo.textContent = hasClTodo ? '✕ Retirer la checklist' : '☑️ Ajouter une checklist'; btnTodo.style.color = hasClTodo ? 'var(--cat-urgent)' : 'var(--text2)'; }
   setType(currentType);
-  selectCat(currentCat);
+  // Rebuilder le picker et restaurer la sélection
+  rebuildCatPicker();
+  updateMemberSelects();
+  if (item.prio) selectNotePrio(item.prio);
   renderClEditor();
   renderClEditorTodo();
   openModal('modal-create');
