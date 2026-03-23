@@ -12,7 +12,7 @@
 <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjogIkxVTUlJQSBXb3Jrc3BhY2UiLCAic2hvcnRfbmFtZSI6ICJXb3Jrc3BhY2UiLCAic3RhcnRfdXJsIjogIi4iLCAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwgImJhY2tncm91bmRfY29sb3IiOiAiIzBkMGQwZiIsICJ0aGVtZV9jb2xvciI6ICIjMGQwZDBmIiwgImljb25zIjogW3sic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzl6ZG1jaUlIWnBaWGRDYjNnOUlqQWdNQ0F5T1RBZ01qa3dJajQ4Y21WamRDQjNhV1IwYUQwaU1qa3dJaUJvWldsbmFIUTlJakk1TUNJZ2NuZzlJall3SWlCbWFXeHNQU0lqTUdRd1pEQm1JaTgrUEhSbGVIUWdlRDBpTlRBbElpQjVQU0kxTlNVaUlHWnZiblF0YzJsNlpUMGlNVFl3SWlCMFpYaDBMV0Z1WTJodmNqMGliV2xrWkd4bElpQmtiMjFwYm1GdWRDMWlZWE5sYkdsdVpUMGliV2xrWkd4bElqN3duNXFnUEM5MFpYaDBQand2YzNablBnPT0iLCAic2l6ZXMiOiAiMTkyeDE5MiA1MTJ4NTEyIiwgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
 <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOTAgMjkwIj48cmVjdCB3aWR0aD0iMjkwIiBoZWlnaHQ9IjI5MCIgcng9IjYwIiBmaWxsPSIjMGQwZDBmIi8+PHRleHQgeD0iNTAlIiB5PSI1NSUiIGZvbnQtc2l6ZT0iMTYwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn5qgPC90ZXh0Pjwvc3ZnPg==">
 
-<!-- LUMIIA Workspace v4.5 -->
+<!-- LUMIIA Workspace v4.6 -->
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 
@@ -353,6 +353,94 @@ main {
 }
 .fab:hover { transform: scale(1.08); box-shadow: 0 6px 28px rgba(255,107,53,0.55); }
 .fab:active { transform: scale(0.94); }
+
+/* ── FAB MENU ── */
+.fab-menu {
+  position: fixed;
+  bottom: 90px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 199;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: all 0.2s ease;
+}
+.fab-menu.open {
+  pointer-events: all;
+  opacity: 1;
+  transform: translateY(0);
+}
+.fab-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: flex-end;
+}
+.fab-menu-label {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text);
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 6px 12px;
+  white-space: nowrap;
+}
+.fab-mini {
+  width: 44px; height: 44px;
+  border-radius: 14px;
+  border: none;
+  color: #000;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  transition: transform 0.15s;
+}
+.fab-mini:active { transform: scale(0.9); }
+.fab-overlay {
+  position: fixed; inset: 0;
+  z-index: 198;
+  display: none;
+}
+.fab-overlay.open { display: block; }
+
+/* ── XPRESS CARD ── */
+.xpress-card {
+  border-radius: var(--radius);
+  padding: 14px 14px 12px;
+  cursor: pointer;
+  position: relative;
+  background: var(--bg3);
+  border: 1px solid rgba(56,189,248,0.35);
+  border-left: 3px solid #38bdf8;
+  animation: fadeIn 0.2s ease both;
+}
+.xpress-close {
+  position: absolute;
+  top: 8px; right: 8px;
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+  border: none;
+  color: var(--text3);
+  font-size: 0.75rem;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s;
+}
+.xpress-close:hover { background: rgba(244,63,94,0.2); color: var(--cat-urgent); }
+.xpress-timer {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #38bdf8;
+  margin-top: 4px;
+}
 
 /* ── MODAL ── */
 .modal-overlay {
@@ -760,7 +848,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
   <button class="tab" data-tab="projets" onclick="switchTab('projets')">Projets</button>
   <button class="tab" data-tab="semaine" onclick="switchTab('semaine')">Semaine</button>
   <div style="flex:1"></div>
-  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v4.5</div>
+  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v4.6</div>
 </div>
 
 <main id="main-content">
@@ -770,7 +858,75 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
   </div>
 </main>
 
-<button class="fab" id="fab" onclick="openCreateModal()">+</button>
+<!-- FAB overlay -->
+<div class="fab-overlay" id="fab-overlay" onclick="closeFabMenu()"></div>
+<!-- FAB menu -->
+<div class="fab-menu" id="fab-menu">
+  <div class="fab-menu-item">
+    <div class="fab-menu-label">Xpress</div>
+    <button class="fab-mini" style="background:#38bdf8" onclick="closeFabMenu();openXpressModal()">⚡</button>
+  </div>
+  <div class="fab-menu-item">
+    <div class="fab-menu-label">T\u00e2che</div>
+    <button class="fab-mini" style="background:#4ade80" onclick="closeFabMenu();openCreateModal();setType('todo')">✅</button>
+  </div>
+  <div class="fab-menu-item">
+    <div class="fab-menu-label">Note</div>
+    <button class="fab-mini" style="background:var(--cat-lumiia)" onclick="closeFabMenu();openCreateModal();setType('note')">📝</button>
+  </div>
+</div>
+<!-- FAB principal -->
+<button class="fab" id="fab" onclick="toggleFabMenu()">+</button>
+
+<!-- MODALE XPRESS -->
+<div class="modal-overlay" id="modal-xpress">
+  <div class="modal" style="padding-bottom:8px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+      <div style="font-family:Syne,sans-serif;font-weight:800;font-size:1.1rem;color:#38bdf8">⚡ Xpress</div>
+      <button onclick="closeModal('modal-xpress')" style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;width:32px;height:32px;color:var(--text2);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center">✕</button>
+    </div>
+    <input type="text" id="xpress-title" class="field-input" placeholder="Note rapide..."
+      style="font-size:1.05rem;font-weight:600;margin-bottom:16px"
+      onkeydown="if(event.key==='Enter'){saveXpress()}">
+
+    <div class="field-label">Rappel (optionnel)</div>
+    <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">
+      <button class="time-btn active" id="xpress-no-time" onclick="selectXpressMode('none')">Aucun</button>
+      <button class="time-btn" id="xpress-hour-btn" onclick="selectXpressMode('hour')">Heure</button>
+      <button class="time-btn" id="xpress-timer-btn" onclick="selectXpressMode('timer')">Compte à rebours</button>
+    </div>
+
+    <!-- Sélecteur heure -->
+    <div id="xpress-hour-section" style="display:none;margin-bottom:12px">
+      <div style="display:flex;align-items:center;gap:4px;background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:6px 12px;width:fit-content">
+        <select id="xpress-h" style="background:transparent;border:none;color:var(--text);font-family:Syne,sans-serif;font-weight:700;font-size:1rem;cursor:pointer;outline:none;-webkit-appearance:none;width:40px;text-align:center">
+          <option>--</option>
+          <option>06</option><option>07</option><option>08</option><option>09</option><option>10</option><option>11</option><option>12</option><option>13</option><option>14</option><option>15</option><option>16</option><option>17</option><option>18</option><option>19</option><option>20</option><option>21</option><option>22</option><option>23</option>
+        </select>
+        <span style="color:var(--text2);font-weight:700;font-size:1.1rem">:</span>
+        <select id="xpress-m" style="background:transparent;border:none;color:var(--text);font-family:Syne,sans-serif;font-weight:700;font-size:1rem;cursor:pointer;outline:none;-webkit-appearance:none;width:40px;text-align:center">
+          <option>00</option><option>05</option><option>10</option><option>15</option><option>20</option><option>25</option><option>30</option><option>35</option><option>40</option><option>45</option><option>50</option><option>55</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Compte à rebours -->
+    <div id="xpress-timer-section" style="display:none;margin-bottom:12px">
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="time-btn" data-min="5" onclick="selectXpressTimer(5,this)">5 min</button>
+        <button class="time-btn" data-min="10" onclick="selectXpressTimer(10,this)">10 min</button>
+        <button class="time-btn" data-min="15" onclick="selectXpressTimer(15,this)">15 min</button>
+        <button class="time-btn" data-min="30" onclick="selectXpressTimer(30,this)">30 min</button>
+        <button class="time-btn" data-min="60" onclick="selectXpressTimer(60,this)">1h</button>
+      </div>
+    </div>
+
+    <div class="modal-actions" style="margin-top:8px">
+      <button class="btn-secondary" onclick="closeModal('modal-xpress')">Annuler</button>
+      <button class="btn-primary" style="background:#38bdf8" onclick="saveXpress()">Créer</button>
+    </div>
+  </div>
+</div>
 
 <!-- CREATE / EDIT MODAL -->
 <div class="modal-overlay" id="modal-create">
@@ -1208,20 +1364,29 @@ function render() {
 }
 
 function renderNotes() {
-  const myNotes = items.filter(i => 
+  const xpressItems = items.filter(i => i.type === 'xpress' && i.owner === currentUser)
+    .sort((a,b) => (a.created||0) - (b.created||0)); // plus ancienne en premier
+
+  const myNotes = items.filter(i =>
     (i.type === 'note' || i.type === 'checklist') &&
     (i.owner === currentUser || i.shared)
   );
   const filtered = applySortOrder(applyFilterCat(myNotes));
 
   let html = `<div class="section-head">
-    <div class="section-title">${filtered.length} note${filtered.length !== 1 ? 's' : ''}</div>
+    <div class="section-title">${filtered.length + xpressItems.length} note${filtered.length + xpressItems.length !== 1 ? 's' : ''}</div>
   </div>`;
 
-  // Filter bar
   html += renderFilterBar(myNotes);
 
-  if (filtered.length === 0) {
+  // Xpress en premier
+  if (xpressItems.length > 0) {
+    html += '<div class="cards-grid" style="margin-bottom:8px">';
+    xpressItems.forEach(item => { html += renderXpressCard(item); });
+    html += '</div>';
+  }
+
+  if (filtered.length === 0 && xpressItems.length === 0) {
     html += `<div class="empty">
       <div class="empty-icon">📝</div>
       <div class="empty-text">Aucune note pour l'instant.<br>Appuie sur + pour commencer.</div>
@@ -1229,11 +1394,11 @@ function renderNotes() {
     return html;
   }
 
-  html += `<div class="cards-grid">`;
-  filtered.forEach((item, idx) => {
-    html += renderCard(item, idx);
-  });
-  html += `</div>`;
+  if (filtered.length > 0) {
+    html += `<div class="cards-grid">`;
+    filtered.forEach((item, idx) => { html += renderCard(item, idx); });
+    html += `</div>`;
+  }
   return html;
 }
 
@@ -1279,6 +1444,27 @@ function renderCard(item, idx) {
     <div class="card-meta" style="margin-top:auto;font-size:0.75rem;color:var(--text3)">${dateStr}</div>
   </div>`;
 }
+
+function renderXpressCard(item) {
+  const now = Date.now();
+  const remaining = item.triggerAt ? item.triggerAt - now : null;
+  let timerHtml = '';
+  if (remaining !== null && remaining > 0) {
+    const mins = Math.ceil(remaining / 60000);
+    timerHtml = '<div class="xpress-timer" id="xpress-countdown-' + item.id + '">'
+      + (mins > 60 ? Math.ceil(mins/60) + 'h' : mins + ' min') + '</div>';
+  } else if (item.triggerAt && remaining <= 0) {
+    timerHtml = '<div class="xpress-timer" style="color:var(--cat-urgent)">Expiré</div>';
+  } else if (item.xpressTime) {
+    timerHtml = '<div class="xpress-timer">' + item.xpressTime + '</div>';
+  }
+  return '<div class="xpress-card" onclick="openDetail(\'' + item.id + '\')">'
+    + '<button class="xpress-close" onclick="deleteXpress(\'' + item.id + '\',event)">✕</button>'
+    + '<div style="font-family:Syne,sans-serif;font-weight:700;font-size:0.92rem;color:var(--text);padding-right:20px">' + item.title + '</div>'
+    + timerHtml
+    + '</div>';
+}
+
 
 function renderTodos() {
   // Premier membre = admin (voit tout), les autres voient leurs tâches assignées
@@ -2481,7 +2667,33 @@ function openDetail(id) {
   const cat = getCatInfo(item); // Gère projectId ET cat global
   let html = '';
 
-  if (item.type === 'todo') {
+  if (item.type === 'xpress') {
+    // ── MODALE XPRESS ──
+    const remaining = item.triggerAt ? item.triggerAt - Date.now() : null;
+    let alarmStr = '';
+    if (remaining !== null && remaining > 0) {
+      const mins = Math.ceil(remaining / 60000);
+      alarmStr = mins > 60 ? Math.ceil(mins/60) + 'h' : mins + ' min';
+    } else if (item.xpressTime) {
+      alarmStr = item.xpressTime;
+    } else if (item.xpressTimer) {
+      alarmStr = item.xpressTimer + ' min (expir\u00e9)';
+    }
+    html += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:14px">'
+      + '<div style="font-size:0.75rem;color:#38bdf8;font-family:Syne,sans-serif;font-weight:700;background:rgba(56,189,248,0.12);border:1px solid rgba(56,189,248,0.3);border-radius:8px;padding:3px 10px">\u26a1 XPRESS</div>'
+      + (alarmStr ? '<div style="font-size:0.75rem;color:var(--text3)">⏰ ' + alarmStr + '</div>' : '')
+      + '</div>';
+    html += '<div style="font-family:Syne,sans-serif;font-weight:800;font-size:1.2rem;color:var(--text);margin-bottom:20px">' + item.title + '</div>';
+    // Boutons de conversion
+    html += '<div style="display:flex;gap:8px;margin-bottom:16px">'
+      + '<button onclick="convertXpress(\'' + item.id + '\',\'note\')" style="flex:1;padding:10px;background:var(--bg3);border:1px solid var(--border);border-radius:10px;color:var(--text2);font-family:Syne,sans-serif;font-weight:700;font-size:0.8rem;cursor:pointer">📝 Envoyer vers Note</button>'
+      + '<button onclick="convertXpress(\'' + item.id + '\',\'todo\')" style="flex:1;padding:10px;background:var(--bg3);border:1px solid var(--border);border-radius:10px;color:var(--text2);font-family:Syne,sans-serif;font-weight:700;font-size:0.8rem;cursor:pointer">✅ Envoyer vers T\u00e2ches</button>'
+      + '</div>';
+    html += '<div class="modal-actions" style="margin-top:8px">'
+      + '<button class="btn-delete" onclick="deleteItem(\'' + item.id + '\',true)">Supprimer</button>'
+      + '</div>';
+
+  } else if (item.type === 'todo') {
     // ── MODALE TO-DO REDESIGNÉE ──
     const prioColors = { urgent: 'var(--cat-urgent)', normal: 'var(--cat-admin)', later: 'var(--text3)' };
     const prioLabels = { urgent: '🔴 Urgent', normal: '🟡 Normal', later: '⚪ Plus tard' };
@@ -2818,11 +3030,186 @@ function seedDemo() {
 }
 
 // ─────────────────────────────────────────────
-// INIT
+// FAB MENU
 // ─────────────────────────────────────────────
+let fabOpen = false;
+function toggleFabMenu() {
+  fabOpen = !fabOpen;
+  document.getElementById('fab-menu').classList.toggle('open', fabOpen);
+  document.getElementById('fab-overlay').classList.toggle('open', fabOpen);
+  document.getElementById('fab').textContent = fabOpen ? '✕' : '+';
+  document.getElementById('fab').style.transform = fabOpen ? 'rotate(45deg)' : '';
+}
+function closeFabMenu() {
+  fabOpen = false;
+  document.getElementById('fab-menu').classList.remove('open');
+  document.getElementById('fab-overlay').classList.remove('open');
+  document.getElementById('fab').textContent = '+';
+  document.getElementById('fab').style.transform = '';
+}
+
+// ─────────────────────────────────────────────
+// XPRESS
+// ─────────────────────────────────────────────
+let xpressMode = 'none';
+let xpressTimerMin = 0;
+const _xpressTimers = {}; // id -> timeoutId
+
+function openXpressModal() {
+  xpressMode = 'none';
+  xpressTimerMin = 0;
+  document.getElementById('xpress-title').value = '';
+  selectXpressMode('none');
+  document.getElementById('xpress-h').value = '--';
+  document.getElementById('xpress-m').value = '00';
+  document.querySelectorAll('#xpress-timer-section .time-btn').forEach(b => b.classList.remove('active'));
+  openModal('modal-xpress');
+  setTimeout(() => document.getElementById('xpress-title').focus(), 100);
+  // Demander permission notifications
+  if ('Notification' in window && Notification.permission === 'default') {
+    Notification.requestPermission();
+  }
+}
+
+function selectXpressMode(mode) {
+  xpressMode = mode;
+  ['none','hour','timer'].forEach(m => {
+    document.getElementById('xpress-' + (m === 'none' ? 'no-time' : m + '-btn')).classList.toggle('active', m === mode);
+  });
+  document.getElementById('xpress-hour-section').style.display = mode === 'hour' ? '' : 'none';
+  document.getElementById('xpress-timer-section').style.display = mode === 'timer' ? '' : 'none';
+}
+
+function selectXpressTimer(min, btn) {
+  xpressTimerMin = min;
+  document.querySelectorAll('#xpress-timer-section .time-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+async function saveXpress() {
+  const title = document.getElementById('xpress-title').value.trim();
+  if (!title) { document.getElementById('xpress-title').focus(); return; }
+
+  const today = localDateStr(new Date());
+  let xpressTime = null;
+  let xpressTimer = null;
+  let triggerAt = null;
+
+  if (xpressMode === 'hour') {
+    const h = document.getElementById('xpress-h').value;
+    const m = document.getElementById('xpress-m').value;
+    if (h !== '--') {
+      xpressTime = h + ':' + m;
+      const d = new Date();
+      d.setHours(parseInt(h), parseInt(m), 0, 0);
+      triggerAt = d.getTime();
+    }
+  } else if (xpressMode === 'timer' && xpressTimerMin > 0) {
+    xpressTimer = xpressTimerMin;
+    triggerAt = Date.now() + xpressTimerMin * 60000;
+  }
+
+  const item = {
+    id: genId(),
+    type: 'xpress',
+    title,
+    owner: currentUser,
+    xpressDate: today,
+    xpressTime,
+    xpressTimer,
+    triggerAt,
+    created: Date.now(),
+    updated: Date.now(),
+  };
+
+  items.push(item);
+  await save();
+  closeModal('modal-xpress');
+  render();
+
+  // Programmer le rappel
+  if (triggerAt) scheduleXpressAlert(item);
+}
+
+function scheduleXpressAlert(item) {
+  const delay = item.triggerAt - Date.now();
+  if (delay <= 0) return;
+  const tid = setTimeout(() => {
+    triggerXpressAlert(item);
+  }, delay);
+  _xpressTimers[item.id] = tid;
+  // Mettre à jour le timer affiché
+  updateXpressCountdown(item.id, delay);
+}
+
+function triggerXpressAlert(item) {
+  // Vibration Android
+  if ('vibrate' in navigator) navigator.vibrate([300, 100, 300, 100, 300]);
+  // Notification navigateur
+  if ('Notification' in window && Notification.permission === 'granted') {
+    new Notification('⚡ Xpress — ' + item.title, {
+      body: item.xpressTimer ? 'Compte \u00e0 rebours termin\u00e9 !' : 'Rappel : ' + (item.xpressTime || ''),
+      icon: '/lumiia-workspace/icon.png',
+      tag: 'xpress-' + item.id,
+    });
+  }
+  // Mettre à jour le rendu
+  render();
+}
+
+function updateXpressCountdown(itemId, delayMs) {
+  const el = document.getElementById('xpress-countdown-' + itemId);
+  if (!el || delayMs <= 0) return;
+  const mins = Math.ceil(delayMs / 60000);
+  el.textContent = mins > 60 ? Math.ceil(mins/60) + 'h' : mins + ' min';
+  setTimeout(() => {
+    const remaining = _xpressTimers[itemId] ? delayMs - 30000 : 0;
+    if (remaining > 0) updateXpressCountdown(itemId, remaining);
+  }, 30000);
+}
+
+function deleteXpress(id, e) {
+  e.stopPropagation();
+  if (_xpressTimers[id]) { clearTimeout(_xpressTimers[id]); delete _xpressTimers[id]; }
+  items = items.filter(i => i.id !== id);
+  save();
+  render();
+}
+
+function convertXpress(id, toType) {
+  const item = items.find(i => i.id === id);
+  if (!item) return;
+  if (_xpressTimers[id]) { clearTimeout(_xpressTimers[id]); delete _xpressTimers[id]; }
+  // Convertir en note ou tâche
+  item.type = toType;
+  item.cat = item.cat || 'perso';
+  item.prio = item.prio || 'later';
+  if (toType === 'todo') {
+    item.assignee = currentUser;
+    item.owner = currentUser;
+    item.done = false;
+    item.validated = false;
+  }
+  delete item.xpressDate;
+  delete item.xpressTime;
+  delete item.xpressTimer;
+  delete item.triggerAt;
+  save();
+  closeModal('modal-detail');
+  render();
+}
+
+// Reprogrammer les timers au chargement
+function restoreXpressTimers() {
+  items.filter(i => i.type === 'xpress' && i.triggerAt && i.triggerAt > Date.now()).forEach(item => {
+    scheduleXpressAlert(item);
+  });
+}
 // Afficher le bon badge user dès le départ
 document.getElementById('user-badge').textContent = currentUser.toUpperCase();
 // render() et seedDemo() sont appelés par onValue Firebase
+// Restaurer les timers Xpress au chargement
+setTimeout(restoreXpressTimers, 1500);
 
 // Exposer les fonctions globalement (nécessaire pour les onclick HTML avec type="module")
 window.openProject = openProject;
@@ -2882,6 +3269,15 @@ window.selectTime = selectTime;
 window.selectNoteTime = selectNoteTime;
 window.render = render;
 window.renderSemaine = renderSemaine;
+// FAB + Xpress
+window.toggleFabMenu = toggleFabMenu;
+window.closeFabMenu = closeFabMenu;
+window.openXpressModal = openXpressModal;
+window.saveXpress = saveXpress;
+window.selectXpressMode = selectXpressMode;
+window.selectXpressTimer = selectXpressTimer;
+window.deleteXpress = deleteXpress;
+window.convertXpress = convertXpress;
 </script>
 </body>
 </html>
