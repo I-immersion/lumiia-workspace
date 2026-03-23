@@ -12,7 +12,7 @@
 <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjogIkxVTUlJQSBXb3Jrc3BhY2UiLCAic2hvcnRfbmFtZSI6ICJXb3Jrc3BhY2UiLCAic3RhcnRfdXJsIjogIi4iLCAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwgImJhY2tncm91bmRfY29sb3IiOiAiIzBkMGQwZiIsICJ0aGVtZV9jb2xvciI6ICIjMGQwZDBmIiwgImljb25zIjogW3sic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzl6ZG1jaUlIWnBaWGRDYjNnOUlqQWdNQ0F5T1RBZ01qa3dJajQ4Y21WamRDQjNhV1IwYUQwaU1qa3dJaUJvWldsbmFIUTlJakk1TUNJZ2NuZzlJall3SWlCbWFXeHNQU0lqTUdRd1pEQm1JaTgrUEhSbGVIUWdlRDBpTlRBbElpQjVQU0kxTlNVaUlHWnZiblF0YzJsNlpUMGlNVFl3SWlCMFpYaDBMV0Z1WTJodmNqMGliV2xrWkd4bElpQmtiMjFwYm1GdWRDMWlZWE5sYkdsdVpUMGliV2xrWkd4bElqN3duNXFnUEM5MFpYaDBQand2YzNablBnPT0iLCAic2l6ZXMiOiAiMTkyeDE5MiA1MTJ4NTEyIiwgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
 <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOTAgMjkwIj48cmVjdCB3aWR0aD0iMjkwIiBoZWlnaHQ9IjI5MCIgcng9IjYwIiBmaWxsPSIjMGQwZDBmIi8+PHRleHQgeD0iNTAlIiB5PSI1NSUiIGZvbnQtc2l6ZT0iMTYwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn5qgPC90ZXh0Pjwvc3ZnPg==">
 
-<!-- LUMIIA Workspace v4.4 -->
+<!-- LUMIIA Workspace v4.5 -->
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 
@@ -760,7 +760,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
   <button class="tab" data-tab="projets" onclick="switchTab('projets')">Projets</button>
   <button class="tab" data-tab="semaine" onclick="switchTab('semaine')">Semaine</button>
   <div style="flex:1"></div>
-  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v4.4</div>
+  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v4.5</div>
 </div>
 
 <main id="main-content">
@@ -1298,7 +1298,8 @@ function renderTodos() {
   const filtered = applySortOrder(applyFilterCat(todos));
   const active = filtered.filter(i => !i.done);
   const done = filtered.filter(i => i.done);
-  const overdue = active.filter(i => i.due && new Date(i.due) < new Date());
+  const todayLocal = localDateStr(new Date());
+  const overdue = active.filter(i => i.due && i.due < todayLocal);
 
   let html = `<div class="section-head">
     <div class="section-title">${active.length} tâche${active.length !== 1 ? 's' : ''} active${active.length !== 1 ? 's' : ''}</div>
@@ -1373,7 +1374,7 @@ function renderTodos() {
 }
 
 function renderTodoItem(item, idx, showDelete = false) {
-  const isOverdue = item.due && !item.done && new Date(item.due) < new Date();
+  const isOverdue = item.due && !item.done && item.due < localDateStr(new Date());
   const dueStr = item.due ? new Date(item.due + 'T00:00:00').toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' }) + (item.dueTime ? ' ' + item.dueTime : '') : '';
   const prioIcon = { urgent: '🔴', normal: '🟡', later: '⚪' }[item.prio] || '';
   const assigneeLabel = item.assignee ? item.assignee.toUpperCase() : '';
@@ -2490,7 +2491,7 @@ function openDetail(id) {
     const ownerName = MEMBERS.find(m => m.id === item.owner)?.name || '';
     const validatorName = item.validated ? (MEMBERS.find(m => m.id === item.validatedBy)?.name || item.validatedBy || '?') : '';
     const dueStr = item.due ? new Date(item.due + 'T00:00:00').toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' }) : '';
-    const isOverdue = item.due && !item.done && new Date(item.due) < new Date();
+    const isOverdue = item.due && !item.done && item.due < localDateStr(new Date());
     const catInfo = getCatInfo(item);
     const isAssignedToMe = item.assignee === currentUser;
     const needsMyValidation = item.validateBy === currentUser && !item.done && !item.validated;
