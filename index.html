@@ -12,7 +12,7 @@
 <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjogIkxVTUlJQSBXb3Jrc3BhY2UiLCAic2hvcnRfbmFtZSI6ICJXb3Jrc3BhY2UiLCAic3RhcnRfdXJsIjogIi4iLCAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwgImJhY2tncm91bmRfY29sb3IiOiAiIzBkMGQwZiIsICJ0aGVtZV9jb2xvciI6ICIjMGQwZDBmIiwgImljb25zIjogW3sic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzl6ZG1jaUlIWnBaWGRDYjNnOUlqQWdNQ0F5T1RBZ01qa3dJajQ4Y21WamRDQjNhV1IwYUQwaU1qa3dJaUJvWldsbmFIUTlJakk1TUNJZ2NuZzlJall3SWlCbWFXeHNQU0lqTUdRd1pEQm1JaTgrUEhSbGVIUWdlRDBpTlRBbElpQjVQU0kxTlNVaUlHWnZiblF0YzJsNlpUMGlNVFl3SWlCMFpYaDBMV0Z1WTJodmNqMGliV2xrWkd4bElpQmtiMjFwYm1GdWRDMWlZWE5sYkdsdVpUMGliV2xrWkd4bElqN3duNXFnUEM5MFpYaDBQand2YzNablBnPT0iLCAic2l6ZXMiOiAiMTkyeDE5MiA1MTJ4NTEyIiwgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
 <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOTAgMjkwIj48cmVjdCB3aWR0aD0iMjkwIiBoZWlnaHQ9IjI5MCIgcng9IjYwIiBmaWxsPSIjMGQwZDBmIi8+PHRleHQgeD0iNTAlIiB5PSI1NSUiIGZvbnQtc2l6ZT0iMTYwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn5qgPC90ZXh0Pjwvc3ZnPg==">
 
-<!-- LUMIIA Workspace v1.4 -->
+<!-- LUMIIA Workspace v1.5 -->
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 
@@ -652,7 +652,10 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
 /* ── TODO LIST VIEW ── */
 .todo-list-view { display: flex; flex-direction: column; gap: 6px; }
 
-/* ── OVERDUE BANNER ── */
+.todo-item.needs-validation {
+  border-color: rgba(255,107,53,0.35);
+  background: rgba(255,107,53,0.05);
+}
 .overdue-banner {
   display: flex; align-items: center; gap: 8px;
   background: rgba(244,63,94,0.1);
@@ -691,10 +694,10 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
   <div class="header-left">
     <div class="logo">LUMIIA <span>●</span> Workspace</div>
     <div class="user-badge" id="user-badge">EM</div>
-    <div style="font-size:0.62rem;color:var(--text3);font-family:Syne,sans-serif;letter-spacing:0.06em">v1.4</div>
   </div>
   <div class="header-actions">
-    <button class="btn-icon" id="sort-btn" onclick="cycleSortOrder()" title="Trier">↕</button>
+    <button class="btn-icon" id="sort-date-btn" onclick="toggleSortDate()" title="Trier par date">📅</button>
+    <button class="btn-icon" id="sort-prio-btn" onclick="toggleSortPrio()" title="Trier par priorité">⚡</button>
     <button class="btn-icon" onclick="showUserPicker()" title="Changer d'espace">⇄</button>
   </div>
 </header>
@@ -702,6 +705,8 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
 <div class="tabs" id="tabs">
   <button class="tab active" data-tab="notes" onclick="switchTab('notes')">Notes</button>
   <button class="tab" data-tab="todo" onclick="switchTab('todo')">To-do</button>
+  <div style="flex:1"></div>
+  <div style="font-size:0.6rem;color:var(--text3);font-family:Syne,sans-serif;letter-spacing:0.06em;align-self:center;padding-right:8px">v1.5</div>
 </div>
 
 <main id="main-content">
@@ -723,7 +728,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
 
     <div class="type-toggle" id="type-toggle">
       <button class="type-btn active" data-type="note" onclick="setType('note')">📝 Note</button>
-      <button class="type-btn" data-type="todo" onclick="setType('todo')">✅ Tâche</button>
+      <button class="type-btn" data-type="todo" onclick="setType('todo')">➡️ Déplacer vers To-do</button>
     </div>
 
     <div class="field-label">Titre</div>
@@ -769,6 +774,28 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
       </div>
       <div class="field-label">Échéance</div>
       <input type="date" class="field-input" id="input-due">
+      <div class="field-label">Contenu (optionnel)</div>
+      <textarea class="field-input" id="input-todo-content" placeholder="Description, contexte..." style="min-height:60px"></textarea>
+      <!-- Checklist dans to-do -->
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+        <button id="toggle-cl-todo-btn" onclick="toggleChecklistTodo()" style="display:flex;align-items:center;gap:6px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:7px 12px;color:var(--text2);font-size:0.78rem;font-family:Syne,sans-serif;font-weight:600;cursor:pointer;transition:all 0.15s">
+          ☑️ Ajouter une checklist
+        </button>
+      </div>
+      <div id="field-checklist-todo" style="display:none">
+        <div class="field-label">Checklist</div>
+        <div class="cl-editor" id="cl-editor-todo"></div>
+        <button class="add-cl-item" onclick="addClItemTodo()">+ Ajouter un élément</button>
+        <div style="height:12px"></div>
+      </div>
+      <!-- À valider -->
+      <div class="field-label">Validation</div>
+      <select class="field-input" id="input-validate-by">
+        <option value="">Aucune validation requise</option>
+        <option value="em">À valider par Emmanuel</option>
+        <option value="au">À valider par Aurélie</option>
+        <option value="ma">À valider par Marion</option>
+      </select>
     </div>
 
     <div class="field-label">Catégorie</div>
@@ -896,6 +923,7 @@ let filterCat = 'all';
 let sortOrder = 'recent'; // recent | oldest | priority
 let editingId = null;
 let clItems = [];
+let clItemsTodo = [];
 let items = [];
 
 // Restaurer l'utilisateur depuis localStorage (juste la préférence de session)
@@ -973,19 +1001,27 @@ function renderNotes() {
 function renderCard(item, idx) {
   const cat = CATS[item.cat] || CATS.lumiia;
   let preview = '';
+  const titleLen = item.title?.length || 0;
+  const shortTitle = titleLen < 25; // titre court = on peut montrer plus de contenu
 
-  if ((item.type === 'checklist' || (item.type === 'note' && item.checklist?.length > 0)) && item.checklist?.length) {
-    const shown = item.checklist.slice(0, 3);
+  if (item.checklist?.length > 0) {
+    const shown = item.checklist.slice(0, shortTitle ? 2 : 2);
     preview = `<div class="card-checklist-preview">` +
       shown.map(ci => `
         <div class="cl-item-preview${ci.done ? ' done' : ''}">
           <div class="cl-checkbox-mini" style="background:${ci.done ? cat.color : 'transparent'};border:1.5px solid ${ci.done ? cat.color : '#555'}"></div>
           ${ci.text}
         </div>`).join('') +
-      (item.checklist.length > 3 ? `<div style="color:var(--text3);font-size:0.68rem">+${item.checklist.length - 3} autres</div>` : '') +
+      (item.checklist.length > 2 ? `<div style="color:var(--text3);font-size:0.72rem">+${item.checklist.length - 2} autres</div>` : '') +
     `</div>`;
+    // Si aussi du contenu texte et titre court, l'afficher en mini
+    if (item.content && shortTitle) {
+      preview = `<div class="card-meta" style="font-size:0.82rem;margin-bottom:4px">${item.content.slice(0, 50)}${item.content.length > 50 ? '…' : ''}</div>` + preview;
+    }
   } else if (item.content) {
-    preview = `<div class="card-meta">${item.content.slice(0, 60)}${item.content.length > 60 ? '…' : ''}</div>`;
+    const maxChars = shortTitle ? 90 : 55;
+    const lines = item.content.split('\n').slice(0, 2).join(' ');
+    preview = `<div class="card-meta" style="font-size:0.82rem;line-height:1.55">${lines.slice(0, maxChars)}${lines.length > maxChars ? '…' : ''}</div>`;
   }
 
   const dateStr = item.created ? new Date(item.created).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' }) : '';
@@ -993,11 +1029,11 @@ function renderCard(item, idx) {
   return `<div class="card" data-cat="${item.cat}" onclick="openDetail('${item.id}')" style="animation-delay:${idx * 0.03}s">
     <div style="display:flex;align-items:center;justify-content:space-between">
       <div class="card-dot dot-${item.cat}"></div>
-      <div class="card-meta">${cat.label}</div>
+      <div class="card-meta" style="font-size:0.72rem">${cat.label}</div>
     </div>
     <div class="card-title">${item.title}</div>
     ${preview}
-    <div class="card-meta" style="margin-top:auto">${dateStr}</div>
+    <div class="card-meta" style="margin-top:auto;font-size:0.75rem;color:var(--text3)">${dateStr}</div>
   </div>`;
 }
 
@@ -1073,15 +1109,31 @@ function renderTodoItem(item, idx) {
   const isOverdue = item.due && !item.done && new Date(item.due) < new Date();
   const dueStr = item.due ? new Date(item.due + 'T00:00:00').toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' }) : '';
   const prioClass = { urgent: 'prio-urgent', normal: 'prio-normal', later: 'prio-later' }[item.prio] || 'prio-normal';
+  const prioIcon = { urgent: '🔴', normal: '🟡', later: '⚪' }[item.prio] || '';
   const assigneeLabel = item.assignee ? item.assignee.toUpperCase() : '';
+  const needsValidation = item.validateBy && !item.done && !item.validated;
+  const canValidate = item.validateBy === currentUser;
 
-  return `<div class="todo-item${item.done ? ' done' : ''}" style="animation-delay:${idx*0.03}s">
-    <div class="todo-check" onclick="toggleTodo('${item.id}')" style="cursor:pointer;flex-shrink:0">${item.done ? '✓' : ''}</div>
-    <div class="todo-text" onclick="openDetail('${item.id}')" style="cursor:pointer;flex:1">${item.title}</div>
+  let validationBadge = '';
+  if (needsValidation) {
+    validationBadge = canValidate
+      ? `<button onclick="event.stopPropagation();validateTask('${item.id}')" style="background:rgba(255,107,53,0.2);border:1px solid var(--cat-lumiia);border-radius:8px;padding:3px 8px;font-size:0.72rem;color:var(--cat-lumiia);font-family:Syne,sans-serif;font-weight:700;cursor:pointer;white-space:nowrap">✓ Valider</button>`
+      : `<div style="font-size:0.7rem;color:var(--cat-admin);font-family:Syne,sans-serif;font-weight:600;white-space:nowrap">⏳ ${item.validateBy.toUpperCase()}</div>`;
+  }
+  if (item.validated) {
+    validationBadge = `<div style="font-size:0.7rem;color:var(--cat-perso);font-family:Syne,sans-serif;font-weight:600">✓ validé</div>`;
+  }
+
+  return `<div class="todo-item${item.done ? ' done' : ''}${needsValidation && canValidate ? ' needs-validation' : ''}" style="animation-delay:${idx*0.03}s">
+    <div class="todo-check" onclick="toggleTodo('${item.id}')" style="cursor:pointer;flex-shrink:0;border-color:${needsValidation ? 'var(--cat-lumiia)' : ''}">${item.done ? '✓' : ''}</div>
+    <div style="flex:1;min-width:0">
+      <div class="todo-text" onclick="openDetail('${item.id}')" style="cursor:pointer">${item.title}</div>
+    </div>
     <div class="todo-right">
-      ${item.prio ? `<div class="priority-dot ${prioClass}"></div>` : ''}
+      ${prioIcon ? `<div style="font-size:0.75rem">${prioIcon}</div>` : ''}
       ${assigneeLabel ? `<div class="assignee-tag">${assigneeLabel}</div>` : ''}
       ${dueStr ? `<div class="due-tag${isOverdue ? ' overdue' : ''}">${dueStr}</div>` : ''}
+      ${validationBadge}
     </div>
   </div>`;
 }
@@ -1108,14 +1160,19 @@ function setFilter(cat) {
   render();
 }
 
-function cycleSortOrder() {
-  const orders = ['recent', 'oldest', 'priority'];
-  const icons  = { recent: '↓ Récent', oldest: '↑ Ancien', priority: '⚡ Priorité' };
-  sortOrder = orders[(orders.indexOf(sortOrder) + 1) % orders.length];
-  const btn = document.getElementById('sort-btn');
-  if (btn) btn.title = icons[sortOrder];
-  // Feedback visuel rapide
-  if (btn) { btn.style.color = 'var(--cat-lumiia)'; setTimeout(() => btn.style.color = '', 600); }
+function cycleSortOrder() {} // deprecated
+
+function toggleSortDate() {
+  sortOrder = sortOrder === 'recent' ? 'oldest' : 'recent';
+  const btn = document.getElementById('sort-date-btn');
+  if (btn) { btn.style.color = 'var(--cat-lumiia)'; btn.title = sortOrder === 'recent' ? '↓ Plus récent' : '↑ Plus ancien'; setTimeout(() => btn.style.color = '', 600); }
+  render();
+}
+
+function toggleSortPrio() {
+  sortOrder = sortOrder === 'priority' ? 'recent' : 'priority';
+  const btn = document.getElementById('sort-prio-btn');
+  if (btn) { btn.style.color = sortOrder === 'priority' ? 'var(--cat-lumiia)' : ''; }
   render();
 }
 
@@ -1135,18 +1192,25 @@ function openCreateModal() {
   currentType = 'note';
   currentCat = 'lumiia';
   clItems = [];
+  clItemsTodo = [];
   document.getElementById('input-title').value = '';
   document.getElementById('input-content').value = '';
+  document.getElementById('input-todo-content').value = '';
   document.getElementById('input-prio').value = 'normal';
   document.getElementById('input-assignee').value = currentUser;
   document.getElementById('input-due').value = '';
+  document.getElementById('input-validate-by').value = '';
   document.getElementById('modal-title').textContent = 'Nouvelle note';
   document.getElementById('field-checklist').style.display = 'none';
+  document.getElementById('field-checklist-todo').style.display = 'none';
   const btn = document.getElementById('toggle-cl-btn');
   if (btn) { btn.textContent = '☑️ Ajouter une checklist'; btn.style.color = 'var(--text2)'; }
+  const btnTodo = document.getElementById('toggle-cl-todo-btn');
+  if (btnTodo) { btnTodo.textContent = '☑️ Ajouter une checklist'; btnTodo.style.color = 'var(--text2)'; }
   setType(currentTab === 'todo' ? 'todo' : 'note');
   selectCat(currentCat);
   renderClEditor();
+  renderClEditorTodo();
   openModal('modal-create');
 }
 
@@ -1166,6 +1230,48 @@ function toggleChecklist() {
   btn.textContent = visible ? '☑️ Ajouter une checklist' : '✕ Retirer la checklist';
   btn.style.color = visible ? 'var(--text2)' : 'var(--cat-urgent)';
   if (!visible && clItems.length === 0) addClItem();
+}
+
+function toggleChecklistTodo() {
+  const el = document.getElementById('field-checklist-todo');
+  const btn = document.getElementById('toggle-cl-todo-btn');
+  if (!el || !btn) return;
+  const visible = el.style.display !== 'none';
+  el.style.display = visible ? 'none' : '';
+  btn.textContent = visible ? '☑️ Ajouter une checklist' : '✕ Retirer la checklist';
+  btn.style.color = visible ? 'var(--text2)' : 'var(--cat-urgent)';
+  if (!visible && clItemsTodo.length === 0) addClItemTodo();
+}
+
+function addClItemTodo(text = '') {
+  clItemsTodo.push({ id: genId(), text, done: false });
+  renderClEditorTodo();
+  const inputs = document.querySelectorAll('#cl-editor-todo input');
+  if (inputs.length) inputs[inputs.length - 1].focus();
+}
+
+function removeClItemTodo(id) {
+  clItemsTodo = clItemsTodo.filter(i => i.id !== id);
+  renderClEditorTodo();
+}
+
+function updateClItemTodo(id, val) {
+  const i = clItemsTodo.find(x => x.id === id);
+  if (i) i.text = val;
+}
+
+function renderClEditorTodo() {
+  const el = document.getElementById('cl-editor-todo');
+  if (!el) return;
+  el.innerHTML = clItemsTodo.map(item => `
+    <div class="cl-row">
+      <input type="text" placeholder="Élément..." value="${item.text.replace(/"/g, '&quot;')}"
+        oninput="updateClItemTodo('${item.id}', this.value)"
+        onkeydown="if(event.key==='Enter'){event.preventDefault();addClItemTodo()}"
+      >
+      <button class="cl-del" onclick="removeClItemTodo('${item.id}')">✕</button>
+    </div>
+  `).join('');
 }
 
 function selectCat(cat) {
@@ -1233,8 +1339,14 @@ function saveItem() {
     item.prio = document.getElementById('input-prio').value;
     item.assignee = document.getElementById('input-assignee').value;
     item.due = document.getElementById('input-due').value || null;
+    item.content = document.getElementById('input-todo-content').value.trim();
     item.done = editingId ? (items.find(i => i.id === editingId)?.done || false) : false;
     item.shared = item.assignee !== currentUser;
+    item.validateBy = document.getElementById('input-validate-by').value || null;
+    item.validated = editingId ? (items.find(i => i.id === editingId)?.validated || false) : false;
+    // Checklist to-do
+    const clTodoVisible = document.getElementById('field-checklist-todo').style.display !== 'none';
+    item.checklist = clTodoVisible ? clItemsTodo.filter(i => i.text.trim()) : (editingId ? (items.find(i => i.id === editingId)?.checklist || []) : []);
   }
 
   if (editingId) {
@@ -1372,6 +1484,17 @@ function toggleTodo(id) {
   if (item) { item.done = !item.done; save(); render(); }
 }
 
+async function validateTask(id) {
+  const item = items.find(i => i.id === id);
+  if (!item) return;
+  item.validated = true;
+  item.validatedBy = currentUser;
+  item.validatedAt = Date.now();
+  item.done = true;
+  await save();
+  render();
+}
+
 async function deleteItem(id) {
   if (!confirm('Supprimer cette note ?')) return;
   closeModal('modal-detail');
@@ -1384,27 +1507,32 @@ function editItem(id) {
   if (!item) return;
   closeModal('modal-detail');
   editingId = id;
-  // compatibilité ancien type 'checklist' → traité comme 'note'
   currentType = (item.type === 'checklist') ? 'note' : item.type;
   currentCat = item.cat;
-  clItems = item.checklist ? [...item.checklist] : [];
+  clItems = (item.type !== 'todo' && item.checklist) ? [...item.checklist] : [];
+  clItemsTodo = (item.type === 'todo' && item.checklist) ? [...item.checklist] : [];
   document.getElementById('input-title').value = item.title;
   document.getElementById('input-content').value = item.content || '';
+  document.getElementById('input-todo-content').value = (item.type === 'todo' ? item.content : '') || '';
   if (item.prio) document.getElementById('input-prio').value = item.prio;
   if (item.assignee) document.getElementById('input-assignee').value = item.assignee;
   if (item.due) document.getElementById('input-due').value = item.due;
+  document.getElementById('input-validate-by').value = item.validateBy || '';
   document.getElementById('modal-title').textContent = 'Modifier';
-  // Afficher checklist si elle existe
-  const hasCl = clItems.length > 0;
+  // Afficher checklist note
+  const hasCl = currentType === 'note' && clItems.length > 0;
   document.getElementById('field-checklist').style.display = hasCl ? '' : 'none';
   const btn = document.getElementById('toggle-cl-btn');
-  if (btn) {
-    btn.textContent = hasCl ? '✕ Retirer la checklist' : '☑️ Ajouter une checklist';
-    btn.style.color = hasCl ? 'var(--cat-urgent)' : 'var(--text2)';
-  }
+  if (btn) { btn.textContent = hasCl ? '✕ Retirer la checklist' : '☑️ Ajouter une checklist'; btn.style.color = hasCl ? 'var(--cat-urgent)' : 'var(--text2)'; }
+  // Afficher checklist to-do
+  const hasClTodo = currentType === 'todo' && clItemsTodo.length > 0;
+  document.getElementById('field-checklist-todo').style.display = hasClTodo ? '' : 'none';
+  const btnTodo = document.getElementById('toggle-cl-todo-btn');
+  if (btnTodo) { btnTodo.textContent = hasClTodo ? '✕ Retirer la checklist' : '☑️ Ajouter une checklist'; btnTodo.style.color = hasClTodo ? 'var(--cat-urgent)' : 'var(--text2)'; }
   setType(currentType);
   selectCat(currentCat);
   renderClEditor();
+  renderClEditorTodo();
   openModal('modal-create');
 }
 
@@ -1455,7 +1583,14 @@ document.getElementById('user-badge').textContent = currentUser.toUpperCase();
 
 // Exposer les fonctions globalement (nécessaire pour les onclick HTML avec type="module")
 window.cycleSortOrder = cycleSortOrder;
+window.toggleSortDate = toggleSortDate;
+window.toggleSortPrio = toggleSortPrio;
 window.toggleChecklist = toggleChecklist;
+window.toggleChecklistTodo = toggleChecklistTodo;
+window.addClItemTodo = addClItemTodo;
+window.removeClItemTodo = removeClItemTodo;
+window.updateClItemTodo = updateClItemTodo;
+window.validateTask = validateTask;
 window.setUser = setUser;
 window.showUserPicker = showUserPicker;
 window.switchTab = switchTab;
