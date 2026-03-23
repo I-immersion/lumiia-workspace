@@ -12,7 +12,7 @@
 <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjogIkxVTUlJQSBXb3Jrc3BhY2UiLCAic2hvcnRfbmFtZSI6ICJXb3Jrc3BhY2UiLCAic3RhcnRfdXJsIjogIi4iLCAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwgImJhY2tncm91bmRfY29sb3IiOiAiIzBkMGQwZiIsICJ0aGVtZV9jb2xvciI6ICIjMGQwZDBmIiwgImljb25zIjogW3sic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzl6ZG1jaUlIWnBaWGRDYjNnOUlqQWdNQ0F5T1RBZ01qa3dJajQ4Y21WamRDQjNhV1IwYUQwaU1qa3dJaUJvWldsbmFIUTlJakk1TUNJZ2NuZzlJall3SWlCbWFXeHNQU0lqTUdRd1pEQm1JaTgrUEhSbGVIUWdlRDBpTlRBbElpQjVQU0kxTlNVaUlHWnZiblF0YzJsNlpUMGlNVFl3SWlCMFpYaDBMV0Z1WTJodmNqMGliV2xrWkd4bElpQmtiMjFwYm1GdWRDMWlZWE5sYkdsdVpUMGliV2xrWkd4bElqN3duNXFnUEM5MFpYaDBQand2YzNablBnPT0iLCAic2l6ZXMiOiAiMTkyeDE5MiA1MTJ4NTEyIiwgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
 <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOTAgMjkwIj48cmVjdCB3aWR0aD0iMjkwIiBoZWlnaHQ9IjI5MCIgcng9IjYwIiBmaWxsPSIjMGQwZDBmIi8+PHRleHQgeD0iNTAlIiB5PSI1NSUiIGZvbnQtc2l6ZT0iMTYwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn5qgPC90ZXh0Pjwvc3ZnPg==">
 
-<!-- LUMIIA Workspace v3.3 -->
+<!-- LUMIIA Workspace v3.4 -->
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 
@@ -743,7 +743,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
   <button class="tab" data-tab="projets" onclick="switchTab('projets')">Projets</button>
   <button class="tab" data-tab="semaine" onclick="switchTab('semaine')">Semaine</button>
   <div style="flex:1"></div>
-  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v3.3</div>
+  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v3.4</div>
 </div>
 
 <main id="main-content">
@@ -1098,20 +1098,19 @@ function setUser(u) {
 }
 
 function showUserPicker() {
-  const colors = ['var(--cat-lumiia)','var(--cat-signal)','var(--cat-raffines)','var(--cat-perso)','var(--cat-admin)'];
+  const colors = ['#ff6b35','#00e5ff','#c084fc','#4ade80','#fbbf24'];
   const list = document.getElementById('user-picker-list');
   if (list) {
     list.innerHTML = MEMBERS.map((m, i) => {
       const isActive = m.id === currentUser;
-      return `<button onclick="setUser('${m.id}')"
-        style="display:flex;align-items:center;gap:12px;background:${isActive ? 'rgba(255,107,53,0.1)' : 'var(--bg3)'};border:1px solid ${isActive ? 'var(--cat-lumiia)' : 'var(--border)'};border-radius:12px;padding:12px 16px;cursor:pointer;width:100%;text-align:left;transition:all 0.15s">
-        <div style="width:36px;height:36px;border-radius:50%;background:${colors[i%colors.length]};display:flex;align-items:center;justify-content:center;font-family:Syne,sans-serif;font-weight:800;font-size:0.8rem;color:#000;flex-shrink:0">${m.name.slice(0,2).toUpperCase()}</div>
-        <div style="flex:1">
-          <div style="font-family:Syne,sans-serif;font-weight:700;font-size:0.95rem;color:var(--text)">${m.name}</div>
-          <div style="font-size:0.72rem;color:var(--text3)">Espace ${m.name}</div>
-        </div>
-        ${isActive ? '<div style="font-size:0.7rem;color:var(--cat-lumiia);font-family:Syne,sans-serif;font-weight:700">✓ ACTIF</div>' : ''}
-      </button>`;
+      const bg = isActive ? 'rgba(56,189,248,0.1)' : 'var(--bg3)';
+      const border = isActive ? 'rgba(56,189,248,0.4)' : 'var(--border)';
+      const badge = isActive ? '<div style="font-size:0.7rem;color:#38bdf8;font-family:Syne,sans-serif;font-weight:700">ACTIF</div>' : '';
+      return '<button onclick="setUser(\'' + m.id + '\')" style="display:flex;align-items:center;gap:12px;background:' + bg + ';border:1px solid ' + border + ';border-radius:12px;padding:12px 16px;cursor:pointer;width:100%;text-align:left">'
+        + '<div style="width:36px;height:36px;border-radius:50%;background:' + colors[i % colors.length] + ';display:flex;align-items:center;justify-content:center;font-family:Syne,sans-serif;font-weight:800;font-size:0.8rem;color:#000;flex-shrink:0">' + m.name.slice(0,2).toUpperCase() + '</div>'
+        + '<div style="flex:1"><div style="font-family:Syne,sans-serif;font-weight:700;font-size:0.95rem;color:var(--text)">' + m.name + '</div>'
+        + '<div style="font-size:0.72rem;color:var(--text3)">' + m.id + '</div></div>'
+        + badge + '</button>';
     }).join('');
   }
   openModal('modal-user');
