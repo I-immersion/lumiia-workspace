@@ -1251,7 +1251,7 @@ function renderTodoItem(item, idx, showDelete = false) {
       ${isWaiting ? waitingLabel : (assigneeLabel ? `<div class="assignee-tag">${assigneeLabel}</div>` : '')}
       ${dueStr ? `<div class="due-tag${isOverdue ? ' overdue' : ''}">${dueStr}</div>` : ''}
       ${validationBadge}
-      ${showDelete ? `<button onclick="event.stopPropagation();deleteItem('${item.id}')" style="background:none;border:none;color:var(--text3);font-size:1rem;cursor:pointer;padding:2px 4px;line-height:1;transition:color 0.15s;flex-shrink:0" onmouseover="this.style.color='var(--cat-urgent)'" onmouseout="this.style.color='var(--text3)'">✕</button>` : ''}
+      ${showDelete ? `<button onclick="event.stopPropagation();deleteItem('${item.id}', true)" style="background:none;border:none;color:var(--text3);font-size:1rem;cursor:pointer;padding:2px 4px;line-height:1;transition:color 0.15s;flex-shrink:0" onmouseover="this.style.color='var(--cat-urgent)'" onmouseout="this.style.color='var(--text3)'">✕</button>` : ''}
     </div>
   </div>`;
 }
