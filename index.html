@@ -1121,7 +1121,7 @@ let currentProjectId = null;   // projet sélectionné dans la modale
 let currentSubcatId = null;    // sous-catégorie sélectionnée
 let currentNotePrio = 'later';
 let filterCat = 'all';
-let semaineFiltreProj = 'all'; // filtre pour la vue semaine
+let semaineFiltreProj = 'all'; // filtre pour la vue Semaine
 let sortOrder = 'recent';
 let currentProject = null;     // projet ouvert dans la vue Projets
 let editingId = null;
@@ -1660,6 +1660,11 @@ function renderSemaine() {
   return html || '<div class="empty"><div class="empty-icon">\uD83D\uDCC5</div><div class="empty-text">Aucun \u00e9l\u00e9ment cette semaine.</div></div>';
 }
 
+function setSemaineFiltre(val) {
+  semaineFiltreProj = val;
+  render();
+}
+
 function toggleDayAccordion(uid) {
   const el = document.getElementById(uid);
   const arrow = document.getElementById(uid + '_arrow');
@@ -1668,7 +1673,6 @@ function toggleDayAccordion(uid) {
   el.style.display = open ? 'block' : 'none';
   if (arrow) arrow.style.transform = open ? 'rotate(90deg)' : '';
 }
-
 
 function renderProjets() {
   if (currentProject) return renderProjetDetail(currentProject);
