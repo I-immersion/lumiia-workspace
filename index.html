@@ -12,7 +12,7 @@
 <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjogIkxVTUlJQSBXb3Jrc3BhY2UiLCAic2hvcnRfbmFtZSI6ICJXb3Jrc3BhY2UiLCAic3RhcnRfdXJsIjogIi4iLCAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwgImJhY2tncm91bmRfY29sb3IiOiAiIzBkMGQwZiIsICJ0aGVtZV9jb2xvciI6ICIjMGQwZDBmIiwgImljb25zIjogW3sic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzl6ZG1jaUlIWnBaWGRDYjNnOUlqQWdNQ0F5T1RBZ01qa3dJajQ4Y21WamRDQjNhV1IwYUQwaU1qa3dJaUJvWldsbmFIUTlJakk1TUNJZ2NuZzlJall3SWlCbWFXeHNQU0lqTUdRd1pEQm1JaTgrUEhSbGVIUWdlRDBpTlRBbElpQjVQU0kxTlNVaUlHWnZiblF0YzJsNlpUMGlNVFl3SWlCMFpYaDBMV0Z1WTJodmNqMGliV2xrWkd4bElpQmtiMjFwYm1GdWRDMWlZWE5sYkdsdVpUMGliV2xrWkd4bElqN3duNXFnUEM5MFpYaDBQand2YzNablBnPT0iLCAic2l6ZXMiOiAiMTkyeDE5MiA1MTJ4NTEyIiwgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
 <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOTAgMjkwIj48cmVjdCB3aWR0aD0iMjkwIiBoZWlnaHQ9IjI5MCIgcng9IjYwIiBmaWxsPSIjMGQwZDBmIi8+PHRleHQgeD0iNTAlIiB5PSI1NSUiIGZvbnQtc2l6ZT0iMTYwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn5qgPC90ZXh0Pjwvc3ZnPg==">
 
-<!-- LUMIIA Workspace v1.8 -->
+<!-- LUMIIA Workspace v1.9 -->
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 
@@ -720,7 +720,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
   <button class="tab" data-tab="todo" onclick="switchTab('todo')">To-do</button>
   <button class="tab" data-tab="projets" onclick="switchTab('projets')">Projets</button>
   <div style="flex:1"></div>
-  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v1.8</div>
+  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v1.9</div>
 </div>
 
 <main id="main-content">
@@ -817,27 +817,28 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
     </div>
 
     <div style="height:20px"></div>
-    <div class="field-label">Catégorie</div>
-    <div class="cat-picker" id="cat-picker">
-      <button class="cat-btn selected" data-cat="lumiia" onclick="selectCat('lumiia')" style="background:var(--cat-lumiia);color:#000;border-color:transparent">
-        <span class="dot dot-lumiia"></span>LUMIIA
-      </button>
-      <button class="cat-btn" data-cat="signal" onclick="selectCat('signal')">
-        <span class="dot dot-signal"></span>SIGNAL
-      </button>
-      <button class="cat-btn" data-cat="raffines" onclick="selectCat('raffines')">
-        <span class="dot dot-raffines"></span>Raffinés
-      </button>
-      <button class="cat-btn" data-cat="perso" onclick="selectCat('perso')">
-        <span class="dot dot-perso"></span>Perso
-      </button>
-      <button class="cat-btn" data-cat="admin" onclick="selectCat('admin')">
-        <span class="dot dot-admin"></span>Admin
-      </button>
-      <button class="cat-btn" data-cat="courant" onclick="selectCat('courant')">
-        <span class="dot" style="width:8px;height:8px;border-radius:50%;background:#6b7280"></span>Courant
-      </button>
+
+    <!-- Priorité pour les notes -->
+    <div id="field-note-prio">
+      <div class="field-label">Priorité</div>
+      <div style="display:flex;gap:8px;margin-bottom:14px">
+        <button class="prio-btn active" data-prio="normal" onclick="selectNotePrio('normal')" style="flex:1;padding:7px;border-radius:8px;border:1px solid var(--border);background:var(--bg3);color:var(--text2);font-size:0.8rem;cursor:pointer;transition:all 0.15s">🟡 Normal</button>
+        <button class="prio-btn" data-prio="urgent" onclick="selectNotePrio('urgent')" style="flex:1;padding:7px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--text3);font-size:0.8rem;cursor:pointer;transition:all 0.15s">🔴 Urgent</button>
+        <button class="prio-btn" data-prio="later" onclick="selectNotePrio('later')" style="flex:1;padding:7px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--text3);font-size:0.8rem;cursor:pointer;transition:all 0.15s">⚪ Plus tard</button>
+      </div>
     </div>
+
+    <!-- Sélecteur Projets + Catégories séparés -->
+    <div id="cat-picker-projects" style="margin-bottom:8px">
+      <div class="field-label">Projet</div>
+      <div class="cat-picker" id="cat-picker-proj-btns"></div>
+    </div>
+    <div>
+      <div class="field-label" style="margin-top:10px">Catégorie</div>
+      <div class="cat-picker" id="cat-picker-cats-btns"></div>
+    </div>
+    <!-- Gardé pour compatibilité rebuildCatPicker -->
+    <div id="cat-picker" style="display:none"></div>
 
     <div class="modal-actions">
       <button class="btn-secondary" onclick="closeModal('modal-create')">Annuler</button>
@@ -885,25 +886,19 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
       <div class="modal-title" style="margin-bottom:0">⚙️ Réglages</div>
       <button onclick="closeModal('modal-settings')" style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;width:32px;height:32px;color:var(--text2);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center">✕</button>
     </div>
-    <div class="field-label">Catégories</div>
+
+    <div class="field-label">Catégories &amp; Projets</div>
     <div id="cat-list-editor" style="display:flex;flex-direction:column;gap:8px;margin-bottom:14px"></div>
     <button class="add-cl-item" onclick="addCat()">+ Nouvelle catégorie</button>
+
     <div style="height:24px"></div>
-    <div class="field-label">Inviter quelqu'un</div>
-    <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:14px">
-      <div style="display:flex;gap:8px">
-        <input type="text" id="invite-name" placeholder="Prénom..." style="flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:var(--text);font-family:DM Sans,sans-serif;font-size:0.88rem;outline:none">
-        <select id="invite-space" style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:var(--text);font-family:DM Sans,sans-serif;font-size:0.88rem;outline:none;cursor:pointer">
-          <option value="em">Espace Emmanuel</option>
-          <option value="au">Espace Aurélie</option>
-          <option value="ma">Espace Marion</option>
-        </select>
-      </div>
-      <button onclick="shareInvite()" style="display:flex;align-items:center;justify-content:center;gap:8px;background:var(--cat-lumiia);border:none;border-radius:8px;padding:10px;color:#000;font-family:Syne,sans-serif;font-weight:700;font-size:0.82rem;cursor:pointer;width:100%">
-        🔗 Copier le lien d'invitation
-      </button>
-      <div id="invite-feedback" style="font-size:0.78rem;color:var(--cat-perso);text-align:center;display:none">✓ Lien copié !</div>
+    <div class="field-label">Membres</div>
+    <div id="members-list" style="display:flex;flex-direction:column;gap:8px;margin-bottom:10px"></div>
+    <div style="display:flex;gap:8px;margin-bottom:14px">
+      <input type="text" id="new-member-name" placeholder="Prénom..." style="flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:var(--text);font-family:DM Sans,sans-serif;font-size:0.88rem;outline:none">
+      <button onclick="addMember()" style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:9px 14px;color:var(--text2);font-family:Syne,sans-serif;font-weight:700;font-size:0.82rem;cursor:pointer">+ Ajouter</button>
     </div>
+
     <div class="modal-actions">
       <button class="btn-secondary" onclick="closeModal('modal-settings')">Fermer</button>
       <button class="btn-primary" onclick="saveCats()">Enregistrer</button>
@@ -974,12 +969,20 @@ let currentUser = 'em';
 let currentTab = 'notes';
 let currentType = 'note';
 let currentCat = 'lumiia';
+let currentNotePrio = 'normal';
 let filterCat = 'all';
-let sortOrder = 'recent'; // recent | oldest | priority
+let sortOrder = 'recent';
 let editingId = null;
 let clItems = [];
 let clItemsTodo = [];
 let items = [];
+
+// Membres configurables (stockés en localStorage)
+let MEMBERS = JSON.parse(localStorage.getItem('lumiia-members') || 'null') || [
+  { id: 'em', name: 'Emmanuel', url: 'em' },
+  { id: 'au', name: 'Aurélie', url: 'au' },
+  { id: 'ma', name: 'Marion', url: 'ma' },
+];
 
 // Restaurer l'utilisateur depuis localStorage (juste la préférence de session)
 const savedUser = localStorage.getItem('lumiia-workspace-user');
@@ -1111,12 +1114,12 @@ function renderTodos() {
   const isEm = currentUser === 'em';
   
   // Em: voit tout
-  // Au/Ma: voient les tâches qui leur sont assignées OU qu'elles ont créées
+  // Au/Ma: voient les tâches qui leur sont assignées
   let todos;
   if (isEm) {
     todos = items.filter(i => i.type === 'todo');
   } else {
-    todos = items.filter(i => i.type === 'todo' && (i.assignee === currentUser || i.owner === currentUser));
+    todos = items.filter(i => i.type === 'todo' && i.assignee === currentUser);
   }
 
   const filtered = applySortOrder(applyFilterCat(todos));
@@ -1384,6 +1387,7 @@ let editingCats = null;
 function openSettings() {
   editingCats = Object.entries(CATS).map(([id, c]) => ({ id, label: c.label, color: c.color, isProject: !!c.isProject }));
   renderCatEditor();
+  renderMembersList();
   openModal('modal-settings');
 }
 
@@ -1433,16 +1437,107 @@ function saveCats() {
   render();
 }
 
-function shareInvite() {
-  const space = document.getElementById('invite-space')?.value || 'em';
-  const name = document.getElementById('invite-name')?.value?.trim();
-  const url = `https://i-immersion.github.io/lumiia-workspace/?user=${space}`;
-  const text = name ? `${name}, voici l'accès à LUMIIA Workspace :` : 'Accès LUMIIA Workspace :';
+function shareInvite() { copyMemberLink(document.getElementById('invite-space')?.value || 'em'); } // deprecated
 
-  // Web Share API (Android / mobile)
+function rebuildCatPicker() {
+  // Picker caché (compatibilité)
+  const picker = document.getElementById('cat-picker');
+  if (picker) picker.innerHTML = '';
+
+  // Picker Projets
+  const projPicker = document.getElementById('cat-picker-proj-btns');
+  // Picker Catégories
+  const catPicker = document.getElementById('cat-picker-cats-btns');
+  if (!projPicker || !catPicker) return;
+
+  const projects = Object.entries(CATS).filter(([id, c]) => c.isProject);
+  const cats = Object.entries(CATS).filter(([id, c]) => !c.isProject);
+
+  projPicker.innerHTML = projects.map(([id, c]) => `
+    <button class="cat-btn" data-cat="${id}" onclick="selectCat('${id}')"
+      style="border:1px solid var(--border);background:transparent;color:var(--text2)">
+      <span class="dot" style="width:8px;height:8px;border-radius:50%;background:${c.color}"></span>
+      ${c.label}
+    </button>
+  `).join('');
+
+  catPicker.innerHTML = cats.map(([id, c]) => `
+    <button class="cat-btn" data-cat="${id}" onclick="selectCat('${id}')"
+      style="border:1px solid var(--border);background:transparent;color:var(--text2)">
+      <span class="dot" style="width:8px;height:8px;border-radius:50%;background:${c.color}"></span>
+      ${c.label}
+    </button>
+  `).join('');
+
+  // Sélectionner la catégorie courante
+  selectCat(currentCat);
+}
+
+function selectNotePrio(prio) {
+  currentNotePrio = prio;
+  document.querySelectorAll('.prio-btn').forEach(b => {
+    const isActive = b.dataset.prio === prio;
+    b.style.background = isActive ? 'var(--bg3)' : 'transparent';
+    b.style.color = isActive ? 'var(--text)' : 'var(--text3)';
+    b.style.borderColor = isActive ? 'rgba(255,255,255,0.2)' : 'var(--border)';
+  });
+}
+
+function updateMemberSelects() {
+  // Reconstruire les selects assignee et validate-by depuis MEMBERS
+  const assigneeEl = document.getElementById('input-assignee');
+  const validateEl = document.getElementById('input-validate-by');
+  if (assigneeEl) {
+    assigneeEl.innerHTML = MEMBERS.map(m =>
+      `<option value="${m.id}">${m.name}</option>`
+    ).join('');
+    assigneeEl.value = currentUser;
+  }
+  if (validateEl) {
+    validateEl.innerHTML = `<option value="">Aucune validation requise</option>` +
+      MEMBERS.map(m => `<option value="${m.id}">À valider par ${m.name}</option>`).join('');
+  }
+}
+
+function renderMembersList() {
+  const el = document.getElementById('members-list');
+  if (!el) return;
+  el.innerHTML = MEMBERS.map((m, i) => `
+    <div style="display:flex;align-items:center;gap:8px">
+      <div style="width:28px;height:28px;border-radius:50%;background:var(--cat-lumiia);display:flex;align-items:center;justify-content:center;font-family:Syne,sans-serif;font-weight:700;font-size:0.75rem;color:#000;flex-shrink:0">${m.name.slice(0,2).toUpperCase()}</div>
+      <div style="flex:1">
+        <div style="font-size:0.85rem;font-weight:600">${m.name}</div>
+        <div style="font-size:0.7rem;color:var(--text3)">i-immersion.github.io/lumiia-workspace/?user=${m.id}</div>
+      </div>
+      <button onclick="copyMemberLink('${m.id}')" style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:5px 10px;color:var(--text2);font-size:0.72rem;font-family:Syne,sans-serif;font-weight:700;cursor:pointer">🔗</button>
+      ${i > 0 ? `<button onclick="removeMember(${i})" style="background:none;border:none;color:var(--text3);font-size:1rem;cursor:pointer;padding:4px">✕</button>` : ''}
+    </div>
+  `).join('');
+}
+
+function addMember() {
+  const input = document.getElementById('new-member-name');
+  const name = input?.value?.trim();
+  if (!name) return;
+  const id = name.toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 8) + '_' + Date.now().toString(36).slice(-3);
+  MEMBERS.push({ id, name, url: id });
+  localStorage.setItem('lumiia-members', JSON.stringify(MEMBERS));
+  if (input) input.value = '';
+  renderMembersList();
+}
+
+function removeMember(idx) {
+  MEMBERS.splice(idx, 1);
+  localStorage.setItem('lumiia-members', JSON.stringify(MEMBERS));
+  renderMembersList();
+}
+
+function copyMemberLink(memberId) {
+  const url = `https://i-immersion.github.io/lumiia-workspace/?user=${memberId}`;
+  const member = MEMBERS.find(m => m.id === memberId);
+  const text = member ? `${member.name}, voici ton accès LUMIIA Workspace :` : 'Accès LUMIIA Workspace :';
   if (navigator.share) {
-    navigator.share({ title: 'LUMIIA Workspace', text, url })
-      .catch(() => fallbackCopy(url));
+    navigator.share({ title: 'LUMIIA Workspace', text, url }).catch(() => fallbackCopy(url));
   } else {
     fallbackCopy(url);
   }
@@ -1450,24 +1545,10 @@ function shareInvite() {
 
 function fallbackCopy(url) {
   navigator.clipboard.writeText(url).then(() => {
-    const fb = document.getElementById('invite-feedback');
-    if (fb) { fb.style.display = 'block'; setTimeout(() => fb.style.display = 'none', 3000); }
-  }).catch(() => {
-    // Dernier recours : prompt
-    window.prompt('Copie ce lien :', url);
-  });
-}
-
-function rebuildCatPicker() {
-  const picker = document.getElementById('cat-picker');
-  if (!picker) return;
-  picker.innerHTML = Object.entries(CATS).map(([id, c], i) => `
-    <button class="cat-btn${i === 0 ? ' selected' : ''}" data-cat="${id}" onclick="selectCat('${id}')"
-      style="${i === 0 ? `background:${c.color};color:#000;border-color:transparent` : ''}">
-      <span class="dot" style="width:8px;height:8px;border-radius:50%;background:${c.color}"></span>
-      ${c.label}
-    </button>
-  `).join('');
+    // Feedback visuel temporaire
+    const els = document.querySelectorAll('[onclick*="copyMemberLink"]');
+    els.forEach(el => { const orig = el.textContent; el.textContent = '✓'; setTimeout(() => el.textContent = orig, 2000); });
+  }).catch(() => { window.prompt('Copie ce lien :', url); });
 }
 
 function cycleSortOrder() {} // deprecated
@@ -1500,7 +1581,8 @@ function applySortOrder(arr) {
 function openCreateModal() {
   editingId = null;
   currentType = 'note';
-  currentCat = 'lumiia';
+  currentCat = Object.keys(CATS)[0] || 'lumiia';
+  currentNotePrio = 'normal';
   clItems = [];
   clItemsTodo = [];
   document.getElementById('input-title').value = '';
@@ -1512,13 +1594,14 @@ function openCreateModal() {
   document.getElementById('input-assignee').value = currentUser;
   document.getElementById('input-due').value = '';
   document.getElementById('input-validate-by').value = '';
-  document.getElementById('modal-title').textContent = 'Nouvelle note';
   document.getElementById('field-checklist').style.display = 'none';
   document.getElementById('field-checklist-todo').style.display = 'none';
   const btn = document.getElementById('toggle-cl-btn');
   if (btn) { btn.textContent = '☑️ Ajouter une checklist'; btn.style.color = 'var(--text2)'; }
   const btnTodo = document.getElementById('toggle-cl-todo-btn');
   if (btnTodo) { btnTodo.textContent = '☑️ Ajouter une checklist'; btnTodo.style.color = 'var(--text2)'; }
+  rebuildCatPicker();
+  updateMemberSelects();
   setType(currentTab === 'todo' ? 'todo' : 'note');
   selectCat(currentCat);
   renderClEditor();
@@ -1602,11 +1685,15 @@ function renderClEditorTodo() {
 
 function selectCat(cat) {
   currentCat = cat;
+  // Mettre à jour tous les boutons cat-btn dans les deux pickers
   document.querySelectorAll('.cat-btn').forEach(b => {
     const c = CATS[b.dataset.cat];
-    b.classList.toggle('selected', b.dataset.cat === cat);
-    b.style.background = b.dataset.cat === cat ? c.color : 'transparent';
-    b.style.color = b.dataset.cat === cat ? '#000' : '';
+    if (!c) return;
+    const isSelected = b.dataset.cat === cat;
+    b.classList.toggle('selected', isSelected);
+    b.style.background = isSelected ? c.color : 'transparent';
+    b.style.color = isSelected ? '#000' : 'var(--text2)';
+    b.style.borderColor = isSelected ? 'transparent' : 'var(--border)';
   });
 }
 
@@ -1658,6 +1745,7 @@ function saveItem() {
   if (currentType === 'note') {
     item.content = document.getElementById('input-content').value.trim();
     item.link = document.getElementById('input-link').value.trim();
+    item.prio = currentNotePrio || 'normal';
     const clVisible = document.getElementById('field-checklist').style.display !== 'none';
     item.checklist = clVisible ? clItems.filter(i => i.text.trim()) : [];
   }
@@ -1948,6 +2036,7 @@ window.switchTab = switchTab;
 window.openCreateModal = openCreateModal;
 window.setType = setType;
 window.selectCat = selectCat;
+window.selectNotePrio = selectNotePrio;
 window.addClItem = addClItem;
 window.removeClItem = removeClItem;
 window.updateClItem = updateClItem;
@@ -1960,6 +2049,9 @@ window.editItem = editItem;
 window.setFilter = setFilter;
 window.closeModal = closeModal;
 window.openModal = openModal;
+window.addMember = addMember;
+window.removeMember = removeMember;
+window.copyMemberLink = copyMemberLink;
 </script>
 </body>
 </html>
