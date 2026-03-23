@@ -12,7 +12,7 @@
 <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjogIkxVTUlJQSBXb3Jrc3BhY2UiLCAic2hvcnRfbmFtZSI6ICJXb3Jrc3BhY2UiLCAic3RhcnRfdXJsIjogIi4iLCAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwgImJhY2tncm91bmRfY29sb3IiOiAiIzBkMGQwZiIsICJ0aGVtZV9jb2xvciI6ICIjMGQwZDBmIiwgImljb25zIjogW3sic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzl6ZG1jaUlIWnBaWGRDYjNnOUlqQWdNQ0F5T1RBZ01qa3dJajQ4Y21WamRDQjNhV1IwYUQwaU1qa3dJaUJvWldsbmFIUTlJakk1TUNJZ2NuZzlJall3SWlCbWFXeHNQU0lqTUdRd1pEQm1JaTgrUEhSbGVIUWdlRDBpTlRBbElpQjVQU0kxTlNVaUlHWnZiblF0YzJsNlpUMGlNVFl3SWlCMFpYaDBMV0Z1WTJodmNqMGliV2xrWkd4bElpQmtiMjFwYm1GdWRDMWlZWE5sYkdsdVpUMGliV2xrWkd4bElqN3duNXFnUEM5MFpYaDBQand2YzNablBnPT0iLCAic2l6ZXMiOiAiMTkyeDE5MiA1MTJ4NTEyIiwgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
 <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOTAgMjkwIj48cmVjdCB3aWR0aD0iMjkwIiBoZWlnaHQ9IjI5MCIgcng9IjYwIiBmaWxsPSIjMGQwZDBmIi8+PHRleHQgeD0iNTAlIiB5PSI1NSUiIGZvbnQtc2l6ZT0iMTYwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn5qgPC90ZXh0Pjwvc3ZnPg==">
 
-<!-- LUMIIA Workspace v4.0 -->
+<!-- LUMIIA Workspace v4.1 -->
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 
@@ -760,7 +760,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
   <button class="tab" data-tab="projets" onclick="switchTab('projets')">Projets</button>
   <button class="tab" data-tab="semaine" onclick="switchTab('semaine')">Semaine</button>
   <div style="flex:1"></div>
-  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v4.0</div>
+  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v4.1</div>
 </div>
 
 <main id="main-content">
@@ -801,19 +801,20 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
         <input type="hidden" id="input-note-time" value="">
       </div>
       <div id="note-time-picker-section" style="margin-bottom:14px">
-        <div style="font-size:0.68rem;color:var(--text3);font-family:Syne,sans-serif;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:6px">Heure (optionnel)</div>
-        <div style="display:flex;flex-wrap:wrap;gap:6px" id="note-time-picker-btns">
-          <button type="button" onclick="selectNoteTime('')" class="time-btn active" data-time="">Journée</button>
-          <button type="button" onclick="selectNoteTime('08:00')" class="time-btn" data-time="08:00">8h</button>
-          <button type="button" onclick="selectNoteTime('09:00')" class="time-btn" data-time="09:00">9h</button>
-          <button type="button" onclick="selectNoteTime('10:00')" class="time-btn" data-time="10:00">10h</button>
-          <button type="button" onclick="selectNoteTime('11:00')" class="time-btn" data-time="11:00">11h</button>
-          <button type="button" onclick="selectNoteTime('12:00')" class="time-btn" data-time="12:00">12h</button>
-          <button type="button" onclick="selectNoteTime('14:00')" class="time-btn" data-time="14:00">14h</button>
-          <button type="button" onclick="selectNoteTime('16:00')" class="time-btn" data-time="16:00">16h</button>
-          <button type="button" onclick="selectNoteTime('18:00')" class="time-btn" data-time="18:00">18h</button>
-          <button type="button" onclick="selectNoteTime('19:00')" class="time-btn" data-time="19:00">19h</button>
-          <button type="button" onclick="selectNoteTime('20:00')" class="time-btn" data-time="20:00">20h</button>
+        <div style="font-size:0.68rem;color:var(--text3);font-family:Syne,sans-serif;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px">Heure (optionnel)</div>
+        <div style="display:flex;align-items:center;gap:8px">
+          <button type="button" onclick="selectNoteTime('')" id="note-time-clear-btn" class="time-btn active" style="flex-shrink:0">Journée</button>
+          <div style="display:flex;align-items:center;gap:4px;background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:4px 8px">
+            <select id="note-time-hour" onchange="updateTimeFromSelects('note')" style="background:transparent;border:none;color:var(--text);font-family:Syne,sans-serif;font-weight:700;font-size:0.9rem;cursor:pointer;outline:none;-webkit-appearance:none;text-align:center;width:36px">
+              <option value="">--</option>
+              <option>00</option><option>01</option><option>02</option><option>03</option><option>04</option><option>05</option><option>06</option><option>07</option><option>08</option><option>09</option><option>10</option><option>11</option><option>12</option><option>13</option><option>14</option><option>15</option><option>16</option><option>17</option><option>18</option><option>19</option><option>20</option><option>21</option><option>22</option><option>23</option>
+            </select>
+            <span style="color:var(--text2);font-weight:700">:</span>
+            <select id="note-time-min" onchange="updateTimeFromSelects('note')" style="background:transparent;border:none;color:var(--text);font-family:Syne,sans-serif;font-weight:700;font-size:0.9rem;cursor:pointer;outline:none;-webkit-appearance:none;text-align:center;width:36px">
+              <option value="">--</option>
+              <option>00</option><option>05</option><option>10</option><option>15</option><option>20</option><option>25</option><option>30</option><option>35</option><option>40</option><option>45</option><option>50</option><option>55</option>
+            </select>
+          </div>
         </div>
       </div>
       <!-- Toggle checklist -->
@@ -853,21 +854,20 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
         <input type="hidden" id="input-time" value="">
       </div>
       <div id="time-picker-section" style="margin-bottom:14px">
-        <div style="font-size:0.68rem;color:var(--text3);font-family:Syne,sans-serif;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:6px">Heure (optionnel)</div>
-        <div style="display:flex;flex-wrap:wrap;gap:6px" id="time-picker-btns">
-          <button type="button" onclick="selectTime('')" class="time-btn active" data-time="">Journée</button>
-          <button type="button" onclick="selectTime('08:00')" class="time-btn" data-time="08:00">8h</button>
-          <button type="button" onclick="selectTime('09:00')" class="time-btn" data-time="09:00">9h</button>
-          <button type="button" onclick="selectTime('10:00')" class="time-btn" data-time="10:00">10h</button>
-          <button type="button" onclick="selectTime('11:00')" class="time-btn" data-time="11:00">11h</button>
-          <button type="button" onclick="selectTime('12:00')" class="time-btn" data-time="12:00">12h</button>
-          <button type="button" onclick="selectTime('14:00')" class="time-btn" data-time="14:00">14h</button>
-          <button type="button" onclick="selectTime('15:00')" class="time-btn" data-time="15:00">15h</button>
-          <button type="button" onclick="selectTime('16:00')" class="time-btn" data-time="16:00">16h</button>
-          <button type="button" onclick="selectTime('17:00')" class="time-btn" data-time="17:00">17h</button>
-          <button type="button" onclick="selectTime('18:00')" class="time-btn" data-time="18:00">18h</button>
-          <button type="button" onclick="selectTime('19:00')" class="time-btn" data-time="19:00">19h</button>
-          <button type="button" onclick="selectTime('20:00')" class="time-btn" data-time="20:00">20h</button>
+        <div style="font-size:0.68rem;color:var(--text3);font-family:Syne,sans-serif;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px">Heure (optionnel)</div>
+        <div style="display:flex;align-items:center;gap:8px">
+          <button type="button" onclick="selectTime('')" id="time-clear-btn" class="time-btn active" style="flex-shrink:0">Journée</button>
+          <div style="display:flex;align-items:center;gap:4px;background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:4px 8px">
+            <select id="time-hour" onchange="updateTimeFromSelects('time')" style="background:transparent;border:none;color:var(--text);font-family:Syne,sans-serif;font-weight:700;font-size:0.9rem;cursor:pointer;outline:none;-webkit-appearance:none;text-align:center;width:36px">
+              <option value="">--</option>
+              <option>00</option><option>01</option><option>02</option><option>03</option><option>04</option><option>05</option><option>06</option><option>07</option><option>08</option><option>09</option><option>10</option><option>11</option><option>12</option><option>13</option><option>14</option><option>15</option><option>16</option><option>17</option><option>18</option><option>19</option><option>20</option><option>21</option><option>22</option><option>23</option>
+            </select>
+            <span style="color:var(--text2);font-weight:700">:</span>
+            <select id="time-min" onchange="updateTimeFromSelects('time')" style="background:transparent;border:none;color:var(--text);font-family:Syne,sans-serif;font-weight:700;font-size:0.9rem;cursor:pointer;outline:none;-webkit-appearance:none;text-align:center;width:36px">
+              <option value="">--</option>
+              <option>00</option><option>05</option><option>10</option><option>15</option><option>20</option><option>25</option><option>30</option><option>35</option><option>40</option><option>45</option><option>50</option><option>55</option>
+            </select>
+          </div>
         </div>
       </div>
       <div class="field-label">Contenu (optionnel)</div>
@@ -1121,6 +1121,7 @@ let currentProjectId = null;   // projet sélectionné dans la modale
 let currentSubcatId = null;    // sous-catégorie sélectionnée
 let currentNotePrio = 'later';
 let filterCat = 'all';
+let semaineFiltreProj = 'all'; // filtre pour la vue semaine
 let sortOrder = 'recent';
 let currentProject = null;     // projet ouvert dans la vue Projets
 let editingId = null;
@@ -1516,6 +1517,11 @@ function renderDayItem(item, isToday) {
     + '</div>';
 }
 
+function setSemaineFiltre(val) {
+  semaineFiltreProj = val;
+  render();
+}
+
 function renderSemaine() {
   const today = new Date();
   today.setHours(0,0,0,0);
@@ -1524,25 +1530,55 @@ function renderSemaine() {
   const isAdmin = currentUser === MEMBERS[0]?.id;
   const todayStr = localDateStr(today);
 
-  // Tâches actives visibles
-  const myTodos = isAdmin
+  // Items visibles
+  const allTodos = isAdmin
     ? items.filter(i => i.type === 'todo' && !i.done)
     : items.filter(i => i.type === 'todo' && !i.done && (i.assignee === currentUser || i.validateBy === currentUser || i.owner === currentUser));
+  const allNotes = items.filter(i => (i.type === 'note' || i.type === 'checklist') && (i.owner === currentUser || i.shared));
 
-  // Notes visibles — avec noteDate ou créées récemment
-  const myNotes = items.filter(i => (i.type === 'note' || i.type === 'checklist') && (i.owner === currentUser || i.shared));
+  // Appliquer le filtre semaine
+  function matchFilter(item) {
+    if (semaineFiltreProj === 'all') return true;
+    if (semaineFiltreProj.startsWith('__proj_')) return item.projectId === semaineFiltreProj.slice(7);
+    return item.cat === semaineFiltreProj;
+  }
+  const myTodos = allTodos.filter(matchFilter);
+  const myNotes = allNotes.filter(matchFilter);
+
+  // Construire la barre de filtres
+  const usedProjIds = [...new Set([...allTodos, ...allNotes].map(i => i.projectId).filter(Boolean))];
+  const usedCats = [...new Set([...allTodos, ...allNotes].map(i => i.cat).filter(Boolean))];
+  let filterBar = '';
+  if (usedProjIds.length + usedCats.length > 0) {
+    filterBar = '<div class="filter-bar" style="margin-bottom:16px;flex-wrap:wrap">'
+      + '<button class="filter-chip' + (semaineFiltreProj === 'all' ? ' active' : '') + '" onclick="setSemaineFiltre(\'all\')">Tout</button>';
+    usedProjIds.forEach(pid => {
+      const p = getProject(pid);
+      if (!p) return;
+      const key = '__proj_' + pid;
+      const isActive = semaineFiltreProj === key;
+      filterBar += '<button class="filter-chip' + (isActive ? ' active' : '') + '" onclick="setSemaineFiltre(\'' + key + '\')" style="' + (isActive ? 'background:' + p.color + ';color:#000;border-color:transparent' : 'border-color:' + p.color + '60') + '">'
+        + '<span style="width:6px;height:6px;border-radius:50%;background:' + p.color + ';display:inline-block"></span> ' + p.label + '</button>';
+    });
+    usedCats.forEach(catId => {
+      const c = CATS[catId];
+      if (!c) return;
+      filterBar += '<button class="filter-chip' + (semaineFiltreProj === catId ? ' active' : '') + '" onclick="setSemaineFiltre(\'' + catId + '\')">'
+        + '<span style="width:6px;height:6px;border-radius:50%;background:' + c.color + ';display:inline-block"></span> ' + c.label + '</button>';
+    });
+    filterBar += '</div>';
+  }
 
   // Tâches en retard
   const overdue = myTodos.filter(i => i.due && i.due < todayStr);
 
-  // Fonction pour obtenir les items d'un jour
+  // Items d'un jour
   function getDayItems(dayStr) {
     const todos = myTodos.filter(i => i.due === dayStr);
     const notes = myNotes.filter(i => {
       const d = i.noteDate || localDateStr(new Date(i.created));
       return d === dayStr;
     });
-    // Mélanger et trier par heure puis priorité
     const all = [
       ...todos.map(i => ({ ...i, _time: i.dueTime || '', _order: i.dueTime ? 0 : 1 })),
       ...notes.map(i => ({ ...i, _time: i.noteTime || '', _order: i.noteTime ? 0 : 2 }))
@@ -1555,7 +1591,7 @@ function renderSemaine() {
     });
   }
 
-  let html = '';
+  let html = filterBar;
 
   // Bloc retards
   if (overdue.length > 0) {
@@ -1566,7 +1602,7 @@ function renderSemaine() {
       + '</div>';
     overdue.sort((a,b) => (a.due||'').localeCompare(b.due||'')).forEach(item => {
       const catInfo = getCatInfo(item);
-      const prioIcon = {'urgent':'🔴','normal':'🟡','later':'⚪'}[item.prio] || '';
+      const prioIcon = {'urgent':'\uD83D\uDD34','normal':'\uD83D\uDFE1','later':'\u26AA'}[item.prio] || '';
       const dueDate = new Date(item.due + 'T12:00:00').toLocaleDateString('fr-FR', { day:'numeric', month:'short' });
       html += '<div onclick="openDetail(\'' + item.id + '\')" style="display:flex;align-items:center;gap:8px;padding:10px 12px;background:var(--bg3);border-radius:10px;margin-bottom:6px;cursor:pointer;border-left:3px solid var(--cat-urgent)">'
         + '<div style="font-size:0.75rem">' + prioIcon + '</div>'
@@ -1589,33 +1625,31 @@ function renderSemaine() {
     const count = dayItems.length;
 
     if (isToday) {
-      // Aujourd'hui — plein, toujours visible
       html += '<div style="margin-bottom:20px;padding:16px;border-radius:16px;background:rgba(56,189,248,0.06);border:1px solid rgba(56,189,248,0.25)">'
-        + '<div style="display:flex;align-items:center;gap:8px;margin-bottom:' + (count ? '12px' : '0') + '">'
+        + '<div style="display:flex;align-items:center;gap:8px;margin-bottom:' + (count ? '12px' : '4px') + '">'
         + '<div style="font-family:Syne,sans-serif;font-size:0.95rem;font-weight:800;color:#38bdf8">' + jourLabel + '</div>'
         + '<div style="font-family:Syne,sans-serif;font-size:0.85rem;font-weight:600;color:var(--text2)">' + dateLabel + '</div>'
         + '<div style="font-size:0.65rem;background:#38bdf8;color:#000;font-family:Syne,sans-serif;font-weight:800;padding:2px 7px;border-radius:10px;letter-spacing:0.08em">AUJOURD\'HUI</div>'
-        + (count ? '<div style="margin-left:auto;font-size:0.7rem;color:var(--text3)">' + count + ' élém.</div>' : '')
+        + (count ? '<div style="margin-left:auto;font-size:0.7rem;color:var(--text3)">' + count + ' \u00e9l\u00e9m.</div>' : '')
         + '</div>';
       if (count === 0) {
-        html += '<div style="font-size:0.82rem;color:var(--text3);padding:4px 0">Rien de prévu aujourd\'hui</div>';
+        html += '<div style="font-size:0.82rem;color:var(--text3)">Rien de pr\u00e9vu aujourd\'hui</div>';
       } else {
         dayItems.forEach(item => { html += renderDayItem(item, true); });
       }
       html += '</div>';
     } else {
-      // Autres jours — accordéon
       const uid = 'day_' + d;
       html += '<div style="margin-bottom:8px;border-radius:12px;background:var(--bg2);border:1px solid var(--border);overflow:hidden">'
         + '<button onclick="toggleDayAccordion(\'' + uid + '\')" style="width:100%;display:flex;align-items:center;gap:8px;padding:11px 14px;background:transparent;border:none;cursor:pointer;text-align:left">'
         + '<div style="font-family:Syne,sans-serif;font-size:0.82rem;font-weight:700;color:var(--text2)">' + jourLabel + '</div>'
         + '<div style="font-family:Syne,sans-serif;font-size:0.75rem;color:var(--text3)">' + dateLabel + '</div>'
         + (count > 0 ? '<div style="font-size:0.68rem;background:var(--bg3);color:var(--text2);font-family:Syne,sans-serif;font-weight:700;padding:2px 6px;border-radius:8px">' + count + '</div>' : '')
-        + '<div id="' + uid + '_arrow" style="margin-left:auto;font-size:0.7rem;color:var(--text3);transition:transform 0.2s">›</div>'
+        + '<div id="' + uid + '_arrow" style="margin-left:auto;font-size:0.7rem;color:var(--text3);transition:transform 0.2s">\u203a</div>'
         + '</button>'
         + '<div id="' + uid + '" style="display:none;padding:0 12px 12px">';
       if (count === 0) {
-        html += '<div style="font-size:0.78rem;color:var(--text3);padding:4px 0">Rien de prévu</div>';
+        html += '<div style="font-size:0.78rem;color:var(--text3);padding:4px 0">Rien de pr\u00e9vu</div>';
       } else {
         dayItems.forEach(item => { html += renderDayItem(item, false); });
       }
@@ -1623,7 +1657,7 @@ function renderSemaine() {
     }
   }
 
-  return html || '<div class="empty"><div class="empty-icon">📅</div><div class="empty-text">Aucun élément cette semaine.</div></div>';
+  return html || '<div class="empty"><div class="empty-icon">\uD83D\uDCC5</div><div class="empty-text">Aucun \u00e9l\u00e9ment cette semaine.</div></div>';
 }
 
 function toggleDayAccordion(uid) {
@@ -1632,8 +1666,9 @@ function toggleDayAccordion(uid) {
   if (!el) return;
   const open = el.style.display === 'none' || el.style.display === '';
   el.style.display = open ? 'block' : 'none';
-  if (arrow) { arrow.style.transform = open ? 'rotate(90deg)' : ''; }
+  if (arrow) arrow.style.transform = open ? 'rotate(90deg)' : '';
 }
+
 
 function renderProjets() {
   if (currentProject) return renderProjetDetail(currentProject);
@@ -2055,16 +2090,43 @@ function selectGlobalCat(catId) {
 
 function selectTime(time) {
   document.getElementById('input-time').value = time;
-  document.querySelectorAll('#time-picker-btns .time-btn').forEach(b => {
-    b.classList.toggle('active', b.dataset.time === time);
-  });
+  const clearBtn = document.getElementById('time-clear-btn');
+  if (clearBtn) { clearBtn.classList.toggle('active', !time); }
+  // Reset les selects si journée
+  if (!time) {
+    const h = document.getElementById('time-hour');
+    const m = document.getElementById('time-min');
+    if (h) h.value = '';
+    if (m) m.value = '';
+  }
 }
 
 function selectNoteTime(time) {
   document.getElementById('input-note-time').value = time;
-  document.querySelectorAll('#note-time-picker-btns .time-btn').forEach(b => {
-    b.classList.toggle('active', b.dataset.time === time);
-  });
+  const clearBtn = document.getElementById('note-time-clear-btn');
+  if (clearBtn) { clearBtn.classList.toggle('active', !time); }
+  if (!time) {
+    const h = document.getElementById('note-time-hour');
+    const m = document.getElementById('note-time-min');
+    if (h) h.value = '';
+    if (m) m.value = '';
+  }
+}
+
+function updateTimeFromSelects(type) {
+  const prefix = type === 'note' ? 'note-' : '';
+  const h = document.getElementById(prefix + 'time-hour')?.value;
+  const m = document.getElementById(prefix + 'time-min')?.value;
+  if (h && m) {
+    const time = h + ':' + m;
+    document.getElementById('input-' + (type === 'note' ? 'note-' : '') + 'time').value = time;
+    const clearBtn = document.getElementById((type === 'note' ? 'note-' : '') + 'time-clear-btn');
+    if (clearBtn) clearBtn.classList.remove('active');
+  } else if (!h && !m) {
+    document.getElementById('input-' + (type === 'note' ? 'note-' : '') + 'time').value = '';
+    const clearBtn = document.getElementById((type === 'note' ? 'note-' : '') + 'time-clear-btn');
+    if (clearBtn) clearBtn.classList.add('active');
+  }
 }
 
 function selectNotePrio(prio) {
@@ -2219,7 +2281,10 @@ function openCreateModal() {
   document.getElementById('input-prio').value = 'normal';
   document.getElementById('input-due').value = '';
   const timeEl = document.getElementById('input-time');
-  if (timeEl) { timeEl.value = ''; }
+  if (timeEl) timeEl.value = '';
+  ['time-hour','time-min','note-time-hour','note-time-min'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.value = '';
+  });
   selectTime('');
   const noteDateEl = document.getElementById('input-note-date');
   if (noteDateEl) noteDateEl.value = '';
@@ -2668,11 +2733,31 @@ function editItem(id) {
   if (item.assignee) document.getElementById('input-assignee').value = item.assignee;
   if (item.due) document.getElementById('input-due').value = item.due;
   const timeEl = document.getElementById('input-time');
-  if (timeEl) { timeEl.value = item.dueTime || ''; selectTime(item.dueTime || ''); }
+  if (timeEl) {
+    timeEl.value = item.dueTime || '';
+    if (item.dueTime) {
+      const [h, m] = item.dueTime.split(':');
+      const hEl = document.getElementById('time-hour');
+      const mEl = document.getElementById('time-min');
+      if (hEl) hEl.value = h;
+      if (mEl) mEl.value = m;
+      const cb = document.getElementById('time-clear-btn');
+      if (cb) cb.classList.remove('active');
+    } else { selectTime(''); }
+  }
   // Champs note
   const noteDateEl = document.getElementById('input-note-date');
   if (noteDateEl) noteDateEl.value = item.noteDate || '';
-  selectNoteTime(item.noteTime || '');
+  if (item.noteTime) {
+    document.getElementById('input-note-time').value = item.noteTime;
+    const [h, m] = item.noteTime.split(':');
+    const hEl = document.getElementById('note-time-hour');
+    const mEl = document.getElementById('note-time-min');
+    if (hEl) hEl.value = h;
+    if (mEl) mEl.value = m;
+    const cb = document.getElementById('note-time-clear-btn');
+    if (cb) cb.classList.remove('active');
+  } else { selectNoteTime(''); }
   document.getElementById('input-validate-by').value = item.validateBy || '';
   document.getElementById('modal-title').textContent = 'Modifier';
   const hasCl = currentType === 'note' && clItems.length > 0;
@@ -2790,6 +2875,10 @@ window.addMember = addMember;
 window.removeMember = removeMember;
 window.copyMemberLink = copyMemberLink;
 window.toggleDayAccordion = toggleDayAccordion;
+window.setSemaineFiltre = setSemaineFiltre;
+window.updateTimeFromSelects = updateTimeFromSelects;
+window.selectTime = selectTime;
+window.selectNoteTime = selectNoteTime;
 window.render = render;
 window.renderSemaine = renderSemaine;
 </script>
