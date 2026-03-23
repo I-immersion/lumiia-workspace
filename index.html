@@ -12,7 +12,7 @@
 <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjogIkxVTUlJQSBXb3Jrc3BhY2UiLCAic2hvcnRfbmFtZSI6ICJXb3Jrc3BhY2UiLCAic3RhcnRfdXJsIjogIi4iLCAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwgImJhY2tncm91bmRfY29sb3IiOiAiIzBkMGQwZiIsICJ0aGVtZV9jb2xvciI6ICIjMGQwZDBmIiwgImljb25zIjogW3sic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzl6ZG1jaUlIWnBaWGRDYjNnOUlqQWdNQ0F5T1RBZ01qa3dJajQ4Y21WamRDQjNhV1IwYUQwaU1qa3dJaUJvWldsbmFIUTlJakk1TUNJZ2NuZzlJall3SWlCbWFXeHNQU0lqTUdRd1pEQm1JaTgrUEhSbGVIUWdlRDBpTlRBbElpQjVQU0kxTlNVaUlHWnZiblF0YzJsNlpUMGlNVFl3SWlCMFpYaDBMV0Z1WTJodmNqMGliV2xrWkd4bElpQmtiMjFwYm1GdWRDMWlZWE5sYkdsdVpUMGliV2xrWkd4bElqN3duNXFnUEM5MFpYaDBQand2YzNablBnPT0iLCAic2l6ZXMiOiAiMTkyeDE5MiA1MTJ4NTEyIiwgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
 <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOTAgMjkwIj48cmVjdCB3aWR0aD0iMjkwIiBoZWlnaHQ9IjI5MCIgcng9IjYwIiBmaWxsPSIjMGQwZDBmIi8+PHRleHQgeD0iNTAlIiB5PSI1NSUiIGZvbnQtc2l6ZT0iMTYwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn5qgPC90ZXh0Pjwvc3ZnPg==">
 
-<!-- LUMIIA Workspace v2.9 -->
+<!-- LUMIIA Workspace v3.0 -->
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 
@@ -739,7 +739,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
   <button class="tab" data-tab="todo" onclick="switchTab('todo')">To-do</button>
   <button class="tab" data-tab="projets" onclick="switchTab('projets')">Projets</button>
   <div style="flex:1"></div>
-  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v2.9</div>
+  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v3.0</div>
 </div>
 
 <main id="main-content">
@@ -799,7 +799,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
           </select>
         </div>
         <div>
-          <div class="field-label">Assigné à</div>
+          <div class="field-label">Édité par</div>
           <div id="assignee-display" style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:11px 13px;color:var(--text3);font-size:0.88rem;font-family:DM Sans,sans-serif">—</div>
           <input type="hidden" id="input-assignee" value="">
         </div>
@@ -1151,6 +1151,7 @@ function renderTodos() {
     ));
   }
 
+  const allTodos = todos; // garder la liste complète pour les filtres
   const filtered = applySortOrder(applyFilterCat(todos));
   const active = filtered.filter(i => !i.done);
   const done = filtered.filter(i => i.done);
@@ -1160,7 +1161,7 @@ function renderTodos() {
     <div class="section-title">${active.length} tâche${active.length !== 1 ? 's' : ''} active${active.length !== 1 ? 's' : ''}</div>
   </div>`;
 
-  html += renderFilterBar(todos);
+  html += renderFilterBar(allTodos);
 
   if (overdue.length > 0) {
     html += `<div class="overdue-banner">⚠️ ${overdue.length} tâche${overdue.length > 1 ? 's' : ''} en retard</div>`;
@@ -1245,8 +1246,12 @@ function renderTodoItem(item, idx, showDelete = false) {
     waitingLabel = `<div style="font-size:0.7rem;color:var(--cat-admin);font-family:Syne,sans-serif;font-weight:600;white-space:nowrap">⏳ ${assigneeLabel}</div>`;
   }
 
+  // Case à cocher : ouvre le popup si validation en attente, sinon toggle normal
+  const needsPopup = item.validateBy && !item.validated && !item.done;
+  const checkAction = needsPopup ? `openDetail('${item.id}')` : `toggleTodo('${item.id}')`;
+
   return `<div class="todo-item${item.done ? ' done' : ''}${extraClass}" style="animation-delay:${idx*0.03}s">
-    <div class="todo-check" onclick="toggleTodo('${item.id}')" style="cursor:pointer;flex-shrink:0">${item.done ? '✓' : ''}</div>
+    <div class="todo-check" onclick="${checkAction}" style="cursor:pointer;flex-shrink:0">${item.done ? '✓' : ''}</div>
     <div style="flex:1;min-width:0">
       <div class="todo-text" onclick="openDetail('${item.id}')" style="cursor:pointer">${item.title}</div>
     </div>
@@ -1263,7 +1268,7 @@ function renderTodoItem(item, idx, showDelete = false) {
 function renderFilterBar(allItems) {
   const usedCats = [...new Set(allItems.map(i => i.cat).filter(Boolean))];
   const hasToValidate = currentTab === 'todo' && allItems.some(i => i.validateBy === currentUser && !i.done && !i.validated);
-  const hasWaiting = currentTab === 'todo' && allItems.some(i => i.assignee && i.assignee !== currentUser && !i.done);
+  const hasWaiting = currentTab === 'todo' && allItems.some(i => i.owner === currentUser && i.validateBy && i.validateBy !== currentUser && !i.done && !i.validated);
 
   if (usedCats.length <= 1 && !hasToValidate && !hasWaiting) return '';
 
@@ -1301,7 +1306,7 @@ function setFilter(cat) {
 function applyFilterCat(arr) {
   if (filterCat === 'all') return arr;
   if (filterCat === '__validate__') return arr.filter(i => i.validateBy === currentUser && !i.done && !i.validated);
-  if (filterCat === '__waiting__') return arr.filter(i => i.assignee && i.assignee !== currentUser && !i.done);
+  if (filterCat === '__waiting__') return arr.filter(i => i.owner === currentUser && i.validateBy && i.validateBy !== currentUser && !i.done && !i.validated);
   return arr.filter(i => i.cat === filterCat);
 }
 
@@ -1900,7 +1905,7 @@ function openDetail(id) {
 
     // Assigné à
     html += `<div style="background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:10px 14px">
-      <div style="font-size:0.65rem;color:var(--text3);font-family:Syne,sans-serif;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:4px">Assigné à</div>
+      <div style="font-size:0.65rem;color:var(--text3);font-family:Syne,sans-serif;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:4px">Édité par</div>
       <div style="font-size:0.88rem;font-weight:600;color:var(--text)">${assigneeName || '—'}</div>
     </div>`;
 
