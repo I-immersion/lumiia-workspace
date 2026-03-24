@@ -13,7 +13,7 @@
 <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjogIkxVTUlJQSBXb3Jrc3BhY2UiLCAic2hvcnRfbmFtZSI6ICJXb3Jrc3BhY2UiLCAic3RhcnRfdXJsIjogIi4iLCAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwgImJhY2tncm91bmRfY29sb3IiOiAiIzBkMGQwZiIsICJ0aGVtZV9jb2xvciI6ICIjMGQwZDBmIiwgImljb25zIjogW3sic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzl6ZG1jaUlIWnBaWGRDYjNnOUlqQWdNQ0F5T1RBZ01qa3dJajQ4Y21WamRDQjNhV1IwYUQwaU1qa3dJaUJvWldsbmFIUTlJakk1TUNJZ2NuZzlJall3SWlCbWFXeHNQU0lqTUdRd1pEQm1JaTgrUEhSbGVIUWdlRDBpTlRBbElpQjVQU0kxTlNVaUlHWnZiblF0YzJsNlpUMGlNVFl3SWlCMFpYaDBMV0Z1WTJodmNqMGliV2xrWkd4bElpQmtiMjFwYm1GdWRDMWlZWE5sYkdsdVpUMGliV2xrWkd4bElqN3duNXFnUEM5MFpYaDBQand2YzNablBnPT0iLCAic2l6ZXMiOiAiMTkyeDE5MiA1MTJ4NTEyIiwgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
 <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOTAgMjkwIj48cmVjdCB3aWR0aD0iMjkwIiBoZWlnaHQ9IjI5MCIgcng9IjYwIiBmaWxsPSIjMGQwZDBmIi8+PHRleHQgeD0iNTAlIiB5PSI1NSUiIGZvbnQtc2l6ZT0iMTYwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn5qgPC90ZXh0Pjwvc3ZnPg==">
 
-<!-- LUMIIA Workspace v5.1 -->
+<!-- LUMIIA Workspace v5.2 -->
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 
@@ -849,7 +849,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
   <button class="tab" data-tab="projets" onclick="switchTab('projets')">Projets</button>
   <button class="tab" data-tab="semaine" onclick="switchTab('semaine')">Semaine</button>
   <div style="flex:1"></div>
-  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v5.1</div>
+  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v5.2</div>
 </div>
 
 <main id="main-content">
@@ -3043,6 +3043,7 @@ const GOOG_SCOPES = 'https://www.googleapis.com/auth/calendar.events https://www
 let _googToken = null;
 let _googTokenClient = null;
 let _googTokenResolve = null;
+let _pendingXpressReminder = null;
 
 function _initGoogClient() {
   if (_googTokenClient) return;
@@ -3057,6 +3058,11 @@ function _initGoogClient() {
         return;
       }
       _googToken = { access_token: resp.access_token, expires_at: Date.now() + (resp.expires_in || 3600) * 1000 };
+      // Traiter l'item Xpress en attente
+      if (_pendingXpressReminder) {
+        scheduleGoogReminder(_pendingXpressReminder);
+        _pendingXpressReminder = null;
+      }
       if (_googTokenResolve) { _googTokenResolve(_googToken.access_token); _googTokenResolve = null; }
     },
   });
@@ -3246,7 +3252,7 @@ async function saveXpress() {
   if (xpressMode === 'hour') {
     const h = document.getElementById('xpress-h').value;
     const m = document.getElementById('xpress-m').value;
-    if (h !== '--') {
+    if (h && h !== '--') {
       xpressTime = h + ':' + m;
       const d = new Date();
       d.setHours(parseInt(h), parseInt(m), 0, 0);
@@ -3258,26 +3264,35 @@ async function saveXpress() {
   }
 
   const item = {
-    id: genId(),
-    type: 'xpress',
-    title,
-    owner: currentUser,
-    xpressDate: today,
-    xpressTime,
-    xpressTimer,
-    triggerAt,
-    created: Date.now(),
-    updated: Date.now(),
+    id: genId(), type: 'xpress', title,
+    owner: currentUser, xpressDate: today,
+    xpressTime, xpressTimer, triggerAt,
+    created: Date.now(), updated: Date.now(),
   };
 
+  // Sauvegarder d'abord
   items.push(item);
   await save();
   closeModal('modal-xpress');
   render();
 
-  // Programmer rappel local + Google
+  // Timer local
   if (triggerAt) scheduleXpressAlert(item);
-  if (item.xpressTime || item.xpressTimer) scheduleGoogReminder(item);
+
+  // Auth Google + Calendar/Tasks — déclenché ici depuis le contexte utilisateur
+  if (item.xpressTime || item.xpressTimer) {
+    _initGoogClient();
+    if (_googTokenClient) {
+      // Si token valide en cache → appel direct sans popup
+      if (_googToken && _googToken.expires_at > Date.now() + 60000) {
+        scheduleGoogReminder(item);
+      } else {
+        // Stocker l'item en attente et ouvrir le popup immédiatement
+        _pendingXpressReminder = item;
+        _googTokenClient.requestAccessToken({ prompt: '' });
+      }
+    }
+  }
 }
 
 function scheduleXpressAlert(item) {
