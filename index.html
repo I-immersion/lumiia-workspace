@@ -12,7 +12,7 @@
 <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjogIkxVTUlJQSBXb3Jrc3BhY2UiLCAic2hvcnRfbmFtZSI6ICJXb3Jrc3BhY2UiLCAic3RhcnRfdXJsIjogIi4iLCAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwgImJhY2tncm91bmRfY29sb3IiOiAiIzBkMGQwZiIsICJ0aGVtZV9jb2xvciI6ICIjMGQwZDBmIiwgImljb25zIjogW3sic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzl6ZG1jaUlIWnBaWGRDYjNnOUlqQWdNQ0F5T1RBZ01qa3dJajQ4Y21WamRDQjNhV1IwYUQwaU1qa3dJaUJvWldsbmFIUTlJakk1TUNJZ2NuZzlJall3SWlCbWFXeHNQU0lqTUdRd1pEQm1JaTgrUEhSbGVIUWdlRDBpTlRBbElpQjVQU0kxTlNVaUlHWnZiblF0YzJsNlpUMGlNVFl3SWlCMFpYaDBMV0Z1WTJodmNqMGliV2xrWkd4bElpQmtiMjFwYm1GdWRDMWlZWE5sYkdsdVpUMGliV2xrWkd4bElqN3duNXFnUEM5MFpYaDBQand2YzNablBnPT0iLCAic2l6ZXMiOiAiMTkyeDE5MiA1MTJ4NTEyIiwgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
 <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOTAgMjkwIj48cmVjdCB3aWR0aD0iMjkwIiBoZWlnaHQ9IjI5MCIgcng9IjYwIiBmaWxsPSIjMGQwZDBmIi8+PHRleHQgeD0iNTAlIiB5PSI1NSUiIGZvbnQtc2l6ZT0iMTYwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn5qgPC90ZXh0Pjwvc3ZnPg==">
 
-<!-- LUMIIA Workspace v4.8 -->
+<!-- LUMIIA Workspace v4.9 -->
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 
@@ -848,7 +848,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
   <button class="tab" data-tab="projets" onclick="switchTab('projets')">Projets</button>
   <button class="tab" data-tab="semaine" onclick="switchTab('semaine')">Semaine</button>
   <div style="flex:1"></div>
-  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v4.8</div>
+  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v4.9</div>
 </div>
 
 <main id="main-content">
@@ -867,7 +867,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
     <button class="fab-mini" style="background:#38bdf8" onclick="closeFabMenu();openXpressModal()">⚡</button>
   </div>
   <div class="fab-menu-item">
-    <div class="fab-menu-label">T\u00e2che</div>
+    <div class="fab-menu-label">Tâche</div>
     <button class="fab-mini" style="background:#4ade80" onclick="closeFabMenu();openCreateModal();setType('todo')">✅</button>
   </div>
   <div class="fab-menu-item">
@@ -885,40 +885,40 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
       <div style="font-family:Syne,sans-serif;font-weight:800;font-size:1.1rem;color:#38bdf8">⚡ Xpress</div>
       <button onclick="closeModal('modal-xpress')" style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;width:32px;height:32px;color:var(--text2);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center">✕</button>
     </div>
+
     <input type="text" id="xpress-title" class="field-input" placeholder="Note rapide..."
       style="font-size:1.05rem;font-weight:600;margin-bottom:16px"
       onkeydown="if(event.key==='Enter'){saveXpress()}">
 
-    <div class="field-label">Rappel (optionnel)</div>
-    <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">
-      <button class="time-btn active" id="xpress-no-time" onclick="selectXpressMode('none')">Aucun</button>
-      <button class="time-btn" id="xpress-hour-btn" onclick="selectXpressMode('hour')">Heure</button>
-      <button class="time-btn" id="xpress-timer-btn" onclick="selectXpressMode('timer')">Compte à rebours</button>
-    </div>
+    <div class="field-label" style="margin-bottom:10px">Rappel (optionnel)</div>
 
-    <!-- Sélecteur heure -->
-    <div id="xpress-hour-section" style="display:none;margin-bottom:12px">
-      <div style="display:flex;align-items:center;gap:4px;background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:6px 12px;width:fit-content">
-        <select id="xpress-h" style="background:transparent;border:none;color:var(--text);font-family:Syne,sans-serif;font-weight:700;font-size:1rem;cursor:pointer;outline:none;-webkit-appearance:none;width:40px;text-align:center">
-          <option>--</option>
-          <option>06</option><option>07</option><option>08</option><option>09</option><option>10</option><option>11</option><option>12</option><option>13</option><option>14</option><option>15</option><option>16</option><option>17</option><option>18</option><option>19</option><option>20</option><option>21</option><option>22</option><option>23</option>
+    <!-- Ligne 1 : sélecteur H:MM direct -->
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+      <div style="display:flex;align-items:center;gap:4px;background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:6px 12px">
+        <select id="xpress-h" onchange="onXpressHourChange()" style="background:transparent;border:none;color:var(--text);font-family:Syne,sans-serif;font-weight:700;font-size:1rem;cursor:pointer;outline:none;-webkit-appearance:none;width:40px;text-align:center">
+          <option value="">--</option>
+          <option>00</option><option>01</option><option>02</option><option>03</option><option>04</option><option>05</option><option>06</option><option>07</option><option>08</option><option>09</option><option>10</option><option>11</option><option>12</option><option>13</option><option>14</option><option>15</option><option>16</option><option>17</option><option>18</option><option>19</option><option>20</option><option>21</option><option>22</option><option>23</option>
         </select>
         <span style="color:var(--text2);font-weight:700;font-size:1.1rem">:</span>
-        <select id="xpress-m" style="background:transparent;border:none;color:var(--text);font-family:Syne,sans-serif;font-weight:700;font-size:1rem;cursor:pointer;outline:none;-webkit-appearance:none;width:40px;text-align:center">
+        <select id="xpress-m" onchange="onXpressHourChange()" style="background:transparent;border:none;color:var(--text);font-family:Syne,sans-serif;font-weight:700;font-size:1rem;cursor:pointer;outline:none;-webkit-appearance:none;width:40px;text-align:center">
           <option>00</option><option>05</option><option>10</option><option>15</option><option>20</option><option>25</option><option>30</option><option>35</option><option>40</option><option>45</option><option>50</option><option>55</option>
         </select>
       </div>
+      <div id="xpress-time-display" style="font-family:Syne,sans-serif;font-size:0.8rem;color:var(--text3)">heure fixe</div>
     </div>
 
-    <!-- Compte à rebours -->
-    <div id="xpress-timer-section" style="display:none;margin-bottom:12px">
-      <div style="display:flex;gap:8px;flex-wrap:wrap">
-        <button class="time-btn" data-min="5" onclick="selectXpressTimer(5,this)">5 min</button>
-        <button class="time-btn" data-min="10" onclick="selectXpressTimer(10,this)">10 min</button>
-        <button class="time-btn" data-min="15" onclick="selectXpressTimer(15,this)">15 min</button>
-        <button class="time-btn" data-min="30" onclick="selectXpressTimer(30,this)">30 min</button>
-        <button class="time-btn" data-min="60" onclick="selectXpressTimer(60,this)">1h</button>
-      </div>
+    <!-- Ligne 2 : compte à rebours -->
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px" id="xpress-timer-btns">
+      <button class="time-btn" data-min="2" onclick="selectXpressTimer(2,this)">2 min</button>
+      <button class="time-btn" data-min="5" onclick="selectXpressTimer(5,this)">5 min</button>
+      <button class="time-btn" data-min="10" onclick="selectXpressTimer(10,this)">10 min</button>
+      <button class="time-btn" data-min="15" onclick="selectXpressTimer(15,this)">15 min</button>
+      <button class="time-btn" data-min="30" onclick="selectXpressTimer(30,this)">30 min</button>
+      <button class="time-btn" data-min="60" onclick="selectXpressTimer(60,this)">1h</button>
+      <button class="time-btn" data-min="120" onclick="selectXpressTimer(120,this)">2h</button>
+      <button class="time-btn" data-min="180" onclick="selectXpressTimer(180,this)">3h</button>
+      <button class="time-btn" data-min="720" onclick="selectXpressTimer(720,this)">12h</button>
+      <button class="time-btn" data-min="1440" onclick="selectXpressTimer(1440,this)">24h</button>
     </div>
 
     <div class="modal-actions" style="margin-top:8px">
@@ -927,6 +927,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
     </div>
   </div>
 </div>
+
 
 <!-- CREATE / EDIT MODAL -->
 <div class="modal-overlay" id="modal-create">
@@ -3207,32 +3208,45 @@ function openXpressModal() {
   xpressMode = 'none';
   xpressTimerMin = 0;
   document.getElementById('xpress-title').value = '';
-  selectXpressMode('none');
-  document.getElementById('xpress-h').value = '--';
+  document.getElementById('xpress-h').value = '';
   document.getElementById('xpress-m').value = '00';
-  document.querySelectorAll('#xpress-timer-section .time-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('xpress-time-display').textContent = 'heure fixe';
+  document.getElementById('xpress-time-display').style.color = 'var(--text3)';
+  document.querySelectorAll('#xpress-timer-btns .time-btn').forEach(b => b.classList.remove('active'));
   openModal('modal-xpress');
   setTimeout(() => document.getElementById('xpress-title').focus(), 100);
-  // Demander permission notifications UNE SEULE FOIS
   if ('Notification' in window && Notification.permission === 'default' && !localStorage.getItem('lumiia-notif-asked')) {
-    Notification.requestPermission().then(result => {
-      localStorage.setItem('lumiia-notif-asked', '1');
-    });
+    Notification.requestPermission().then(() => localStorage.setItem('lumiia-notif-asked', '1'));
   }
 }
 
-function selectXpressMode(mode) {
-  xpressMode = mode;
-  ['none','hour','timer'].forEach(m => {
-    document.getElementById('xpress-' + (m === 'none' ? 'no-time' : m + '-btn')).classList.toggle('active', m === mode);
-  });
-  document.getElementById('xpress-hour-section').style.display = mode === 'hour' ? '' : 'none';
-  document.getElementById('xpress-timer-section').style.display = mode === 'timer' ? '' : 'none';
+function onXpressHourChange() {
+  const h = document.getElementById('xpress-h').value;
+  const m = document.getElementById('xpress-m').value;
+  const display = document.getElementById('xpress-time-display');
+  if (h) {
+    // Heure fixe sélectionnée — désactiver les timers
+    xpressMode = 'hour';
+    xpressTimerMin = 0;
+    document.querySelectorAll('#xpress-timer-btns .time-btn').forEach(b => b.classList.remove('active'));
+    display.textContent = 'rappel à ' + h + 'h' + m;
+    display.style.color = '#38bdf8';
+  } else {
+    xpressMode = 'none';
+    display.textContent = 'heure fixe';
+    display.style.color = 'var(--text3)';
+  }
 }
 
 function selectXpressTimer(min, btn) {
   xpressTimerMin = min;
-  document.querySelectorAll('#xpress-timer-section .time-btn').forEach(b => b.classList.remove('active'));
+  xpressMode = 'timer';
+  // Désactiver le sélecteur heure
+  document.getElementById('xpress-h').value = '';
+  document.getElementById('xpress-time-display').textContent = 'heure fixe';
+  document.getElementById('xpress-time-display').style.color = 'var(--text3)';
+  // Activer le bon bouton
+  document.querySelectorAll('#xpress-timer-btns .time-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
 }
 
@@ -3425,7 +3439,7 @@ window.toggleFabMenu = toggleFabMenu;
 window.closeFabMenu = closeFabMenu;
 window.openXpressModal = openXpressModal;
 window.saveXpress = saveXpress;
-window.selectXpressMode = selectXpressMode;
+window.onXpressHourChange = onXpressHourChange;
 window.selectXpressTimer = selectXpressTimer;
 window.deleteXpress = deleteXpress;
 window.convertXpress = convertXpress;
