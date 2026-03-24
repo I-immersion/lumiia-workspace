@@ -13,7 +13,7 @@
 <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjogIkxVTUlJQSBXb3Jrc3BhY2UiLCAic2hvcnRfbmFtZSI6ICJXb3Jrc3BhY2UiLCAic3RhcnRfdXJsIjogIi4iLCAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwgImJhY2tncm91bmRfY29sb3IiOiAiIzBkMGQwZiIsICJ0aGVtZV9jb2xvciI6ICIjMGQwZDBmIiwgImljb25zIjogW3sic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzl6ZG1jaUlIWnBaWGRDYjNnOUlqQWdNQ0F5T1RBZ01qa3dJajQ4Y21WamRDQjNhV1IwYUQwaU1qa3dJaUJvWldsbmFIUTlJakk1TUNJZ2NuZzlJall3SWlCbWFXeHNQU0lqTUdRd1pEQm1JaTgrUEhSbGVIUWdlRDBpTlRBbElpQjVQU0kxTlNVaUlHWnZiblF0YzJsNlpUMGlNVFl3SWlCMFpYaDBMV0Z1WTJodmNqMGliV2xrWkd4bElpQmtiMjFwYm1GdWRDMWlZWE5sYkdsdVpUMGliV2xrWkd4bElqN3duNXFnUEM5MFpYaDBQand2YzNablBnPT0iLCAic2l6ZXMiOiAiMTkyeDE5MiA1MTJ4NTEyIiwgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
 <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOTAgMjkwIj48cmVjdCB3aWR0aD0iMjkwIiBoZWlnaHQ9IjI5MCIgcng9IjYwIiBmaWxsPSIjMGQwZDBmIi8+PHRleHQgeD0iNTAlIiB5PSI1NSUiIGZvbnQtc2l6ZT0iMTYwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn5qgPC90ZXh0Pjwvc3ZnPg==">
 
-<!-- LUMIIA Workspace v5.2 -->
+<!-- LUMIIA Workspace v5.3 -->
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 
@@ -849,7 +849,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
   <button class="tab" data-tab="projets" onclick="switchTab('projets')">Projets</button>
   <button class="tab" data-tab="semaine" onclick="switchTab('semaine')">Semaine</button>
   <div style="flex:1"></div>
-  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v5.2</div>
+  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v5.3</div>
 </div>
 
 <main id="main-content">
@@ -868,12 +868,12 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
     <button class="fab-mini" style="background:#38bdf8" onclick="closeFabMenu();openXpressModal()">⚡</button>
   </div>
   <div class="fab-menu-item">
-    <div class="fab-menu-label">Tâche</div>
-    <button class="fab-mini" style="background:#4ade80" onclick="closeFabMenu();openCreateModal();setType('todo')">✅</button>
-  </div>
-  <div class="fab-menu-item">
     <div class="fab-menu-label">Note</div>
     <button class="fab-mini" style="background:var(--cat-lumiia)" onclick="closeFabMenu();openCreateModal();setType('note')">📝</button>
+  </div>
+  <div class="fab-menu-item">
+    <div class="fab-menu-label">Tâche</div>
+    <button class="fab-mini" style="background:#4ade80" onclick="closeFabMenu();openCreateModal();setType('todo')">✅</button>
   </div>
 </div>
 <!-- FAB principal -->
@@ -3098,12 +3098,17 @@ function getGoogToken() {
 async function googCreateCalendarEvent(title, dateTimeISO, durationMin = 30) {
   const token = await getGoogToken();
   if (!token) { console.warn('Pas de token Google'); return false; }
-  const start = new Date(dateTimeISO);
+  let start = new Date(dateTimeISO);
+  // Si l'heure est déjà passée aujourd'hui, mettre demain
+  if (start < new Date()) {
+    start.setDate(start.getDate() + 1);
+  }
   const end = new Date(start.getTime() + durationMin * 60000);
+  const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
   const body = {
     summary: '\u26a1 ' + title,
-    start: { dateTime: start.toISOString(), timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone },
-    end: { dateTime: end.toISOString(), timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone },
+    start: { dateTime: start.toISOString(), timeZone: tz },
+    end: { dateTime: end.toISOString(), timeZone: tz },
     reminders: { useDefault: false, overrides: [{ method: 'popup', minutes: 0 }] },
   };
   const res = await fetch('https://www.googleapis.com/calendar/v3/calendars/primary/events', {
@@ -3111,7 +3116,7 @@ async function googCreateCalendarEvent(title, dateTimeISO, durationMin = 30) {
     headers: { Authorization: 'Bearer ' + token, 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
   });
-  if (res.ok) console.log('\u2705 Event Calendar cr\u00e9\u00e9 : ' + title);
+  if (res.ok) console.log('\u2705 Event Calendar cr\u00e9\u00e9 : ' + title + ' \u00e0 ' + start.toLocaleTimeString('fr-FR', {hour:'2-digit',minute:'2-digit'}));
   else console.warn('\u274c Calendar error:', await res.text());
   return res.ok;
 }
@@ -3215,12 +3220,16 @@ function onXpressHourChange() {
   const m = document.getElementById('xpress-m').value;
   const display = document.getElementById('xpress-time-display');
   if (h) {
-    // Heure fixe sélectionnée — désactiver les timers
     xpressMode = 'hour';
     xpressTimerMin = 0;
     document.querySelectorAll('#xpress-timer-btns .time-btn').forEach(b => b.classList.remove('active'));
-    display.textContent = 'rappel à ' + h + 'h' + m;
-    display.style.color = '#38bdf8';
+    // Vérifier si l'heure est déjà passée
+    const now = new Date();
+    const chosen = new Date();
+    chosen.setHours(parseInt(h), parseInt(m), 0, 0);
+    const isPast = chosen < now;
+    display.textContent = isPast ? 'demain \u00e0 ' + h + 'h' + m : 'aujourd\'hui \u00e0 ' + h + 'h' + m;
+    display.style.color = isPast ? 'var(--cat-admin)' : '#38bdf8';
   } else {
     xpressMode = 'none';
     display.textContent = 'heure fixe';
