@@ -12,7 +12,7 @@
 <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjogIkxVTUlJQSBXb3Jrc3BhY2UiLCAic2hvcnRfbmFtZSI6ICJXb3Jrc3BhY2UiLCAic3RhcnRfdXJsIjogIi4iLCAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwgImJhY2tncm91bmRfY29sb3IiOiAiIzBkMGQwZiIsICJ0aGVtZV9jb2xvciI6ICIjMGQwZDBmIiwgImljb25zIjogW3sic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzl6ZG1jaUlIWnBaWGRDYjNnOUlqQWdNQ0F5T1RBZ01qa3dJajQ4Y21WamRDQjNhV1IwYUQwaU1qa3dJaUJvWldsbmFIUTlJakk1TUNJZ2NuZzlJall3SWlCbWFXeHNQU0lqTUdRd1pEQm1JaTgrUEhSbGVIUWdlRDBpTlRBbElpQjVQU0kxTlNVaUlHWnZiblF0YzJsNlpUMGlNVFl3SWlCMFpYaDBMV0Z1WTJodmNqMGliV2xrWkd4bElpQmtiMjFwYm1GdWRDMWlZWE5sYkdsdVpUMGliV2xrWkd4bElqN3duNXFnUEM5MFpYaDBQand2YzNablBnPT0iLCAic2l6ZXMiOiAiMTkyeDE5MiA1MTJ4NTEyIiwgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
 <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOTAgMjkwIj48cmVjdCB3aWR0aD0iMjkwIiBoZWlnaHQ9IjI5MCIgcng9IjYwIiBmaWxsPSIjMGQwZDBmIi8+PHRleHQgeD0iNTAlIiB5PSI1NSUiIGZvbnQtc2l6ZT0iMTYwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn5qgPC90ZXh0Pjwvc3ZnPg==">
 
-<!-- LUMIIA Workspace v4.6 -->
+<!-- LUMIIA Workspace v4.8 -->
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 
@@ -848,7 +848,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
   <button class="tab" data-tab="projets" onclick="switchTab('projets')">Projets</button>
   <button class="tab" data-tab="semaine" onclick="switchTab('semaine')">Semaine</button>
   <div style="flex:1"></div>
-  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v4.6</div>
+  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v4.8</div>
 </div>
 
 <main id="main-content">
@@ -2650,6 +2650,8 @@ function saveItem() {
     if (idx !== -1) items[idx] = item;
   } else {
     items.unshift(item);
+    // Rappel Google Calendar pour nouvelle tâche avec date
+    if (item.type === 'todo' && item.due) scheduleGoogTodoReminder(item);
   }
 
   save();
@@ -3032,6 +3034,152 @@ function seedDemo() {
 // ─────────────────────────────────────────────
 // FAB MENU
 // ─────────────────────────────────────────────
+// ─────────────────────────────────────────────
+// GOOGLE OAUTH + CALENDAR + TASKS
+// ─────────────────────────────────────────────
+const GOOG_CLIENT_ID = '823919513931-igf7jdknqhioqdr0dssig4en4ubn08mu.apps.googleusercontent.com';
+const GOOG_SCOPES = 'https://www.googleapis.com/auth/calendar.events https://www.googleapis.com/auth/tasks';
+let _googToken = null;
+
+function getGoogToken() {
+  // Retourne un token valide ou lance le flux OAuth
+  return new Promise((resolve, reject) => {
+    if (_googToken && _googToken.expires_at > Date.now() + 60000) {
+      resolve(_googToken.access_token);
+      return;
+    }
+    // Lancer le popup OAuth
+    const params = new URLSearchParams({
+      client_id: GOOG_CLIENT_ID,
+      redirect_uri: 'https://i-immersion.github.io/lumiia-workspace/',
+      response_type: 'token',
+      scope: GOOG_SCOPES,
+      prompt: 'none', // silencieux si déjà autorisé
+    });
+    const url = 'https://accounts.google.com/o/oauth2/v2/auth?' + params.toString();
+
+    // Essai silencieux via iframe
+    const iframe = document.createElement('iframe');
+    iframe.style.display = 'none';
+    iframe.src = url;
+    document.body.appendChild(iframe);
+
+    const timer = setTimeout(() => {
+      document.body.removeChild(iframe);
+      // Fallback : popup visible
+      _googTokenPopup(resolve, reject);
+    }, 3000);
+
+    window.addEventListener('message', function handler(e) {
+      if (e.data?.type === 'goog_token') {
+        clearTimeout(timer);
+        document.body.removeChild(iframe);
+        window.removeEventListener('message', handler);
+        _googToken = { access_token: e.data.token, expires_at: Date.now() + e.data.expires_in * 1000 };
+        resolve(_googToken.access_token);
+      }
+    });
+  });
+}
+
+function _googTokenPopup(resolve, reject) {
+  const params = new URLSearchParams({
+    client_id: GOOG_CLIENT_ID,
+    redirect_uri: 'https://i-immersion.github.io/lumiia-workspace/',
+    response_type: 'token',
+    scope: GOOG_SCOPES,
+    prompt: 'select_account',
+  });
+  const url = 'https://accounts.google.com/o/oauth2/v2/auth?' + params.toString();
+  const popup = window.open(url, 'goog_oauth', 'width=480,height=600');
+
+  const interval = setInterval(() => {
+    try {
+      const hash = popup?.location?.hash;
+      if (hash && hash.includes('access_token')) {
+        clearInterval(interval);
+        popup.close();
+        const p = new URLSearchParams(hash.slice(1));
+        _googToken = { access_token: p.get('access_token'), expires_at: Date.now() + parseInt(p.get('expires_in')) * 1000 };
+        resolve(_googToken.access_token);
+      }
+    } catch(e) {}
+    if (popup?.closed) { clearInterval(interval); reject(new Error('Popup ferm\u00e9')); }
+  }, 300);
+}
+
+async function googCreateCalendarEvent(title, dateTimeISO, durationMin = 30) {
+  const token = await getGoogToken();
+  const start = new Date(dateTimeISO);
+  const end = new Date(start.getTime() + durationMin * 60000);
+  const body = {
+    summary: '\u26a1 ' + title,
+    start: { dateTime: start.toISOString(), timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone },
+    end: { dateTime: end.toISOString(), timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone },
+    reminders: { useDefault: false, overrides: [{ method: 'popup', minutes: 0 }] },
+  };
+  const res = await fetch('https://www.googleapis.com/calendar/v3/calendars/primary/events', {
+    method: 'POST',
+    headers: { Authorization: 'Bearer ' + token, 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+  return res.ok;
+}
+
+async function googCreateTask(title, dueDateISO) {
+  const token = await getGoogToken();
+  const body = { title: '\u26a1 ' + title, due: new Date(dueDateISO).toISOString() };
+  const res = await fetch('https://www.googleapis.com/tasks/v1/lists/@default/tasks', {
+    method: 'POST',
+    headers: { Authorization: 'Bearer ' + token, 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+  return res.ok;
+}
+
+async function scheduleGoogReminder(item) {
+  try {
+    if (item.xpressTime) {
+      // Heure fixe → Google Calendar
+      const today = localDateStr(new Date());
+      const iso = today + 'T' + item.xpressTime + ':00';
+      await googCreateCalendarEvent(item.title, iso);
+    } else if (item.xpressTimer && item.triggerAt) {
+      // Compte à rebours → Google Tasks
+      await googCreateTask(item.title, new Date(item.triggerAt).toISOString());
+    }
+  } catch(e) {
+    console.warn('Google reminder failed:', e.message);
+  }
+}
+
+async function scheduleGoogTodoReminder(item) {
+  // Tâche avec date → Google Calendar
+  if (!item.due) return;
+  try {
+    const token = await getGoogToken();
+    const time = item.dueTime || '09:00';
+    const iso = item.due + 'T' + time + ':00';
+    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const start = new Date(iso);
+    const end = new Date(start.getTime() + 30 * 60000);
+    const body = {
+      summary: item.title,
+      description: 'T\u00e2che LUMIIA Workspace',
+      start: { dateTime: start.toISOString(), timeZone: tz },
+      end: { dateTime: end.toISOString(), timeZone: tz },
+      reminders: { useDefault: true },
+    };
+    await fetch('https://www.googleapis.com/calendar/v3/calendars/primary/events', {
+      method: 'POST',
+      headers: { Authorization: 'Bearer ' + token, 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+  } catch(e) {
+    console.warn('Todo reminder failed:', e.message);
+  }
+}
+
 let fabOpen = false;
 function toggleFabMenu() {
   fabOpen = !fabOpen;
@@ -3065,9 +3213,11 @@ function openXpressModal() {
   document.querySelectorAll('#xpress-timer-section .time-btn').forEach(b => b.classList.remove('active'));
   openModal('modal-xpress');
   setTimeout(() => document.getElementById('xpress-title').focus(), 100);
-  // Demander permission notifications
-  if ('Notification' in window && Notification.permission === 'default') {
-    Notification.requestPermission();
+  // Demander permission notifications UNE SEULE FOIS
+  if ('Notification' in window && Notification.permission === 'default' && !localStorage.getItem('lumiia-notif-asked')) {
+    Notification.requestPermission().then(result => {
+      localStorage.setItem('lumiia-notif-asked', '1');
+    });
   }
 }
 
@@ -3127,8 +3277,9 @@ async function saveXpress() {
   closeModal('modal-xpress');
   render();
 
-  // Programmer le rappel
+  // Programmer rappel local + Google
   if (triggerAt) scheduleXpressAlert(item);
+  if (item.xpressTime || item.xpressTimer) scheduleGoogReminder(item);
 }
 
 function scheduleXpressAlert(item) {
