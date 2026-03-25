@@ -1169,6 +1169,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
 // ─────────────────────────────────────────────
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
 import { getDatabase, ref, onValue, set, remove } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js';
+import { getMessaging, getToken, onMessage } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-messaging.js';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBPgjVFKrP80qX_hlfUFqL168XONfNIBA4",
@@ -1184,6 +1185,69 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 const NOTES_REF = ref(db, 'workspace/items');
 const PROJECTS_REF = ref(db, 'workspace/projects');
+
+// ─────────────────────────────────────────────
+// FCM — NOTIFICATIONS PUSH
+// ─────────────────────────────────────────────
+// Clé VAPID publique — à récupérer dans Firebase Console > Project Settings > Cloud Messaging > Web Push certificates
+const FCM_VAPID_KEY = 'REMPLACER_PAR_CLE_VAPID_FIREBASE';
+
+async function initFCM(userId) {
+  if (!('Notification' in window) || !('serviceWorker' in navigator)) return;
+
+  try {
+    // Enregistrement du Service Worker FCM
+    const swReg = await navigator.serviceWorker.register('/lumiia-workspace/firebase-messaging-sw.js');
+
+    // Demande de permission si pas encore accordée
+    const permission = await Notification.requestPermission();
+    if (permission !== 'granted') {
+      console.log('[FCM] Permission refusée');
+      return;
+    }
+
+    // Récupération du token FCM pour cet appareil
+    const messaging = getMessaging(app);
+    const token = await getToken(messaging, {
+      vapidKey: FCM_VAPID_KEY,
+      serviceWorkerRegistration: swReg
+    });
+
+    if (token) {
+      // Stockage du token dans Firebase sous /tokens/{userId}
+      // deviceId stable basé sur userAgent + écran (pas d'UUID requis)
+      const deviceId = btoa(navigator.userAgent + screen.width + screen.height).slice(0, 32).replace(/[^a-zA-Z0-9]/g, '_');
+      const tokenRef = ref(db, 'workspace/tokens/' + userId + '/' + deviceId);
+      await set(tokenRef, {
+        token,
+        updatedAt: Date.now(),
+        userAgent: navigator.userAgent.slice(0, 80)
+      });
+      console.log('[FCM] Token enregistré pour', userId);
+    }
+
+    // Notifications reçues quand l'app est ouverte (foreground)
+    onMessage(messaging, (payload) => {
+      const { title, body } = payload.notification || {};
+      if (title) {
+        new Notification(title, {
+          body: body || '',
+          icon: '/lumiia-workspace/icon-192.png',
+          tag: payload.data?.tag || 'lumiia-notif'
+        });
+      }
+    });
+
+  } catch (err) {
+    console.error('[FCM] Erreur initialisation:', err);
+  }
+}
+
+// Init FCM après que l'utilisateur soit connu
+// Conditionnel : seulement si la clé VAPID est configurée
+if (FCM_VAPID_KEY !== 'REMPLACER_PAR_CLE_VAPID_FIREBASE') {
+  setTimeout(() => initFCM(currentUser), 2000);
+}
 
 // Sync items temps réel
 onValue(NOTES_REF, (snapshot) => {
@@ -2185,7 +2249,7 @@ function rebuildCatPicker() {
 
   // Restaurer la sélection courante
   if (currentProjectId) selectProject(currentProjectId, currentSubcatId);
-  else { const savedCat = currentCat; selectProject(null); if (savedCat) selectGlobalCat(savedCat); }
+  else { selectProject(null); if (currentCat) selectGlobalCat(currentCat); }
 }
 
 function selectProject(projectId, subcatId = null) {
@@ -2226,7 +2290,7 @@ function selectProject(projectId, subcatId = null) {
         + '<span style="width:7px;height:7px;border-radius:50%;background:' + s.color + ';display:inline-block;margin-right:3px"></span>'
         + s.label + '</button>'
       ).join('');
-      selectSubcat(subcatId || proj.subcats[0]?.id);
+      if (!subcatId && proj.subcats[0]) selectSubcat(proj.subcats[0].id);
     } else {
       subcatSection.style.display = 'none';
     }
