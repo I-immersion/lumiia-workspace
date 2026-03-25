@@ -1,4 +1,4 @@
-// LUMIIA Workspace — Firebase Messaging Service Worker v1.0
+// LUMIIA Workspace — Firebase Messaging Service Worker v1.1
 // Rôle unique : recevoir les notifications push FCM quand Chrome est fermé ou en arrière-plan
 
 importScripts('https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js');
