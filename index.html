@@ -13,7 +13,7 @@
 <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjogIkxVTUlJQSBXb3Jrc3BhY2UiLCAic2hvcnRfbmFtZSI6ICJXb3Jrc3BhY2UiLCAic3RhcnRfdXJsIjogIi4iLCAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwgImJhY2tncm91bmRfY29sb3IiOiAiIzBkMGQwZiIsICJ0aGVtZV9jb2xvciI6ICIjMGQwZDBmIiwgImljb25zIjogW3sic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzl6ZG1jaUlIWnBaWGRDYjNnOUlqQWdNQ0F5T1RBZ01qa3dJajQ4Y21WamRDQjNhV1IwYUQwaU1qa3dJaUJvWldsbmFIUTlJakk1TUNJZ2NuZzlJall3SWlCbWFXeHNQU0lqTUdRd1pEQm1JaTgrUEhSbGVIUWdlRDBpTlRBbElpQjVQU0kxTlNVaUlHWnZiblF0YzJsNlpUMGlNVFl3SWlCMFpYaDBMV0Z1WTJodmNqMGliV2xrWkd4bElpQmtiMjFwYm1GdWRDMWlZWE5sYkdsdVpUMGliV2xrWkd4bElqN3duNXFnUEM5MFpYaDBQand2YzNablBnPT0iLCAic2l6ZXMiOiAiMTkyeDE5MiA1MTJ4NTEyIiwgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
 <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOTAgMjkwIj48cmVjdCB3aWR0aD0iMjkwIiBoZWlnaHQ9IjI5MCIgcng9IjYwIiBmaWxsPSIjMGQwZDBmIi8+PHRleHQgeD0iNTAlIiB5PSI1NSUiIGZvbnQtc2l6ZT0iMTYwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn5qgPC90ZXh0Pjwvc3ZnPg==">
 
-<!-- LUMIIA Workspace v5.9 -->
+<!-- LUMIIA Workspace v6.0 -->
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 
@@ -850,7 +850,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
   <button class="tab" data-tab="semaine" onclick="switchTab('semaine')">Semaine</button>
   <button class="tab" data-tab="prospects" onclick="switchTab('prospects')">Prospects</button>
   <div style="flex:1"></div>
-  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v5.9</div>
+  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v6.0</div>
 </div>
 
 <main id="main-content">
@@ -888,6 +888,9 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
       <button onclick="closeModal('modal-prospect')" style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;width:32px;height:32px;color:var(--text2);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center">&#x2715;</button>
     </div>
 
+    <div class="field-label">Sujet</div>
+    <input type="text" class="field-input" id="prospect-sujet" placeholder="Ex: Soir\u00e9e priv\u00e9e 150 personnes..." style="margin-bottom:14px" autofocus>
+
     <div class="row-fields">
       <div>
         <div class="field-label">Pr\u00e9nom</div>
@@ -909,9 +912,6 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
         <input type="email" class="field-input" id="prospect-email" placeholder="email@...">
       </div>
     </div>
-
-    <div class="field-label">Sujet</div>
-    <input type="text" class="field-input" id="prospect-sujet" placeholder="Ex: Soir\u00e9e priv\u00e9e 150 personnes..." style="margin-bottom:14px">
 
     <div class="field-label">Type de demande</div>
     <div style="display:flex;gap:8px;margin-bottom:14px">
@@ -952,6 +952,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
     <textarea class="field-input" id="prospect-notes" placeholder="Notes libres..." style="min-height:80px;resize:vertical;margin-bottom:14px"></textarea>
 
     <div class="modal-actions">
+      <button class="btn-delete" id="prospect-delete-btn" style="display:none" onclick="deleteProspectFromModal()">Supprimer</button>
       <button class="btn-secondary" onclick="closeModal('modal-prospect')">Annuler</button>
       <button class="btn-primary" onclick="saveProspect()">Enregistrer</button>
     </div>
@@ -1545,7 +1546,7 @@ function renderXpressCard(item) {
     timerHtml = '<div class="xpress-timer" id="xpress-countdown-' + item.id + '">'
       + (mins > 60 ? Math.ceil(mins/60) + 'h' : mins + ' min') + '</div>';
   } else if (item.triggerAt && remaining <= 0) {
-    timerHtml = '<div class="xpress-timer" style="color:var(--cat-urgent)">Expiré</div>';
+    timerHtml = '<div class="xpress-timer" style="color:var(--cat-urgent)">Expir\u00e9</div>';
   } else if (item.xpressTime) {
     timerHtml = '<div class="xpress-timer">' + item.xpressTime + '</div>';
   }
@@ -2829,7 +2830,7 @@ function openDetail(id) {
     // Échéance
     if (dueStr) {
       html += `<div style="background:${isOverdue ? 'rgba(244,63,94,0.1)' : 'var(--bg3)'};border:1px solid ${isOverdue ? 'rgba(244,63,94,0.3)' : 'var(--border)'};border-radius:12px;padding:10px 14px;grid-column:1/-1">
-        <div style="font-size:0.65rem;color:${isOverdue ? 'var(--cat-urgent)' : 'var(--text3)'};font-family:Syne,sans-serif;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:4px">${isOverdue ? '⚠️ En retard' : '📅 Échéance'}</div>
+        <div style="font-size:0.65rem;color:${isOverdue ? 'var(--cat-urgent)' : 'var(--text3)'};font-family:Syne,sans-serif;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:4px">${isOverdue ? '\u26a0\ufe0f En retard' : '📅 \u00c9ch\u00e9ance'}</div>
         <div style="font-size:0.88rem;font-weight:600;color:${isOverdue ? 'var(--cat-urgent)' : 'var(--text)'}">${dueStr}</div>
       </div>`;
     }
@@ -3106,7 +3107,7 @@ document.querySelectorAll('.modal-overlay').forEach(overlay => {
 function seedDemo() {
   if (items.length > 0) return;
   items = [
-    { id: genId(), type: 'note', cat: 'raffines', title: 'Soiree des Laureats REDA', content: 'Séquence 1 : vidéo pré-enregistrée au studio\nSéquence 2 : scène de bar live\nSéquence 3 : vidéo de transition\nSéquence 4 : adresse directe au public', owner: 'em', created: Date.now() - 86400000*2 },
+    { id: genId(), type: 'note', cat: 'raffines', title: 'Soiree des Laureats REDA', content: 'S\u00e9quence 1 : vid\u00e9o pr\u00e9-enregistr\u00e9e au studio\nS\u00e9quence 2 : sc\u00e8ne de bar live\nS\u00e9quence 3 : vid\u00e9o de transition\nS\u00e9quence 4 : adresse directe au public', owner: 'em', created: Date.now() - 86400000*2 },
     { id: genId(), type: 'checklist', cat: 'lumiia', title: 'Ouverture \u00e9tage LUMIIA', checklist: [
       { id: genId(), text: 'Plans architecte finalises', done: true },
       { id: genId(), text: 'Devis electricite', done: true },
@@ -3214,19 +3215,25 @@ function openProspectModal(id) {
   const p = id ? prospects.find(x => x.id === id) : null;
 
   document.getElementById('prospect-modal-title').textContent = p ? 'Modifier prospect' : 'Nouveau prospect';
+  document.getElementById('prospect-sujet').value = p?.sujet || '';
   document.getElementById('prospect-prenom').value = p?.prenom || '';
   document.getElementById('prospect-nom').value = p?.nom || '';
   document.getElementById('prospect-tel').value = p?.tel || '';
   document.getElementById('prospect-email').value = p?.email || '';
-  document.getElementById('prospect-sujet').value = p?.sujet || '';
   document.getElementById('prospect-date-event').value = p?.dateEvent || '';
   document.getElementById('prospect-echeance').value = p?.echeance || '';
   document.getElementById('prospect-notes').value = p?.notes || '';
+
+  // Bouton supprimer visible seulement en mode édition
+  const deleteBtn = document.getElementById('prospect-delete-btn');
+  if (deleteBtn) deleteBtn.style.display = id ? '' : 'none';
 
   selectProspectType(p?.type || 'devis');
   selectProspectStatut(p?.statut || 'nouveau');
 
   openModal('modal-prospect');
+  // Focus sur le champ sujet
+  setTimeout(() => { document.getElementById('prospect-sujet')?.focus(); }, 80);
 }
 
 function selectProspectType(type) {
@@ -3281,6 +3288,13 @@ async function saveProspect() {
 async function deleteProspect(id) {
   await remove(ref(db, 'workspace/prospects/' + id));
   closeModal('modal-detail');
+}
+
+function deleteProspectFromModal() {
+  if (!editingProspectId) return;
+  const id = editingProspectId;
+  closeModal('modal-prospect');
+  remove(ref(db, 'workspace/prospects/' + id));
 }
 
 function openProspectDetail(id) {
@@ -3769,6 +3783,7 @@ window.convertXpress = convertXpress;
 window.openProspectModal = openProspectModal;
 window.saveProspect = saveProspect;
 window.deleteProspect = deleteProspect;
+window.deleteProspectFromModal = deleteProspectFromModal;
 window.openProspectDetail = openProspectDetail;
 window.selectProspectType = selectProspectType;
 window.selectProspectStatut = selectProspectStatut;
