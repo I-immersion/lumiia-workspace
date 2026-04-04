@@ -12,7 +12,7 @@
 <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjogIkxVTUlJQSBXb3Jrc3BhY2UiLCAic2hvcnRfbmFtZSI6ICJXb3Jrc3BhY2UiLCAic3RhcnRfdXJsIjogIi4iLCAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwgImJhY2tncm91bmRfY29sb3IiOiAiIzBkMGQwZiIsICJ0aGVtZV9jb2xvciI6ICIjMGQwZDBmIiwgImljb25zIjogW3sic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzl6ZG1jaUlIWnBaWGRDYjNnOUlqQWdNQ0F5T1RBZ01qa3dJajQ4Y21WamRDQjNhV1IwYUQwaU1qa3dJaUJvWldsbmFIUTlJakk1TUNJZ2NuZzlJall3SWlCbWFXeHNQU0lqTUdRd1pEQm1JaTgrUEhSbGVIUWdlRDBpTlRBbElpQjVQU0kxTlNVaUlHWnZiblF0YzJsNlpUMGlNVFl3SWlCMFpYaDBMV0Z1WTJodmNqMGliV2xrWkd4bElpQmtiMjFwYm1GdWRDMWlZWE5sYkdsdVpUMGliV2xrWkd4bElqN3duNXFnUEM5MFpYaDBQand2YzNablBnPT0iLCAic2l6ZXMiOiAiMTkyeDE5MiA1MTJ4NTEyIiwgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
 <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOTAgMjkwIj48cmVjdCB3aWR0aD0iMjkwIiBoZWlnaHQ9IjI5MCIgcng9IjYwIiBmaWxsPSIjMGQwZDBmIi8+PHRleHQgeD0iNTAlIiB5PSI1NSUiIGZvbnQtc2l6ZT0iMTYwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn5qgPC90ZXh0Pjwvc3ZnPg==">
 
-<!-- LUMIIA Workspace v7.0 -->
+<!-- LUMIIA Workspace v7.2 -->
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 
@@ -843,7 +843,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
     <div style="text-align:center;margin-bottom:8px">
       <div style="font-family:Syne,sans-serif;font-weight:900;font-size:1.4rem;letter-spacing:0.04em;color:var(--text)">LUMIIA <span style="color:#38bdf8">●</span> Workspace</div>
       <div style="font-size:0.8rem;color:var(--text3);margin-top:6px;font-family:DM Sans,sans-serif">Connexion requise</div>
-      <div style="font-size:0.7rem;color:var(--text3);margin-top:4px;font-family:Syne,sans-serif;letter-spacing:0.05em">v7.0</div>
+      <div style="font-size:0.7rem;color:var(--text3);margin-top:4px;font-family:Syne,sans-serif;letter-spacing:0.05em">v7.2</div>
     </div>
     <div style="display:flex;flex-direction:column;gap:10px">
       <input id="login-email" type="email" placeholder="Email" autocomplete="email" style="
@@ -888,7 +888,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
   <button class="tab" data-tab="semaine" onclick="switchTab('semaine')">Semaine</button>
   <button class="tab" data-tab="prospects" onclick="switchTab('prospects')">Prospects</button>
   <div style="flex:1"></div>
-  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v7.0</div>
+  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v7.2</div>
 </div>
 
 <main id="main-content">
@@ -913,6 +913,10 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
   <div class="fab-menu-item">
     <div class="fab-menu-label">Tâche</div>
     <button class="fab-mini" style="background:#4ade80" onclick="closeFabMenu();openCreateModal();setType('todo')">✅</button>
+  </div>
+  <div class="fab-menu-item">
+    <div class="fab-menu-label">Prospect</div>
+    <button class="fab-mini" style="background:#c084fc" onclick="closeFabMenu();openProspectModal()">👤</button>
   </div>
 </div>
 <!-- FAB principal -->
@@ -2557,12 +2561,15 @@ function selectTime(time) {
   document.getElementById('input-time').value = time;
   const clearBtn = document.getElementById('time-clear-btn');
   if (clearBtn) { clearBtn.classList.toggle('active', !time); }
-  // Reset les selects si journée
+  const h = document.getElementById('time-hour');
+  const m = document.getElementById('time-min');
   if (!time) {
-    const h = document.getElementById('time-hour');
-    const m = document.getElementById('time-min');
     if (h) h.value = '';
     if (m) m.value = '';
+  } else {
+    const parts = time.split(':');
+    if (h && parts[0]) h.value = parts[0].padStart(2,'0');
+    if (m && parts[1]) m.value = parts[1].padStart(2,'0');
   }
 }
 
@@ -2570,11 +2577,15 @@ function selectNoteTime(time) {
   document.getElementById('input-note-time').value = time;
   const clearBtn = document.getElementById('note-time-clear-btn');
   if (clearBtn) { clearBtn.classList.toggle('active', !time); }
+  const h = document.getElementById('note-time-hour');
+  const m = document.getElementById('note-time-min');
   if (!time) {
-    const h = document.getElementById('note-time-hour');
-    const m = document.getElementById('note-time-min');
     if (h) h.value = '';
     if (m) m.value = '';
+  } else {
+    const parts = time.split(':');
+    if (h && parts[0]) h.value = parts[0].padStart(2,'0');
+    if (m && parts[1]) m.value = parts[1].padStart(2,'0');
   }
 }
 
@@ -2747,16 +2758,10 @@ function openCreateModal() {
   document.getElementById('input-due').value = '';
   const timeEl = document.getElementById('input-time');
   if (timeEl) timeEl.value = '';
-  ['time-hour','note-time-hour'].forEach(id => {
-    const el = document.getElementById(id); if (el) el.value = '12';
-  });
-  ['time-min','note-time-min'].forEach(id => {
-    const el = document.getElementById(id); if (el) el.value = '00';
-  });
-  selectTime('');
+  selectTime('12:00');
   const noteDateEl = document.getElementById('input-note-date');
   if (noteDateEl) noteDateEl.value = '';
-  selectNoteTime('');
+  selectNoteTime('12:00');
   document.getElementById('input-validate-by').value = '';
   document.getElementById('field-checklist').style.display = 'none';
   document.getElementById('field-checklist-todo').style.display = 'none';
@@ -3400,7 +3405,7 @@ function renderProspectCard(p, today) {
     + (echeanceStr ? '\n*Relance avant :* ' + echeanceStr : '')
     + (p.notes ? '\n\n*Notes :*\n' + p.notes : '');
   const waUrl = p.tel
-    ? 'https://wa.me/' + p.tel.replace(/[^0-9]/g,'') + '?text=' + encodeURIComponent(waText)
+    ? 'https://wa.me/' + p.tel.replace(/[^0-9]/g,'').replace(/^0/, '33') + '?text=' + encodeURIComponent(waText)
     : 'https://wa.me/?text=' + encodeURIComponent(waText);
 
   return '<div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:14px 16px;margin-bottom:10px;'
@@ -3598,7 +3603,7 @@ function openProspectDetail(id) {
     + (p.notes ? '\n\n*Notes :*\n' + p.notes : '');
 
   const waUrl = p.tel
-    ? 'https://wa.me/' + p.tel.replace(/[^0-9]/g, '') + '?text=' + encodeURIComponent(waText)
+    ? 'https://wa.me/' + p.tel.replace(/[^0-9]/g, '').replace(/^0/, '33') + '?text=' + encodeURIComponent(waText)
     : 'https://wa.me/?text=' + encodeURIComponent(waText);
 
   let html = '<div style="display:flex;align-items:center;gap:8px;margin-bottom:14px">'
