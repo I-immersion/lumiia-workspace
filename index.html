@@ -12,7 +12,7 @@
 <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjogIkxVTUlJQSBXb3Jrc3BhY2UiLCAic2hvcnRfbmFtZSI6ICJXb3Jrc3BhY2UiLCAic3RhcnRfdXJsIjogIi4iLCAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwgImJhY2tncm91bmRfY29sb3IiOiAiIzBkMGQwZiIsICJ0aGVtZV9jb2xvciI6ICIjMGQwZDBmIiwgImljb25zIjogW3sic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzl6ZG1jaUlIWnBaWGRDYjNnOUlqQWdNQ0F5T1RBZ01qa3dJajQ4Y21WamRDQjNhV1IwYUQwaU1qa3dJaUJvWldsbmFIUTlJakk1TUNJZ2NuZzlJall3SWlCbWFXeHNQU0lqTUdRd1pEQm1JaTgrUEhSbGVIUWdlRDBpTlRBbElpQjVQU0kxTlNVaUlHWnZiblF0YzJsNlpUMGlNVFl3SWlCMFpYaDBMV0Z1WTJodmNqMGliV2xrWkd4bElpQmtiMjFwYm1GdWRDMWlZWE5sYkdsdVpUMGliV2xrWkd4bElqN3duNXFnUEM5MFpYaDBQand2YzNablBnPT0iLCAic2l6ZXMiOiAiMTkyeDE5MiA1MTJ4NTEyIiwgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
 <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOTAgMjkwIj48cmVjdCB3aWR0aD0iMjkwIiBoZWlnaHQ9IjI5MCIgcng9IjYwIiBmaWxsPSIjMGQwZDBmIi8+PHRleHQgeD0iNTAlIiB5PSI1NSUiIGZvbnQtc2l6ZT0iMTYwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn5qgPC90ZXh0Pjwvc3ZnPg==">
 
-<!-- LUMIIA Workspace v7.5 -->
+<!-- LUMIIA Workspace v7.6 -->
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 
@@ -843,7 +843,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
     <div style="text-align:center;margin-bottom:8px">
       <div style="font-family:Syne,sans-serif;font-weight:900;font-size:1.4rem;letter-spacing:0.04em;color:var(--text)">LUMIIA <span style="color:#38bdf8">●</span> Workspace</div>
       <div style="font-size:0.8rem;color:var(--text3);margin-top:6px;font-family:DM Sans,sans-serif">Connexion requise</div>
-      <div style="font-size:0.7rem;color:var(--text3);margin-top:4px;font-family:Syne,sans-serif;letter-spacing:0.05em">v7.5</div>
+      <div style="font-size:0.7rem;color:var(--text3);margin-top:4px;font-family:Syne,sans-serif;letter-spacing:0.05em">v7.6</div>
     </div>
     <div style="display:flex;flex-direction:column;gap:10px">
       <input id="login-email" type="email" placeholder="Email" autocomplete="email" style="
@@ -888,7 +888,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
   <button class="tab" data-tab="semaine" onclick="switchTab('semaine')">Semaine</button>
   <button class="tab" data-tab="prospects" onclick="switchTab('prospects')">Prospects</button>
   <div style="flex:1"></div>
-  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v7.5</div>
+  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v7.6</div>
 </div>
 
 <main id="main-content">
@@ -3444,11 +3444,24 @@ function renderProspectCard(p, today) {
     + '</div></div>'
     // Date événement (grande)
     + (eventStr ? '<div style="font-size:0.88rem;font-weight:600;color:var(--text);margin-bottom:6px">\uD83D\uDCC5 ' + eventStr + '</div>' : '')
-    // Tel + échéance
+    // Tel + échéance + projet + montant
     + '<div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">'
     + (p.tel ? '<div style="font-size:0.78rem;color:var(--cat-signal)">\uD83D\uDCDE ' + p.tel + '</div>' : '')
     + (echeanceStr ? '<div style="font-size:0.75rem;color:' + (isOverdue ? 'var(--cat-urgent)' : 'var(--text3)') + '">\u23F0 Relance : ' + echeanceStr + '</div>' : '')
+    + (() => { const proj = p.projectId ? PROJECTS.find(pr => pr.id === p.projectId) : null; return proj ? '<div style="font-size:0.72rem;font-weight:700;padding:2px 7px;border-radius:6px;background:' + proj.color + '20;color:' + proj.color + '">' + proj.label + '</div>' : ''; })()
+    + (p.montant ? '<div style="font-size:0.72rem;font-weight:700;color:#4ade80">' + p.montant.toLocaleString('fr-FR') + '\u00a0\u20ac</div>' : '')
     + '</div>'
+    // Dernière entrée historique
+    + (() => {
+        const history = p.history || [];
+        if (!history.length) return '';
+        const last = [...history].sort((a,b) => b.at - a.at)[0];
+        const dateStr = new Date(last.at).toLocaleDateString('fr-FR', {day:'numeric', month:'short', hour:'2-digit', minute:'2-digit'});
+        return '<div style="margin-top:8px;padding:7px 10px;background:var(--bg3);border-radius:8px;border-left:2px solid rgba(56,189,248,0.4)">'
+          + '<div style="font-size:0.68rem;color:var(--text3);margin-bottom:2px">' + dateStr + '</div>'
+          + '<div style="font-size:0.78rem;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + last.text + '</div>'
+          + '</div>';
+      })()
     + '</div>'
     // Boutons action
     + '<div style="display:flex;gap:8px;margin-top:10px;padding-top:10px;border-top:1px solid var(--border)">'
@@ -3732,7 +3745,7 @@ function openProspectDetail(id) {
     + '<button class="btn-delete" onclick="deleteProspect(\'' + p.id + '\')">Supprimer</button>'
     + '</div>';
 
-  document.getElementById('modal-detail-body').innerHTML = html;
+  document.getElementById('detail-content').innerHTML = html;
   openModal('modal-detail');
 }
 
