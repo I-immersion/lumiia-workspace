@@ -1,6 +1,4 @@
-// LUMIIA Workspace — Firebase Messaging Service Worker v1.1
-// Rôle unique : recevoir les notifications push FCM quand Chrome est fermé ou en arrière-plan
-
+// firebase-messaging-sw.js
 importScripts('https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js');
 importScripts('https://www.gstatic.com/firebasejs/10.12.0/firebase-messaging-compat.js');
 
@@ -16,32 +14,34 @@ firebase.initializeApp({
 
 const messaging = firebase.messaging();
 
-// Notifications reçues quand l'app est en arrière-plan ou Chrome fermé
-messaging.onBackgroundMessage((payload) => {
-  const { title, body, icon } = payload.notification || {};
-
-  self.registration.showNotification(title || 'LUMIIA', {
-    body: body || '',
-    icon: icon || '/lumiia-workspace/icon-192.png',
+messaging.onBackgroundMessage(payload => {
+  const title    = payload.notification?.title || '\u26a1 LUMIIA Workspace';
+  const body     = payload.notification?.body  || '';
+  const xpressId = payload.data?.xpressId || '';
+  self.registration.showNotification(title, {
+    body,
+    icon: '/lumiia-workspace/icon-192.png',
     badge: '/lumiia-workspace/icon-192.png',
-    tag: payload.data?.tag || 'lumiia-notif',
+    tag: 'lumiia-xpress-' + xpressId,
     renotify: true,
-    data: payload.data || {}
+    data: { xpressId },
   });
 });
 
-// Clic sur la notification → ouvrir/focus l'app
-self.addEventListener('notificationclick', (event) => {
+self.addEventListener('notificationclick', event => {
   event.notification.close();
-  const url = 'https://i-immersion.github.io/lumiia-workspace/';
+  const xpressId = event.notification.data?.xpressId;
+  const appUrl = 'https://i-immersion.github.io/lumiia-workspace/';
   event.waitUntil(
-    clients.matchAll({ type: 'window', includeUncontrolled: true }).then((windowClients) => {
-      for (const client of windowClients) {
-        if (client.url.includes('lumiia-workspace') && 'focus' in client) {
-          return client.focus();
+    clients.matchAll({ type: 'window', includeUncontrolled: true }).then(clientList => {
+      for (const client of clientList) {
+        if (client.url.startsWith(appUrl)) {
+          client.focus();
+          if (xpressId) client.postMessage({ type: 'OPEN_XPRESS', xpressId });
+          return;
         }
       }
-      if (clients.openWindow) return clients.openWindow(url);
+      return clients.openWindow(appUrl + (xpressId ? '?xpress=' + xpressId : ''));
     })
   );
 });
