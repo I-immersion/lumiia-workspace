@@ -12,7 +12,7 @@
 <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjogIkxVTUlJQSBXb3Jrc3BhY2UiLCAic2hvcnRfbmFtZSI6ICJXb3Jrc3BhY2UiLCAic3RhcnRfdXJsIjogIi4iLCAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwgImJhY2tncm91bmRfY29sb3IiOiAiIzBkMGQwZiIsICJ0aGVtZV9jb2xvciI6ICIjMGQwZDBmIiwgImljb25zIjogW3sic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzl6ZG1jaUlIWnBaWGRDYjNnOUlqQWdNQ0F5T1RBZ01qa3dJajQ4Y21WamRDQjNhV1IwYUQwaU1qa3dJaUJvWldsbmFIUTlJakk1TUNJZ2NuZzlJall3SWlCbWFXeHNQU0lqTUdRd1pEQm1JaTgrUEhSbGVIUWdlRDBpTlRBbElpQjVQU0kxTlNVaUlHWnZiblF0YzJsNlpUMGlNVFl3SWlCMFpYaDBMV0Z1WTJodmNqMGliV2xrWkd4bElpQmtiMjFwYm1GdWRDMWlZWE5sYkdsdVpUMGliV2xrWkd4bElqN3duNXFnUEM5MFpYaDBQand2YzNablBnPT0iLCAic2l6ZXMiOiAiMTkyeDE5MiA1MTJ4NTEyIiwgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
 <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOTAgMjkwIj48cmVjdCB3aWR0aD0iMjkwIiBoZWlnaHQ9IjI5MCIgcng9IjYwIiBmaWxsPSIjMGQwZDBmIi8+PHRleHQgeD0iNTAlIiB5PSI1NSUiIGZvbnQtc2l6ZT0iMTYwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn5qgPC90ZXh0Pjwvc3ZnPg==">
 
-<!-- LUMIIA Workspace v6.5 -->
+<!-- LUMIIA Workspace v6.6 -->
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 
@@ -843,7 +843,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
     <div style="text-align:center;margin-bottom:8px">
       <div style="font-family:Syne,sans-serif;font-weight:900;font-size:1.4rem;letter-spacing:0.04em;color:var(--text)">LUMIIA <span style="color:#38bdf8">●</span> Workspace</div>
       <div style="font-size:0.8rem;color:var(--text3);margin-top:6px;font-family:DM Sans,sans-serif">Connexion requise</div>
-      <div style="font-size:0.7rem;color:var(--text3);margin-top:4px;font-family:Syne,sans-serif;letter-spacing:0.05em">v6.5</div>
+      <div style="font-size:0.7rem;color:var(--text3);margin-top:4px;font-family:Syne,sans-serif;letter-spacing:0.05em">v6.6</div>
     </div>
     <div style="display:flex;flex-direction:column;gap:10px">
       <input id="login-email" type="email" placeholder="Email" autocomplete="email" style="
@@ -888,7 +888,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
   <button class="tab" data-tab="semaine" onclick="switchTab('semaine')">Semaine</button>
   <button class="tab" data-tab="prospects" onclick="switchTab('prospects')">Prospects</button>
   <div style="flex:1"></div>
-  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v6.5</div>
+  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v6.6</div>
 </div>
 
 <main id="main-content">
@@ -1307,6 +1307,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
 import { getDatabase, ref, onValue, set, remove } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js';
 import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+import { getMessaging, getToken, onMessage } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-messaging.js';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBPgjVFKrP80qX_hlfUFqL168XONfNIBA4",
@@ -1321,6 +1322,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 const auth = getAuth(app);
+const messaging = getMessaging(app);
+const VAPID_KEY = 'BM3m_kwL5IU5w3d_4sdLxV2zmudcmjha4LmmX1IuDs42mGttlOD465j5QTKQYG1ueaNJ5ffGyh7GRjfIhxYA-7E';
 const NOTES_REF = ref(db, 'workspace/items');
 const PROJECTS_REF = ref(db, 'workspace/projects');
 const PROSPECTS_REF = ref(db, 'workspace/prospects');
@@ -1377,6 +1380,7 @@ onAuthStateChanged(auth, (user) => {
     document.getElementById('user-badge').textContent = memberId.toUpperCase();
     document.getElementById('login-screen').style.display = 'none';
     initDataListeners();
+    initFCM();
   } else {
     document.getElementById('login-screen').style.display = 'flex';
   }
@@ -1417,6 +1421,49 @@ function doLogout() {
   items = [];
   prospects = [];
 }
+
+// ─────────────────────────────────────────────
+// FCM — Notifications push
+// ─────────────────────────────────────────────
+async function initFCM() {
+  try {
+    // Enregistrer le Service Worker
+    if (!('serviceWorker' in navigator)) return;
+    const reg = await navigator.serviceWorker.register('/lumiia-workspace/firebase-messaging-sw.js');
+
+    // Demander la permission (ne redemande pas si déjà accordée)
+    const permission = await Notification.requestPermission();
+    if (permission !== 'granted') return;
+
+    // Obtenir le token FCM
+    const token = await getToken(messaging, { vapidKey: VAPID_KEY, serviceWorkerRegistration: reg });
+    if (!token) return;
+
+    // Enregistrer en Firebase sous workspace/fcm_tokens/{userId}/{shortId}
+    const shortId = token.slice(-8);
+    await set(ref(db, `workspace/fcm_tokens/${currentUser}/${shortId}`), {
+      token,
+      updatedAt: Date.now(),
+    });
+  } catch (e) {
+    // Silencieux — les notifications ne sont pas critiques
+  }
+}
+
+// Notifications en foreground (app ouverte)
+onMessage(messaging, payload => {
+  const title = payload.notification?.title || '\u26a1 Rappel';
+  const body  = payload.notification?.body  || '';
+  // Réutiliser le système d'alerte Xpress existant
+  if (typeof showXpressAlertBanner === 'function') {
+    showXpressAlertBanner(title, body);
+  } else {
+    // Fallback : notification native si permission accordée
+    if (Notification.permission === 'granted') {
+      new Notification(title, { body });
+    }
+  }
+});
 
 // Entrée clavier sur les champs login
 document.getElementById('login-email').addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('login-password').focus(); });
@@ -3687,7 +3734,7 @@ function triggerXpressAlert(item) {
   if ('vibrate' in navigator) navigator.vibrate([300, 100, 300, 100, 300]);
   // Notification navigateur
   if ('Notification' in window && Notification.permission === 'granted') {
-    new Notification('⚡ Xpress — ' + item.title, {
+    new Notification('\u26a1 Xpress \u2014 ' + item.title, {
       body: item.xpressTimer ? 'Compte \u00e0 rebours termin\u00e9 !' : 'Rappel : ' + (item.xpressTime || ''),
       icon: '/lumiia-workspace/icon.png',
       tag: 'xpress-' + item.id,
@@ -3695,6 +3742,24 @@ function triggerXpressAlert(item) {
   }
   // Mettre à jour le rendu
   render();
+}
+
+function showXpressAlertBanner(title, body) {
+  if ('vibrate' in navigator) navigator.vibrate([300, 100, 300]);
+  // Bannière in-app
+  let banner = document.getElementById('fcm-banner');
+  if (!banner) {
+    banner = document.createElement('div');
+    banner.id = 'fcm-banner';
+    banner.style.cssText = 'position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:9998;background:var(--bg3);border:1px solid rgba(56,189,248,0.4);border-radius:14px;padding:14px 20px;max-width:340px;width:90%;box-shadow:0 8px 32px rgba(0,0,0,0.5);display:flex;flex-direction:column;gap:4px;cursor:pointer';
+    banner.onclick = () => banner.remove();
+    document.body.appendChild(banner);
+  }
+  banner.innerHTML = '<div style="font-family:Syne,sans-serif;font-weight:700;font-size:0.95rem;color:#38bdf8">' + title + '</div>'
+    + (body ? '<div style="font-size:0.82rem;color:var(--text2);font-family:DM Sans,sans-serif">' + body + '</div>' : '');
+  banner.style.display = 'flex';
+  clearTimeout(banner._timeout);
+  banner._timeout = setTimeout(() => banner.remove(), 5000);
 }
 
 function updateXpressCountdown(itemId, delayMs) {
