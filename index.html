@@ -8,12 +8,11 @@
 <meta name="mobile-web-app-capable" content="true">
 <meta name="apple-mobile-web-app-capable" content="true">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<script src="https://accounts.google.com/gsi/client" async defer></script>
 <meta name="apple-mobile-web-app-title" content="LUMIIA Workspace">
 <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjogIkxVTUlJQSBXb3Jrc3BhY2UiLCAic2hvcnRfbmFtZSI6ICJXb3Jrc3BhY2UiLCAic3RhcnRfdXJsIjogIi4iLCAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwgImJhY2tncm91bmRfY29sb3IiOiAiIzBkMGQwZiIsICJ0aGVtZV9jb2xvciI6ICIjMGQwZDBmIiwgImljb25zIjogW3sic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzl6ZG1jaUlIWnBaWGRDYjNnOUlqQWdNQ0F5T1RBZ01qa3dJajQ4Y21WamRDQjNhV1IwYUQwaU1qa3dJaUJvWldsbmFIUTlJakk1TUNJZ2NuZzlJall3SWlCbWFXeHNQU0lqTUdRd1pEQm1JaTgrUEhSbGVIUWdlRDBpTlRBbElpQjVQU0kxTlNVaUlHWnZiblF0YzJsNlpUMGlNVFl3SWlCMFpYaDBMV0Z1WTJodmNqMGliV2xrWkd4bElpQmtiMjFwYm1GdWRDMWlZWE5sYkdsdVpUMGliV2xrWkd4bElqN3duNXFnUEM5MFpYaDBQand2YzNablBnPT0iLCAic2l6ZXMiOiAiMTkyeDE5MiA1MTJ4NTEyIiwgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
 <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOTAgMjkwIj48cmVjdCB3aWR0aD0iMjkwIiBoZWlnaHQ9IjI5MCIgcng9IjYwIiBmaWxsPSIjMGQwZDBmIi8+PHRleHQgeD0iNTAlIiB5PSI1NSUiIGZvbnQtc2l6ZT0iMTYwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn5qgPC90ZXh0Pjwvc3ZnPg==">
 
-<!-- LUMIIA Workspace v6.4 -->
+<!-- LUMIIA Workspace v6.5 -->
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 
@@ -844,7 +843,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
     <div style="text-align:center;margin-bottom:8px">
       <div style="font-family:Syne,sans-serif;font-weight:900;font-size:1.4rem;letter-spacing:0.04em;color:var(--text)">LUMIIA <span style="color:#38bdf8">●</span> Workspace</div>
       <div style="font-size:0.8rem;color:var(--text3);margin-top:6px;font-family:DM Sans,sans-serif">Connexion requise</div>
-      <div style="font-size:0.7rem;color:var(--text3);margin-top:4px;font-family:Syne,sans-serif;letter-spacing:0.05em">v6.4</div>
+      <div style="font-size:0.7rem;color:var(--text3);margin-top:4px;font-family:Syne,sans-serif;letter-spacing:0.05em">v6.5</div>
     </div>
     <div style="display:flex;flex-direction:column;gap:10px">
       <input id="login-email" type="email" placeholder="Email" autocomplete="email" style="
@@ -889,7 +888,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
   <button class="tab" data-tab="semaine" onclick="switchTab('semaine')">Semaine</button>
   <button class="tab" data-tab="prospects" onclick="switchTab('prospects')">Prospects</button>
   <div style="flex:1"></div>
-  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v6.4</div>
+  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v6.5</div>
 </div>
 
 <main id="main-content">
@@ -2863,8 +2862,6 @@ function saveItem() {
     if (idx !== -1) items[idx] = item;
   } else {
     items.unshift(item);
-    // Rappel Google Calendar pour nouvelle tâche avec date
-    if (item.type === 'todo' && item.due) scheduleGoogTodoReminder(item);
   }
 
   save();
@@ -3560,146 +3557,6 @@ function openProspectDetail(id) {
 }
 
 
-// ─────────────────────────────────────────────
-// GOOGLE OAUTH — Google Identity Services (GIS)
-// ─────────────────────────────────────────────
-const GOOG_CLIENT_ID = '823919513931-igf7jdknqhioqdr0dssig4en4ubn08mu.apps.googleusercontent.com';
-const GOOG_SCOPES = 'https://www.googleapis.com/auth/calendar.events https://www.googleapis.com/auth/tasks';
-let _googToken = null;
-let _googTokenClient = null;
-let _googTokenResolve = null;
-let _pendingXpressReminder = null;
-
-function _initGoogClient() {
-  if (_googTokenClient) return;
-  if (!window.google?.accounts?.oauth2) return;
-  _googTokenClient = window.google.accounts.oauth2.initTokenClient({
-    client_id: GOOG_CLIENT_ID,
-    scope: GOOG_SCOPES,
-    callback: (resp) => {
-      if (resp.error) {
-        console.warn('Google OAuth error:', resp.error);
-        if (_googTokenResolve) { _googTokenResolve(null); _googTokenResolve = null; }
-        return;
-      }
-      _googToken = { access_token: resp.access_token, expires_at: Date.now() + (resp.expires_in || 3600) * 1000 };
-      // Traiter l'item Xpress en attente
-      if (_pendingXpressReminder) {
-        scheduleGoogReminder(_pendingXpressReminder);
-        _pendingXpressReminder = null;
-      }
-      if (_googTokenResolve) { _googTokenResolve(_googToken.access_token); _googTokenResolve = null; }
-    },
-  });
-}
-
-function getGoogToken() {
-  return new Promise((resolve) => {
-    // Token valide en cache
-    if (_googToken && _googToken.expires_at > Date.now() + 60000) {
-      resolve(_googToken.access_token);
-      return;
-    }
-    _initGoogClient();
-    if (!_googTokenClient) {
-      // GIS pas encore charg\u00e9 — attendre
-      const wait = setInterval(() => {
-        _initGoogClient();
-        if (_googTokenClient) {
-          clearInterval(wait);
-          _googTokenResolve = resolve;
-          _googTokenClient.requestAccessToken({ prompt: '' });
-        }
-      }, 200);
-      setTimeout(() => { clearInterval(wait); resolve(null); }, 5000);
-      return;
-    }
-    _googTokenResolve = resolve;
-    // Silencieux si d\u00e9j\u00e0 autoris\u00e9, popup sinon
-    _googTokenClient.requestAccessToken({ prompt: '' });
-  });
-}
-
-async function googCreateCalendarEvent(title, dateTimeISO, durationMin = 30) {
-  const token = await getGoogToken();
-  if (!token) { console.warn('Pas de token Google'); return false; }
-  let start = new Date(dateTimeISO);
-  // Si l'heure est déjà passée aujourd'hui, mettre demain
-  if (start < new Date()) {
-    start.setDate(start.getDate() + 1);
-  }
-  const end = new Date(start.getTime() + durationMin * 60000);
-  const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
-  const body = {
-    summary: '\u26a1 ' + title,
-    start: { dateTime: start.toISOString(), timeZone: tz },
-    end: { dateTime: end.toISOString(), timeZone: tz },
-    reminders: { useDefault: false, overrides: [{ method: 'popup', minutes: 0 }] },
-  };
-  const res = await fetch('https://www.googleapis.com/calendar/v3/calendars/primary/events', {
-    method: 'POST',
-    headers: { Authorization: 'Bearer ' + token, 'Content-Type': 'application/json' },
-    body: JSON.stringify(body),
-  });
-  if (res.ok) console.log('\u2705 Event Calendar cr\u00e9\u00e9 : ' + title + ' \u00e0 ' + start.toLocaleTimeString('fr-FR', {hour:'2-digit',minute:'2-digit'}));
-  else console.warn('\u274c Calendar error:', await res.text());
-  return res.ok;
-}
-
-async function googCreateTask(title, dueDateISO) {
-  const token = await getGoogToken();
-  if (!token) { console.warn('Pas de token Google'); return false; }
-  const body = { title: '\u26a1 ' + title, due: new Date(dueDateISO).toISOString() };
-  const res = await fetch('https://www.googleapis.com/tasks/v1/lists/@default/tasks', {
-    method: 'POST',
-    headers: { Authorization: 'Bearer ' + token, 'Content-Type': 'application/json' },
-    body: JSON.stringify(body),
-  });
-  if (res.ok) console.log('\u2705 Task cr\u00e9\u00e9e : ' + title);
-  else console.warn('\u274c Tasks error:', await res.text());
-  return res.ok;
-}
-
-async function scheduleGoogReminder(item) {
-  try {
-    if (item.xpressTime) {
-      const today = localDateStr(new Date());
-      const iso = today + 'T' + item.xpressTime + ':00';
-      await googCreateCalendarEvent(item.title, iso);
-    } else if (item.xpressTimer && item.triggerAt) {
-      await googCreateTask(item.title, new Date(item.triggerAt).toISOString());
-    }
-  } catch(e) {
-    console.warn('Google reminder failed:', e.message);
-  }
-}
-
-async function scheduleGoogTodoReminder(item) {
-  if (!item.due) return;
-  try {
-    const token = await getGoogToken();
-    if (!token) return;
-    const time = item.dueTime || '09:00';
-    const iso = item.due + 'T' + time + ':00';
-    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    const start = new Date(iso);
-    const end = new Date(start.getTime() + 30 * 60000);
-    const body = {
-      summary: item.title,
-      description: 'T\u00e2che LUMIIA Workspace',
-      start: { dateTime: start.toISOString(), timeZone: tz },
-      end: { dateTime: end.toISOString(), timeZone: tz },
-      reminders: { useDefault: true },
-    };
-    await fetch('https://www.googleapis.com/calendar/v3/calendars/primary/events', {
-      method: 'POST',
-      headers: { Authorization: 'Bearer ' + token, 'Content-Type': 'application/json' },
-      body: JSON.stringify(body),
-    });
-  } catch(e) {
-    console.warn('Todo reminder failed:', e.message);
-  }
-}
 
 let fabOpen = false;
 function toggleFabMenu() {
@@ -3812,21 +3669,6 @@ async function saveXpress() {
 
   // Timer local
   if (triggerAt) scheduleXpressAlert(item);
-
-  // Auth Google + Calendar/Tasks — déclenché ici depuis le contexte utilisateur
-  if (item.xpressTime || item.xpressTimer) {
-    _initGoogClient();
-    if (_googTokenClient) {
-      // Si token valide en cache → appel direct sans popup
-      if (_googToken && _googToken.expires_at > Date.now() + 60000) {
-        scheduleGoogReminder(item);
-      } else {
-        // Stocker l'item en attente et ouvrir le popup immédiatement
-        _pendingXpressReminder = item;
-        _googTokenClient.requestAccessToken({ prompt: '' });
-      }
-    }
-  }
 }
 
 function scheduleXpressAlert(item) {
