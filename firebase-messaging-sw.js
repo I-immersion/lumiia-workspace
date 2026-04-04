@@ -22,7 +22,7 @@ messaging.onBackgroundMessage(payload => {
     body,
     icon: '/lumiia-workspace/icon-192.png',
     badge: '/lumiia-workspace/icon-192.png',
-    tag: 'lumiia-xpress-' + xpressId,
+    tag: 'lumiia-' + xpressId + '-' + Date.now(),
     renotify: true,
     data: { xpressId },
   });

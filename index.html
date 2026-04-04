@@ -12,7 +12,7 @@
 <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjogIkxVTUlJQSBXb3Jrc3BhY2UiLCAic2hvcnRfbmFtZSI6ICJXb3Jrc3BhY2UiLCAic3RhcnRfdXJsIjogIi4iLCAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwgImJhY2tncm91bmRfY29sb3IiOiAiIzBkMGQwZiIsICJ0aGVtZV9jb2xvciI6ICIjMGQwZDBmIiwgImljb25zIjogW3sic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzl6ZG1jaUlIWnBaWGRDYjNnOUlqQWdNQ0F5T1RBZ01qa3dJajQ4Y21WamRDQjNhV1IwYUQwaU1qa3dJaUJvWldsbmFIUTlJakk1TUNJZ2NuZzlJall3SWlCbWFXeHNQU0lqTUdRd1pEQm1JaTgrUEhSbGVIUWdlRDBpTlRBbElpQjVQU0kxTlNVaUlHWnZiblF0YzJsNlpUMGlNVFl3SWlCMFpYaDBMV0Z1WTJodmNqMGliV2xrWkd4bElpQmtiMjFwYm1GdWRDMWlZWE5sYkdsdVpUMGliV2xrWkd4bElqN3duNXFnUEM5MFpYaDBQand2YzNablBnPT0iLCAic2l6ZXMiOiAiMTkyeDE5MiA1MTJ4NTEyIiwgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
 <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOTAgMjkwIj48cmVjdCB3aWR0aD0iMjkwIiBoZWlnaHQ9IjI5MCIgcng9IjYwIiBmaWxsPSIjMGQwZDBmIi8+PHRleHQgeD0iNTAlIiB5PSI1NSUiIGZvbnQtc2l6ZT0iMTYwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn5qgPC90ZXh0Pjwvc3ZnPg==">
 
-<!-- LUMIIA Workspace v6.8 -->
+<!-- LUMIIA Workspace v6.9 -->
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 
@@ -843,7 +843,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
     <div style="text-align:center;margin-bottom:8px">
       <div style="font-family:Syne,sans-serif;font-weight:900;font-size:1.4rem;letter-spacing:0.04em;color:var(--text)">LUMIIA <span style="color:#38bdf8">●</span> Workspace</div>
       <div style="font-size:0.8rem;color:var(--text3);margin-top:6px;font-family:DM Sans,sans-serif">Connexion requise</div>
-      <div style="font-size:0.7rem;color:var(--text3);margin-top:4px;font-family:Syne,sans-serif;letter-spacing:0.05em">v6.8</div>
+      <div style="font-size:0.7rem;color:var(--text3);margin-top:4px;font-family:Syne,sans-serif;letter-spacing:0.05em">v6.9</div>
     </div>
     <div style="display:flex;flex-direction:column;gap:10px">
       <input id="login-email" type="email" placeholder="Email" autocomplete="email" style="
@@ -888,7 +888,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
   <button class="tab" data-tab="semaine" onclick="switchTab('semaine')">Semaine</button>
   <button class="tab" data-tab="prospects" onclick="switchTab('prospects')">Prospects</button>
   <div style="flex:1"></div>
-  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v6.8</div>
+  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v6.9</div>
 </div>
 
 <main id="main-content">
@@ -2931,18 +2931,19 @@ function saveItem() {
   }
 
   // Calculer triggerAt pour notes et tâches avec une heure définie
-  // → déclenche une notification FCM à l'heure exacte
   item.triggerAt = null;
   item.notificationSent = false;
-  if (item.type === 'note' && item.noteDate && item.noteTime) {
+  if (item.type === 'note' && item.noteTime) {
+    const dateStr = item.noteDate || localDateStr(new Date());
     const [h, m] = item.noteTime.split(':').map(Number);
-    const d = new Date(item.noteDate + 'T00:00:00');
+    const d = new Date(dateStr + 'T00:00:00');
     d.setHours(h, m, 0, 0);
     if (d.getTime() > Date.now()) item.triggerAt = d.getTime();
   }
-  if (item.type === 'todo' && item.due && item.dueTime) {
+  if (item.type === 'todo' && item.dueTime) {
+    const dateStr = item.due || localDateStr(new Date());
     const [h, m] = item.dueTime.split(':').map(Number);
-    const d = new Date(item.due + 'T00:00:00');
+    const d = new Date(dateStr + 'T00:00:00');
     d.setHours(h, m, 0, 0);
     if (d.getTime() > Date.now()) item.triggerAt = d.getTime();
   }
@@ -3782,27 +3783,33 @@ function triggerXpressAlert(item) {
 
 function showXpressAlertBanner(title, body, xpressId) {
   if ('vibrate' in navigator) navigator.vibrate([300, 100, 300]);
-  let banner = document.getElementById('fcm-banner');
-  if (!banner) {
-    banner = document.createElement('div');
-    banner.id = 'fcm-banner';
-    banner.style.cssText = 'position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:9998;background:var(--bg3);border:1px solid rgba(56,189,248,0.4);border-radius:14px;padding:14px 18px 14px 20px;max-width:340px;width:90%;box-shadow:0 8px 32px rgba(0,0,0,0.5);display:flex;flex-direction:row;align-items:flex-start;gap:12px';
-    document.body.appendChild(banner);
+
+  // Conteneur principal (créé une seule fois)
+  let container = document.getElementById('fcm-banners');
+  if (!container) {
+    container = document.createElement('div');
+    container.id = 'fcm-banners';
+    container.style.cssText = 'position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:9998;display:flex;flex-direction:column;gap:8px;max-width:340px;width:90%;pointer-events:none';
+    document.body.appendChild(container);
   }
-  clearTimeout(banner._timeout);
+
+  // Nouvelle bannière individuelle
+  const banner = document.createElement('div');
+  banner.style.cssText = 'background:var(--bg3);border:1px solid rgba(56,189,248,0.4);border-radius:14px;padding:14px 18px 14px 20px;box-shadow:0 8px 32px rgba(0,0,0,0.5);display:flex;flex-direction:row;align-items:flex-start;gap:12px;pointer-events:all';
   banner.innerHTML =
-    '<div style="flex:1;display:flex;flex-direction:column;gap:3px;cursor:pointer" id="fcm-banner-body">'
+    '<div style="flex:1;display:flex;flex-direction:column;gap:3px;cursor:pointer" class="fcm-banner-body">'
     + '<div style="font-family:Syne,sans-serif;font-weight:700;font-size:0.95rem;color:#38bdf8">' + title + '</div>'
     + (body ? '<div style="font-size:0.82rem;color:var(--text2);font-family:DM Sans,sans-serif">' + body + '</div>' : '')
     + (xpressId ? '<div style="font-size:0.72rem;color:var(--text3);font-family:DM Sans,sans-serif;margin-top:2px">Appuie pour ouvrir</div>' : '')
     + '</div>'
-    + '<button id="fcm-banner-close" style="background:transparent;border:none;color:var(--text3);font-size:1.1rem;cursor:pointer;padding:0;line-height:1;flex-shrink:0;margin-top:1px">✕</button>';
-  banner.querySelector('#fcm-banner-body').onclick = () => {
+    + '<button style="background:transparent;border:none;color:var(--text3);font-size:1.1rem;cursor:pointer;padding:0;line-height:1;flex-shrink:0;margin-top:1px" class="fcm-banner-close">✕</button>';
+
+  banner.querySelector('.fcm-banner-body').onclick = () => {
     banner.remove();
     if (xpressId) openXpressFromNotification(xpressId);
   };
-  banner.querySelector('#fcm-banner-close').onclick = () => banner.remove();
-  banner.style.display = 'flex';
+  banner.querySelector('.fcm-banner-close').onclick = () => banner.remove();
+  container.appendChild(banner);
 }
 
 function updateXpressCountdown(itemId, delayMs) {

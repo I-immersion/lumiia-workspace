@@ -13,24 +13,37 @@ exports.sendXpressNotifications = onSchedule(
     const itemsSnap = await db.ref('workspace/items').get();
     const items = itemsSnap.val();
     if (!items) return;
+
     for (const [id, item] of Object.entries(items)) {
-      if (item.type !== 'xpress') continue;
+      if (!['xpress', 'note', 'todo'].includes(item.type)) continue;
       if (!item.triggerAt || item.triggerAt > now) continue;
       if (item.notificationSent) continue;
+
       await db.ref('workspace/items/' + id + '/notificationSent').set(true);
+
       const tokensSnap = await db.ref('workspace/fcm_tokens/' + item.owner).get();
       const tokensData = tokensSnap.val();
       if (!tokensData) continue;
       const tokens = Object.values(tokensData).map(t => t.token).filter(Boolean);
       if (!tokens.length) continue;
+
+      // Construire le message selon le type
+      let title = '\u26a1 ' + (item.title || 'Rappel');
+      let body = '';
+      if (item.type === 'xpress') {
+        body = item.xpressTime ? 'Rappel : ' + item.xpressTime : 'Minuteur Xpress echu';
+      } else if (item.type === 'note') {
+        body = item.noteTime ? 'Note \u00e0 ' + item.noteTime : 'Rappel de note';
+      } else if (item.type === 'todo') {
+        body = item.dueTime ? 'T\u00e2che \u00e0 ' + item.dueTime : 'Rappel de t\u00e2che';
+      }
+
       await Promise.all(tokens.map(async (token) => {
         try {
           await getMessaging().send({
             token,
-            notification: {
-              title: '\u26a1 ' + (item.title || 'Rappel Xpress'),
-              body: item.xpressTime ? 'Rappel : ' + item.xpressTime : 'Minuteur Xpress echu',
-            },
+            notification: { title, body },
+            data: { xpressId: id, itemType: item.type },
             android: { priority: 'high' },
           });
         } catch(e) {
