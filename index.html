@@ -13,7 +13,7 @@
 <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjogIkxVTUlJQSBXb3Jrc3BhY2UiLCAic2hvcnRfbmFtZSI6ICJXb3Jrc3BhY2UiLCAic3RhcnRfdXJsIjogIi4iLCAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwgImJhY2tncm91bmRfY29sb3IiOiAiIzBkMGQwZiIsICJ0aGVtZV9jb2xvciI6ICIjMGQwZDBmIiwgImljb25zIjogW3sic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzl6ZG1jaUlIWnBaWGRDYjNnOUlqQWdNQ0F5T1RBZ01qa3dJajQ4Y21WamRDQjNhV1IwYUQwaU1qa3dJaUJvWldsbmFIUTlJakk1TUNJZ2NuZzlJall3SWlCbWFXeHNQU0lqTUdRd1pEQm1JaTgrUEhSbGVIUWdlRDBpTlRBbElpQjVQU0kxTlNVaUlHWnZiblF0YzJsNlpUMGlNVFl3SWlCMFpYaDBMV0Z1WTJodmNqMGliV2xrWkd4bElpQmtiMjFwYm1GdWRDMWlZWE5sYkdsdVpUMGliV2xrWkd4bElqN3duNXFnUEM5MFpYaDBQand2YzNablBnPT0iLCAic2l6ZXMiOiAiMTkyeDE5MiA1MTJ4NTEyIiwgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
 <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOTAgMjkwIj48cmVjdCB3aWR0aD0iMjkwIiBoZWlnaHQ9IjI5MCIgcng9IjYwIiBmaWxsPSIjMGQwZDBmIi8+PHRleHQgeD0iNTAlIiB5PSI1NSUiIGZvbnQtc2l6ZT0iMTYwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn5qgPC90ZXh0Pjwvc3ZnPg==">
 
-<!-- LUMIIA Workspace v6.1 -->
+<!-- LUMIIA Workspace v6.2 -->
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 
@@ -831,6 +831,44 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
 </head>
 <body>
 
+<!-- ─────────────────────────────────────────────
+     ÉCRAN DE CONNEXION
+     ───────────────────────────────────────────── -->
+<div id="login-screen" style="
+  position:fixed;inset:0;z-index:9999;
+  background:var(--bg);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:24px;
+">
+  <div style="width:100%;max-width:360px;display:flex;flex-direction:column;gap:20px">
+    <div style="text-align:center;margin-bottom:8px">
+      <div style="font-family:Syne,sans-serif;font-weight:900;font-size:1.4rem;letter-spacing:0.04em;color:var(--text)">LUMIIA <span style="color:var(--accent)">●</span> Workspace</div>
+      <div style="font-size:0.8rem;color:var(--text3);margin-top:6px;font-family:DM Sans,sans-serif">Connexion requise</div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <input id="login-email" type="email" placeholder="Email" autocomplete="email" style="
+        background:var(--bg2);border:1px solid var(--border);border-radius:10px;
+        padding:13px 16px;color:var(--text);font-family:DM Sans,sans-serif;font-size:0.95rem;outline:none;
+        width:100%;box-sizing:border-box;
+      ">
+      <input id="login-password" type="password" placeholder="Mot de passe" autocomplete="current-password" style="
+        background:var(--bg2);border:1px solid var(--border);border-radius:10px;
+        padding:13px 16px;color:var(--text);font-family:DM Sans,sans-serif;font-size:0.95rem;outline:none;
+        width:100%;box-sizing:border-box;
+      ">
+    </div>
+    <div id="login-error" style="
+      display:none;background:rgba(255,80,80,0.12);border:1px solid rgba(255,80,80,0.3);
+      border-radius:8px;padding:10px 14px;color:#ff5050;font-size:0.82rem;font-family:DM Sans,sans-serif;
+    "></div>
+    <button id="login-btn" onclick="doLogin()" style="
+      background:var(--accent);border:none;border-radius:10px;
+      padding:14px;color:#000;font-family:Syne,sans-serif;font-weight:700;font-size:0.95rem;
+      cursor:pointer;width:100%;
+    ">Se connecter</button>
+  </div>
+</div>
+
 <header>
   <div class="header-left">
     <div class="logo">LUMIIA <span>●</span> Workspace</div>
@@ -1200,6 +1238,11 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
       <button onclick="closeModal('modal-user')" style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;width:32px;height:32px;color:var(--text2);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center">✕</button>
     </div>
     <div id="user-picker-list" style="display:flex;flex-direction:column;gap:10px;"></div>
+    <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border)">
+      <button onclick="doLogout();closeModal('modal-user')" style="width:100%;background:transparent;border:1px solid rgba(244,63,94,0.3);border-radius:10px;padding:11px;color:var(--cat-urgent);font-family:Syne,sans-serif;font-weight:700;font-size:0.85rem;cursor:pointer">
+        Se d&#233;connecter
+      </button>
+    </div>
   </div>
 </div>
 
@@ -1263,6 +1306,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
 // ─────────────────────────────────────────────
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
 import { getDatabase, ref, onValue, set, remove } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js';
+import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBPgjVFKrP80qX_hlfUFqL168XONfNIBA4",
@@ -1276,34 +1320,107 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
+const auth = getAuth(app);
 const NOTES_REF = ref(db, 'workspace/items');
 const PROJECTS_REF = ref(db, 'workspace/projects');
 const PROSPECTS_REF = ref(db, 'workspace/prospects');
 
-// Sync items temps réel
-onValue(NOTES_REF, (snapshot) => {
-  const data = snapshot.val();
-  items = data ? Object.values(data) : [];
-  if (items.length === 0) seedDemo();
-  else render();
-});
+// Mapping email Firebase → ID membre interne
+const EMAIL_TO_MEMBER = {
+  'contact@lumiia.fr': 'em',
+  'aurelie@lumiia.fr': 'au',
+  'marion.duizabo@hotmail.com': 'ma',
+};
 
-// Sync projets temps réel
-onValue(PROJECTS_REF, (snapshot) => {
-  const data = snapshot.val();
-  if (data) {
-    PROJECTS = Object.values(data).sort((a, b) => (a.order||0) - (b.order||0));
+// Listeners Firebase — démarrés uniquement après authentification
+let _listenersStarted = false;
+function initDataListeners() {
+  if (_listenersStarted) return;
+  _listenersStarted = true;
+
+  // Sync items temps réel
+  onValue(NOTES_REF, (snapshot) => {
+    const data = snapshot.val();
+    items = data ? Object.values(data) : [];
+    if (items.length === 0) seedDemo();
+    else render();
+  });
+
+  // Sync projets temps réel
+  onValue(PROJECTS_REF, (snapshot) => {
+    const data = snapshot.val();
+    if (data) {
+      PROJECTS = Object.values(data).sort((a, b) => (a.order||0) - (b.order||0));
+    }
+    render();
+  });
+
+  // Sync prospects temps réel
+  onValue(PROSPECTS_REF, (snapshot) => {
+    const data = snapshot.val();
+    prospects = data ? Object.values(data).sort((a,b) => (b.created||0) - (a.created||0)) : [];
+    render();
+  });
+}
+
+// Authentification — point d'entrée unique
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    const memberId = EMAIL_TO_MEMBER[user.email];
+    if (!memberId) {
+      // Email non reconnu — déconnexion forcée
+      signOut(auth);
+      showLoginError('Compte non autoris\u00e9.');
+      return;
+    }
+    currentUser = memberId;
+    document.getElementById('user-badge').textContent = memberId.toUpperCase();
+    document.getElementById('login-screen').style.display = 'none';
+    initDataListeners();
+  } else {
+    document.getElementById('login-screen').style.display = 'flex';
   }
-  render();
 });
 
-// Sync prospects temps réel
-let prospects = [];
-onValue(PROSPECTS_REF, (snapshot) => {
-  const data = snapshot.val();
-  prospects = data ? Object.values(data).sort((a,b) => (b.created||0) - (a.created||0)) : [];
-  render();
-});
+// Fonctions login / logout
+async function doLogin() {
+  const email = document.getElementById('login-email').value.trim();
+  const pwd = document.getElementById('login-password').value;
+  const btn = document.getElementById('login-btn');
+  if (!email || !pwd) return;
+  btn.textContent = 'Connexion...';
+  btn.style.opacity = '0.7';
+  try {
+    await signInWithEmailAndPassword(auth, email, pwd);
+    // onAuthStateChanged prend le relais
+  } catch(e) {
+    const msgs = {
+      'auth/invalid-credential': 'Email ou mot de passe incorrect.',
+      'auth/too-many-requests': 'Trop de tentatives. R\u00e9essaie plus tard.',
+      'auth/user-disabled': 'Compte d\u00e9sactiv\u00e9.',
+    };
+    showLoginError(msgs[e.code] || 'Erreur de connexion.');
+    btn.textContent = 'Se connecter';
+    btn.style.opacity = '1';
+  }
+}
+
+function showLoginError(msg) {
+  const el = document.getElementById('login-error');
+  el.textContent = msg;
+  el.style.display = '';
+}
+
+function doLogout() {
+  signOut(auth);
+  _listenersStarted = false;
+  items = [];
+  prospects = [];
+}
+
+// Entrée clavier sur les champs login
+document.getElementById('login-email').addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('login-password').focus(); });
+document.getElementById('login-password').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
 
 async function save() {
   const obj = {};
@@ -1389,6 +1506,7 @@ let editingId = null;
 let clItems = [];
 let clItemsTodo = [];
 let items = [];
+let prospects = [];
 
 // Membres configurables (stockés en localStorage)
 let MEMBERS = JSON.parse(localStorage.getItem('lumiia-members') || 'null') || [
@@ -1396,17 +1514,6 @@ let MEMBERS = JSON.parse(localStorage.getItem('lumiia-members') || 'null') || [
   { id: 'au', name: 'Aur\u00e9lie', url: 'au' },
   { id: 'ma', name: 'Marion', url: 'ma' },
 ];
-
-// Restaurer l'utilisateur depuis localStorage (juste la préférence de session)
-const savedUser = localStorage.getItem('lumiia-workspace-user');
-// Vérifier aussi le paramètre URL ?user= (lien d'invitation)
-const urlUser = new URLSearchParams(window.location.search).get('user');
-if (urlUser && ['em','au','ma'].includes(urlUser)) {
-  currentUser = urlUser;
-  localStorage.setItem('lumiia-workspace-user', urlUser);
-} else if (savedUser) {
-  currentUser = savedUser;
-}
 
 function genId() {
   return Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
@@ -1417,7 +1524,6 @@ function genId() {
 // ─────────────────────────────────────────────
 function setUser(u) {
   currentUser = u;
-  localStorage.setItem('lumiia-workspace-user', u);
   document.getElementById('user-badge').textContent = u.toUpperCase();
   closeModal('modal-user');
   render();
@@ -3796,9 +3902,7 @@ function restoreXpressTimers() {
     scheduleXpressAlert(item);
   });
 }
-// Afficher le bon badge user dès le départ
-document.getElementById('user-badge').textContent = currentUser.toUpperCase();
-// render() et seedDemo() sont appelés par onValue Firebase
+// render() et seedDemo() sont appelés par onValue Firebase après auth
 // Restaurer les timers Xpress au chargement
 setTimeout(restoreXpressTimers, 1500);
 
