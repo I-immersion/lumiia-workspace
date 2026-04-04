@@ -1,4 +1,3 @@
-// firebase-messaging-sw.js
 importScripts('https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js');
 importScripts('https://www.gstatic.com/firebasejs/10.12.0/firebase-messaging-compat.js');
 
@@ -17,31 +16,33 @@ const messaging = firebase.messaging();
 messaging.onBackgroundMessage(payload => {
   const title    = payload.notification?.title || '\u26a1 LUMIIA Workspace';
   const body     = payload.notification?.body  || '';
-  const xpressId = payload.data?.xpressId || '';
+  const itemId   = payload.data?.xpressId || '';
+  const itemType = payload.data?.itemType || 'xpress';
   self.registration.showNotification(title, {
     body,
     icon: '/lumiia-workspace/icon-192.png',
     badge: '/lumiia-workspace/icon-192.png',
-    tag: 'lumiia-' + xpressId + '-' + Date.now(),
+    tag: 'lumiia-' + itemId + '-' + Date.now(),
     renotify: true,
-    data: { xpressId },
+    data: { itemId, itemType },
   });
 });
 
 self.addEventListener('notificationclick', event => {
   event.notification.close();
-  const xpressId = event.notification.data?.xpressId;
+  const { itemId, itemType } = event.notification.data || {};
   const appUrl = 'https://i-immersion.github.io/lumiia-workspace/';
   event.waitUntil(
     clients.matchAll({ type: 'window', includeUncontrolled: true }).then(clientList => {
       for (const client of clientList) {
         if (client.url.startsWith(appUrl)) {
           client.focus();
-          if (xpressId) client.postMessage({ type: 'OPEN_XPRESS', xpressId });
+          if (itemId) client.postMessage({ type: 'OPEN_XPRESS', xpressId: itemId, itemType });
           return;
         }
       }
-      return clients.openWindow(appUrl + (xpressId ? '?xpress=' + xpressId : ''));
+      const params = itemId ? '?item=' + itemId + '&type=' + (itemType || 'xpress') : '';
+      return clients.openWindow(appUrl + params);
     })
   );
 });
