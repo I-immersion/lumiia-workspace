@@ -12,7 +12,7 @@
 <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjogIkxVTUlJQSBXb3Jrc3BhY2UiLCAic2hvcnRfbmFtZSI6ICJXb3Jrc3BhY2UiLCAic3RhcnRfdXJsIjogIi4iLCAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwgImJhY2tncm91bmRfY29sb3IiOiAiIzBkMGQwZiIsICJ0aGVtZV9jb2xvciI6ICIjMGQwZDBmIiwgImljb25zIjogW3sic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzl6ZG1jaUlIWnBaWGRDYjNnOUlqQWdNQ0F5T1RBZ01qa3dJajQ4Y21WamRDQjNhV1IwYUQwaU1qa3dJaUJvWldsbmFIUTlJakk1TUNJZ2NuZzlJall3SWlCbWFXeHNQU0lqTUdRd1pEQm1JaTgrUEhSbGVIUWdlRDBpTlRBbElpQjVQU0kxTlNVaUlHWnZiblF0YzJsNlpUMGlNVFl3SWlCMFpYaDBMV0Z1WTJodmNqMGliV2xrWkd4bElpQmtiMjFwYm1GdWRDMWlZWE5sYkdsdVpUMGliV2xrWkd4bElqN3duNXFnUEM5MFpYaDBQand2YzNablBnPT0iLCAic2l6ZXMiOiAiMTkyeDE5MiA1MTJ4NTEyIiwgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
 <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOTAgMjkwIj48cmVjdCB3aWR0aD0iMjkwIiBoZWlnaHQ9IjI5MCIgcng9IjYwIiBmaWxsPSIjMGQwZDBmIi8+PHRleHQgeD0iNTAlIiB5PSI1NSUiIGZvbnQtc2l6ZT0iMTYwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn5qgPC90ZXh0Pjwvc3ZnPg==">
 
-<!-- LUMIIA Workspace v7.2 -->
+<!-- LUMIIA Workspace v7.3 -->
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 
@@ -843,7 +843,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
     <div style="text-align:center;margin-bottom:8px">
       <div style="font-family:Syne,sans-serif;font-weight:900;font-size:1.4rem;letter-spacing:0.04em;color:var(--text)">LUMIIA <span style="color:#38bdf8">●</span> Workspace</div>
       <div style="font-size:0.8rem;color:var(--text3);margin-top:6px;font-family:DM Sans,sans-serif">Connexion requise</div>
-      <div style="font-size:0.7rem;color:var(--text3);margin-top:4px;font-family:Syne,sans-serif;letter-spacing:0.05em">v7.2</div>
+      <div style="font-size:0.7rem;color:var(--text3);margin-top:4px;font-family:Syne,sans-serif;letter-spacing:0.05em">v7.3</div>
     </div>
     <div style="display:flex;flex-direction:column;gap:10px">
       <input id="login-email" type="email" placeholder="Email" autocomplete="email" style="
@@ -888,7 +888,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
   <button class="tab" data-tab="semaine" onclick="switchTab('semaine')">Semaine</button>
   <button class="tab" data-tab="prospects" onclick="switchTab('prospects')">Prospects</button>
   <div style="flex:1"></div>
-  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v7.2</div>
+  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v7.3</div>
 </div>
 
 <main id="main-content">
@@ -976,6 +976,12 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
 
     <div class="field-label">Relance</div>
     <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px" id="prospect-relance-btns">
+      <button class="cat-btn" data-relance="2mn" onclick="selectProspectRelance('2mn')"
+        style="border:1px solid var(--border);background:transparent;color:var(--text2);font-size:0.78rem">2mn</button>
+      <button class="cat-btn" data-relance="5mn" onclick="selectProspectRelance('5mn')"
+        style="border:1px solid var(--border);background:transparent;color:var(--text2);font-size:0.78rem">5mn</button>
+      <button class="cat-btn" data-relance="30mn" onclick="selectProspectRelance('30mn')"
+        style="border:1px solid var(--border);background:transparent;color:var(--text2);font-size:0.78rem">30mn</button>
       <button class="cat-btn" data-relance="1h" onclick="selectProspectRelance('1h')"
         style="border:1px solid var(--border);background:transparent;color:var(--text2);font-size:0.78rem">1H</button>
       <button class="cat-btn" data-relance="4h" onclick="selectProspectRelance('4h')"
@@ -3396,7 +3402,7 @@ function renderProspectCard(p, today) {
   const eventStr = p.dateEvent ? new Date(p.dateEvent + 'T12:00:00').toLocaleDateString('fr-FR', {weekday:'short', day:'numeric', month:'short', year:'numeric'}) : '';
 
   // Texte WhatsApp pour partage rapide depuis la carte
-  const waText = '\u26a1 *Prospect LUMIIA*\n\n*' + (p.prenom||'') + ' ' + (p.nom||'') + '*\n'
+  const waText = '\u26a1 *Contact LUMIIA*\n\n*' + (p.prenom||'') + ' ' + (p.nom||'') + '*\n'
     + (p.tel ? '\uD83D\uDCDE ' + p.tel + '\n' : '')
     + (p.email ? '\u2709\uFE0F ' + p.email + '\n' : '')
     + '\n*Demande :* ' + typeLabel
@@ -3447,11 +3453,14 @@ function setProspectFiltre(val) {
 function selectProspectRelance(val) {
   const now = new Date();
   let target = new Date(now);
-  if (val === '1h')   target.setHours(now.getHours() + 1);
-  else if (val === '4h')  target.setHours(now.getHours() + 4);
-  else if (val === '1j')  target.setDate(now.getDate() + 1);
-  else if (val === '2j')  target.setDate(now.getDate() + 2);
-  else if (val === '3j')  target.setDate(now.getDate() + 3);
+  if (val === '2mn')  target.setMinutes(now.getMinutes() + 2);
+  else if (val === '5mn')  target.setMinutes(now.getMinutes() + 5);
+  else if (val === '30mn') target.setMinutes(now.getMinutes() + 30);
+  else if (val === '1h')   target.setHours(now.getHours() + 1);
+  else if (val === '4h')   target.setHours(now.getHours() + 4);
+  else if (val === '1j')   target.setDate(now.getDate() + 1);
+  else if (val === '2j')   target.setDate(now.getDate() + 2);
+  else if (val === '3j')   target.setDate(now.getDate() + 3);
   else if (val === '1sem') target.setDate(now.getDate() + 7);
 
   const dateStr = localDateStr(target);
@@ -3461,7 +3470,7 @@ function selectProspectRelance(val) {
   const label = document.getElementById('prospect-relance-label');
   if (label) {
     const options = {weekday:'short', day:'numeric', month:'long'};
-    if (val === '1h' || val === '4h') {
+    if (['2mn','5mn','30mn','1h','4h'].includes(val)) {
       label.textContent = 'Le ' + target.toLocaleDateString('fr-FR', options) + ' \u00e0 ' + target.getHours() + 'h' + String(target.getMinutes()).padStart(2,'0');
     } else {
       label.textContent = 'Le ' + target.toLocaleDateString('fr-FR', options);
@@ -3592,7 +3601,7 @@ function openProspectDetail(id) {
   const echeanceStr = p.echeance ? new Date(p.echeance + 'T12:00:00').toLocaleDateString('fr-FR', {day:'numeric', month:'long'}) : '';
 
   // Texte pour partage WhatsApp
-  const waText = '\u26a1 *Prospect LUMIIA*\n\n'
+  const waText = '\u26a1 *Contact LUMIIA*\n\n'
     + '*' + p.prenom + ' ' + p.nom + '*\n'
     + (p.tel ? '\uD83D\uDCDE ' + p.tel + '\n' : '')
     + (p.email ? '\u2709\uFE0F ' + p.email + '\n' : '')
