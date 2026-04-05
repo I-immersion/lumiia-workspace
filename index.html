@@ -12,7 +12,7 @@
 <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjogIkxVTUlJQSBXb3Jrc3BhY2UiLCAic2hvcnRfbmFtZSI6ICJXb3Jrc3BhY2UiLCAic3RhcnRfdXJsIjogIi4iLCAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwgImJhY2tncm91bmRfY29sb3IiOiAiIzBkMGQwZiIsICJ0aGVtZV9jb2xvciI6ICIjMGQwZDBmIiwgImljb25zIjogW3sic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzl6ZG1jaUlIWnBaWGRDYjNnOUlqQWdNQ0F5T1RBZ01qa3dJajQ4Y21WamRDQjNhV1IwYUQwaU1qa3dJaUJvWldsbmFIUTlJakk1TUNJZ2NuZzlJall3SWlCbWFXeHNQU0lqTUdRd1pEQm1JaTgrUEhSbGVIUWdlRDBpTlRBbElpQjVQU0kxTlNVaUlHWnZiblF0YzJsNlpUMGlNVFl3SWlCMFpYaDBMV0Z1WTJodmNqMGliV2xrWkd4bElpQmtiMjFwYm1GdWRDMWlZWE5sYkdsdVpUMGliV2xrWkd4bElqN3duNXFnUEM5MFpYaDBQand2YzNablBnPT0iLCAic2l6ZXMiOiAiMTkyeDE5MiA1MTJ4NTEyIiwgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
 <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOTAgMjkwIj48cmVjdCB3aWR0aD0iMjkwIiBoZWlnaHQ9IjI5MCIgcng9IjYwIiBmaWxsPSIjMGQwZDBmIi8+PHRleHQgeD0iNTAlIiB5PSI1NSUiIGZvbnQtc2l6ZT0iMTYwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn5qgPC90ZXh0Pjwvc3ZnPg==">
 
-<!-- LUMIIA Workspace v8.6 -->
+<!-- LUMIIA Workspace v8.7 -->
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 
@@ -848,7 +848,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
     <div style="text-align:center;margin-bottom:8px">
       <div style="font-family:Syne,sans-serif;font-weight:900;font-size:1.4rem;letter-spacing:0.04em;color:var(--text)">LUMIIA <span style="color:#38bdf8">●</span> Workspace</div>
       <div style="font-size:0.8rem;color:var(--text3);margin-top:6px;font-family:DM Sans,sans-serif">Connexion requise</div>
-      <div style="font-size:0.7rem;color:var(--text3);margin-top:4px;font-family:Syne,sans-serif;letter-spacing:0.05em">v8.6</div>
+      <div style="font-size:0.7rem;color:var(--text3);margin-top:4px;font-family:Syne,sans-serif;letter-spacing:0.05em">v8.7</div>
     </div>
     <div style="display:flex;flex-direction:column;gap:10px">
       <input id="login-email" type="email" placeholder="Email" autocomplete="email" style="
@@ -894,8 +894,9 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
   <button class="tab" data-tab="todo" onclick="switchTab('todo')">Tâches</button>
   <button class="tab" data-tab="projets" onclick="switchTab('projets')">Projets</button>
   <button class="tab" data-tab="semaine" onclick="switchTab('semaine')">Semaine</button>
+  <button class="tab" data-tab="roadmap" onclick="switchTab('roadmap')">🗺 Roadmap</button>
   <div style="flex:1"></div>
-  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v8.6</div>
+  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v8.7</div>
 </div>
 
 <main id="main-content">
@@ -1364,6 +1365,7 @@ const NOTES_REF = ref(db, 'workspace/items');
 const PROJECTS_REF = ref(db, 'workspace/projects');
 const PROSPECTS_REF = ref(db, 'workspace/prospects');
 const SETTINGS_REF = ref(db, 'workspace/settings');
+const ROADMAP_REF = ref(db, 'roadmap');
 
 // Mapping email Firebase → ID membre interne
 const EMAIL_TO_MEMBER = {
@@ -1412,6 +1414,15 @@ function initDataListeners() {
         Object.entries(data.cats).forEach(([id, c]) => { CATS[id] = c; });
         render();
       }
+    }
+  });
+
+  // Sync roadmap
+  onValue(ROADMAP_REF, (snapshot) => {
+    const data = snapshot.val();
+    if (data) {
+      roadmapData = data;
+      if (currentTab === 'roadmap') render();
     }
   });
 }
@@ -1647,6 +1658,7 @@ let clItems = [];
 let clItemsTodo = [];
 let items = [];
 let prospects = [];
+let roadmapData = {};
 
 // Membres configurables (stockés en localStorage)
 let MEMBERS = JSON.parse(localStorage.getItem('lumiia-members') || 'null') || [
@@ -1718,6 +1730,7 @@ function render() {
   else if (currentTab === 'todo') el.innerHTML = renderTodos();
   else if (currentTab === 'projets') el.innerHTML = renderProjets();
   else if (currentTab === 'semaine') el.innerHTML = renderSemaine();
+  else if (currentTab === 'roadmap') el.innerHTML = renderRoadmap();
   // Masquer/afficher le FAB
   const fab = document.getElementById('fab');
   if (fab) fab.style.display = (currentTab === 'projets' && !currentProject) || currentModule ? 'none' : '';
@@ -2065,6 +2078,68 @@ function renderDayItem(item, isToday) {
     + '</div>';
 }
 
+
+function renderRoadmap() {
+  const ORDER = ['tresorerie', 'workspace', 'site'];
+  const STATUS_LABEL = { done: 'Fait', wip: 'En cours', todo: 'À faire' };
+  const STATUS_COLOR = {
+    done: 'var(--accent)',
+    wip: '#fbbf24',
+    todo: 'var(--text3)'
+  };
+  const STATUS_BG = {
+    done: 'rgba(74,222,128,0.1)',
+    wip: 'rgba(251,191,36,0.1)',
+    todo: 'var(--bg3)'
+  };
+
+  if (!Object.keys(roadmapData).length) {
+    return `<div style="padding:32px;text-align:center;color:var(--text3)">Chargement du roadmap\u2026</div>`;
+  }
+
+  const projects = ORDER.filter(k => roadmapData[k]);
+
+  let html = `<div style="padding:20px 24px 40px">
+    <div style="font-family:Syne,sans-serif;font-size:1.1rem;font-weight:700;letter-spacing:0.04em;margin-bottom:4px">Roadmap LUMIIA</div>
+    <div style="font-size:0.75rem;color:var(--text3);margin-bottom:24px">Synchronis\u00e9 en temps r\u00e9el \u00b7 mis \u00e0 jour par Claude</div>
+    <div style="display:flex;flex-direction:column;gap:20px">`;
+
+  for (const key of projects) {
+    const proj = roadmapData[key];
+    const tasks = proj.tasks ? Object.values(proj.tasks).sort((a,b) => (a.order||0)-(b.order||0)) : [];
+    const done = tasks.filter(t => t.status === 'done').length;
+
+    html += `<div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;overflow:hidden">
+      <div style="padding:14px 18px 12px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between">
+        <div style="display:flex;align-items:center;gap:10px">
+          <span style="font-size:1.1rem">${proj.emoji||'\ud83d\udcc1'}</span>
+          <span style="font-family:Syne,sans-serif;font-weight:700;font-size:0.9rem;letter-spacing:0.03em">${proj.label}</span>
+        </div>
+        <span style="font-size:0.72rem;color:var(--text3)">${done}/${tasks.length} termin\u00e9${done > 1 ? 's' : ''}</span>
+      </div>
+      <div style="padding:8px 0">`;
+
+    for (const task of tasks) {
+      const color = STATUS_COLOR[task.status] || 'var(--text3)';
+      const bg = STATUS_BG[task.status] || 'var(--bg3)';
+      const label = STATUS_LABEL[task.status] || task.status;
+      const strike = task.status === 'done' ? 'text-decoration:line-through;opacity:0.5;' : '';
+      html += `<div style="display:flex;align-items:center;gap:12px;padding:9px 18px;border-bottom:1px solid var(--border)">
+        <span style="flex-shrink:0;width:7px;height:7px;border-radius:50%;background:${color};display:inline-block"></span>
+        <span style="flex:1;font-size:0.8rem;${strike}color:var(--text1)">${task.label}</span>
+        <span style="display:flex;align-items:center;gap:6px;flex-shrink:0">
+          ${task.version ? `<span style="font-size:0.68rem;color:var(--text3);font-family:Syne,sans-serif">${task.version}</span>` : ''}
+          <span style="font-size:0.68rem;padding:2px 8px;border-radius:20px;background:${bg};color:${color};font-weight:600">${label}</span>
+        </span>
+      </div>`;
+    }
+
+    html += `</div></div>`;
+  }
+
+  html += `</div></div>`;
+  return html;
+}
 
 function renderSemaine() {
   const today = new Date();
