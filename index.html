@@ -12,7 +12,7 @@
 <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjogIkxVTUlJQSBXb3Jrc3BhY2UiLCAic2hvcnRfbmFtZSI6ICJXb3Jrc3BhY2UiLCAic3RhcnRfdXJsIjogIi4iLCAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwgImJhY2tncm91bmRfY29sb3IiOiAiIzBkMGQwZiIsICJ0aGVtZV9jb2xvciI6ICIjMGQwZDBmIiwgImljb25zIjogW3sic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzl6ZG1jaUlIWnBaWGRDYjNnOUlqQWdNQ0F5T1RBZ01qa3dJajQ4Y21WamRDQjNhV1IwYUQwaU1qa3dJaUJvWldsbmFIUTlJakk1TUNJZ2NuZzlJall3SWlCbWFXeHNQU0lqTUdRd1pEQm1JaTgrUEhSbGVIUWdlRDBpTlRBbElpQjVQU0kxTlNVaUlHWnZiblF0YzJsNlpUMGlNVFl3SWlCMFpYaDBMV0Z1WTJodmNqMGliV2xrWkd4bElpQmtiMjFwYm1GdWRDMWlZWE5sYkdsdVpUMGliV2xrWkd4bElqN3duNXFnUEM5MFpYaDBQand2YzNablBnPT0iLCAic2l6ZXMiOiAiMTkyeDE5MiA1MTJ4NTEyIiwgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
 <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOTAgMjkwIj48cmVjdCB3aWR0aD0iMjkwIiBoZWlnaHQ9IjI5MCIgcng9IjYwIiBmaWxsPSIjMGQwZDBmIi8+PHRleHQgeD0iNTAlIiB5PSI1NSUiIGZvbnQtc2l6ZT0iMTYwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn5qgPC90ZXh0Pjwvc3ZnPg==">
 
-<!-- LUMIIA Workspace v8.5 -->
+<!-- LUMIIA Workspace v8.6 -->
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 
@@ -848,7 +848,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
     <div style="text-align:center;margin-bottom:8px">
       <div style="font-family:Syne,sans-serif;font-weight:900;font-size:1.4rem;letter-spacing:0.04em;color:var(--text)">LUMIIA <span style="color:#38bdf8">●</span> Workspace</div>
       <div style="font-size:0.8rem;color:var(--text3);margin-top:6px;font-family:DM Sans,sans-serif">Connexion requise</div>
-      <div style="font-size:0.7rem;color:var(--text3);margin-top:4px;font-family:Syne,sans-serif;letter-spacing:0.05em">v8.5</div>
+      <div style="font-size:0.7rem;color:var(--text3);margin-top:4px;font-family:Syne,sans-serif;letter-spacing:0.05em">v8.6</div>
     </div>
     <div style="display:flex;flex-direction:column;gap:10px">
       <input id="login-email" type="email" placeholder="Email" autocomplete="email" style="
@@ -895,7 +895,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
   <button class="tab" data-tab="projets" onclick="switchTab('projets')">Projets</button>
   <button class="tab" data-tab="semaine" onclick="switchTab('semaine')">Semaine</button>
   <div style="flex:1"></div>
-  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v8.5</div>
+  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v8.6</div>
 </div>
 
 <main id="main-content">
@@ -2145,6 +2145,44 @@ function renderSemaine() {
 
   let html = filterBar;
 
+  // ── Focus du jour ──
+  const allTodosForFocus = items.filter(i => i.type === 'todo');
+  const focusTasks = allTodosForFocus.filter(i => i.todayFlag && !i.done);
+  const focusDone = allTodosForFocus.filter(i => i.todayFlag && i.done);
+  const focusTotal = focusTasks.length + focusDone.length;
+  if (focusTotal > 0) {
+    const pct = Math.round(focusDone.length / focusTotal * 100);
+    const msg = pct === 100 ? 'Mission accomplie \uD83C\uDF89'
+      : pct >= 75 ? 'Presque l\u00e0 ! \uD83D\uDCAA'
+      : pct >= 50 ? '\u00c0 mi-chemin, continue !'
+      : pct >= 25 ? 'Bon d\u00e9part, lance-toi !'
+      : 'C\'est parti pour aujourd\'hui !';
+    html += '<div style="background:var(--bg2);border:1px solid rgba(251,191,36,0.3);border-radius:14px;padding:16px 18px;margin-bottom:20px;border-left:3px solid #fbbf24">'
+      + '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">'
+      + '<div style="font-family:Syne,sans-serif;font-weight:800;font-size:0.88rem;color:#fbbf24">\u2600\uFE0F Focus du jour</div>'
+      + '<div style="font-size:0.8rem;color:var(--text2)">' + focusDone.length + ' / ' + focusTotal + ' faites</div>'
+      + '</div>'
+      + '<div style="height:7px;background:var(--bg3);border-radius:4px;overflow:hidden;margin-bottom:10px">'
+      + '<div style="height:100%;width:' + pct + '%;background:linear-gradient(90deg,#fbbf24,#f59e0b);border-radius:4px;transition:width 0.4s"></div>'
+      + '</div>'
+      + '<div style="font-size:0.8rem;color:var(--text2);margin-bottom:12px;font-style:italic">' + msg + '</div>'
+      + '<div style="display:flex;flex-direction:column;gap:5px">';
+    allTodosForFocus.filter(i => i.todayFlag).sort((a,b) => (a.done?1:0)-(b.done?1:0)).forEach(i => {
+      const catInfo = getCatInfo(i);
+      html += '<div onclick="toggleTodo(\'' + i.id + '\')" style="display:flex;align-items:center;gap:10px;cursor:pointer;padding:8px 10px;background:var(--bg3);border-radius:10px;border-left:3px solid ' + (i.done ? '#4ade80' : catInfo.color) + '">'
+        + '<div style="width:18px;height:18px;border-radius:50%;border:2px solid ' + (i.done?'#4ade80':'#fbbf24') + ';background:' + (i.done?'#4ade80':'transparent') + ';flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:0.65rem;color:#000;font-weight:900">' + (i.done?'✓':'') + '</div>'
+        + '<div style="flex:1;font-size:0.85rem;color:' + (i.done?'var(--text3)':'var(--text)') + ';' + (i.done?'text-decoration:line-through;':'font-weight:600;') + '">' + i.title + '</div>'
+        + (i.prio === 'urgent' ? '<div style="font-size:0.75rem">\uD83D\uDD34</div>' : '')
+        + '</div>';
+    });
+    html += '</div></div>';
+  } else {
+    html += '<div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:14px 18px;margin-bottom:20px;border-left:3px solid var(--border);opacity:0.7">'
+      + '<div style="font-family:Syne,sans-serif;font-weight:700;font-size:0.82rem;color:var(--text3)">\u2600\uFE0F Focus du jour</div>'
+      + '<div style="font-size:0.78rem;color:var(--text3);margin-top:6px">Aucune t\u00e2che marqu\u00e9e \u2600 pour aujourd\'hui.<br>Appuie sur \u2600 sur une t\u00e2che pour l\'ajouter ici.</div>'
+      + '</div>';
+  }
+
   // Bloc retards
   if (overdue.length > 0) {
     html += '<div style="margin-bottom:20px;padding:14px 16px;background:rgba(244,63,94,0.08);border:1px solid rgba(244,63,94,0.3);border-radius:14px">'
@@ -2482,9 +2520,9 @@ function renderCatEditor() {
   const catEl = document.getElementById('cat-list-editor-cats');
 
   const renderRow = (cat, i) => `
-    <div style="display:flex;align-items:center;gap:8px">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
       <div style="width:20px;height:20px;border-radius:50%;background:${cat.color};flex-shrink:0;cursor:pointer" onclick="cycleCatColor(${i})" title="Changer la couleur"></div>
-      <input type="text" value="${cat.label}" oninput="editingCats[${i}].label=this.value"
+      <input type="text" value="${cat.label}" oninput="updateCatLabel(${i}, this.value)"
         style="flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:8px 11px;color:var(--text);font-family:DM Sans,sans-serif;font-size:0.85rem;outline:none">
       <button onclick="removeCat(${i})" style="background:none;border:none;color:var(--text3);font-size:1rem;cursor:pointer;padding:4px;" onmouseover="this.style.color='var(--cat-urgent)'" onmouseout="this.style.color='var(--text3)'">✕</button>
     </div>`;
@@ -3510,7 +3548,7 @@ function renderCRM() {
     + '<div class="section-title">CRM \u2014 ' + all.length + ' prospect' + (all.length !== 1 ? 's' : '') + '</div>'
     + '<div style="display:flex;gap:8px;align-items:center">'
     + '<button onclick="openProspectModal()" style="background:var(--cat-lumiia);border:none;border-radius:10px;padding:7px 14px;color:#000;font-family:Syne,sans-serif;font-weight:700;font-size:0.78rem;cursor:pointer">+ Nouveau</button>'
-    + '<button onclick="setCrmView(crmView===\'table\'?\'cards\':\'table\')" style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:6px 12px;color:var(--text2);font-size:0.78rem;font-family:Syne,sans-serif;font-weight:700;cursor:pointer">Vue ' + (crmView === 'table' ? '\u25a6 Cartes' : '\u2261 Tableau') + '</button>'
+    + '<button onclick="setCrmView(\'' + (crmView === 'table' ? 'cards' : 'table') + '\')" style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:6px 12px;color:var(--text2);font-size:0.78rem;font-family:Syne,sans-serif;font-weight:700;cursor:pointer">Vue ' + (crmView === 'table' ? '\u25a6 Cartes' : '\u2261 Tableau') + '</button>'
     + '</div></div>';
 
   // Filtres statut
@@ -3646,37 +3684,6 @@ function renderDashboard() {
       + '</div>';
   });
   html += '</div>';
-
-  // ── Focus du jour ──
-  const todayTasks = allTodos.filter(i => i.todayFlag && !i.done);
-  const todayDone = allTodos.filter(i => i.todayFlag && i.done);
-  const todayTotal = todayTasks.length + todayDone.length;
-  if (todayTotal > 0) {
-    const pct = todayTotal ? Math.round(todayDone.length / todayTotal * 100) : 0;
-    const msg = pct === 100 ? 'Mission accomplie \uD83C\uDF89'
-      : pct >= 75 ? 'Presque l\u00e0 ! \uD83D\uDCAA'
-      : pct >= 50 ? '\u00c0 mi-chemin, continue !'
-      : pct >= 25 ? 'Bon d\u00e9part, lance-toi !'
-      : 'C\'est parti pour aujourd\'hui \u2600\uFE0F';
-    html += '<div style="background:var(--bg2);border:1px solid rgba(251,191,36,0.3);border-radius:14px;padding:16px 20px;margin-bottom:24px;border-left:3px solid #fbbf24">'
-      + '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">'
-      + '<div style="font-family:Syne,sans-serif;font-weight:700;font-size:0.85rem;color:#fbbf24">\u2600\uFE0F Focus du jour</div>'
-      + '<div style="font-size:0.82rem;color:var(--text2)">' + todayDone.length + ' / ' + todayTotal + ' faites</div>'
-      + '</div>'
-      + '<div style="height:8px;background:var(--bg3);border-radius:4px;overflow:hidden;margin-bottom:10px">'
-      + '<div style="height:100%;width:' + pct + '%;background:linear-gradient(90deg,#fbbf24,#f59e0b);border-radius:4px;transition:width 0.4s"></div>'
-      + '</div>'
-      + '<div style="font-size:0.82rem;color:var(--text2);margin-bottom:10px">' + msg + '</div>'
-      + '<div style="display:flex;flex-direction:column;gap:6px">';
-    allTodos.filter(i => i.todayFlag).sort((a,b) => (a.done?1:0)-(b.done?1:0)).forEach(i => {
-      html += '<div onclick="switchTab(\'todo\')" style="display:flex;align-items:center;gap:8px;cursor:pointer;padding:4px 0">'
-        + '<div style="width:16px;height:16px;border-radius:50%;border:2px solid ' + (i.done?'#4ade80':'#fbbf24') + ';background:' + (i.done?'#4ade80':'transparent') + ';flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:0.6rem;color:#000">' + (i.done?'✓':'') + '</div>'
-        + '<div style="font-size:0.82rem;color:' + (i.done?'var(--text3)':'var(--text)') + ';' + (i.done?'text-decoration:line-through;':'') + '">' + i.title + '</div>'
-        + (i.prio === 'urgent' ? '<div style="font-size:0.7rem">\uD83D\uDD34</div>' : '')
-        + '</div>';
-    });
-    html += '</div></div>';
-  }
 
   // ── Graphiques ──
   html += '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:24px">';
@@ -4437,6 +4444,7 @@ window.openSettings = openSettings;
 window.addCat = addCat;
 window.removeCat = removeCat;
 window.cycleCatColor = cycleCatColor;
+window.updateCatLabel = (idx, val) => { if (editingCats && editingCats[idx]) editingCats[idx].label = val; };
 window.saveCats = saveCats;
 window.setUser = setUser;
 window.showUserPicker = showUserPicker;
