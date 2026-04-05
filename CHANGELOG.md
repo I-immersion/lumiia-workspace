@@ -1,7 +1,101 @@
 # CHANGELOG — LUMIIA Workspace
-
 Toutes les modifications notables du projet, version par version.
 Format : `[vX.Y] — date — description`
+
+---
+
+## [v8.6] — 5 avril 2026
+- Focus du jour déplacé du Dashboard vers la vue **Semaine** (en haut, avant les retards)
+- Focus du jour toujours visible même sans tâches flaggées (message d'invitation)
+- Tâches dans Focus du jour cochables directement depuis la vue Semaine
+- Correction bug réglages catégories : `updateCatLabel(idx, val)` exposé sur `window` (les `oninput` inline ne peuvent pas accéder aux variables de module ES6)
+- Correction bug bouton VUE CRM : valeur calculée au rendu, plus de référence à `crmView` dans le `onclick` (variable de module non accessible globalement)
+
+## [v8.5] — 5 avril 2026
+- Correction `setCrmView` : force `currentModule = 'crm'` avant render
+- Correction listener Firebase settings : ne réécrase plus CATS si déjà rempli (évite la perte des catégories après sauvegarde)
+- Focus du jour dans Dashboard (temporaire, déplacé en v8.6)
+
+## [v8.4] — 5 avril 2026
+- Interrupteur ☀ "Traiter aujourd'hui" sur chaque tâche (`todayFlag: true`)
+- CSS `.today-flagged` : fond jaune + bordure gauche ambrée
+- Tâches `todayFlag` apparaissent dans vue Semaine au jour d'aujourd'hui (indépendamment de leur date d'échéance)
+- `toggleTodayFlag(id)` exposé sur `window`
+- Bloc "Focus du jour" dans Dashboard : barre de progression, message motivant dynamique
+- Bug réglages catégories : `saveCats()` persiste dans Firebase `/workspace/settings/cats`
+- Listener `onValue(SETTINGS_REF)` pour sync initiale des catégories
+- VUE CRM : 2 boutons remplacés par toggle unique (Vue ▦ Cartes / Vue ≡ Tableau)
+- CRM tableau : colonne ÉVÉNEMENT ajoutée
+
+## [v8.3] — 5 avril 2026
+- Correction bug critique : `openProspectModal` avait perdu son `function` header lors d'un str_replace — code du body s'exécutait hors fonction
+- Correction accolade orpheline dans `selectProspectRelanceDate`
+- `previousModule` mémorisé à l'ouverture d'une fiche détail → bouton ← Retour vers Dashboard ou CRM
+- KPI cards Dashboard cliquables (Notes→Notes, Tâches→Tâches, Prospects→CRM)
+- Montant prospects : "de devis actifs" à la place de "en jeu"
+- `selectProspectRelanceDate(dateStr)` : sélection date précise pour les relances
+- Input date synchronisé avec les boutons rapides de relance
+
+## [v8.2] — 5 avril 2026
+- Navigation restructurée : tab bar quotidien (Notes/Tâches/Projets/Semaine) + boutons modules header (CRM, 📊 Dashboard)
+- `switchModule(module)` : toggle — recliquer ferme et revient aux tabs
+- Highlight visuel bouton module actif
+- **Module CRM** : vue tableau par défaut (Contact, Sujet, Statut, Dernière action, Relance, Montant) + toggle Tableau/Cartes
+- Filtres statut dans CRM
+- **Module Dashboard** : 4 KPI, 3 graphiques SVG (donut tâches, barres projets, donut prospects), 2 listes action (retards cliquables, activité récente)
+- `render()` respecte `currentModule` en priorité sur les tabs (correction retour sur Notes)
+- `switchTab()` reset `currentModule` et les boutons modules
+
+## [v8.1] — 5 avril 2026
+- Tokens FCM : clés fixes `mobile` et `desktop` au lieu de shortId aléatoire
+- Maximum 1 token par type d'appareil par utilisateur
+- Nettoyage des anciens tokens shortId dans Firebase
+
+## [v8.0] — 5 avril 2026
+- Service Worker détecte si l'app est visible avant d'afficher une notification système
+- Foreground : SW envoie message à la page → bannière in-app (pas de doublon)
+- Background : notification système normale
+- Tag notification stable (`lumiia-{itemId}`) pour déduplication Android
+
+## [v7.9] — 5 avril 2026
+- `openItemFromNotification(itemId, itemType)` : routing unifié (xpress/note/todo/prospect)
+- `openXpressFromNotification` conservé pour compatibilité
+- SW passe `itemType` dans les données de notification
+- Clic notification prospect → ouvre directement la fiche détail
+- Cloud Function : envoie à tous les tokens (mobile + desktop)
+
+## [v7.8] — 5 avril 2026
+- Option C notifications : foreground = bannière in-app, background = notification système
+- `onMessage` intercepte les notifications foreground (pas de doublon quand app active)
+- SW `onBackgroundMessage` uniquement pour background
+
+## [v7.7] — 5 avril 2026
+- Champ `device: 'mobile'|'desktop'` ajouté aux tokens FCM à l'enregistrement
+- Cloud Function filtre `device !== 'desktop'` (tentative de résolution doublon, abandonnée en v7.9)
+
+## [v7.6] — 5 avril 2026
+- Correction bug historique prospects : mauvais ID `modal-detail-body` → `detail-content`
+- Dernier historique visible sur les cartes prospects (date + texte tronqué)
+- Projet associé et montant visibles sur les cartes
+- Section historique dans la fiche détail avec champ de saisie
+
+## [v7.5] — 5 avril 2026 (version de départ session)
+
+## [v6.5] — 5 avril 2026
+- Suppression Google Calendar (155 lignes de dette technique)
+- Navigation restructurée : tab bar quotidien + boutons header modules
+
+## [v6.2 → v6.4] — 5 avril 2026
+- Firebase Auth email/password activé
+- 3 comptes créés : contact@lumiia.fr (em/admin), aurelie@lumiia.fr (au), marion.duizabo@hotmail.com (ma)
+- Règles Firebase : `auth != null`
+- Écran de connexion avec badge version
+- Bouton déconnexion dans le menu utilisateur
+- Mapping email → ID membre : contact@lumiia.fr→em, aurelie@lumiia.fr→au, marion.duizabo@hotmail.com→ma
+- Cloud Function `sendXpressNotifications` : toutes les minutes, europe-west1
+- Gère xpress, notes, tâches, prospects (champ `echeanceAt`)
+- Tokens FCM : `mobile` et `desktop` clés fixes dans `/workspace/fcm_tokens/{userId}/`
+- FCM SW avec déduplication par tag stable
 
 ---
 
@@ -38,101 +132,48 @@ Format : `[vX.Y] — date — description`
 ## [v5.0] — Mars 2026
 - Remplacement OAuth manuel par Google Identity Services
 - Ajout script GIS dans `<head>`
-- Logs console pour diagnostiquer les appels Calendar (`✅ Event Calendar créé` / `❌ Calendar error`)
+- Logs console pour diagnostiquer les appels Calendar
 
 ## [v4.9] — Mars 2026
-- Modale Xpress refonte UX : suppression des 3 boutons Aucun/Heure/Timer
-- Interface tout-en-un : sélecteur H:MM direct + boutons timer sur la même ligne
+- Modale Xpress refonte UX : interface tout-en-un sélecteur H:MM + boutons timer
 - Ajout durées : 2min, 2h, 3h, 12h, 24h
 - Indication "aujourd'hui à 19h00" ou "demain à 08h00" en temps réel
-- Correction accent "Tâche" dans le FAB menu (était `\u00e2che` en HTML)
 
 ## [v4.8] — Mars 2026
 - Intégration Google Calendar API pour notifications Xpress heure fixe
 - Intégration Google Tasks API pour notifications Xpress compte à rebours
-- OAuth Google via popup — première autorisation demandée au clic "Créer"
-- Rappel automatique Google Calendar pour tâches avec date d'échéance
-- Client ID OAuth : `823919513931-igf7jdknqhioqdr0dssig4en4ubn08mu.apps.googleusercontent.com`
+- OAuth Google via popup
 
 ## [v4.7] — Mars 2026
-- Correction : `openXpressModal` ne demande la permission notification qu'une seule fois (flag `lumiia-notif-asked`)
+- Correction : `openXpressModal` ne demande la permission notification qu'une seule fois
 
 ## [v4.6] — Mars 2026
-- **Feature Xpress** : nouveau type d'item note rapide
+- **Feature Xpress** : nouveau type d'item note rapide avec rappel
 - FAB menu contextuel : Note / Tâche / Xpress
-- Modale Xpress : titre + rappel (heure fixe ou compte à rebours 5/10/15/30/60 min)
-- Cartes Xpress : bord bleu `#38bdf8`, badge ⚡, timer countdown, bouton ✕
-- Conversion Xpress → Note ou Tâche depuis le détail
 - Notifications Web + vibration Android à l'échéance
-- Restauration des timers Xpress au rechargement (`restoreXpressTimers`)
-- Stockage Xpress dans Firebase `/workspace/items` (type: 'xpress')
+- Restauration timers Xpress au rechargement
 
 ## [v4.5] — Mars 2026
-- Correction `overdue` dans `renderTodos` : utilise `localDateStr` (cohérence timezone)
-- Correction `isOverdue` dans `renderTodoItem` et `openDetail`
+- Correction `overdue` dans `renderTodos` : utilise `localDateStr`
 
 ## [v4.4] — Mars 2026
-- Correction doublon `setSemaineFiltre` déclaré deux fois (crash module)
+- Correction doublon `setSemaineFiltre` déclaré deux fois
 - Correction `toggleDayAccordion` qui avait perdu sa déclaration `function`
 
 ## [v4.3] — Mars 2026
-- Correction accents dans strings JS simples (crash Chrome)
-- Correction `selectNotePrio` qui avait perdu sa déclaration `function`
-- Suppression fonctions dépréciées : `USERS`, `shareInvite`, `cycleSortOrder`
+- Correction accents dans strings JS simples
+- Suppression fonctions dépréciées
 
 ## [v4.2] — Mars 2026
-- Correction crash module Chrome : accents dans strings JS (`tâches`, `catégorie`, etc.)
-- Scan systématique des strings JS simples et remplacement par unicode
+- Correction crash module Chrome : accents dans strings JS
 
 ## [v4.1] — Mars 2026
-- Filtres vue Semaine : chips par projet/catégorie (`setSemaineFiltre`)
-- Sélecteur H:MM pour les heures (notes et tâches) — remplace les boutons prédéfinis
-- Accordéon vue Semaine : Aujourd'hui plein, 6 autres jours collapsés (flèche ›)
-- Correction timezone : `localDateStr(date)` pour toutes les comparaisons de date
-- Fusion notes + tâches dans la Semaine, triées par heure puis priorité
+- Filtres vue Semaine par projet/catégorie
+- Sélecteur H:MM pour les heures
+- Accordéon vue Semaine
 
 ## [v4.0] — Mars 2026
-- Section **En retard** dans vue Semaine (au-dessus d'Aujourd'hui), fond rouge
-- Logique overdue cohérente entre Tâches et Semaine
-- Tri tâches par heure dans chaque journée Semaine
+- Section En retard dans vue Semaine
 
-## [v3.9] — Mars 2026
-- Correction `selectProject` : accolades mal fermées
-- Correction `selectNotePrio` : déclaration `function` perdue
-- Nettoyage code : suppression variables mortes, commentaires obsolètes
-
-## [v3.8] — Mars 2026
-- **Projets dans Firebase** `/workspace/projects` (plus localStorage)
-- `editItem` restaure projet/subcat dans le picker à l'édition
-- Correction affichage modale note : dot inline au lieu de classe CSS manquante
-- Boutons Modifier/Supprimer inversés (Modifier à gauche)
-- Catégories masquées si projet sélectionné (`cat-picker-global-section`)
-- Fonction `saveProjects` async (Firebase)
-
-## [v3.7] — Mars 2026
-- *(version de référence avant session du 24 mars)*
-
-## [v3.x] — Mars 2026
-- Vue **Semaine** : Aujourd'hui plein + 6 jours accordéon
-- Vue **Projets** : grille + vue détail avec sous-catégories
-- Sous-catégories par projet
-- FAB `+` avec menu contextuel
-- Validation de tâches (`validateBy`, badge `✓ XXX`)
-- Système de membres (localStorage `lumiia-members`)
-
-## [v2.x] — Mars 2026
-- Architecture multi-utilisateurs (Emmanuel admin, Aurélie, Marion)
-- Visibilité des tâches par utilisateur
-- Badge validation + feedback visuel
-- Tri 3 états priorité
-- Correction bug assignation (`updateMemberSelects` manquant)
-- Correction 5 tâches Firebase (assignee bloqué sur 'em')
-
-## [v1.x] — Mars 2026
-- Version initiale : Notes + Checklist + To-do
-- Firebase Realtime Database
-- Catégories globales (Perso, Admin, Courant)
-- Projets (LUMIIA, SIGNAL, Raffinés)
-- PWA (manifest, icône, mobile-web-app-capable)
-- Filtre par projet/catégorie
-- Priorités (Urgent / Normal / Plus tard)
+## [v3.x → v1.x] — Mars 2026
+- Voir historique précédent
