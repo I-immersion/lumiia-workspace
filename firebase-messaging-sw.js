@@ -39,7 +39,7 @@ messaging.onBackgroundMessage(async payload => {
     body,
     icon: '/lumiia-workspace/icon-192.png',
     badge: '/lumiia-workspace/icon-192.png',
-    tag: 'lumiia-' + itemId + '-' + Date.now(),
+    tag: 'lumiia-' + itemId,
     renotify: true,
     data: { itemId, itemType },
   });
