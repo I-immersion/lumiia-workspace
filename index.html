@@ -12,7 +12,7 @@
 <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjogIkxVTUlJQSBXb3Jrc3BhY2UiLCAic2hvcnRfbmFtZSI6ICJXb3Jrc3BhY2UiLCAic3RhcnRfdXJsIjogIi4iLCAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwgImJhY2tncm91bmRfY29sb3IiOiAiIzBkMGQwZiIsICJ0aGVtZV9jb2xvciI6ICIjMGQwZDBmIiwgImljb25zIjogW3sic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzl6ZG1jaUlIWnBaWGRDYjNnOUlqQWdNQ0F5T1RBZ01qa3dJajQ4Y21WamRDQjNhV1IwYUQwaU1qa3dJaUJvWldsbmFIUTlJakk1TUNJZ2NuZzlJall3SWlCbWFXeHNQU0lqTUdRd1pEQm1JaTgrUEhSbGVIUWdlRDBpTlRBbElpQjVQU0kxTlNVaUlHWnZiblF0YzJsNlpUMGlNVFl3SWlCMFpYaDBMV0Z1WTJodmNqMGliV2xrWkd4bElpQmtiMjFwYm1GdWRDMWlZWE5sYkdsdVpUMGliV2xrWkd4bElqN3duNXFnUEM5MFpYaDBQand2YzNablBnPT0iLCAic2l6ZXMiOiAiMTkyeDE5MiA1MTJ4NTEyIiwgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
 <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOTAgMjkwIj48cmVjdCB3aWR0aD0iMjkwIiBoZWlnaHQ9IjI5MCIgcng9IjYwIiBmaWxsPSIjMGQwZDBmIi8+PHRleHQgeD0iNTAlIiB5PSI1NSUiIGZvbnQtc2l6ZT0iMTYwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn5qgPC90ZXh0Pjwvc3ZnPg==">
 
-<!-- LUMIIA Workspace v8.2 -->
+<!-- LUMIIA Workspace v8.3 -->
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 
@@ -843,7 +843,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
     <div style="text-align:center;margin-bottom:8px">
       <div style="font-family:Syne,sans-serif;font-weight:900;font-size:1.4rem;letter-spacing:0.04em;color:var(--text)">LUMIIA <span style="color:#38bdf8">●</span> Workspace</div>
       <div style="font-size:0.8rem;color:var(--text3);margin-top:6px;font-family:DM Sans,sans-serif">Connexion requise</div>
-      <div style="font-size:0.7rem;color:var(--text3);margin-top:4px;font-family:Syne,sans-serif;letter-spacing:0.05em">v8.2</div>
+      <div style="font-size:0.7rem;color:var(--text3);margin-top:4px;font-family:Syne,sans-serif;letter-spacing:0.05em">v8.3</div>
     </div>
     <div style="display:flex;flex-direction:column;gap:10px">
       <input id="login-email" type="email" placeholder="Email" autocomplete="email" style="
@@ -890,7 +890,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
   <button class="tab" data-tab="projets" onclick="switchTab('projets')">Projets</button>
   <button class="tab" data-tab="semaine" onclick="switchTab('semaine')">Semaine</button>
   <div style="flex:1"></div>
-  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v8.2</div>
+  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v8.3</div>
 </div>
 
 <main id="main-content">
@@ -997,7 +997,13 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
       <button class="cat-btn" data-relance="1sem" onclick="selectProspectRelance('1sem')"
         style="border:1px solid var(--border);background:transparent;color:var(--text2);font-size:0.78rem">1 Sem</button>
     </div>
-    <div style="font-size:0.72rem;color:var(--text3);margin-bottom:14px" id="prospect-relance-label"></div>
+    <div style="display:flex;align-items:center;gap:8px;margin-top:6px;margin-bottom:4px">
+      <div style="font-size:0.72rem;color:var(--text3);white-space:nowrap">Ou date précise :</div>
+      <input type="date" id="prospect-echeance-date" onclick="this.showPicker && this.showPicker()" onchange="selectProspectRelanceDate(this.value)" style="flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:6px 10px;color:var(--text);font-family:DM Sans,sans-serif;font-size:0.82rem;outline:none;cursor:pointer">
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+      <div style="font-size:0.72rem;color:var(--text3)" id="prospect-relance-label"></div>
+    </div>
     <input type="hidden" id="prospect-echeance">
 
     <div class="field-label">Statut</div>
@@ -1686,16 +1692,16 @@ function switchTab(tab) {
 
 function render() {
   const el = document.getElementById('main-content');
-  if (currentTab === 'notes') el.innerHTML = renderNotes();
+  // Si un module est actif, toujours l'afficher (priorité sur les tabs)
+  if (currentModule === 'crm') { el.innerHTML = renderCRM(); }
+  else if (currentModule === 'dashboard') { el.innerHTML = renderDashboard(); }
+  else if (currentTab === 'notes') el.innerHTML = renderNotes();
   else if (currentTab === 'todo') el.innerHTML = renderTodos();
   else if (currentTab === 'projets') el.innerHTML = renderProjets();
   else if (currentTab === 'semaine') el.innerHTML = renderSemaine();
-  else if (currentTab === 'crm') el.innerHTML = renderCRM();
-  else if (currentTab === 'dashboard') el.innerHTML = renderDashboard();
-  else if (currentTab === 'prospects') el.innerHTML = renderCRM(); // compat ancien routing
   // Masquer/afficher le FAB
   const fab = document.getElementById('fab');
-  if (fab) fab.style.display = (currentTab === 'projets' && !currentProject) || currentTab === 'dashboard' ? 'none' : '';
+  if (fab) fab.style.display = (currentTab === 'projets' && !currentProject) || currentModule ? 'none' : '';
 }
 
 function renderNotes() {
@@ -3405,9 +3411,10 @@ const PROSPECT_STATUTS = {
 // MODULES (CRM + DASHBOARD) — Header buttons
 // ─────────────────────────────────────────────
 let currentModule = null; // null = tab quotidien actif
+let previousModule = null; // pour le bouton retour
 
-function switchModule(module) {
-  if (currentModule === module) {
+function switchModule(module, force) {
+  if (currentModule === module && !force) {
     // Toggle : re-cliquer ferme le module et revient aux tabs
     currentModule = null;
     ['crm','dashboard'].forEach(m => {
@@ -3464,17 +3471,17 @@ function renderCRM() {
     + '<div class="section-title">CRM \u2014 ' + all.length + ' prospect' + (all.length !== 1 ? 's' : '') + '</div>'
     + '<div style="display:flex;gap:8px;align-items:center">'
     + '<button onclick="openProspectModal()" style="background:var(--cat-lumiia);border:none;border-radius:10px;padding:7px 14px;color:#000;font-family:Syne,sans-serif;font-weight:700;font-size:0.78rem;cursor:pointer">+ Nouveau</button>'
-    + '<button onclick="crmView=\'table\';switchModule(\'crm\')" style="background:' + (crmView==='table'?'rgba(56,189,248,0.15)':'var(--bg3)') + ';border:1px solid ' + (crmView==='table'?'rgba(56,189,248,0.4)':'var(--border)') + ';border-radius:8px;padding:6px 10px;color:' + (crmView==='table'?'#38bdf8':'var(--text2)') + ';font-size:0.78rem;font-family:Syne,sans-serif;font-weight:700;cursor:pointer">\u2261 Tableau</button>'
-    + '<button onclick="crmView=\'cards\';switchModule(\'crm\')" style="background:' + (crmView==='cards'?'rgba(56,189,248,0.15)':'var(--bg3)') + ';border:1px solid ' + (crmView==='cards'?'rgba(56,189,248,0.4)':'var(--border)') + ';border-radius:8px;padding:6px 10px;color:' + (crmView==='cards'?'#38bdf8':'var(--text2)') + ';font-size:0.78rem;font-family:Syne,sans-serif;font-weight:700;cursor:pointer">\u25a6 Cartes</button>'
+    + '<button onclick="setCrmView(&apos;table&apos;)" style="background:' + (crmView==='table'?'rgba(56,189,248,0.15)':'var(--bg3)') + ';border:1px solid ' + (crmView==='table'?'rgba(56,189,248,0.4)':'var(--border)') + ';border-radius:8px;padding:6px 10px;color:' + (crmView==='table'?'#38bdf8':'var(--text2)') + ';font-size:0.78rem;font-family:Syne,sans-serif;font-weight:700;cursor:pointer">\u2261 Tableau</button>'
+    + '<button onclick="setCrmView(&apos;cards&apos;)" style="background:' + (crmView==='cards'?'rgba(56,189,248,0.15)':'var(--bg3)') + ';border:1px solid ' + (crmView==='cards'?'rgba(56,189,248,0.4)':'var(--border)') + ';border-radius:8px;padding:6px 10px;color:' + (crmView==='cards'?'#38bdf8':'var(--text2)') + ';font-size:0.78rem;font-family:Syne,sans-serif;font-weight:700;cursor:pointer">\u25a6 Cartes</button>'
     + '</div></div>';
 
   // Filtres statut
   html += '<div class="filter-bar" style="margin-bottom:16px">'
-    + '<button class="filter-chip' + (prospectFiltreStatut==='all'?' active':'') + '" onclick="setProspectFiltre(\'all\');switchModule(\'crm\')">Actifs</button>'
-    + '<button class="filter-chip' + (prospectFiltreStatut==='nouveau'?' active':'') + '" onclick="setProspectFiltre(\'nouveau\');switchModule(\'crm\')" style="color:#38bdf8">Nouveau</button>'
-    + '<button class="filter-chip' + (prospectFiltreStatut==='encours'?' active':'') + '" onclick="setProspectFiltre(\'encours\');switchModule(\'crm\')" style="color:#fbbf24">En cours</button>'
-    + '<button class="filter-chip' + (prospectFiltreStatut==='cloture'?' active':'') + '" onclick="setProspectFiltre(\'cloture\');switchModule(\'crm\')" style="color:#4ade80">Cl\u00f4tur\u00e9</button>'
-    + '<button class="filter-chip' + (prospectFiltreStatut==='archive'?' active':'') + '" onclick="setProspectFiltre(\'archive\');switchModule(\'crm\')" style="color:var(--text3)">Archiv\u00e9s</button>'
+    + '<button class="filter-chip' + (prospectFiltreStatut==='all'?' active':'') + '" onclick="setProspectFiltre(&apos;all&apos;)">Actifs</button>'
+    + '<button class="filter-chip' + (prospectFiltreStatut==='nouveau'?' active':'') + '" onclick="setProspectFiltre(&apos;nouveau&apos;)" style="color:#38bdf8">Nouveau</button>'
+    + '<button class="filter-chip' + (prospectFiltreStatut==='encours'?' active':'') + '" onclick="setProspectFiltre(&apos;encours&apos;)" style="color:#fbbf24">En cours</button>'
+    + '<button class="filter-chip' + (prospectFiltreStatut==='cloture'?' active':'') + '" onclick="setProspectFiltre(&apos;cloture&apos;)" style="color:#4ade80">Cl\u00f4tur\u00e9</button>'
+    + '<button class="filter-chip' + (prospectFiltreStatut==='archive'?' active':'') + '" onclick="setProspectFiltre(&apos;archive&apos;)" style="color:var(--text3)">Archiv\u00e9s</button>'
     + '</div>';
 
   if (overdueCount > 0 && prospectFiltreStatut !== 'archive') {
@@ -3586,13 +3593,13 @@ function renderDashboard() {
   // ── KPI Cards ──
   html += '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px">';
   const kpis = [
-    { label: 'Notes', value: noteCount, color: '#ff6b35', icon: '📝' },
-    { label: 'Tâches actives', value: todoActive, color: '#38bdf8', icon: '✅' },
-    { label: 'En retard', value: todoOverdue + pOverdue, color: todoOverdue+pOverdue > 0 ? '#f43f5e' : '#4ade80', icon: '⚠️' },
-    { label: 'Prospects actifs', value: prospectActifs.length, color: '#c084fc', icon: '👤' },
+    { label: 'Notes', value: noteCount, color: '#ff6b35', icon: '📝', action: "switchTab('notes')" },
+    { label: 'Tâches actives', value: todoActive, color: '#38bdf8', icon: '✅', action: "switchTab('todo')" },
+    { label: 'En retard', value: todoOverdue + pOverdue, color: todoOverdue+pOverdue > 0 ? '#f43f5e' : '#4ade80', icon: '⚠️', action: "switchTab('todo')" },
+    { label: 'Prospects actifs', value: prospectActifs.length, color: '#c084fc', icon: '👤', action: "switchModule('crm')" },
   ];
   kpis.forEach(k => {
-    html += '<div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:16px 18px;border-left:3px solid ' + k.color + '">'
+    html += '<div onclick="' + k.action + '" style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:16px 18px;border-left:3px solid ' + k.color + ';cursor:pointer;transition:background 0.15s" onmouseover="this.style.background=\'var(--bg3)\'" onmouseout="this.style.background=\'var(--bg2)\'">'
       + '<div style="font-size:1.5rem;margin-bottom:4px">' + k.icon + '</div>'
       + '<div style="font-family:Syne,sans-serif;font-weight:900;font-size:1.6rem;color:var(--text)">' + k.value + '</div>'
       + '<div style="font-size:0.72rem;color:var(--text3);font-family:DM Sans,sans-serif;margin-top:2px">' + k.label + '</div>'
@@ -3649,7 +3656,7 @@ function renderDashboard() {
   ].filter(s => s.v > 0);
   html += '<div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:16px">'
     + '<div style="font-family:Syne,sans-serif;font-weight:700;font-size:0.75rem;letter-spacing:0.06em;color:var(--text3);margin-bottom:12px">PROSPECTS</div>'
-    + (montantTotal > 0 ? '<div style="font-size:0.8rem;color:#4ade80;font-weight:700;margin-bottom:10px">' + montantTotal.toLocaleString('fr-FR') + '\u00a0\u20ac en jeu</div>' : '')
+    + (montantTotal > 0 ? '<div style="font-size:0.8rem;color:#4ade80;font-weight:700;margin-bottom:10px">' + montantTotal.toLocaleString('fr-FR') + '\u00a0\u20ac de devis actifs</div>' : '')
     + '<div style="display:flex;align-items:center;gap:16px">'
     + '<div style="flex-shrink:0">' + donut(pSegs) + '</div>'
     + '<div style="display:flex;flex-direction:column;gap:5px;font-size:0.75rem">';
@@ -3825,6 +3832,8 @@ function selectProspectRelance(val) {
 
   const dateStr = localDateStr(target);
   document.getElementById('prospect-echeance').value = dateStr;
+  const picker = document.getElementById('prospect-echeance-date');
+  if (picker) picker.value = dateStr;
   prospectEcheanceAt = target.getTime();
 
   // Mettre à jour label
@@ -3845,6 +3854,21 @@ function selectProspectRelance(val) {
     b.style.color = isActive ? '#38bdf8' : 'var(--text2)';
     b.style.borderColor = isActive ? 'rgba(56,189,248,0.4)' : 'var(--border)';
   });
+}
+
+function selectProspectRelanceDate(dateStr) {
+  if (!dateStr) return;
+  // Désélectionner tous les boutons rapides
+  document.querySelectorAll('[data-relance]').forEach(b => {
+    b.style.background = 'transparent';
+    b.style.color = 'var(--text2)';
+    b.style.borderColor = 'var(--border)';
+  });
+  document.getElementById('prospect-echeance').value = dateStr;
+  prospectEcheanceAt = new Date(dateStr + 'T09:00:00').getTime();
+  const d = new Date(dateStr + 'T12:00:00');
+  const label = document.getElementById('prospect-relance-label');
+  if (label) label.textContent = 'Le ' + d.toLocaleDateString('fr-FR', {weekday:'short', day:'numeric', month:'long'});
 }
 
 function openProspectModal(id) {
@@ -3878,8 +3902,9 @@ function openProspectModal(id) {
 
   // Initialiser relance
   if (p?.echeance) {
-    // Mode édition : afficher la date existante
     document.getElementById('prospect-echeance').value = p.echeance;
+    const dateInput = document.getElementById('prospect-echeance-date');
+    if (dateInput) dateInput.value = p.echeance;
     const label = document.getElementById('prospect-relance-label');
     if (label) {
       const d = new Date(p.echeance + 'T12:00:00');
@@ -3893,6 +3918,8 @@ function openProspectModal(id) {
     });
   } else {
     // Nouveau prospect : 1J par défaut
+    const dateInput = document.getElementById('prospect-echeance-date');
+    if (dateInput) dateInput.value = '';
     selectProspectRelance('1j');
   }
 
@@ -3992,6 +4019,7 @@ function deleteProspectFromModal() {
 }
 
 function openProspectDetail(id) {
+  previousModule = currentModule; // mémoriser d'où on vient
   const p = prospects.find(x => x.id === id);
   if (!p) return;
   const statut = PROSPECT_STATUTS[p.statut] || PROSPECT_STATUTS.nouveau;
@@ -4073,7 +4101,11 @@ function openProspectDetail(id) {
     + '<span style="font-size:1.1rem">\uD83D\uDCF1</span> Partager sur WhatsApp</a>';
 
   // Actions
+  const backBtn = previousModule
+    ? '<button class="btn-secondary" onclick="closeModal(\'modal-detail\');switchModule(\'' + previousModule + '\')">\u2190 Retour</button>'
+    : '';
   html += '<div class="modal-actions">'
+    + backBtn
     + '<button class="btn-secondary" onclick="openProspectModal(\'' + p.id + '\');closeModal(\'modal-detail\')">Modifier</button>'
     + '<button class="btn-delete" onclick="deleteProspect(\'' + p.id + '\')">Supprimer</button>'
     + '</div>';
@@ -4339,6 +4371,7 @@ window.setUser = setUser;
 window.showUserPicker = showUserPicker;
 window.switchTab = switchTab;
 window.switchModule = switchModule;
+window.setCrmView = (v) => { crmView = v; render(); };
 window.openCreateModal = openCreateModal;
 window.setType = setType;
 window.selectCat = selectCat;
@@ -4385,6 +4418,7 @@ window.selectProspectType = selectProspectType;
 window.selectProspectStatut = selectProspectStatut;
 window.setProspectFiltre = setProspectFiltre;
 window.selectProspectRelance = selectProspectRelance;
+window.selectProspectRelanceDate = selectProspectRelanceDate;
 window.doLogin = doLogin;
 window.doLogout = doLogout;
 </script>
