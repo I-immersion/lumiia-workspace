@@ -12,7 +12,7 @@
 <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjogIkxVTUlJQSBXb3Jrc3BhY2UiLCAic2hvcnRfbmFtZSI6ICJXb3Jrc3BhY2UiLCAic3RhcnRfdXJsIjogIi4iLCAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwgImJhY2tncm91bmRfY29sb3IiOiAiIzBkMGQwZiIsICJ0aGVtZV9jb2xvciI6ICIjMGQwZDBmIiwgImljb25zIjogW3sic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzl6ZG1jaUlIWnBaWGRDYjNnOUlqQWdNQ0F5T1RBZ01qa3dJajQ4Y21WamRDQjNhV1IwYUQwaU1qa3dJaUJvWldsbmFIUTlJakk1TUNJZ2NuZzlJall3SWlCbWFXeHNQU0lqTUdRd1pEQm1JaTgrUEhSbGVIUWdlRDBpTlRBbElpQjVQU0kxTlNVaUlHWnZiblF0YzJsNlpUMGlNVFl3SWlCMFpYaDBMV0Z1WTJodmNqMGliV2xrWkd4bElpQmtiMjFwYm1GdWRDMWlZWE5sYkdsdVpUMGliV2xrWkd4bElqN3duNXFnUEM5MFpYaDBQand2YzNablBnPT0iLCAic2l6ZXMiOiAiMTkyeDE5MiA1MTJ4NTEyIiwgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
 <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOTAgMjkwIj48cmVjdCB3aWR0aD0iMjkwIiBoZWlnaHQ9IjI5MCIgcng9IjYwIiBmaWxsPSIjMGQwZDBmIi8+PHRleHQgeD0iNTAlIiB5PSI1NSUiIGZvbnQtc2l6ZT0iMTYwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn5qgPC90ZXh0Pjwvc3ZnPg==">
 
-<!-- LUMIIA Workspace v8.1 -->
+<!-- LUMIIA Workspace v8.2 -->
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 
@@ -843,7 +843,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
     <div style="text-align:center;margin-bottom:8px">
       <div style="font-family:Syne,sans-serif;font-weight:900;font-size:1.4rem;letter-spacing:0.04em;color:var(--text)">LUMIIA <span style="color:#38bdf8">●</span> Workspace</div>
       <div style="font-size:0.8rem;color:var(--text3);margin-top:6px;font-family:DM Sans,sans-serif">Connexion requise</div>
-      <div style="font-size:0.7rem;color:var(--text3);margin-top:4px;font-family:Syne,sans-serif;letter-spacing:0.05em">v8.1</div>
+      <div style="font-size:0.7rem;color:var(--text3);margin-top:4px;font-family:Syne,sans-serif;letter-spacing:0.05em">v8.2</div>
     </div>
     <div style="display:flex;flex-direction:column;gap:10px">
       <input id="login-email" type="email" placeholder="Email" autocomplete="email" style="
@@ -877,6 +877,9 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
   <div class="header-actions">
     <button class="btn-icon" id="sort-date-btn" onclick="toggleSortDate()" title="↓ Plus récent">📅</button>
     <button class="btn-icon" id="sort-prio-btn" onclick="toggleSortPrio()" title="Trier par priorité">⚡</button>
+    <div style="width:1px;height:20px;background:var(--border);margin:0 2px"></div>
+    <button class="btn-icon" id="module-crm-btn" onclick="switchModule('crm')" title="CRM Prospects" style="font-size:0.72rem;font-family:Syne,sans-serif;font-weight:700;letter-spacing:0.03em;padding:6px 10px;width:auto">CRM</button>
+    <button class="btn-icon" id="module-dash-btn" onclick="switchModule('dashboard')" title="Dashboard" style="padding:6px 10px;width:auto">📊</button>
     <button class="btn-icon" onclick="openSettings()" title="Réglages">⚙️</button>
   </div>
 </header>
@@ -886,9 +889,8 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
   <button class="tab" data-tab="todo" onclick="switchTab('todo')">Tâches</button>
   <button class="tab" data-tab="projets" onclick="switchTab('projets')">Projets</button>
   <button class="tab" data-tab="semaine" onclick="switchTab('semaine')">Semaine</button>
-  <button class="tab" data-tab="prospects" onclick="switchTab('prospects')">Prospects</button>
   <div style="flex:1"></div>
-  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v8.1</div>
+  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v8.2</div>
 </div>
 
 <main id="main-content">
@@ -1495,7 +1497,7 @@ async function initFCM() {
 
 function openItemFromNotification(itemId, itemType) {
   if (itemType === 'prospect') {
-    if (typeof switchTab === 'function') switchTab('prospects');
+    if (typeof switchTab === 'function') switchTab('crm');
     setTimeout(() => {
       if (typeof openProspectDetail === 'function') openProspectDetail(itemId);
     }, 300);
@@ -1666,8 +1668,14 @@ function showUserPicker() {
 // ─────────────────────────────────────────────
 function switchTab(tab) {
   currentTab = tab;
+  currentModule = null;
   currentProject = null;
   document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
+  // Reset style boutons modules
+  ['module-crm-btn','module-dash-btn'].forEach(id => {
+    const btn = document.getElementById(id);
+    if (btn) { btn.style.background = 'var(--bg3)'; btn.style.color = 'var(--text2)'; btn.style.borderColor = 'var(--border)'; }
+  });
   filterCat = 'all';
   render();
 }
@@ -1682,10 +1690,12 @@ function render() {
   else if (currentTab === 'todo') el.innerHTML = renderTodos();
   else if (currentTab === 'projets') el.innerHTML = renderProjets();
   else if (currentTab === 'semaine') el.innerHTML = renderSemaine();
-  else if (currentTab === 'prospects') el.innerHTML = renderProspects();
+  else if (currentTab === 'crm') el.innerHTML = renderCRM();
+  else if (currentTab === 'dashboard') el.innerHTML = renderDashboard();
+  else if (currentTab === 'prospects') el.innerHTML = renderCRM(); // compat ancien routing
   // Masquer/afficher le FAB
   const fab = document.getElementById('fab');
-  if (fab) fab.style.display = currentTab === 'projets' && !currentProject ? 'none' : '';
+  if (fab) fab.style.display = (currentTab === 'projets' && !currentProject) || currentTab === 'dashboard' ? 'none' : '';
 }
 
 function renderNotes() {
@@ -3391,6 +3401,305 @@ const PROSPECT_STATUTS = {
   archive:  { label: 'Archiv\u00e9',  color: '#6b7280' },
 };
 
+// ─────────────────────────────────────────────
+// MODULES (CRM + DASHBOARD) — Header buttons
+// ─────────────────────────────────────────────
+let currentModule = null; // null = tab quotidien actif
+
+function switchModule(module) {
+  if (currentModule === module) {
+    // Toggle : re-cliquer ferme le module et revient aux tabs
+    currentModule = null;
+    ['crm','dashboard'].forEach(m => {
+      const btn = document.getElementById('module-' + m.replace('dashboard','dash') + '-btn');
+      if (btn) { btn.style.background = 'var(--bg3)'; btn.style.color = 'var(--text2)'; btn.style.borderColor = 'var(--border)'; }
+    });
+    render();
+    return;
+  }
+  currentModule = module;
+  // Reset tab actif visuellement
+  document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+  // Highlight bouton module
+  ['crm','dashboard'].forEach(m => {
+    const btnId = 'module-' + (m === 'dashboard' ? 'dash' : m) + '-btn';
+    const btn = document.getElementById(btnId);
+    if (!btn) return;
+    if (m === module) {
+      btn.style.background = 'rgba(56,189,248,0.15)';
+      btn.style.color = '#38bdf8';
+      btn.style.borderColor = 'rgba(56,189,248,0.4)';
+    } else {
+      btn.style.background = 'var(--bg3)';
+      btn.style.color = 'var(--text2)';
+      btn.style.borderColor = 'var(--border)';
+    }
+  });
+  const el = document.getElementById('main-content');
+  if (module === 'crm') el.innerHTML = renderCRM();
+  else if (module === 'dashboard') el.innerHTML = renderDashboard();
+  // Masquer FAB sur modules
+  const fab = document.getElementById('fab');
+  if (fab) fab.style.display = module ? 'none' : '';
+}
+
+// ─────────────────────────────────────────────
+// CRM — Vue tableau prospects
+// ─────────────────────────────────────────────
+let crmView = 'table'; // 'table' ou 'cards'
+
+function renderCRM() {
+  const isAdmin = currentUser === MEMBERS[0]?.id;
+  if (!isAdmin) return '<div class="empty"><div class="empty-icon">\uD83D\uDC64</div><div class="empty-text">Acc\u00e8s r\u00e9serv\u00e9 \u00e0 l\'administrateur.</div></div>';
+
+  const today = new Date().toISOString().split('T')[0];
+  const active = prospects.filter(p => p.statut !== 'archive');
+  const all = prospectFiltreStatut === 'all' ? active
+    : prospectFiltreStatut === 'archive' ? prospects.filter(p => p.statut === 'archive')
+    : prospects.filter(p => p.statut === prospectFiltreStatut);
+
+  const overdueCount = prospects.filter(p => p.echeance && p.echeance < today && !['archive','cloture'].includes(p.statut)).length;
+
+  let html = '<div class="section-head">'
+    + '<div class="section-title">CRM \u2014 ' + all.length + ' prospect' + (all.length !== 1 ? 's' : '') + '</div>'
+    + '<div style="display:flex;gap:8px;align-items:center">'
+    + '<button onclick="openProspectModal()" style="background:var(--cat-lumiia);border:none;border-radius:10px;padding:7px 14px;color:#000;font-family:Syne,sans-serif;font-weight:700;font-size:0.78rem;cursor:pointer">+ Nouveau</button>'
+    + '<button onclick="crmView=\'table\';switchModule(\'crm\')" style="background:' + (crmView==='table'?'rgba(56,189,248,0.15)':'var(--bg3)') + ';border:1px solid ' + (crmView==='table'?'rgba(56,189,248,0.4)':'var(--border)') + ';border-radius:8px;padding:6px 10px;color:' + (crmView==='table'?'#38bdf8':'var(--text2)') + ';font-size:0.78rem;font-family:Syne,sans-serif;font-weight:700;cursor:pointer">\u2261 Tableau</button>'
+    + '<button onclick="crmView=\'cards\';switchModule(\'crm\')" style="background:' + (crmView==='cards'?'rgba(56,189,248,0.15)':'var(--bg3)') + ';border:1px solid ' + (crmView==='cards'?'rgba(56,189,248,0.4)':'var(--border)') + ';border-radius:8px;padding:6px 10px;color:' + (crmView==='cards'?'#38bdf8':'var(--text2)') + ';font-size:0.78rem;font-family:Syne,sans-serif;font-weight:700;cursor:pointer">\u25a6 Cartes</button>'
+    + '</div></div>';
+
+  // Filtres statut
+  html += '<div class="filter-bar" style="margin-bottom:16px">'
+    + '<button class="filter-chip' + (prospectFiltreStatut==='all'?' active':'') + '" onclick="setProspectFiltre(\'all\');switchModule(\'crm\')">Actifs</button>'
+    + '<button class="filter-chip' + (prospectFiltreStatut==='nouveau'?' active':'') + '" onclick="setProspectFiltre(\'nouveau\');switchModule(\'crm\')" style="color:#38bdf8">Nouveau</button>'
+    + '<button class="filter-chip' + (prospectFiltreStatut==='encours'?' active':'') + '" onclick="setProspectFiltre(\'encours\');switchModule(\'crm\')" style="color:#fbbf24">En cours</button>'
+    + '<button class="filter-chip' + (prospectFiltreStatut==='cloture'?' active':'') + '" onclick="setProspectFiltre(\'cloture\');switchModule(\'crm\')" style="color:#4ade80">Cl\u00f4tur\u00e9</button>'
+    + '<button class="filter-chip' + (prospectFiltreStatut==='archive'?' active':'') + '" onclick="setProspectFiltre(\'archive\');switchModule(\'crm\')" style="color:var(--text3)">Archiv\u00e9s</button>'
+    + '</div>';
+
+  if (overdueCount > 0 && prospectFiltreStatut !== 'archive') {
+    html += '<div class="overdue-banner">\u26a0\ufe0f ' + overdueCount + ' relance' + (overdueCount > 1 ? 's' : '') + ' en retard</div>';
+  }
+
+  if (all.length === 0) return html + '<div class="empty"><div class="empty-icon">\uD83D\uDC64</div><div class="empty-text">Aucun prospect.</div></div>';
+
+  if (crmView === 'cards') {
+    all.forEach(p => { html += renderProspectCard(p, today); });
+    return html;
+  }
+
+  // Vue tableau
+  html += '<div style="overflow-x:auto;margin-bottom:24px">'
+    + '<table style="width:100%;border-collapse:collapse;font-size:0.82rem">'
+    + '<thead><tr style="border-bottom:1px solid var(--border)">'
+    + '<th style="text-align:left;padding:8px 10px;font-family:Syne,sans-serif;font-size:0.7rem;letter-spacing:0.06em;color:var(--text3);font-weight:700">CONTACT</th>'
+    + '<th style="text-align:left;padding:8px 10px;font-family:Syne,sans-serif;font-size:0.7rem;letter-spacing:0.06em;color:var(--text3);font-weight:700">SUJET</th>'
+    + '<th style="text-align:left;padding:8px 10px;font-family:Syne,sans-serif;font-size:0.7rem;letter-spacing:0.06em;color:var(--text3);font-weight:700">STATUT</th>'
+    + '<th style="text-align:left;padding:8px 10px;font-family:Syne,sans-serif;font-size:0.7rem;letter-spacing:0.06em;color:var(--text3);font-weight:700">DERNI\u00c8RE ACTION</th>'
+    + '<th style="text-align:left;padding:8px 10px;font-family:Syne,sans-serif;font-size:0.7rem;letter-spacing:0.06em;color:var(--text3);font-weight:700">RELANCE</th>'
+    + '<th style="text-align:right;padding:8px 10px;font-family:Syne,sans-serif;font-size:0.7rem;letter-spacing:0.06em;color:var(--text3);font-weight:700">MONTANT</th>'
+    + '</tr></thead><tbody>';
+
+  all.forEach(p => {
+    const statut = PROSPECT_STATUTS[p.statut] || PROSPECT_STATUTS.nouveau;
+    const proj = p.projectId ? PROJECTS.find(pr => pr.id === p.projectId) : null;
+    const history = p.history || [];
+    const lastAction = history.length ? [...history].sort((a,b) => b.at - a.at)[0] : null;
+    const lastActionStr = lastAction
+      ? '<div style="color:var(--text2)">' + lastAction.text.substring(0,40) + (lastAction.text.length>40?'…':'') + '</div>'
+        + '<div style="font-size:0.68rem;color:var(--text3)">' + new Date(lastAction.at).toLocaleDateString('fr-FR',{day:'numeric',month:'short'}) + '</div>'
+      : '<span style="color:var(--text3)">—</span>';
+    const isOverdue = p.echeance && p.echeance < today && !['archive','cloture'].includes(p.statut);
+    const echeanceStr = p.echeance ? new Date(p.echeance+'T12:00:00').toLocaleDateString('fr-FR',{day:'numeric',month:'short'}) : '—';
+
+    html += '<tr onclick="openProspectDetail(\'' + p.id + '\')" style="border-bottom:1px solid rgba(255,255,255,0.05);cursor:pointer" onmouseover="this.style.background=\'var(--bg2)\'" onmouseout="this.style.background=\'transparent\'">'
+      + '<td style="padding:10px 10px"><div style="font-family:Syne,sans-serif;font-weight:700;color:var(--text)">' + (p.prenom||'') + ' ' + (p.nom||'') + '</div>'
+        + (proj ? '<div style="font-size:0.68rem;padding:1px 6px;border-radius:4px;background:'+proj.color+'20;color:'+proj.color+';display:inline-block;margin-top:2px">' + proj.label + '</div>' : '') + '</td>'
+      + '<td style="padding:10px 10px;color:var(--text2);max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + (p.sujet||'—') + '</td>'
+      + '<td style="padding:10px 10px"><span style="font-size:0.72rem;font-weight:700;padding:3px 8px;border-radius:6px;background:'+statut.color+'20;color:'+statut.color+'">' + statut.label + '</span></td>'
+      + '<td style="padding:10px 10px">' + lastActionStr + '</td>'
+      + '<td style="padding:10px 10px;color:' + (isOverdue?'var(--cat-urgent)':'var(--text2)') + '">' + (isOverdue?'\u26a0\ufe0f ':'\u23f0 ') + echeanceStr + '</td>'
+      + '<td style="padding:10px 10px;text-align:right;color:' + (p.montant?'#4ade80':'var(--text3)') + ';font-weight:700">' + (p.montant ? p.montant.toLocaleString('fr-FR') + '\u00a0\u20ac' : '—') + '</td>'
+      + '</tr>';
+  });
+
+  html += '</tbody></table></div>';
+  return html;
+}
+
+// ─────────────────────────────────────────────
+// DASHBOARD
+// ─────────────────────────────────────────────
+function renderDashboard() {
+  const isAdmin = currentUser === MEMBERS[0]?.id;
+  const today = new Date().toISOString().split('T')[0];
+
+  // Calcul des données
+  const allTodos = items.filter(i => i.type === 'todo');
+  const todoDone = allTodos.filter(i => i.done).length;
+  const todoActive = allTodos.filter(i => !i.done).length;
+  const todoOverdue = allTodos.filter(i => !i.done && i.due && i.due < today).length;
+  const todoWaiting = allTodos.filter(i => !i.done && i.validateBy && !i.validated).length;
+  const noteCount = items.filter(i => i.type === 'note' || i.type === 'checklist').length;
+  const xpressCount = items.filter(i => i.type === 'xpress').length;
+
+  const prospectActifs = prospects.filter(p => !['archive','cloture'].includes(p.statut));
+  const pNouveau = prospects.filter(p => p.statut === 'nouveau').length;
+  const pEncours = prospects.filter(p => p.statut === 'encours').length;
+  const pCloture = prospects.filter(p => p.statut === 'cloture').length;
+  const pArchive = prospects.filter(p => p.statut === 'archive').length;
+  const pOverdue = prospects.filter(p => p.echeance && p.echeance < today && !['archive','cloture'].includes(p.statut)).length;
+  const montantTotal = prospects.filter(p => p.montant).reduce((s,p) => s + (p.montant||0), 0);
+
+  // Projets avec tâches
+  const projStats = PROJECTS.map(proj => {
+    const t = allTodos.filter(i => i.projectId === proj.id);
+    return { label: proj.label, color: proj.color, total: t.length, done: t.filter(i=>i.done).length };
+  }).filter(p => p.total > 0);
+
+  // Activité récente
+  const recent = [...items].sort((a,b) => (b.updated||b.created||0) - (a.updated||a.created||0)).slice(0,6);
+
+  // Tâches en retard
+  const overdueTodos = allTodos.filter(i => !i.done && i.due && i.due < today).sort((a,b) => a.due.localeCompare(b.due));
+  const overdueProspects = prospects.filter(p => p.echeance && p.echeance < today && !['archive','cloture'].includes(p.statut));
+
+  // SVG Donut helper
+  function donut(segments, size=80, stroke=10) {
+    const r = (size - stroke) / 2;
+    const circ = 2 * Math.PI * r;
+    const total = segments.reduce((s,sg) => s + sg.v, 0) || 1;
+    let offset = 0;
+    let paths = '';
+    for (const sg of segments) {
+      const pct = sg.v / total;
+      const dash = circ * pct;
+      const gap = circ - dash;
+      paths += `<circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="${sg.c}" stroke-width="${stroke}" stroke-dasharray="${dash} ${gap}" stroke-dashoffset="${-offset}" transform="rotate(-90 ${size/2} ${size/2})" />`;
+      offset += dash;
+    }
+    return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">${paths}</svg>`;
+  }
+
+  let html = '<div style="padding-bottom:32px">';
+
+  // ── KPI Cards ──
+  html += '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px">';
+  const kpis = [
+    { label: 'Notes', value: noteCount, color: '#ff6b35', icon: '📝' },
+    { label: 'Tâches actives', value: todoActive, color: '#38bdf8', icon: '✅' },
+    { label: 'En retard', value: todoOverdue + pOverdue, color: todoOverdue+pOverdue > 0 ? '#f43f5e' : '#4ade80', icon: '⚠️' },
+    { label: 'Prospects actifs', value: prospectActifs.length, color: '#c084fc', icon: '👤' },
+  ];
+  kpis.forEach(k => {
+    html += '<div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:16px 18px;border-left:3px solid ' + k.color + '">'
+      + '<div style="font-size:1.5rem;margin-bottom:4px">' + k.icon + '</div>'
+      + '<div style="font-family:Syne,sans-serif;font-weight:900;font-size:1.6rem;color:var(--text)">' + k.value + '</div>'
+      + '<div style="font-size:0.72rem;color:var(--text3);font-family:DM Sans,sans-serif;margin-top:2px">' + k.label + '</div>'
+      + '</div>';
+  });
+  html += '</div>';
+
+  // ── Graphiques ──
+  html += '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:24px">';
+
+  // Donut Tâches
+  const todoSegs = [
+    { v: todoDone, c: '#4ade80', l: 'Faites' },
+    { v: todoActive - todoOverdue - todoWaiting, c: '#38bdf8', l: 'En cours' },
+    { v: todoOverdue, c: '#f43f5e', l: 'En retard' },
+    { v: todoWaiting, c: '#fbbf24', l: 'En attente' },
+  ].filter(s => s.v > 0);
+  html += '<div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:16px">'
+    + '<div style="font-family:Syne,sans-serif;font-weight:700;font-size:0.75rem;letter-spacing:0.06em;color:var(--text3);margin-bottom:12px">TÂCHES</div>'
+    + '<div style="display:flex;align-items:center;gap:16px">'
+    + '<div style="flex-shrink:0">' + donut(todoSegs) + '</div>'
+    + '<div style="display:flex;flex-direction:column;gap:5px;font-size:0.75rem">';
+  todoSegs.forEach(s => {
+    html += '<div style="display:flex;align-items:center;gap:6px"><div style="width:8px;height:8px;border-radius:50%;background:' + s.c + ';flex-shrink:0"></div><span style="color:var(--text2)">' + s.l + '</span><span style="color:var(--text);font-weight:700;margin-left:auto;padding-left:8px">' + s.v + '</span></div>';
+  });
+  html += '</div></div></div>';
+
+  // Barres Projets
+  html += '<div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:16px">'
+    + '<div style="font-family:Syne,sans-serif;font-weight:700;font-size:0.75rem;letter-spacing:0.06em;color:var(--text3);margin-bottom:12px">PROJETS</div>';
+  if (projStats.length === 0) {
+    html += '<div style="color:var(--text3);font-size:0.82rem">Aucune tâche par projet</div>';
+  } else {
+    projStats.forEach(p => {
+      const pct = p.total ? Math.round(p.done / p.total * 100) : 0;
+      html += '<div style="margin-bottom:10px">'
+        + '<div style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:4px">'
+        + '<span style="color:var(--text2);font-family:Syne,sans-serif;font-weight:700">' + p.label + '</span>'
+        + '<span style="color:var(--text3)">' + p.done + '/' + p.total + '</span>'
+        + '</div>'
+        + '<div style="height:6px;background:var(--bg3);border-radius:3px;overflow:hidden">'
+        + '<div style="height:100%;width:' + pct + '%;background:' + p.color + ';border-radius:3px;transition:width 0.3s"></div>'
+        + '</div></div>';
+    });
+  }
+  html += '</div>';
+
+  // Donut Prospects
+  const pSegs = [
+    { v: pNouveau, c: '#38bdf8', l: 'Nouveau' },
+    { v: pEncours, c: '#fbbf24', l: 'En cours' },
+    { v: pCloture, c: '#4ade80', l: 'Clôturé' },
+    { v: pArchive, c: '#6b7280', l: 'Archivé' },
+  ].filter(s => s.v > 0);
+  html += '<div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:16px">'
+    + '<div style="font-family:Syne,sans-serif;font-weight:700;font-size:0.75rem;letter-spacing:0.06em;color:var(--text3);margin-bottom:12px">PROSPECTS</div>'
+    + (montantTotal > 0 ? '<div style="font-size:0.8rem;color:#4ade80;font-weight:700;margin-bottom:10px">' + montantTotal.toLocaleString('fr-FR') + '\u00a0\u20ac en jeu</div>' : '')
+    + '<div style="display:flex;align-items:center;gap:16px">'
+    + '<div style="flex-shrink:0">' + donut(pSegs) + '</div>'
+    + '<div style="display:flex;flex-direction:column;gap:5px;font-size:0.75rem">';
+  pSegs.forEach(s => {
+    html += '<div style="display:flex;align-items:center;gap:6px"><div style="width:8px;height:8px;border-radius:50%;background:' + s.c + ';flex-shrink:0"></div><span style="color:var(--text2)">' + s.l + '</span><span style="color:var(--text);font-weight:700;margin-left:auto;padding-left:8px">' + s.v + '</span></div>';
+  });
+  html += '</div></div></div>';
+  html += '</div>'; // fin grid graphiques
+
+  // ── Listes action ──
+  html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">';
+
+  // Tâches en retard + prospects en retard
+  html += '<div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:16px">'
+    + '<div style="font-family:Syne,sans-serif;font-weight:700;font-size:0.75rem;letter-spacing:0.06em;color:var(--text3);margin-bottom:12px">\u26a0\uFE0F À TRAITER EN PRIORITÉ</div>';
+  if (overdueTodos.length === 0 && overdueProspects.length === 0) {
+    html += '<div style="color:#4ade80;font-size:0.82rem">\u2714 Rien en retard \u2014 bravo\u00a0!</div>';
+  } else {
+    overdueTodos.slice(0,5).forEach(i => {
+      html += '<div onclick="switchTab(\'todo\')" style="padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.05);cursor:pointer;display:flex;align-items:center;gap:8px">'
+        + '<span style="color:#f43f5e;font-size:0.8rem">✅</span>'
+        + '<div style="flex:1"><div style="font-size:0.82rem;color:var(--text)">' + i.title + '</div><div style="font-size:0.68rem;color:var(--text3)">' + i.due + '</div></div>'
+        + '</div>';
+    });
+    overdueProspects.slice(0,5).forEach(p => {
+      html += '<div onclick="switchModule(\'crm\')" style="padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.05);cursor:pointer;display:flex;align-items:center;gap:8px">'
+        + '<span style="color:#c084fc;font-size:0.8rem">\uD83D\uDC64</span>'
+        + '<div style="flex:1"><div style="font-size:0.82rem;color:var(--text)">' + (p.prenom||'') + ' ' + (p.nom||'') + '</div><div style="font-size:0.68rem;color:var(--text3)">' + (p.sujet||'') + '</div></div>'
+        + '</div>';
+    });
+  }
+  html += '</div>';
+
+  // Activité récente
+  html += '<div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:16px">'
+    + '<div style="font-family:Syne,sans-serif;font-weight:700;font-size:0.75rem;letter-spacing:0.06em;color:var(--text3);margin-bottom:12px">\uD83D\uDD52 ACTIVITÉ RÉCENTE</div>';
+  const typeIcon = { note: '📝', checklist: '☑️', todo: '✅', xpress: '⚡' };
+  recent.forEach(i => {
+    const d = new Date(i.updated||i.created).toLocaleDateString('fr-FR',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'});
+    html += '<div style="padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;align-items:center;gap:8px">'
+      + '<span style="font-size:0.9rem">' + (typeIcon[i.type]||'📌') + '</span>'
+      + '<div style="flex:1;min-width:0"><div style="font-size:0.82rem;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + i.title + '</div><div style="font-size:0.68rem;color:var(--text3)">' + d + '</div></div>'
+      + '</div>';
+  });
+  html += '</div>';
+
+  html += '</div></div>'; // fin grid listes + fin dashboard
+  return html;
+}
+
 function renderProspects() {
   const isAdmin = currentUser === MEMBERS[0]?.id;
   if (!isAdmin) {
@@ -4029,6 +4338,7 @@ window.saveCats = saveCats;
 window.setUser = setUser;
 window.showUserPicker = showUserPicker;
 window.switchTab = switchTab;
+window.switchModule = switchModule;
 window.openCreateModal = openCreateModal;
 window.setType = setType;
 window.selectCat = selectCat;

@@ -41,7 +41,7 @@ exports.sendXpressNotifications = onSchedule(
         if (!p.echeanceAt || p.echeanceAt > now || p.notifRelanceSent) continue;
         if (['archive','cloture'].includes(p.statut)) continue;
         await db.ref('workspace/prospects/' + id + '/notifRelanceSent').set(true);
-        await sendToUser(db, p.owner, '\uD83D\uDCCB Relance : ' + (p.prenom||'') + ' ' + (p.nom||''), p.sujet || 'Prospect a relancer', id, 'prospect');
+        await sendToUser(db, p.owner, '\uD83D\uDCCB Relance prospect : ' + (p.prenom||'') + ' ' + (p.nom||''), p.sujet || 'Prospect a relancer', id, 'prospect');
       }
     }
   }
