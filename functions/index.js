@@ -11,7 +11,13 @@ async function sendToUser(db, userId, title, body, itemId, itemType) {
   if (!tokens.length) return;
   await Promise.all(tokens.map(async (token) => {
     try {
-      await getMessaging().send({ token, notification: { title, body }, data: { xpressId: itemId || '', itemType: itemType || '' }, android: { priority: 'high' }, apns: { payload: { aps: { sound: 'default' } } } });
+      await getMessaging().send({
+        token,
+        notification: { title, body },
+        data: { xpressId: itemId || '', itemType: itemType || '' },
+        android: { priority: 'high' },
+        apns: { payload: { aps: { sound: 'default' } } },
+      });
     } catch(e) {
       if (e.code === 'messaging/registration-token-not-registered') await db.ref('workspace/fcm_tokens/' + userId + '/' + token.slice(-8)).remove();
     }
