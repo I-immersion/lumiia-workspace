@@ -12,7 +12,7 @@
 <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjogIkxVTUlJQSBXb3Jrc3BhY2UiLCAic2hvcnRfbmFtZSI6ICJXb3Jrc3BhY2UiLCAic3RhcnRfdXJsIjogIi4iLCAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwgImJhY2tncm91bmRfY29sb3IiOiAiIzBkMGQwZiIsICJ0aGVtZV9jb2xvciI6ICIjMGQwZDBmIiwgImljb25zIjogW3sic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzl6ZG1jaUlIWnBaWGRDYjNnOUlqQWdNQ0F5T1RBZ01qa3dJajQ4Y21WamRDQjNhV1IwYUQwaU1qa3dJaUJvWldsbmFIUTlJakk1TUNJZ2NuZzlJall3SWlCbWFXeHNQU0lqTUdRd1pEQm1JaTgrUEhSbGVIUWdlRDBpTlRBbElpQjVQU0kxTlNVaUlHWnZiblF0YzJsNlpUMGlNVFl3SWlCMFpYaDBMV0Z1WTJodmNqMGliV2xrWkd4bElpQmtiMjFwYm1GdWRDMWlZWE5sYkdsdVpUMGliV2xrWkd4bElqN3duNXFnUEM5MFpYaDBQand2YzNablBnPT0iLCAic2l6ZXMiOiAiMTkyeDE5MiA1MTJ4NTEyIiwgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
 <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOTAgMjkwIj48cmVjdCB3aWR0aD0iMjkwIiBoZWlnaHQ9IjI5MCIgcng9IjYwIiBmaWxsPSIjMGQwZDBmIi8+PHRleHQgeD0iNTAlIiB5PSI1NSUiIGZvbnQtc2l6ZT0iMTYwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn5qgPC90ZXh0Pjwvc3ZnPg==">
 
-<!-- LUMIIA Workspace v8.13 -->
+<!-- LUMIIA Workspace v8.14 -->
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 
@@ -848,7 +848,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
     <div style="text-align:center;margin-bottom:8px">
       <div style="font-family:Syne,sans-serif;font-weight:900;font-size:1.4rem;letter-spacing:0.04em;color:var(--text)">LUMIIA <span style="color:#38bdf8">●</span> Workspace</div>
       <div style="font-size:0.8rem;color:var(--text3);margin-top:6px;font-family:DM Sans,sans-serif">Connexion requise</div>
-      <div style="font-size:0.7rem;color:var(--text3);margin-top:4px;font-family:Syne,sans-serif;letter-spacing:0.05em">v8.13</div>
+      <div style="font-size:0.7rem;color:var(--text3);margin-top:4px;font-family:Syne,sans-serif;letter-spacing:0.05em">v8.14</div>
     </div>
     <div style="display:flex;flex-direction:column;gap:10px">
       <input id="login-email" type="email" placeholder="Email" autocomplete="email" style="
@@ -896,7 +896,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
   <button class="tab" data-tab="projets" onclick="switchTab('projets')">Projets</button>
   <button class="tab" data-tab="semaine" onclick="switchTab('semaine')">Semaine</button>
   <div style="flex:1"></div>
-  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v8.13</div>
+  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v8.14</div>
 </div>
 
 <main id="main-content">
@@ -2102,6 +2102,9 @@ function renderDayItem(item, isToday) {
 }
 
 
+// Onglet actif roadmap (persist\u00e9 en m\u00e9moire)
+let roadmapActiveTab = '_global';
+
 function renderRoadmap() {
   const isAdmin = currentUser === 'em';
   const STATUS_LABEL = { done: 'Fait', wip: 'En cours', todo: '\u00c0 faire' };
@@ -2112,69 +2115,107 @@ function renderRoadmap() {
     return `<div style="padding:32px;text-align:center;color:var(--text3)">Chargement du roadmap\u2026</div>`;
   }
 
-  // Dynamique : tous les projets pr\u00e9sents dans Firebase, tri\u00e9s par ordre alpha
-  // sauf les projets connus qui gardent un ordre fixe en t\u00eate
+  // Ordre des onglets : _global en premier, puis projets par priorit\u00e9, puis alpha
   const PRIORITY = ['tresorerie', 'workspace', 'site', 'caisse'];
   const allKeys = Object.keys(roadmapData).filter(k => roadmapData[k] && roadmapData[k].label);
-  const projects = [
+  const projectKeys = [
+    ...(['_global'].filter(k => allKeys.includes(k))),
     ...PRIORITY.filter(k => allKeys.includes(k)),
-    ...allKeys.filter(k => !PRIORITY.includes(k)).sort()
+    ...allKeys.filter(k => !PRIORITY.includes(k) && k !== '_global').sort()
   ];
 
-  let html = `<div style="padding:20px 24px 40px">
+  // S\u00e9curiser l'onglet actif
+  if (!projectKeys.includes(roadmapActiveTab)) roadmapActiveTab = projectKeys[0];
+
+  // ── Barre d'onglets ──
+  const tabs = projectKeys.map(k => {
+    const p = roadmapData[k];
+    const isGlobal = k === '_global';
+    const isActive = k === roadmapActiveTab;
+    const tasks = p.tasks ? Object.values(p.tasks) : [];
+    const wip = tasks.filter(t => t.status === 'wip').length;
+    const todo = tasks.filter(t => t.status === 'todo').length;
+    const badge = wip ? `<span style="background:#fbbf24;color:#000;border-radius:10px;padding:1px 5px;font-size:0.6rem;margin-left:4px;font-weight:700">${wip}</span>`
+                : todo ? `<span style="background:var(--bg3);color:var(--text3);border-radius:10px;padding:1px 5px;font-size:0.6rem;margin-left:4px">${todo}</span>` : '';
+    return `<button onclick="roadmapActiveTab='${k}';document.getElementById('roadmap-content').innerHTML=renderRoadmapProject('${k}')"
+      style="display:flex;align-items:center;gap:5px;padding:6px 12px;border-radius:8px;border:none;cursor:pointer;font-size:0.78rem;font-family:Syne,sans-serif;font-weight:${isActive?'700':'500'};
+      background:${isActive ? (isGlobal ? 'rgba(168,139,250,0.15)' : 'rgba(74,222,128,0.12)') : 'var(--bg2)'};
+      color:${isActive ? (isGlobal ? '#a78bfa' : 'var(--accent)') : 'var(--text3)'};
+      border:1px solid ${isActive ? (isGlobal ? 'rgba(168,139,250,0.3)' : 'rgba(74,222,128,0.2)') : 'var(--border)'};
+      white-space:nowrap">
+      <span>${p.emoji||'\ud83d\udcc1'}</span><span>${p.label}</span>${badge}
+    </button>`;
+  }).join('');
+
+  return `<div style="padding:20px 24px 40px">
     <div style="font-family:Syne,sans-serif;font-size:1.1rem;font-weight:700;letter-spacing:0.04em;margin-bottom:4px">Roadmap LUMIIA</div>
-    <div style="font-size:0.75rem;color:var(--text3);margin-bottom:24px">Synchronis\u00e9 en temps r\u00e9el \u00b7 mis \u00e0 jour par Claude</div>
-    <div style="display:flex;flex-direction:column;gap:20px">`;
+    <div style="font-size:0.75rem;color:var(--text3);margin-bottom:16px">Synchronis\u00e9 en temps r\u00e9el \u00b7 mis \u00e0 jour par Claude</div>
+    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px">${tabs}</div>
+    <div id="roadmap-content">${renderRoadmapProject(roadmapActiveTab)}</div>
+  </div>`;
+}
 
-  for (const key of projects) {
-    const proj = roadmapData[key];
-    const tasks = proj.tasks ? Object.values(proj.tasks).sort((a,b) => (a.order||0)-(b.order||0)) : [];
-    const notes = (isAdmin && proj.notes) ? Object.values(proj.notes).sort((a,b) => (a.order||0)-(b.order||0)) : [];
-    const done = tasks.filter(t => t.status === 'done').length;
+function renderRoadmapProject(key) {
+  const isAdmin = currentUser === 'em';
+  const STATUS_LABEL = { done: 'Fait', wip: 'En cours', todo: '\u00c0 faire' };
+  const STATUS_COLOR = { done: 'var(--accent)', wip: '#fbbf24', todo: 'var(--text3)' };
+  const STATUS_BG = { done: 'rgba(74,222,128,0.1)', wip: 'rgba(251,191,36,0.1)', todo: 'var(--bg3)' };
+  const isGlobal = key === '_global';
 
-    html += `<div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;overflow:hidden">
-      <div style="padding:14px 18px 12px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between">
-        <div style="display:flex;align-items:center;gap:10px">
-          <span style="font-size:1.1rem">${proj.emoji||'\ud83d\udcc1'}</span>
-          <span style="font-family:Syne,sans-serif;font-weight:700;font-size:0.9rem;letter-spacing:0.03em">${proj.label}</span>
-        </div>
-        <span style="font-size:0.72rem;color:var(--text3)">${done}/${tasks.length} termin\u00e9${done > 1 ? 's' : ''}</span>
-      </div>
-      <div>`;
+  const proj = roadmapData[key];
+  if (!proj) return '';
 
-    // T\u00e2ches
-    for (const task of tasks) {
-      const color = STATUS_COLOR[task.status] || 'var(--text3)';
-      const bg = STATUS_BG[task.status] || 'var(--bg3)';
-      const label = STATUS_LABEL[task.status] || task.status;
-      const strike = task.status === 'done' ? 'text-decoration:line-through;opacity:0.45;' : '';
-      html += `<div style="display:flex;align-items:center;gap:12px;padding:9px 18px;border-bottom:1px solid var(--border)">
-        <span style="flex-shrink:0;width:7px;height:7px;border-radius:50%;background:${color};display:inline-block"></span>
-        <span style="flex:1;font-size:0.8rem;${strike}color:var(--text1)">
-          ${task.label}
-          ${task.note ? `<div style="font-size:0.7rem;color:var(--text3);margin-top:3px;font-weight:400;line-height:1.5;text-decoration:none;opacity:1">${task.note}</div>` : ''}
-        </span>
-        <span style="display:flex;align-items:center;gap:6px;flex-shrink:0">
-          ${task.version ? `<span style="font-size:0.68rem;color:var(--text3);font-family:Syne,sans-serif">${task.version}</span>` : ''}
-          <span style="font-size:0.68rem;padding:2px 8px;border-radius:20px;background:${bg};color:${color};font-weight:600">${label}</span>
-        </span>
+  const tasks = proj.tasks ? Object.values(proj.tasks).sort((a,b) => (a.order||0)-(b.order||0)) : [];
+  const notes = (isAdmin && proj.notes) ? Object.values(proj.notes).sort((a,b) => (a.order||0)-(b.order||0)) : [];
+  const done = tasks.filter(t => t.status === 'done').length;
+
+  const accentColor = isGlobal ? '#a78bfa' : 'var(--accent)';
+  const borderColor = isGlobal ? 'rgba(168,139,250,0.25)' : 'var(--border)';
+
+  let html = `<div style="background:var(--bg2);border:1px solid ${borderColor};border-radius:14px;overflow:hidden">`;
+
+  // Header
+  html += `<div style="padding:14px 18px 12px;border-bottom:1px solid ${borderColor};display:flex;align-items:center;justify-content:space-between;${isGlobal?'background:rgba(168,139,250,0.04)':''}">
+    <div style="display:flex;align-items:center;gap:10px">
+      <span style="font-size:1.1rem">${proj.emoji||'\ud83d\udcc1'}</span>
+      <span style="font-family:Syne,sans-serif;font-weight:700;font-size:0.9rem;letter-spacing:0.03em;color:${accentColor}">${proj.label}</span>
+      ${isGlobal ? `<span style="font-size:0.65rem;padding:2px 7px;border-radius:10px;background:rgba(168,139,250,0.15);color:#a78bfa;font-weight:600">Commun \u00e0 tous les projets</span>` : ''}
+    </div>
+    ${!isGlobal ? `<span style="font-size:0.72rem;color:var(--text3)">${done}/${tasks.length} termin\u00e9${done > 1 ? 's' : ''}</span>` : ''}
+  </div>
+  <div>`;
+
+  // T\u00e2ches (pas pour _global)
+  for (const task of tasks) {
+    const color = STATUS_COLOR[task.status] || 'var(--text3)';
+    const bg = STATUS_BG[task.status] || 'var(--bg3)';
+    const lbl = STATUS_LABEL[task.status] || task.status;
+    const strike = task.status === 'done' ? 'text-decoration:line-through;opacity:0.45;' : '';
+    html += `<div style="display:flex;align-items:center;gap:12px;padding:9px 18px;border-bottom:1px solid var(--border)">
+      <span style="flex-shrink:0;width:7px;height:7px;border-radius:50%;background:${color};display:inline-block"></span>
+      <span style="flex:1;font-size:0.8rem;${strike}color:var(--text1)">
+        ${task.label}
+        ${task.note ? `<div style="font-size:0.7rem;color:var(--text3);margin-top:3px;font-weight:400;line-height:1.5;text-decoration:none;opacity:1">${task.note}</div>` : ''}
+      </span>
+      <span style="display:flex;align-items:center;gap:6px;flex-shrink:0">
+        ${task.version ? `<span style="font-size:0.68rem;color:var(--text3);font-family:Syne,sans-serif">${task.version}</span>` : ''}
+        <span style="font-size:0.68rem;padding:2px 8px;border-radius:20px;background:${bg};color:${color};font-weight:600">${lbl}</span>
+      </span>
+    </div>`;
+  }
+
+  // Notes techniques
+  if (notes.length) {
+    const notesLabel = isGlobal ? 'Philosophie & r\u00e8gles communes' : 'Notes techniques';
+    html += `<div style="padding:12px 18px 6px;border-top:1px solid ${borderColor};background:rgba(255,255,255,0.02)">
+      <div style="font-size:0.68rem;color:${isGlobal?'#a78bfa':'var(--text3)'};font-family:Syne,sans-serif;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:10px">${notesLabel}</div>
+      <div style="display:flex;flex-direction:column;gap:8px;padding-bottom:6px">`;
+    for (const note of notes) {
+      html += `<div style="background:var(--bg3);border:1px solid ${isGlobal?'rgba(168,139,250,0.15)':'var(--border)'};border-radius:8px;padding:10px 12px">
+        <div style="font-size:0.75rem;font-weight:600;color:${isGlobal?'#a78bfa':'var(--text2)'};margin-bottom:4px">${note.title}</div>
+        <div style="font-size:0.75rem;color:var(--text3);line-height:1.5;white-space:pre-line">${note.content}</div>
       </div>`;
     }
-
-    // Notes techniques (admin uniquement)
-    if (notes.length) {
-      html += `<div style="padding:12px 18px 6px;border-top:1px solid var(--border);background:rgba(255,255,255,0.02)">
-        <div style="font-size:0.68rem;color:var(--text3);font-family:Syne,sans-serif;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:10px">Notes techniques</div>
-        <div style="display:flex;flex-direction:column;gap:8px;padding-bottom:6px">`;
-      for (const note of notes) {
-        html += `<div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:10px 12px">
-          <div style="font-size:0.75rem;font-weight:600;color:var(--text2);margin-bottom:4px">${note.title}</div>
-          <div style="font-size:0.75rem;color:var(--text3);line-height:1.5">${note.content}</div>
-        </div>`;
-      }
-      html += `</div></div>`;
-    }
-
     html += `</div></div>`;
   }
 
