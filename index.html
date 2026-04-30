@@ -12,7 +12,7 @@
 <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjogIkxVTUlJQSBXb3Jrc3BhY2UiLCAic2hvcnRfbmFtZSI6ICJXb3Jrc3BhY2UiLCAic3RhcnRfdXJsIjogIi4iLCAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwgImJhY2tncm91bmRfY29sb3IiOiAiIzBkMGQwZiIsICJ0aGVtZV9jb2xvciI6ICIjMGQwZDBmIiwgImljb25zIjogW3sic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzl6ZG1jaUlIWnBaWGRDYjNnOUlqQWdNQ0F5T1RBZ01qa3dJajQ4Y21WamRDQjNhV1IwYUQwaU1qa3dJaUJvWldsbmFIUTlJakk1TUNJZ2NuZzlJall3SWlCbWFXeHNQU0lqTUdRd1pEQm1JaTgrUEhSbGVIUWdlRDBpTlRBbElpQjVQU0kxTlNVaUlHWnZiblF0YzJsNlpUMGlNVFl3SWlCMFpYaDBMV0Z1WTJodmNqMGliV2xrWkd4bElpQmtiMjFwYm1GdWRDMWlZWE5sYkdsdVpUMGliV2xrWkd4bElqN3duNXFnUEM5MFpYaDBQand2YzNablBnPT0iLCAic2l6ZXMiOiAiMTkyeDE5MiA1MTJ4NTEyIiwgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
 <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOTAgMjkwIj48cmVjdCB3aWR0aD0iMjkwIiBoZWlnaHQ9IjI5MCIgcng9IjYwIiBmaWxsPSIjMGQwZDBmIi8+PHRleHQgeD0iNTAlIiB5PSI1NSUiIGZvbnQtc2l6ZT0iMTYwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn5qgPC90ZXh0Pjwvc3ZnPg==">
 
-<!-- LUMIIA Workspace v8.17 -->
+<!-- LUMIIA Workspace v8.18 -->
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 
@@ -848,7 +848,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
     <div style="text-align:center;margin-bottom:8px">
       <div style="font-family:Syne,sans-serif;font-weight:900;font-size:1.4rem;letter-spacing:0.04em;color:var(--text)">LUMIIA <span style="color:#38bdf8">●</span> Workspace</div>
       <div style="font-size:0.8rem;color:var(--text3);margin-top:6px;font-family:DM Sans,sans-serif">Connexion requise</div>
-      <div style="font-size:0.7rem;color:var(--text3);margin-top:4px;font-family:Syne,sans-serif;letter-spacing:0.05em">v8.17</div>
+      <div style="font-size:0.7rem;color:var(--text3);margin-top:4px;font-family:Syne,sans-serif;letter-spacing:0.05em">v8.18</div>
     </div>
     <div style="display:flex;flex-direction:column;gap:10px">
       <input id="login-email" type="email" placeholder="Email" autocomplete="email" style="
@@ -896,7 +896,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
   <button class="tab" data-tab="projets" onclick="switchTab('projets')">Projets</button>
   <button class="tab" data-tab="semaine" onclick="switchTab('semaine')">Semaine</button>
   <div style="flex:1"></div>
-  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v8.17</div>
+  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v8.18</div>
 </div>
 
 <main id="main-content">
@@ -1143,6 +1143,13 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
             </select>
           </div>
         </div>
+      </div>
+      <!-- v8.18 : Toggle partage avec l'équipe (notes) -->
+      <div style="margin-bottom:10px">
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:0.82rem;color:var(--text2);font-family:DM Sans,sans-serif;padding:8px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:8px">
+          <input type="checkbox" id="input-note-shared" style="cursor:pointer;width:16px;height:16px;accent-color:#38bdf8">
+          <span>\ud83d\udc65 Partager cette note avec l'équipe</span>
+        </label>
       </div>
       <!-- Toggle checklist -->
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
@@ -1689,7 +1696,7 @@ let MEMBERS = JSON.parse(localStorage.getItem('lumiia-members') || 'null') || [
   { id: 'ro', name: 'Romain', url: 'ro' },
 ];
 
-// Migration v8.17 : ajout auto des nouveaux membres si absents du localStorage
+// Migration v8.18 : ajout auto des nouveaux membres si absents du localStorage
 (function migrateMembers_v817() {
   var defaults = [
     { id: 'inv', name: 'Invit\u00e9', url: 'inv' },
@@ -1777,6 +1784,28 @@ function render() {
   // Masquer/afficher le FAB
   const fab = document.getElementById('fab');
   if (fab) fab.style.display = (currentTab === 'projets' && !currentProject) || currentModule ? 'none' : '';
+}
+
+// v8.18 : filtre centralise de visibilite par utilisateur
+function isItemVisibleToUser(item) {
+  if (!item) return false;
+  // Premier membre = admin (voit tout)
+  if (currentUser === MEMBERS[0]?.id) return true;
+  // Notes / checklists : owner ou shared
+  if (item.type === 'note' || item.type === 'checklist') {
+    return item.owner === currentUser || item.shared === true;
+  }
+  // Todos : assignee, validateBy ou owner
+  if (item.type === 'todo') {
+    return item.assignee === currentUser
+        || item.validateBy === currentUser
+        || item.owner === currentUser;
+  }
+  // Xpress : owner uniquement
+  if (item.type === 'xpress') {
+    return item.owner === currentUser;
+  }
+  return false;
 }
 
 function renderNotes() {
@@ -2444,7 +2473,14 @@ function toggleDayAccordion(uid) {
 function renderProjets() {
   if (currentProject) return renderProjetDetail(currentProject);
 
-  if (PROJECTS.length === 0) {
+  // v8.18 : filtrer les projets pour les non-admins
+  const isAdmin = currentUser === MEMBERS[0]?.id;
+  const visibleProjects = isAdmin ? PROJECTS : PROJECTS.filter(p =>
+    p.owner === currentUser ||
+    items.some(i => i.projectId === p.id && isItemVisibleToUser(i))
+  );
+
+  if (visibleProjects.length === 0) {
     return `<div class="empty">
       <div class="empty-icon">📁</div>
       <div class="empty-text">Aucun projet.<br>
@@ -2454,14 +2490,14 @@ function renderProjets() {
   }
 
   let html = `<div class="section-head">
-    <div class="section-title">${PROJECTS.length} projet${PROJECTS.length > 1 ? 's' : ''}</div>
+    <div class="section-title">${visibleProjects.length} projet${visibleProjects.length > 1 ? 's' : ''}</div>
     <button onclick="openNewProjectModal()" style="font-size:0.72rem;color:#38bdf8;background:none;border:none;cursor:pointer;font-family:Syne,sans-serif;font-weight:700">+ Nouveau</button>
   </div>`;
   html += `<div class="cards-grid">`;
 
-  PROJECTS.forEach((proj, idx) => {
-    const notes = items.filter(i => i.projectId === proj.id && (i.type === 'note' || i.type === 'checklist'));
-    const todos = items.filter(i => i.projectId === proj.id && i.type === 'todo');
+  visibleProjects.forEach((proj, idx) => {
+    const notes = items.filter(i => i.projectId === proj.id && (i.type === 'note' || i.type === 'checklist') && isItemVisibleToUser(i));
+    const todos = items.filter(i => i.projectId === proj.id && i.type === 'todo' && isItemVisibleToUser(i));
     const activeTodos = todos.filter(i => !i.done);
     const urgentCount = activeTodos.filter(i => i.prio === 'urgent').length;
 
@@ -2487,8 +2523,8 @@ function renderProjetDetail(projectId) {
   const proj = getProject(projectId);
   if (!proj) return '';
 
-  const notes = items.filter(i => i.projectId === projectId && (i.type === 'note' || i.type === 'checklist'));
-  const todos = items.filter(i => i.projectId === projectId && i.type === 'todo');
+  const notes = items.filter(i => i.projectId === projectId && (i.type === 'note' || i.type === 'checklist') && isItemVisibleToUser(i));
+  const todos = items.filter(i => i.projectId === projectId && i.type === 'todo' && isItemVisibleToUser(i));
   const activeTodos = todos.filter(i => !i.done);
   const doneTodos = todos.filter(i => i.done);
 
@@ -2557,8 +2593,8 @@ function filterProjectSubcat(projectId, subcatId, btn) {
   btn.closest('.filter-bar')?.querySelectorAll('.filter-chip').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   // Filtrer les cartes et tâches
-  const notes = items.filter(i => i.projectId === projectId && (i.type === 'note' || i.type === 'checklist') && (!subcatId || i.subcat === subcatId));
-  const todos = items.filter(i => i.projectId === projectId && i.type === 'todo' && !i.done && (!subcatId || i.subcat === subcatId));
+  const notes = items.filter(i => i.projectId === projectId && (i.type === 'note' || i.type === 'checklist') && (!subcatId || i.subcat === subcatId) && isItemVisibleToUser(i));
+  const todos = items.filter(i => i.projectId === projectId && i.type === 'todo' && !i.done && (!subcatId || i.subcat === subcatId) && isItemVisibleToUser(i));
   const notesGrid = document.getElementById('proj-notes-grid');
   const todosList = document.getElementById('proj-todos-list');
   if (notesGrid) notesGrid.innerHTML = notes.map((item, idx) => renderCard(item, idx)).join('');
@@ -2656,7 +2692,7 @@ function saveProject() {
     if (idx >= 0) PROJECTS[idx] = { ...PROJECTS[idx], label: name, color, subcats };
   } else {
     const id = name.toLowerCase().replace(/[^a-z0-9]/g, '_').slice(0, 12) + '_' + Date.now().toString(36).slice(-3);
-    PROJECTS.push({ id, label: name, color, subcats });
+    PROJECTS.push({ id, label: name, color, subcats, owner: currentUser });
   }
   saveProjects();
   closeModal('modal-project');
@@ -3070,6 +3106,8 @@ function openCreateModal() {
   if (noteDateEl) noteDateEl.value = '';
   selectNoteTime('12:00');
   document.getElementById('input-validate-by').value = '';
+  const sharedEl = document.getElementById('input-note-shared');
+  if (sharedEl) sharedEl.checked = false;
   document.getElementById('field-checklist').style.display = 'none';
   document.getElementById('field-checklist-todo').style.display = 'none';
   const btn = document.getElementById('toggle-cl-btn');
@@ -3214,6 +3252,9 @@ function saveItem() {
   };
 
   if (currentType === 'note') {
+    // v8.18 : flag de partage avec l'equipe
+    const shareEl = document.getElementById('input-note-shared');
+    item.shared = shareEl ? shareEl.checked : false;
     item.content = document.getElementById('input-content').value.trim();
     item.link = document.getElementById('input-link').value.trim();
     item.prio = currentNotePrio || 'later';
@@ -3588,6 +3629,8 @@ function editItem(id) {
     if (cb) cb.classList.remove('active');
   } else { selectNoteTime(''); }
   document.getElementById('input-validate-by').value = item.validateBy || '';
+  const sharedElEdit = document.getElementById('input-note-shared');
+  if (sharedElEdit) sharedElEdit.checked = !!item.shared;
   document.getElementById('modal-title').textContent = 'Modifier';
   const hasCl = currentType === 'note' && clItems.length > 0;
   document.getElementById('field-checklist').style.display = hasCl ? '' : 'none';
