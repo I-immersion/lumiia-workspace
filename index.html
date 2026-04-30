@@ -1373,6 +1373,7 @@ const EMAIL_TO_MEMBER = {
   'aurelie@lumiia.fr': 'au',
   'marion.duizabo@hotmail.com': 'ma',
   'invite@lumiia.fr': 'inv',
+  'romain.desquinabo@gmail.com': 'ro',
 };
 
 // Listeners Firebase — démarrés uniquement après authentification
@@ -1685,13 +1686,24 @@ let MEMBERS = JSON.parse(localStorage.getItem('lumiia-members') || 'null') || [
   { id: 'au', name: 'Aur\u00e9lie', url: 'au' },
   { id: 'ma', name: 'Marion', url: 'ma' },
   { id: 'inv', name: 'Invit\u00e9', url: 'inv' },
+  { id: 'ro', name: 'Romain', url: 'ro' },
 ];
 
-// Migration v8.17 : ajout auto du membre Invite si absent du localStorage
-if (!MEMBERS.find(function(m){ return m.id === 'inv'; })) {
-  MEMBERS.push({ id: 'inv', name: 'Invit\u00e9', url: 'inv' });
-  localStorage.setItem('lumiia-members', JSON.stringify(MEMBERS));
-}
+// Migration v8.17 : ajout auto des nouveaux membres si absents du localStorage
+(function migrateMembers_v817() {
+  var defaults = [
+    { id: 'inv', name: 'Invit\u00e9', url: 'inv' },
+    { id: 'ro',  name: 'Romain',     url: 'ro'  }
+  ];
+  var changed = false;
+  defaults.forEach(function(d) {
+    if (!MEMBERS.find(function(m){ return m.id === d.id; })) {
+      MEMBERS.push(d);
+      changed = true;
+    }
+  });
+  if (changed) localStorage.setItem('lumiia-members', JSON.stringify(MEMBERS));
+})();
 
 function genId() {
   return Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
