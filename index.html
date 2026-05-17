@@ -12,7 +12,7 @@
 <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjogIkxVTUlJQSBXb3Jrc3BhY2UiLCAic2hvcnRfbmFtZSI6ICJXb3Jrc3BhY2UiLCAic3RhcnRfdXJsIjogIi4iLCAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwgImJhY2tncm91bmRfY29sb3IiOiAiIzBkMGQwZiIsICJ0aGVtZV9jb2xvciI6ICIjMGQwZDBmIiwgImljb25zIjogW3sic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzl6ZG1jaUlIWnBaWGRDYjNnOUlqQWdNQ0F5T1RBZ01qa3dJajQ4Y21WamRDQjNhV1IwYUQwaU1qa3dJaUJvWldsbmFIUTlJakk1TUNJZ2NuZzlJall3SWlCbWFXeHNQU0lqTUdRd1pEQm1JaTgrUEhSbGVIUWdlRDBpTlRBbElpQjVQU0kxTlNVaUlHWnZiblF0YzJsNlpUMGlNVFl3SWlCMFpYaDBMV0Z1WTJodmNqMGliV2xrWkd4bElpQmtiMjFwYm1GdWRDMWlZWE5sYkdsdVpUMGliV2xrWkd4bElqN3duNXFnUEM5MFpYaDBQand2YzNablBnPT0iLCAic2l6ZXMiOiAiMTkyeDE5MiA1MTJ4NTEyIiwgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
 <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOTAgMjkwIj48cmVjdCB3aWR0aD0iMjkwIiBoZWlnaHQ9IjI5MCIgcng9IjYwIiBmaWxsPSIjMGQwZDBmIi8+PHRleHQgeD0iNTAlIiB5PSI1NSUiIGZvbnQtc2l6ZT0iMTYwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn5qgPC90ZXh0Pjwvc3ZnPg==">
 
-<!-- LUMIIA Workspace v8.20 -->
+<!-- LUMIIA Workspace v8.22 -->
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 
@@ -848,7 +848,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
     <div style="text-align:center;margin-bottom:8px">
       <div style="font-family:Syne,sans-serif;font-weight:900;font-size:1.4rem;letter-spacing:0.04em;color:var(--text)">LUMIIA <span style="color:#38bdf8">●</span> Workspace</div>
       <div style="font-size:0.8rem;color:var(--text3);margin-top:6px;font-family:DM Sans,sans-serif">Connexion requise</div>
-      <div style="font-size:0.7rem;color:var(--text3);margin-top:4px;font-family:Syne,sans-serif;letter-spacing:0.05em">v8.20</div>
+      <div style="font-size:0.7rem;color:var(--text3);margin-top:4px;font-family:Syne,sans-serif;letter-spacing:0.05em">v8.22</div>
     </div>
     <div style="display:flex;flex-direction:column;gap:10px">
       <input id="login-email" type="email" placeholder="Email" autocomplete="email" style="
@@ -896,7 +896,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
   <button class="tab" data-tab="projets" onclick="switchTab('projets')">Projets</button>
   <button class="tab" data-tab="semaine" onclick="switchTab('semaine')">Semaine</button>
   <div style="flex:1"></div>
-  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v8.20</div>
+  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v8.22</div>
 </div>
 
 <main id="main-content">
@@ -2167,6 +2167,32 @@ function renderDayItem(item, isToday) {
 // Onglet actif roadmap (persist\u00e9 en m\u00e9moire) - sur window pour accessibilit\u00e9 onclick
 window.roadmapActiveTab = '_global';
 
+// v8.22 : Helpers d'affichage des timestamps createdAt/updatedAt sur les
+// taches et notes roadmap. Format ISO 8601 UTC en entree, format compact
+// "DD/MM/YY HH:MM" en sortie (heure locale). Si absent : retourne null
+// (affichage non rendu plutot que "date inconnue" partout).
+function fmtRoadmapDate(iso) {
+  if (!iso || typeof iso !== 'string') return null;
+  const d = new Date(iso);
+  if (isNaN(d.getTime())) return null;
+  const dd = String(d.getDate()).padStart(2, '0');
+  const mm = String(d.getMonth() + 1).padStart(2, '0');
+  const yy = String(d.getFullYear()).slice(-2);
+  const hh = String(d.getHours()).padStart(2, '0');
+  const mi = String(d.getMinutes()).padStart(2, '0');
+  return `${dd}/${mm}/${yy} ${hh}:${mi}`;
+}
+
+function fmtRoadmapTimestamps(item) {
+  const c = fmtRoadmapDate(item && item.createdAt);
+  const u = fmtRoadmapDate(item && item.updatedAt);
+  if (!c && !u) return '';
+  const style = 'font-size:0.62rem;color:var(--text3);opacity:0.65;font-family:DM Sans,sans-serif;margin-top:5px';
+  if (!c) return `<div style="${style}">maj ${u}</div>`;
+  if (!u || u === c) return `<div style="${style}">cr\u00e9\u00e9 ${c}</div>`;
+  return `<div style="${style}">cr\u00e9\u00e9 ${c} \u00b7 maj ${u}</div>`;
+}
+
 function renderRoadmap() {
   const isAdmin = currentUser === 'em';
   // v8.20 : roadmap reservee a l'admin
@@ -2181,44 +2207,43 @@ function renderRoadmap() {
     return `<div style="padding:32px;text-align:center;color:var(--text3)">Chargement du roadmap\u2026</div>`;
   }
 
-  // Ordre des onglets : _global en premier, puis projets par priorit\u00e9, puis alpha
-  const PRIORITY = ['tresorerie', 'workspace', 'site', 'caisse'];
+  // Groupement par catégorie
+  const CAT_META = {
+    admin: { label: '⚙️ Admin',  color: '#60a5fa' },
+    com:   { label: '📣 Com',    color: '#f472b6' },
+    game:  { label: '🎮 Game',   color: '#a78bfa' },
+    meta:  { label: '🔧 Global', color: 'var(--text3)' }
+  };
+  const CAT_ORDER = ['admin', 'com', 'game', 'meta'];
   const allKeys = Object.keys(roadmapData).filter(k => roadmapData[k] && roadmapData[k].label);
-  const projectKeys = [
-    ...(['_global'].filter(k => allKeys.includes(k))),
-    ...PRIORITY.filter(k => allKeys.includes(k)),
-    ...allKeys.filter(k => !PRIORITY.includes(k) && k !== '_global').sort()
-  ];
-
-  // S\u00e9curiser l'onglet actif
+  const groups = {};
+  CAT_ORDER.forEach(c => groups[c] = []);
+  allKeys.forEach(k => { const cat = roadmapData[k].category||'meta'; if(!groups[cat]) groups[cat]=[]; groups[cat].push(k); });
+  Object.values(groups).forEach(arr => arr.sort((a,b) => (roadmapData[a].label||a).localeCompare(roadmapData[b].label||b)));
+  const projectKeys = CAT_ORDER.flatMap(c => groups[c]);
   if (!projectKeys.includes(roadmapActiveTab)) roadmapActiveTab = projectKeys[0];
-
-  // ── Barre d'onglets ──
-  const tabs = projectKeys.map(k => {
-    const p = roadmapData[k];
-    const isGlobal = k === '_global';
-    const isActive = k === roadmapActiveTab;
+  function makeRdBtn(k) {
+    const p = roadmapData[k]; const isActive = k === roadmapActiveTab;
     const tasks = p.tasks ? Object.values(p.tasks) : [];
     const wip = tasks.filter(t => t.status === 'wip').length;
     const todo = tasks.filter(t => t.status === 'todo').length;
-    const badge = wip ? `<span style="background:#fbbf24;color:#000;border-radius:10px;padding:1px 5px;font-size:0.6rem;margin-left:4px;font-weight:700">${wip}</span>`
-                : todo ? `<span style="background:var(--bg3);color:var(--text3);border-radius:10px;padding:1px 5px;font-size:0.6rem;margin-left:4px">${todo}</span>` : '';
-    return `<button onclick="roadmapActiveTab='${k}';document.getElementById('roadmap-content').innerHTML=renderRoadmapProject('${k}')"
-      style="display:flex;align-items:center;gap:5px;padding:6px 12px;border-radius:8px;border:none;cursor:pointer;font-size:0.78rem;font-family:Syne,sans-serif;font-weight:${isActive?'700':'500'};
-      background:${isActive ? (isGlobal ? 'rgba(168,139,250,0.15)' : 'rgba(74,222,128,0.12)') : 'var(--bg2)'};
-      color:${isActive ? (isGlobal ? '#a78bfa' : 'var(--accent)') : 'var(--text3)'};
-      border:1px solid ${isActive ? (isGlobal ? 'rgba(168,139,250,0.3)' : 'rgba(74,222,128,0.2)') : 'var(--border)'};
-      white-space:nowrap">
-      <span>${p.emoji||'\ud83d\udcc1'}</span><span>${p.label}</span>${badge}
-    </button>`;
+    const badge = wip ? '<span style="background:#fbbf24;color:#000;border-radius:10px;padding:1px 5px;font-size:0.6rem;margin-left:4px;font-weight:700">'+wip+'</span>'
+                : todo ? '<span style="background:var(--bg3);color:var(--text3);border-radius:10px;padding:1px 5px;font-size:0.6rem;margin-left:4px">'+todo+'</span>' : '';
+    return '<button onclick="roadmapActiveTab=\''+k+'\';document.getElementById(\'roadmap-content\').innerHTML=renderRoadmapProject(\''+k+'\')"'
+      +' style="display:flex;align-items:center;gap:5px;padding:6px 12px;border-radius:8px;border:none;cursor:pointer;font-size:0.78rem;font-family:Syne,sans-serif;white-space:nowrap;font-weight:'+(isActive?'700':'500')+';background:'+(isActive?'rgba(74,222,128,0.12)':'var(--bg2)')+';color:'+(isActive?'var(--accent)':'var(--text3)')+';border:1px solid '+(isActive?'rgba(74,222,128,0.2)':'var(--border)')+'">'
+      +'<span>'+(p.emoji||'📁')+'</span><span>'+p.label+'</span>'+badge+'</button>';
+  }
+  const tabsHtml = CAT_ORDER.map(cat => {
+    const keys = groups[cat]; if (!keys.length) return '';
+    const cm = CAT_META[cat];
+    return '<div style="margin-bottom:12px"><div style="font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;color:'+cm.color+';font-weight:700;margin-bottom:5px;padding-left:2px">'+cm.label+'</div><div style="display:flex;flex-wrap:wrap;gap:5px">'+keys.map(makeRdBtn).join('')+'</div></div>';
   }).join('');
-
-  return `<div style="padding:20px 24px 40px">
-    <div style="font-family:Syne,sans-serif;font-size:1.1rem;font-weight:700;letter-spacing:0.04em;margin-bottom:4px">Roadmap LUMIIA</div>
-    <div style="font-size:0.75rem;color:var(--text3);margin-bottom:16px">Synchronis\u00e9 en temps r\u00e9el \u00b7 mis \u00e0 jour par Claude</div>
-    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px">${tabs}</div>
-    <div id="roadmap-content">${renderRoadmapProject(roadmapActiveTab)}</div>
-  </div>`;
+  return '<div style="padding:20px 24px 40px">'
+    + '<div style="font-family:Syne,sans-serif;font-size:1.1rem;font-weight:700;letter-spacing:0.04em;margin-bottom:4px">Roadmap LUMIIA</div>'
+    + '<div style="font-size:0.75rem;color:var(--text3);margin-bottom:16px">Synchronisé en temps réel · mis à jour par Claude</div>'
+    + '<div style="margin-bottom:20px">'+tabsHtml+'</div>'
+    + '<div id="roadmap-content">'+renderRoadmapProject(roadmapActiveTab)+'</div>'
+    + '</div>';
 }
 
 window.renderRoadmapProject = function renderRoadmapProject(key) {
@@ -2262,6 +2287,7 @@ window.renderRoadmapProject = function renderRoadmapProject(key) {
       <span style="flex:1;font-size:0.8rem;${strike}color:var(--text1)">
         ${task._id ? `<span style="font-size:0.65rem;font-family:Syne,sans-serif;color:var(--text3);margin-right:6px;opacity:0.7">${task._id}</span>` : ''}${task.label}
         ${task.note ? `<div style="font-size:0.7rem;color:var(--text3);margin-top:3px;font-weight:400;line-height:1.5;text-decoration:none;opacity:1">${task.note}</div>` : ''}
+        ${fmtRoadmapTimestamps(task)}
       </span>
       <span style="display:flex;align-items:center;gap:6px;flex-shrink:0">
         ${task.version ? `<span style="font-size:0.68rem;color:var(--text3);font-family:Syne,sans-serif">${task.version}</span>` : ''}
@@ -2280,6 +2306,7 @@ window.renderRoadmapProject = function renderRoadmapProject(key) {
       html += `<div style="background:var(--bg3);border:1px solid ${isGlobal?'rgba(168,139,250,0.15)':'var(--border)'};border-radius:8px;padding:10px 12px">
         <div style="font-size:0.75rem;font-weight:600;color:${isGlobal?'#a78bfa':'var(--text2)'};margin-bottom:4px">${note.title}</div>
         <div style="font-size:0.75rem;color:var(--text3);line-height:1.5;white-space:pre-line">${note.content}</div>
+        ${fmtRoadmapTimestamps(note)}
       </div>`;
     }
     html += `</div></div>`;
@@ -4761,4 +4788,4 @@ window.doLogin = doLogin;
 window.doLogout = doLogout;
 </script>
 </body>
-</html>
+  </html>

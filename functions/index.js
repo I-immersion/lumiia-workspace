@@ -3,6 +3,10 @@ const { initializeApp, getApps } = require('firebase-admin/app');
 const { getDatabase } = require('firebase-admin/database');
 const { getMessaging } = require('firebase-admin/messaging');
 if (!getApps().length) { initializeApp(); }
+
+// ════════════════════════════════════════════════════════════════════
+// 1. WORKSPACE — sendXpressNotifications (existant, inchangé)
+// ════════════════════════════════════════════════════════════════════
 async function sendToUser(db, userId, title, body, itemId, itemType) {
   const tokensSnap = await db.ref('workspace/fcm_tokens/' + userId).get();
   const tokensData = tokensSnap.val();
@@ -52,3 +56,11 @@ exports.sendXpressNotifications = onSchedule(
     }
   }
 );
+
+// ════════════════════════════════════════════════════════════════════
+// 2. BONS KDO — sendBonEmail + validerBon + getMailjetStats
+// ════════════════════════════════════════════════════════════════════
+const bonsKdo = require('./bons_kdo');
+exports.sendBonEmail = bonsKdo.sendBonEmail;
+exports.validerBon = bonsKdo.validerBon;
+exports.getMailjetStats = bonsKdo.getMailjetStats;
