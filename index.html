@@ -2212,9 +2212,10 @@ function renderRoadmap() {
     admin: { label: '⚙️ Admin',  color: '#60a5fa' },
     com:   { label: '📣 Com',    color: '#f472b6' },
     game:  { label: '🎮 Game',   color: '#a78bfa' },
+    design:{ label: '🎨 Design', color: '#34d399' },
     meta:  { label: '🔧 Global', color: 'var(--text3)' }
   };
-  const CAT_ORDER = ['admin', 'com', 'game', 'meta'];
+  const CAT_ORDER = ['admin', 'com', 'game', 'design', 'meta'];
   const allKeys = Object.keys(roadmapData).filter(k => roadmapData[k] && roadmapData[k].label);
   const groups = {};
   CAT_ORDER.forEach(c => groups[c] = []);
