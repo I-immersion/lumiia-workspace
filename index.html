@@ -12,7 +12,7 @@
 <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjogIkxVTUlJQSBXb3Jrc3BhY2UiLCAic2hvcnRfbmFtZSI6ICJXb3Jrc3BhY2UiLCAic3RhcnRfdXJsIjogIi4iLCAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwgImJhY2tncm91bmRfY29sb3IiOiAiIzBkMGQwZiIsICJ0aGVtZV9jb2xvciI6ICIjMGQwZDBmIiwgImljb25zIjogW3sic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzl6ZG1jaUlIWnBaWGRDYjNnOUlqQWdNQ0F5T1RBZ01qa3dJajQ4Y21WamRDQjNhV1IwYUQwaU1qa3dJaUJvWldsbmFIUTlJakk1TUNJZ2NuZzlJall3SWlCbWFXeHNQU0lqTUdRd1pEQm1JaTgrUEhSbGVIUWdlRDBpTlRBbElpQjVQU0kxTlNVaUlHWnZiblF0YzJsNlpUMGlNVFl3SWlCMFpYaDBMV0Z1WTJodmNqMGliV2xrWkd4bElpQmtiMjFwYm1GdWRDMWlZWE5sYkdsdVpUMGliV2xrWkd4bElqN3duNXFnUEM5MFpYaDBQand2YzNablBnPT0iLCAic2l6ZXMiOiAiMTkyeDE5MiA1MTJ4NTEyIiwgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
 <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOTAgMjkwIj48cmVjdCB3aWR0aD0iMjkwIiBoZWlnaHQ9IjI5MCIgcng9IjYwIiBmaWxsPSIjMGQwZDBmIi8+PHRleHQgeD0iNTAlIiB5PSI1NSUiIGZvbnQtc2l6ZT0iMTYwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn5qgPC90ZXh0Pjwvc3ZnPg==">
 
-<!-- LUMIIA Workspace v8.27 -->
+<!-- LUMIIA Workspace v8.28 -->
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 
@@ -848,7 +848,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
     <div style="text-align:center;margin-bottom:8px">
       <div style="font-family:Syne,sans-serif;font-weight:900;font-size:1.4rem;letter-spacing:0.04em;color:var(--text)">LUMIIA <span style="color:#38bdf8">●</span> Workspace</div>
       <div style="font-size:0.8rem;color:var(--text3);margin-top:6px;font-family:DM Sans,sans-serif">Connexion requise</div>
-      <div style="font-size:0.7rem;color:var(--text3);margin-top:4px;font-family:Syne,sans-serif;letter-spacing:0.05em">v8.27</div>
+      <div style="font-size:0.7rem;color:var(--text3);margin-top:4px;font-family:Syne,sans-serif;letter-spacing:0.05em">v8.28</div>
     </div>
     <div style="display:flex;flex-direction:column;gap:10px">
       <input id="login-email" type="email" placeholder="Email" autocomplete="email" style="
@@ -896,7 +896,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
   <button class="tab" data-tab="projets" onclick="switchTab('projets')">Projets</button>
   <button class="tab" data-tab="semaine" onclick="switchTab('semaine')">Semaine</button>
   <div style="flex:1"></div>
-  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v8.27</div>
+  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v8.28</div>
 </div>
 
 <main id="main-content">
@@ -1437,6 +1437,12 @@ function initDataListeners() {
     inboxData = snapshot.val() || {};
     if (currentTab === 'roadmap') render();
   }, () => { inboxData = {}; });
+
+  // Sync boite aux lettres Workspace (notes/taches deposees par Claude ; lecture admin, erreur silencieuse sinon) — v8.28
+  onValue(ref(db, 'workspace_inbox'), (snapshot) => {
+    wsInboxData = snapshot.val() || {};
+    if (currentTab === 'notes' || currentTab === 'todo') render();
+  }, () => { wsInboxData = {}; });
 }
 
 // Authentification — point d'entrée unique
@@ -1706,6 +1712,7 @@ let items = [];
 let prospects = [];
 let roadmapData = {};
 let inboxData = {};
+let wsInboxData = {};
 
 // Membres configurables (stockés en localStorage)
 let MEMBERS = JSON.parse(localStorage.getItem('lumiia-members') || 'null') || [
@@ -1842,6 +1849,7 @@ function renderNotes() {
     <div class="section-title">${filtered.length + xpressItems.length} note${filtered.length + xpressItems.length !== 1 ? 's' : ''}</div>
   </div>`;
 
+  html += renderWsInboxCard('note');
   html += renderFilterBar(myNotes);
 
   // Xpress en premier
@@ -1956,6 +1964,7 @@ function renderTodos() {
     <div class="section-title">${active.length} tâche${active.length !== 1 ? 's' : ''} active${active.length !== 1 ? 's' : ''}</div>
   </div>`;
 
+  html += renderWsInboxCard('task');
   html += renderFilterBar(allTodos);
 
   if (overdue.length > 0) {
@@ -2280,6 +2289,92 @@ window.rejectInboxItem = async function rejectInboxItem(id) {
   try {
     const fb = await import('https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js');
     await fb.remove(fb.ref(db, 'roadmap_inbox/'+id));
+  } catch(e) { alert('Erreur : '+((e&&e.message)||e)); }
+};
+
+// v8.28 : boite aux lettres Workspace — notes/taches deposees par Claude depuis une conversation (mobile incluse)
+window.renderWsInboxCard = function renderWsInboxCard(kind) {
+  if (currentUser !== MEMBERS[0]?.id) return '';
+  const all = wsInboxData || {};
+  const ids = Object.keys(all).filter(id => {
+    const k = (all[id] && all[id].kind) || 'note';
+    return kind === 'task' ? k === 'task' : k !== 'task';
+  });
+  if (!ids.length) return '';
+  const esc = s => (''+(s==null?'':s)).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const selStyle = 'padding:4px 6px;border-radius:6px;border:1px solid var(--border);background:var(--bg3);color:var(--text2);font-size:0.72rem;max-width:160px';
+  const rows = ids.map(id => {
+    const it = all[id] || {};
+    const isTask = (it.kind === 'task');
+    const typeLabel = isTask ? '\u2705 T\u00e2che' : '\ud83d\udcdd Note';
+    const resume = it.title || it.label || (isTask ? '(sans libell\u00e9)' : '(sans titre)');
+    const raw = (it.content || it.note || it.brief || '') + '';
+    const preview = raw.slice(0,140);
+    let control;
+    if (isTask) {
+      const cur = it.assignee || (MEMBERS[0] && MEMBERS[0].id);
+      const opts = MEMBERS.map(m => '<option value="'+m.id+'"'+(cur===m.id?' selected':'')+'>'+esc(m.name)+'</option>').join('');
+      control = '<label style="font-size:0.68rem;color:var(--text3)">Assign\u00e9 : <select id="wsinbox_'+id+'" style="'+selStyle+'">'+opts+'</select></label>';
+    } else {
+      const cur = it.cat || 'perso';
+      const opts = Object.keys(CATS).map(c => '<option value="'+c+'"'+(cur===c?' selected':'')+'>'+esc((CATS[c]&&CATS[c].label)||c)+'</option>').join('');
+      control = '<label style="font-size:0.68rem;color:var(--text3)">Cat\u00e9gorie : <select id="wsinbox_'+id+'" style="'+selStyle+'">'+opts+'</select></label>';
+    }
+    return '<div style="padding:9px 11px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;margin-bottom:6px">'
+      + '<div style="font-size:0.68rem;color:#facc15;font-weight:700;margin-bottom:2px">'+typeLabel+'</div>'
+      + '<div style="font-size:0.82rem;font-weight:600;color:var(--text2)">'+esc(resume)+'</div>'
+      + (preview ? '<div style="font-size:0.7rem;color:var(--text3);margin-top:2px;line-height:1.35">'+esc(preview)+(raw.length>140?'\u2026':'')+'</div>' : '')
+      + '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:8px">'
+      +   control
+      +   '<span style="flex:1;min-width:8px"></span>'
+      +   '<button onclick="integrateWsInboxItem(\'' + id + '\')" style="padding:4px 12px;border-radius:6px;border:none;cursor:pointer;font-size:0.72rem;font-weight:700;background:#4ade80;color:#05210f">Int\u00e9grer</button>'
+      +   '<button onclick="rejectWsInboxItem(\'' + id + '\')" style="padding:4px 10px;border-radius:6px;border:1px solid var(--border);cursor:pointer;font-size:0.72rem;background:var(--bg3);color:var(--text3)">Rejeter</button>'
+      + '</div></div>';
+  }).join('');
+  return '<div style="margin-bottom:14px;padding:12px 14px;background:rgba(250,204,21,0.06);border:1px solid rgba(250,204,21,0.3);border-radius:10px">'
+    + '<div style="font-family:Syne,sans-serif;font-size:0.9rem;font-weight:700;color:#facc15;margin-bottom:8px">\ud83d\udce5 \u00c0 int\u00e9grer ('+ids.length+')</div>'
+    + rows + '</div>';
+};
+
+window.integrateWsInboxItem = async function integrateWsInboxItem(id) {
+  const it = wsInboxData[id]; if (!it) return;
+  try {
+    const fb = await import('https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js');
+    const now = Date.now();
+    const isTask = (it.kind === 'task');
+    const sel = document.getElementById('wsinbox_'+id);
+    const newId = genId();
+    let item;
+    if (isTask) {
+      const assignee = (sel && sel.value) || it.assignee || (MEMBERS[0] && MEMBERS[0].id);
+      item = {
+        id: newId, type: 'todo', cat: it.cat || 'courant', projectId: null, subcat: null,
+        title: it.title || it.label || '(sans libell\u00e9)', content: it.content || it.note || '', link: '',
+        owner: currentUser, assignee: assignee, prio: it.prio || 'normal',
+        due: it.due || null, dueTime: null, done: false, shared: assignee !== currentUser,
+        validateBy: null, validated: false, checklist: [], triggerAt: null,
+        created: now, updated: now
+      };
+    } else {
+      const cat = (sel && sel.value) || it.cat || 'perso';
+      item = {
+        id: newId, type: 'note', cat: cat, projectId: null, subcat: null,
+        title: it.title || '(sans titre)', content: it.content || it.brief || '', link: it.link || '',
+        owner: currentUser, shared: !!it.shared, prio: it.prio || 'later',
+        noteDate: null, noteTime: null, checklist: [], triggerAt: null,
+        created: now, updated: now
+      };
+    }
+    await fb.set(fb.ref(db, 'workspace/items/'+newId), item);
+    await fb.remove(fb.ref(db, 'workspace_inbox/'+id));
+  } catch(e) { alert('Erreur int\u00e9gration : '+((e&&e.message)||e)); }
+};
+
+window.rejectWsInboxItem = async function rejectWsInboxItem(id) {
+  if (!confirm('Rejeter cet \u00e9l\u00e9ment ? Il sera supprim\u00e9 sans \u00eatre int\u00e9gr\u00e9.')) return;
+  try {
+    const fb = await import('https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js');
+    await fb.remove(fb.ref(db, 'workspace_inbox/'+id));
   } catch(e) { alert('Erreur : '+((e&&e.message)||e)); }
 };
 
