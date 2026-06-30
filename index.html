@@ -848,7 +848,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
     <div style="text-align:center;margin-bottom:8px">
       <div style="font-family:Syne,sans-serif;font-weight:900;font-size:1.4rem;letter-spacing:0.04em;color:var(--text)">LUMIIA <span style="color:#38bdf8">●</span> Workspace</div>
       <div style="font-size:0.8rem;color:var(--text3);margin-top:6px;font-family:DM Sans,sans-serif">Connexion requise</div>
-      <div style="font-size:0.7rem;color:var(--text3);margin-top:4px;font-family:Syne,sans-serif;letter-spacing:0.05em">v8.30</div>
+      <div style="font-size:0.7rem;color:var(--text3);margin-top:4px;font-family:Syne,sans-serif;letter-spacing:0.05em">v8.31</div>
     </div>
     <div style="display:flex;flex-direction:column;gap:10px">
       <input id="login-email" type="email" placeholder="Email" autocomplete="email" style="
@@ -896,7 +896,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
   <button class="tab" data-tab="projets" onclick="switchTab('projets')">Projets</button>
   <button class="tab" data-tab="semaine" onclick="switchTab('semaine')">Semaine</button>
   <div style="flex:1"></div>
-  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v8.30</div>
+  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v8.31</div>
 </div>
 
 <main id="main-content">
@@ -2297,7 +2297,12 @@ window.renderWsInboxCard = function renderWsInboxCard(kind) {
   if (currentUser !== MEMBERS[0]?.id) return '';
   const all = wsInboxData || {};
   const ids = Object.keys(all).filter(id => {
-    const k = (all[id] && all[id].kind) || 'note';
+    const o = all[id] || {};
+    const k = o.kind || 'note';
+    if (k === 'checklist') {            // v8.31 : depot check-list, route par target
+      const tgtTask = (o.target === 'todo' || o.target === 'task');
+      return kind === 'task' ? tgtTask : !tgtTask;
+    }
     return kind === 'task' ? k === 'task' : k === 'note';
   });
   if (!ids.length) return '';
@@ -2310,6 +2315,28 @@ window.renderWsInboxCard = function renderWsInboxCard(kind) {
   };
   const rows = ids.map(id => {
     const it = all[id] || {};
+    if (it.kind === 'checklist') {       // v8.31 : carte check-list
+      const lines = Array.isArray(it.lines) ? it.lines : [];
+      const tgtTask = (it.target === 'todo' || it.target === 'task');
+      const itemType = tgtTask ? 'todo' : 'note';
+      const typeLabel = '\u2611\ufe0f Check-list \u2192 ' + (tgtTask ? 't\u00e2che' : 'note');
+      const linesHtml = lines.map(t => '<div style="font-size:0.72rem;color:var(--text3);line-height:1.45">\u2610 '+esc(t)+'</div>').join('');
+      const existing = (typeof items !== 'undefined' ? items : []).filter(x => x && x.type === itemType);
+      const newLabel = tgtTask ? '\u2795 Nouvelle t\u00e2che' : '\u2795 Nouvelle note';
+      const exOpts = existing.map(x => '<option value="'+x.id+'">'+esc((x.title||'(sans titre)').slice(0,40))+'</option>').join('');
+      const targetSel = '<label style="font-size:0.68rem;color:var(--text3)">Ajouter \u00e0 : <select id="wsinbox_chktarget_'+id+'" style="'+selStyle+'"><option value="new" selected>'+newLabel+'</option>'+(exOpts?('<optgroup label="Items existants">'+exOpts+'</optgroup>'):'')+'</select></label>';
+      const titleLine = it.title ? '<div style="font-size:0.82rem;font-weight:600;color:var(--text2)">'+esc(it.title)+'</div>' : '';
+      return '<div style="padding:9px 11px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;margin-bottom:6px">'
+        + '<div style="font-size:0.68rem;color:#facc15;font-weight:700;margin-bottom:2px">'+typeLabel+' ('+lines.length+')</div>'
+        + titleLine
+        + '<div style="margin-top:4px">'+linesHtml+'</div>'
+        + '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:8px">'
+        +   targetSel
+        +   '<span style="flex:1;min-width:8px"></span>'
+        +   '<button onclick="integrateWsInboxItem(\''+id+'\')" style="padding:4px 12px;border-radius:6px;border:none;cursor:pointer;font-size:0.72rem;font-weight:700;background:#4ade80;color:#05210f">Int\u00e9grer</button>'
+        +   '<button onclick="rejectWsInboxItem(\''+id+'\')" style="padding:4px 10px;border-radius:6px;border:1px solid var(--border);cursor:pointer;font-size:0.72rem;background:var(--bg3);color:var(--text3)">Rejeter</button>'
+        + '</div></div>';
+    }
     const isTask = (it.kind === 'task');
     const typeLabel = isTask ? '\u2705 T\u00e2che' : '\ud83d\udcdd Note';
     const resume = it.title || it.label || (isTask ? '(sans libell\u00e9)' : '(sans titre)');
@@ -2345,6 +2372,31 @@ window.integrateWsInboxItem = async function integrateWsInboxItem(id) {
   try {
     const fb = await import('https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js');
     const now = Date.now();
+    // v8.31 : depot de type check-list -> nouvel item OU ajout aux lignes d'un item existant
+    if (it.kind === 'checklist') {
+      const lines = Array.isArray(it.lines) ? it.lines : [];
+      const cells = lines.map(t => ({ text: ('' + t), done: false }));
+      const tgtTask = (it.target === 'todo' || it.target === 'task');
+      const selEl = document.getElementById('wsinbox_chktarget_' + id);
+      const tgt = (selEl && selEl.value) || 'new';
+      if (tgt && tgt !== 'new') {
+        const existing = (typeof items !== 'undefined' ? items : []).find(x => x && x.id === tgt);
+        const cur = (existing && Array.isArray(existing.checklist)) ? existing.checklist : [];
+        await fb.update(fb.ref(db, 'workspace/items/' + tgt), { checklist: cur.concat(cells), updated: now });
+      } else {
+        const newId = genId();
+        const base = {
+          id: newId, cat: tgtTask ? 'courant' : 'perso', projectId: null, subcat: null,
+          title: it.title || 'Check-list', content: '', link: '',
+          owner: currentUser, checklist: cells, triggerAt: null, created: now, updated: now
+        };
+        if (tgtTask) Object.assign(base, { type: 'todo', assignee: currentUser, prio: 'normal', due: null, dueTime: null, done: false, shared: false, validateBy: null, validated: false });
+        else Object.assign(base, { type: 'note', shared: false, prio: 'later', noteDate: null, noteTime: null });
+        await fb.set(fb.ref(db, 'workspace/items/' + newId), base);
+      }
+      await fb.remove(fb.ref(db, 'workspace_inbox/' + id));
+      return;
+    }
     const isTask = (it.kind === 'task');
     const newId = genId();
     // Classement : categorie OU projet (menu "Classer dans")
