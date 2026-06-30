@@ -12,7 +12,7 @@
 <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjogIkxVTUlJQSBXb3Jrc3BhY2UiLCAic2hvcnRfbmFtZSI6ICJXb3Jrc3BhY2UiLCAic3RhcnRfdXJsIjogIi4iLCAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwgImJhY2tncm91bmRfY29sb3IiOiAiIzBkMGQwZiIsICJ0aGVtZV9jb2xvciI6ICIjMGQwZDBmIiwgImljb25zIjogW3sic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzl6ZG1jaUlIWnBaWGRDYjNnOUlqQWdNQ0F5T1RBZ01qa3dJajQ4Y21WamRDQjNhV1IwYUQwaU1qa3dJaUJvWldsbmFIUTlJakk1TUNJZ2NuZzlJall3SWlCbWFXeHNQU0lqTUdRd1pEQm1JaTgrUEhSbGVIUWdlRDBpTlRBbElpQjVQU0kxTlNVaUlHWnZiblF0YzJsNlpUMGlNVFl3SWlCMFpYaDBMV0Z1WTJodmNqMGliV2xrWkd4bElpQmtiMjFwYm1GdWRDMWlZWE5sYkdsdVpUMGliV2xrWkd4bElqN3duNXFnUEM5MFpYaDBQand2YzNablBnPT0iLCAic2l6ZXMiOiAiMTkyeDE5MiA1MTJ4NTEyIiwgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
 <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOTAgMjkwIj48cmVjdCB3aWR0aD0iMjkwIiBoZWlnaHQ9IjI5MCIgcng9IjYwIiBmaWxsPSIjMGQwZDBmIi8+PHRleHQgeD0iNTAlIiB5PSI1NSUiIGZvbnQtc2l6ZT0iMTYwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn5qgPC90ZXh0Pjwvc3ZnPg==">
 
-<!-- LUMIIA Workspace v8.31 -->
+<!-- LUMIIA Workspace v8.32 -->
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 
@@ -848,7 +848,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
     <div style="text-align:center;margin-bottom:8px">
       <div style="font-family:Syne,sans-serif;font-weight:900;font-size:1.4rem;letter-spacing:0.04em;color:var(--text)">LUMIIA <span style="color:#38bdf8">●</span> Workspace</div>
       <div style="font-size:0.8rem;color:var(--text3);margin-top:6px;font-family:DM Sans,sans-serif">Connexion requise</div>
-      <div style="font-size:0.7rem;color:var(--text3);margin-top:4px;font-family:Syne,sans-serif;letter-spacing:0.05em">v8.31</div>
+      <div style="font-size:0.7rem;color:var(--text3);margin-top:4px;font-family:Syne,sans-serif;letter-spacing:0.05em" class="ver-badge">v8.32</div>
     </div>
     <div style="display:flex;flex-direction:column;gap:10px">
       <input id="login-email" type="email" placeholder="Email" autocomplete="email" style="
@@ -896,7 +896,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
   <button class="tab" data-tab="projets" onclick="switchTab('projets')">Projets</button>
   <button class="tab" data-tab="semaine" onclick="switchTab('semaine')">Semaine</button>
   <div style="flex:1"></div>
-  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px">v8.31</div>
+  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px" class="ver-badge">v8.32</div>
 </div>
 
 <main id="main-content">
@@ -1342,6 +1342,13 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
 </div>
 
 <script type="module">
+// ─────────────────────────────────────────────
+// VERSION — source unique pour les badges affichés.
+// /!\ Garder en phase avec le commentaire <!-- LUMIIA Workspace vX.Y --> (ligne ~15),
+//     que deployer.command lit en texte brut (impossible à dériver d'ici).
+// ─────────────────────────────────────────────
+const APP_VERSION = 'v8.32';
+try { document.querySelectorAll('.ver-badge').forEach(e => e.textContent = APP_VERSION); } catch (e) {}
 // ─────────────────────────────────────────────
 // FIREBASE
 // ─────────────────────────────────────────────
@@ -2299,7 +2306,7 @@ window.renderWsInboxCard = function renderWsInboxCard(kind) {
   const ids = Object.keys(all).filter(id => {
     const o = all[id] || {};
     const k = o.kind || 'note';
-    if (k === 'checklist') {            // v8.31 : depot check-list, route par target
+    if (k === 'checklist') {            // v8.32 : depot check-list, route par target
       const tgtTask = (o.target === 'todo' || o.target === 'task');
       return kind === 'task' ? tgtTask : !tgtTask;
     }
@@ -2315,7 +2322,7 @@ window.renderWsInboxCard = function renderWsInboxCard(kind) {
   };
   const rows = ids.map(id => {
     const it = all[id] || {};
-    if (it.kind === 'checklist') {       // v8.31 : carte check-list
+    if (it.kind === 'checklist') {       // v8.32 : carte check-list
       const lines = Array.isArray(it.lines) ? it.lines : [];
       const tgtTask = (it.target === 'todo' || it.target === 'task');
       const itemType = tgtTask ? 'todo' : 'note';
@@ -2382,7 +2389,7 @@ window.integrateWsInboxItem = async function integrateWsInboxItem(id) {
   try {
     const fb = await import('https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js');
     const now = Date.now();
-    // v8.31 : depot de type check-list -> nouvel item OU ajout aux lignes d'un item existant
+    // v8.32 : depot de type check-list -> nouvel item OU ajout aux lignes d'un item existant
     if (it.kind === 'checklist') {
       const lines = Array.isArray(it.lines) ? it.lines : [];
       const cells = lines.map(t => ({ text: ('' + t), done: false }));
