@@ -12,7 +12,7 @@
 <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjogIkxVTUlJQSBXb3Jrc3BhY2UiLCAic2hvcnRfbmFtZSI6ICJXb3Jrc3BhY2UiLCAic3RhcnRfdXJsIjogIi4iLCAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwgImJhY2tncm91bmRfY29sb3IiOiAiIzBkMGQwZiIsICJ0aGVtZV9jb2xvciI6ICIjMGQwZDBmIiwgImljb25zIjogW3sic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzl6ZG1jaUlIWnBaWGRDYjNnOUlqQWdNQ0F5T1RBZ01qa3dJajQ4Y21WamRDQjNhV1IwYUQwaU1qa3dJaUJvWldsbmFIUTlJakk1TUNJZ2NuZzlJall3SWlCbWFXeHNQU0lqTUdRd1pEQm1JaTgrUEhSbGVIUWdlRDBpTlRBbElpQjVQU0kxTlNVaUlHWnZiblF0YzJsNlpUMGlNVFl3SWlCMFpYaDBMV0Z1WTJodmNqMGliV2xrWkd4bElpQmtiMjFwYm1GdWRDMWlZWE5sYkdsdVpUMGliV2xrWkd4bElqN3duNXFnUEM5MFpYaDBQand2YzNablBnPT0iLCAic2l6ZXMiOiAiMTkyeDE5MiA1MTJ4NTEyIiwgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
 <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOTAgMjkwIj48cmVjdCB3aWR0aD0iMjkwIiBoZWlnaHQ9IjI5MCIgcng9IjYwIiBmaWxsPSIjMGQwZDBmIi8+PHRleHQgeD0iNTAlIiB5PSI1NSUiIGZvbnQtc2l6ZT0iMTYwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn5qgPC90ZXh0Pjwvc3ZnPg==">
 
-<!-- LUMIIA Workspace v8.30 -->
+<!-- LUMIIA Workspace v8.31 -->
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 
@@ -2326,12 +2326,22 @@ window.renderWsInboxCard = function renderWsInboxCard(kind) {
       const exOpts = existing.map(x => '<option value="'+x.id+'">'+esc((x.title||'(sans titre)').slice(0,40))+'</option>').join('');
       const targetSel = '<label style="font-size:0.68rem;color:var(--text3)">Ajouter \u00e0 : <select id="wsinbox_chktarget_'+id+'" style="'+selStyle+'"><option value="new" selected>'+newLabel+'</option>'+(exOpts?('<optgroup label="Items existants">'+exOpts+'</optgroup>'):'')+'</select></label>';
       const titleLine = it.title ? '<div style="font-size:0.82rem;font-weight:600;color:var(--text2)">'+esc(it.title)+'</div>' : '';
+      const chkClasser = classerSelect(id, it.cat || (tgtTask ? 'courant' : 'perso'), it.projectId || null);
+      let chkAssignee = '';
+      if (tgtTask) {
+        const curA = it.assignee || (MEMBERS[0] && MEMBERS[0].id);
+        const aopts = MEMBERS.map(m => '<option value="'+m.id+'"'+(curA===m.id?' selected':'')+'>'+esc(m.name)+'</option>').join('');
+        chkAssignee = '<label style="font-size:0.68rem;color:var(--text3)">Assign\u00e9 : <select id="wsinbox_assignee_'+id+'" style="'+selStyle+'">'+aopts+'</select></label>';
+      }
       return '<div style="padding:9px 11px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;margin-bottom:6px">'
         + '<div style="font-size:0.68rem;color:#facc15;font-weight:700;margin-bottom:2px">'+typeLabel+' ('+lines.length+')</div>'
         + titleLine
         + '<div style="margin-top:4px">'+linesHtml+'</div>'
         + '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:8px">'
         +   targetSel
+        +   chkAssignee
+        +   chkClasser
+        +   '<span style="font-size:0.62rem;color:var(--text3);flex-basis:100%;margin-top:-2px">Classement'+(tgtTask?' et assignation':'')+' uniquement pour une <b>nouvelle</b> '+(tgtTask?'t\u00e2che':'note')+'.</span>'
         +   '<span style="flex:1;min-width:8px"></span>'
         +   '<button onclick="integrateWsInboxItem(\''+id+'\')" style="padding:4px 12px;border-radius:6px;border:none;cursor:pointer;font-size:0.72rem;font-weight:700;background:#4ade80;color:#05210f">Int\u00e9grer</button>'
         +   '<button onclick="rejectWsInboxItem(\''+id+'\')" style="padding:4px 10px;border-radius:6px;border:1px solid var(--border);cursor:pointer;font-size:0.72rem;background:var(--bg3);color:var(--text3)">Rejeter</button>'
@@ -2385,13 +2395,25 @@ window.integrateWsInboxItem = async function integrateWsInboxItem(id) {
         await fb.update(fb.ref(db, 'workspace/items/' + tgt), { checklist: cur.concat(cells), updated: now });
       } else {
         const newId = genId();
+        // classement choisi dans le menu "Classer dans" (cat: ou proj:)
+        let cCat = tgtTask ? 'courant' : 'perso', cProj = null;
+        const clEl = document.getElementById('wsinbox_classer_' + id);
+        const cv = clEl ? clEl.value : '';
+        if (cv.indexOf('proj:') === 0) { cProj = cv.slice(5); cCat = null; }
+        else if (cv.indexOf('cat:') === 0) { cCat = cv.slice(4); cProj = null; }
         const base = {
-          id: newId, cat: tgtTask ? 'courant' : 'perso', projectId: null, subcat: null,
+          id: newId, cat: cProj ? null : cCat, projectId: cProj, subcat: null,
           title: it.title || 'Check-list', content: '', link: '',
           owner: currentUser, checklist: cells, triggerAt: null, created: now, updated: now
         };
         if (tgtTask) Object.assign(base, { type: 'todo', assignee: currentUser, prio: 'normal', due: null, dueTime: null, done: false, shared: false, validateBy: null, validated: false });
         else Object.assign(base, { type: 'note', shared: false, prio: 'later', noteDate: null, noteTime: null });
+        if (tgtTask) {
+          const aEl = document.getElementById('wsinbox_assignee_' + id);
+          const asg = (aEl && aEl.value) || it.assignee || currentUser;
+          base.assignee = asg;
+          base.shared = (asg !== currentUser);
+        }
         await fb.set(fb.ref(db, 'workspace/items/' + newId), base);
       }
       await fb.remove(fb.ref(db, 'workspace_inbox/' + id));
