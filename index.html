@@ -12,7 +12,7 @@
 <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjogIkxVTUlJQSBXb3Jrc3BhY2UiLCAic2hvcnRfbmFtZSI6ICJXb3Jrc3BhY2UiLCAic3RhcnRfdXJsIjogIi4iLCAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwgImJhY2tncm91bmRfY29sb3IiOiAiIzBkMGQwZiIsICJ0aGVtZV9jb2xvciI6ICIjMGQwZDBmIiwgImljb25zIjogW3sic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzl6ZG1jaUlIWnBaWGRDYjNnOUlqQWdNQ0F5T1RBZ01qa3dJajQ4Y21WamRDQjNhV1IwYUQwaU1qa3dJaUJvWldsbmFIUTlJakk1TUNJZ2NuZzlJall3SWlCbWFXeHNQU0lqTUdRd1pEQm1JaTgrUEhSbGVIUWdlRDBpTlRBbElpQjVQU0kxTlNVaUlHWnZiblF0YzJsNlpUMGlNVFl3SWlCMFpYaDBMV0Z1WTJodmNqMGliV2xrWkd4bElpQmtiMjFwYm1GdWRDMWlZWE5sYkdsdVpUMGliV2xrWkd4bElqN3duNXFnUEM5MFpYaDBQand2YzNablBnPT0iLCAic2l6ZXMiOiAiMTkyeDE5MiA1MTJ4NTEyIiwgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
 <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOTAgMjkwIj48cmVjdCB3aWR0aD0iMjkwIiBoZWlnaHQ9IjI5MCIgcng9IjYwIiBmaWxsPSIjMGQwZDBmIi8+PHRleHQgeD0iNTAlIiB5PSI1NSUiIGZvbnQtc2l6ZT0iMTYwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn5qgPC90ZXh0Pjwvc3ZnPg==">
 
-<!-- LUMIIA Workspace v8.37 -->
+<!-- LUMIIA Workspace v8.38 -->
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 
@@ -887,7 +887,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
     <div style="text-align:center;margin-bottom:8px">
       <div style="font-family:Syne,sans-serif;font-weight:900;font-size:1.4rem;letter-spacing:0.04em;color:var(--text)">LUMIIA <span style="color:#38bdf8">●</span> Workspace</div>
       <div style="font-size:0.8rem;color:var(--text3);margin-top:6px;font-family:DM Sans,sans-serif">Connexion requise</div>
-      <div style="font-size:0.7rem;color:var(--text3);margin-top:4px;font-family:Syne,sans-serif;letter-spacing:0.05em" class="ver-badge">v8.37</div>
+      <div style="font-size:0.7rem;color:var(--text3);margin-top:4px;font-family:Syne,sans-serif;letter-spacing:0.05em" class="ver-badge">v8.38</div>
     </div>
     <div style="display:flex;flex-direction:column;gap:10px">
       <input id="login-email" type="email" placeholder="Email" autocomplete="email" style="
@@ -935,7 +935,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
   <button class="tab" data-tab="projets" onclick="switchTab('projets')">Projets</button>
   <button class="tab" data-tab="semaine" onclick="switchTab('semaine')">Semaine</button>
   <div style="flex:1"></div>
-  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px" class="ver-badge">v8.37</div>
+  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px" class="ver-badge">v8.38</div>
 </div>
 
 <main id="main-content">
@@ -1097,8 +1097,9 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
 
     <input type="text" id="xpress-title" class="field-input" placeholder="Note rapide..."
       style="font-size:1.05rem;font-weight:600;margin-bottom:16px"
-      onkeydown="if(event.key==='Enter'){saveXpress()}">
+      oninput="xpressTitleSync()" onkeydown="xpressTitleKey(event)">
 
+    <div id="xpress-reminder">
     <div class="field-label" style="margin-bottom:10px">Rappel (optionnel)</div>
 
     <!-- Ligne 1 : sélecteur H:MM direct -->
@@ -1129,10 +1130,14 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
       <button class="time-btn" data-min="720" onclick="selectXpressTimer(720,this)">12h</button>
       <button class="time-btn" data-min="1440" onclick="selectXpressTimer(1440,this)">24h</button>
     </div>
+    </div>
+
+    <!-- v8.38 : check-list enchainee a la volee, injectee apres creation -->
+    <div id="xpress-cl-host" style="display:none"></div>
 
     <div class="modal-actions" style="margin-top:8px">
-      <button class="btn-secondary" onclick="closeModal('modal-xpress')">Annuler</button>
-      <button class="btn-primary" style="background:#38bdf8" onclick="saveXpress()">Créer</button>
+      <button class="btn-secondary" id="xpress-cancel-btn" onclick="cancelXpressModal()">Annuler</button>
+      <button class="btn-primary" id="xpress-create-btn" style="background:#38bdf8" onclick="finishXpress()">Créer</button>
     </div>
   </div>
 </div>
@@ -1386,7 +1391,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
 // /!\ Garder en phase avec le commentaire <!-- LUMIIA Workspace vX.Y --> (ligne ~15),
 //     que deployer.command lit en texte brut (impossible à dériver d'ici).
 // ─────────────────────────────────────────────
-const APP_VERSION = 'v8.37';
+const APP_VERSION = 'v8.38';
 try { document.querySelectorAll('.ver-badge').forEach(e => e.textContent = APP_VERSION); } catch (e) {}
 // ─────────────────────────────────────────────
 // FIREBASE
@@ -4966,6 +4971,9 @@ function closeFabMenu() {
 // XPRESS
 // ─────────────────────────────────────────────
 let xpressMode = 'none';
+// v8.38 : Xpress en cours de saisie dans la modale (deja cree en base, enchainement Entree)
+let _xpressLiveId = null;
+let _xpressTitleTimer = null;
 let xpressTimerMin = 0;
 const _xpressTimers = {}; // id -> timeoutId
 
@@ -4978,6 +4986,17 @@ function openXpressModal() {
   document.getElementById('xpress-time-display').textContent = 'heure fixe';
   document.getElementById('xpress-time-display').style.color = 'var(--text3)';
   document.querySelectorAll('#xpress-timer-btns .time-btn').forEach(b => b.classList.remove('active'));
+  // v8.38 : retour a l'etat "creation", check-list masquee
+  _xpressLiveId = null;
+  clearTimeout(_xpressTitleTimer);
+  const _host = document.getElementById('xpress-cl-host');
+  if (_host) { _host.innerHTML = ''; _host.style.display = 'none'; }
+  const _rem = document.getElementById('xpress-reminder');
+  if (_rem) _rem.style.display = '';
+  const _ok = document.getElementById('xpress-create-btn');
+  if (_ok) _ok.textContent = 'Cr\u00e9er';
+  const _no = document.getElementById('xpress-cancel-btn');
+  if (_no) _no.textContent = 'Annuler';
   openModal('modal-xpress');
   setTimeout(() => document.getElementById('xpress-title').focus(), 100);
   if ('Notification' in window && Notification.permission === 'default' && !localStorage.getItem('lumiia-notif-asked')) {
@@ -5019,9 +5038,13 @@ function selectXpressTimer(min, btn) {
   btn.classList.add('active');
 }
 
-async function saveXpress() {
+// v8.38 : construction SYNCHRONE (aucun await avant le focus).
+// iOS n'ouvre le clavier que si le focus a lieu dans le meme tick que le geste
+// utilisateur : un seul await intercale et la saisie s'interrompt sur telephone.
+// L'ecriture Firebase part donc en arriere-plan, sans etre attendue.
+function buildXpressFromModal() {
   const title = document.getElementById('xpress-title').value.trim();
-  if (!title) { document.getElementById('xpress-title').focus(); return; }
+  if (!title) { document.getElementById('xpress-title').focus(); return null; }
 
   const today = localDateStr(new Date());
   let xpressTime = null;
@@ -5049,14 +5072,89 @@ async function saveXpress() {
     created: Date.now(), updated: Date.now(),
   };
 
-  // Sauvegarder d'abord
   items.push(item);
-  await save();
+  save();
+  render();
+  if (triggerAt) scheduleXpressAlert(item);
+  return item;
+}
+
+async function saveXpress(keepOpen) {
+  const item = buildXpressFromModal();
+  if (!item) return null;
+  if (!keepOpen) closeModal('modal-xpress');
+  return item;
+}
+
+// ─────────────────────────────────────────────
+// ENCHAINEMENT A LA VOLEE — v8.38
+// Entree sur le titre : l'Xpress est cree en base immediatement, la zone
+// Rappel laisse place a la check-list et le curseur descend sur la 1re ligne.
+// Entree ensuite : ligne suivante. Entree sur une ligne vide : c'est fini.
+// Aucune validation manuelle nulle part.
+// ─────────────────────────────────────────────
+function xpressTitleKey(e) {
+  if (e.key !== 'Enter') return;
+  e.preventDefault();
+  if (!_xpressLiveId) {
+    const item = buildXpressFromModal();
+    if (!item) return;
+    _xpressLiveId = item.id;
+    const rem = document.getElementById('xpress-reminder');
+    if (rem) rem.style.display = 'none';
+    const host = document.getElementById('xpress-cl-host');
+    if (host) { host.innerHTML = renderXpressChecklistHTML(item); host.style.display = ''; }
+    const ok = document.getElementById('xpress-create-btn');
+    if (ok) ok.textContent = 'Termin\u00e9';
+    const no = document.getElementById('xpress-cancel-btn');
+    if (no) no.textContent = 'Supprimer';
+  }
+  xclAdd(_xpressLiveId);
+}
+
+function xpressTitleSync() {
+  if (!_xpressLiveId) return;
+  clearTimeout(_xpressTitleTimer);
+  _xpressTitleTimer = setTimeout(async () => {
+    const id = _xpressLiveId;
+    const el = document.getElementById('xpress-title');
+    if (!id || !el) return;
+    const t = el.value.trim();
+    if (!t) return;
+    const it = items.find(i => i.id === id);
+    if (it) it.title = t;
+    try { await set(ref(db, 'workspace/items/' + id + '/title'), t); } catch (err) {}
+    render();
+  }, 500);
+}
+
+async function finishXpress() {
+  if (!_xpressLiveId) { await saveXpress(false); return; }
+  const id = _xpressLiveId;
+  clearTimeout(_xpressTitleTimer);
+  const el = document.getElementById('xpress-title');
+  const t = el ? el.value.trim() : '';
+  const it = items.find(i => i.id === id);
+  if (t && it) {
+    it.title = t;
+    try { await set(ref(db, 'workspace/items/' + id + '/title'), t); } catch (err) {}
+  }
+  await xclFlush(id);
+  _xpressLiveId = null;
   closeModal('modal-xpress');
   render();
+}
 
-  // Timer local
-  if (triggerAt) scheduleXpressAlert(item);
+function cancelXpressModal() {
+  if (!_xpressLiveId) { closeModal('modal-xpress'); return; }
+  const id = _xpressLiveId;
+  if (!confirm('Supprimer cet Xpress ?')) return;
+  if (_xpressTimers[id]) { clearTimeout(_xpressTimers[id]); delete _xpressTimers[id]; }
+  items = items.filter(i => i.id !== id);
+  _xpressLiveId = null;
+  removeItem(id);
+  closeModal('modal-xpress');
+  render();
 }
 
 function scheduleXpressAlert(item) {
@@ -5283,6 +5381,15 @@ function xclRemove(itemId, lineId) {
 function xclKey(e, itemId, lineId) {
   if (e.key === 'Enter') {
     e.preventDefault();
+    if (e.target.value.trim() === '') {
+      // v8.38 : ligne vide = plus rien a saisir, on cloture
+      const row = xclRow(itemId, lineId);
+      if (row) row.remove();
+      xclProgress(itemId);
+      xclFlush(itemId);
+      if (_xpressLiveId === itemId) finishXpress(); else e.target.blur();
+      return;
+    }
     xclFlush(itemId);
     xclAdd(itemId, lineId);
   } else if (e.key === 'Backspace' && e.target.value === '') {
@@ -5357,6 +5464,10 @@ window.openCreateModalForProject = openCreateModalForProject;
 window.applyFilterCat = applyFilterCat;
 window.toggleSortDate = toggleSortDate;
 window.toggleSortPrio = toggleSortPrio;
+window.xpressTitleKey = xpressTitleKey;
+window.xpressTitleSync = xpressTitleSync;
+window.finishXpress = finishXpress;
+window.cancelXpressModal = cancelXpressModal;
 window.xclToggle = xclToggle;
 window.xclAdd = xclAdd;
 window.xclRemove = xclRemove;
