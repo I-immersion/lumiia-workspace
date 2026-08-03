@@ -12,7 +12,7 @@
 <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjogIkxVTUlJQSBXb3Jrc3BhY2UiLCAic2hvcnRfbmFtZSI6ICJXb3Jrc3BhY2UiLCAic3RhcnRfdXJsIjogIi4iLCAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwgImJhY2tncm91bmRfY29sb3IiOiAiIzBkMGQwZiIsICJ0aGVtZV9jb2xvciI6ICIjMGQwZDBmIiwgImljb25zIjogW3sic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzl6ZG1jaUlIWnBaWGRDYjNnOUlqQWdNQ0F5T1RBZ01qa3dJajQ4Y21WamRDQjNhV1IwYUQwaU1qa3dJaUJvWldsbmFIUTlJakk1TUNJZ2NuZzlJall3SWlCbWFXeHNQU0lqTUdRd1pEQm1JaTgrUEhSbGVIUWdlRDBpTlRBbElpQjVQU0kxTlNVaUlHWnZiblF0YzJsNlpUMGlNVFl3SWlCMFpYaDBMV0Z1WTJodmNqMGliV2xrWkd4bElpQmtiMjFwYm1GdWRDMWlZWE5sYkdsdVpUMGliV2xrWkd4bElqN3duNXFnUEM5MFpYaDBQand2YzNablBnPT0iLCAic2l6ZXMiOiAiMTkyeDE5MiA1MTJ4NTEyIiwgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
 <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOTAgMjkwIj48cmVjdCB3aWR0aD0iMjkwIiBoZWlnaHQ9IjI5MCIgcng9IjYwIiBmaWxsPSIjMGQwZDBmIi8+PHRleHQgeD0iNTAlIiB5PSI1NSUiIGZvbnQtc2l6ZT0iMTYwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn5qgPC90ZXh0Pjwvc3ZnPg==">
 
-<!-- LUMIIA Workspace v8.39 -->
+<!-- LUMIIA Workspace v8.40 -->
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 
@@ -887,7 +887,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
     <div style="text-align:center;margin-bottom:8px">
       <div style="font-family:Syne,sans-serif;font-weight:900;font-size:1.4rem;letter-spacing:0.04em;color:var(--text)">LUMIIA <span style="color:#38bdf8">●</span> Workspace</div>
       <div style="font-size:0.8rem;color:var(--text3);margin-top:6px;font-family:DM Sans,sans-serif">Connexion requise</div>
-      <div style="font-size:0.7rem;color:var(--text3);margin-top:4px;font-family:Syne,sans-serif;letter-spacing:0.05em" class="ver-badge">v8.39</div>
+      <div style="font-size:0.7rem;color:var(--text3);margin-top:4px;font-family:Syne,sans-serif;letter-spacing:0.05em" class="ver-badge">v8.40</div>
     </div>
     <div style="display:flex;flex-direction:column;gap:10px">
       <input id="login-email" type="email" placeholder="Email" autocomplete="email" style="
@@ -935,7 +935,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
   <button class="tab" data-tab="projets" onclick="switchTab('projets')">Projets</button>
   <button class="tab" data-tab="semaine" onclick="switchTab('semaine')">Semaine</button>
   <div style="flex:1"></div>
-  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px" class="ver-badge">v8.39</div>
+  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px" class="ver-badge">v8.40</div>
 </div>
 
 <main id="main-content">
@@ -1097,6 +1097,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
 
     <input type="text" id="xpress-title" class="field-input" placeholder="Note rapide..."
       style="font-size:1.05rem;font-weight:600;margin-bottom:16px"
+      enterkeyhint="done" autocapitalize="sentences" autocomplete="off"
       oninput="xpressTitleSync()" onkeydown="xpressTitleKey(event)">
 
     <div id="xpress-reminder">
@@ -1391,7 +1392,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
 // /!\ Garder en phase avec le commentaire <!-- LUMIIA Workspace vX.Y --> (ligne ~15),
 //     que deployer.command lit en texte brut (impossible à dériver d'ici).
 // ─────────────────────────────────────────────
-const APP_VERSION = 'v8.39';
+const APP_VERSION = 'v8.40';
 try { document.querySelectorAll('.ver-badge').forEach(e => e.textContent = APP_VERSION); } catch (e) {}
 // ─────────────────────────────────────────────
 // FIREBASE
@@ -5112,9 +5113,19 @@ function startXpressChecklist() {
   return true;
 }
 
+// v8.40 : Gboard (Android) n'envoie pas toujours key='Enter'. Quand un champ
+// focusable suit, Chrome affiche la touche "Suivant" et effectue un TAB natif
+// qui deplace le focus hors du champ -> le clavier se referme. On intercepte
+// donc Enter ET Tab, et on bloque systematiquement le comportement natif.
+function isXpressGoKey(e) {
+  return e.key === 'Enter' || e.key === 'Tab' || e.key === 'Go' || e.key === 'Next'
+      || e.keyCode === 13 || e.keyCode === 9;
+}
+
 function xpressTitleKey(e) {
-  if (e.key !== 'Enter') return;
+  if (!isXpressGoKey(e)) return;
   e.preventDefault();
+  if (e.stopPropagation) e.stopPropagation();
   if (!startXpressChecklist()) return;
   xclAdd(_xpressLiveId);
 }
@@ -5273,6 +5284,7 @@ function xclRowHTML(itemId, line) {
   return `<div class="xcl-row${line.done ? ' done' : ''}" data-line-id="${line.id}" data-done="${line.done ? '1' : '0'}">
     <div class="xcl-check" onclick="xclToggle('${itemId}','${line.id}')">${line.done ? '\u2713' : ''}</div>
     <input class="xcl-input" type="text" value="${xclEsc(line.text)}" placeholder="Nouvelle ligne..."
+      enterkeyhint="done" autocapitalize="sentences" autocomplete="off"
       oninput="xclSchedule('${itemId}')" onkeydown="xclKey(event,'${itemId}','${line.id}')">
     <button class="xcl-del" onclick="xclRemove('${itemId}','${line.id}')">\u2715</button>
   </div>`;
@@ -5390,8 +5402,9 @@ function xclRemove(itemId, lineId) {
 }
 
 function xclKey(e, itemId, lineId) {
-  if (e.key === 'Enter') {
+  if (isXpressGoKey(e)) {
     e.preventDefault();
+    if (e.stopPropagation) e.stopPropagation();
     if (e.target.value.trim() === '') {
       // v8.38 : ligne vide = plus rien a saisir, on cloture
       const row = xclRow(itemId, lineId);
