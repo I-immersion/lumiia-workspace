@@ -12,7 +12,7 @@
 <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjogIkxVTUlJQSBXb3Jrc3BhY2UiLCAic2hvcnRfbmFtZSI6ICJXb3Jrc3BhY2UiLCAic3RhcnRfdXJsIjogIi4iLCAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwgImJhY2tncm91bmRfY29sb3IiOiAiIzBkMGQwZiIsICJ0aGVtZV9jb2xvciI6ICIjMGQwZDBmIiwgImljb25zIjogW3sic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzl6ZG1jaUlIWnBaWGRDYjNnOUlqQWdNQ0F5T1RBZ01qa3dJajQ4Y21WamRDQjNhV1IwYUQwaU1qa3dJaUJvWldsbmFIUTlJakk1TUNJZ2NuZzlJall3SWlCbWFXeHNQU0lqTUdRd1pEQm1JaTgrUEhSbGVIUWdlRDBpTlRBbElpQjVQU0kxTlNVaUlHWnZiblF0YzJsNlpUMGlNVFl3SWlCMFpYaDBMV0Z1WTJodmNqMGliV2xrWkd4bElpQmtiMjFwYm1GdWRDMWlZWE5sYkdsdVpUMGliV2xrWkd4bElqN3duNXFnUEM5MFpYaDBQand2YzNablBnPT0iLCAic2l6ZXMiOiAiMTkyeDE5MiA1MTJ4NTEyIiwgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
 <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOTAgMjkwIj48cmVjdCB3aWR0aD0iMjkwIiBoZWlnaHQ9IjI5MCIgcng9IjYwIiBmaWxsPSIjMGQwZDBmIi8+PHRleHQgeD0iNTAlIiB5PSI1NSUiIGZvbnQtc2l6ZT0iMTYwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn5qgPC90ZXh0Pjwvc3ZnPg==">
 
-<!-- LUMIIA Workspace v8.36 -->
+<!-- LUMIIA Workspace v8.37 -->
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 
@@ -38,6 +38,7 @@
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
+html { overflow-x: hidden; }
 body {
   font-family: 'DM Sans', sans-serif;
   background: var(--bg);
@@ -844,6 +845,24 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
 }
 .card, .todo-item { animation: fadeIn 0.2s ease both; }
 
+/* ── MOBILE : header compact (v8.37) ──
+   Cause corrigee : le header exigeait 560 px de large alors que l'iPhone en fait 390.
+   Le document debordait donc de ~175 px, iOS dezoomait toute la page pour l'afficher
+   en entier, et le contenu (qui, lui, reste a 390 px) laissait une bande noire a droite.
+   Le logo devient elastique (tronque a l'ellipse) : plus aucun element incompressible. */
+@media (max-width: 639px) {
+  header { padding: 14px 12px 12px; gap: 6px; }
+  .header-left { gap: 6px; flex: 1 1 auto; min-width: 0; overflow: hidden; }
+  .logo { font-size: 0.8rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+  .logo-tail { display: none; }
+  .user-badge { padding: 0; width: 28px; height: 28px; font-size: 0.64rem; letter-spacing: 0.04em; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+  .header-actions { gap: 2px; flex-shrink: 0; }
+  .header-actions .btn-icon { width: 28px; height: 28px; font-size: 0.8rem; padding: 0 !important; }
+  .header-actions .hdr-sep { display: none; }
+  #module-crm-btn { font-size: 0.55rem !important; padding: 0 4px !important; width: auto !important; }
+  #module-dash-btn, #module-roadmap-btn { width: 28px !important; padding: 0 !important; }
+}
+
 /* ── DESKTOP ── */
 @media (min-width: 640px) {
   header { padding: 18px 32px 14px; }
@@ -868,7 +887,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
     <div style="text-align:center;margin-bottom:8px">
       <div style="font-family:Syne,sans-serif;font-weight:900;font-size:1.4rem;letter-spacing:0.04em;color:var(--text)">LUMIIA <span style="color:#38bdf8">●</span> Workspace</div>
       <div style="font-size:0.8rem;color:var(--text3);margin-top:6px;font-family:DM Sans,sans-serif">Connexion requise</div>
-      <div style="font-size:0.7rem;color:var(--text3);margin-top:4px;font-family:Syne,sans-serif;letter-spacing:0.05em" class="ver-badge">v8.36</div>
+      <div style="font-size:0.7rem;color:var(--text3);margin-top:4px;font-family:Syne,sans-serif;letter-spacing:0.05em" class="ver-badge">v8.37</div>
     </div>
     <div style="display:flex;flex-direction:column;gap:10px">
       <input id="login-email" type="email" placeholder="Email" autocomplete="email" style="
@@ -896,13 +915,13 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
 
 <header>
   <div class="header-left">
-    <div class="logo">LUMIIA <span>●</span> Workspace</div>
+    <div class="logo">LUMIIA <span>●</span><span class="logo-tail"> Workspace</span></div>
     <button class="user-badge" id="user-badge" onclick="showUserPicker()" title="Changer d'espace">EM</button>
   </div>
   <div class="header-actions">
     <button class="btn-icon" id="sort-date-btn" onclick="toggleSortDate()" title="↓ Plus récent">📅</button>
     <button class="btn-icon" id="sort-prio-btn" onclick="toggleSortPrio()" title="Trier par priorité">⚡</button>
-    <div style="width:1px;height:20px;background:var(--border);margin:0 2px"></div>
+    <div class="hdr-sep" style="width:1px;height:20px;background:var(--border);margin:0 2px"></div>
     <button class="btn-icon" id="module-crm-btn" onclick="switchModule('crm')" title="CRM Prospects" style="font-size:0.72rem;font-family:Syne,sans-serif;font-weight:700;letter-spacing:0.03em;padding:6px 10px;width:auto">CRM</button>
     <button class="btn-icon" id="module-dash-btn" onclick="switchModule('dashboard')" title="Dashboard" style="padding:6px 10px;width:auto">📊</button>
     <button class="btn-icon" id="module-roadmap-btn" onclick="switchTab('roadmap')" title="Roadmap" style="padding:6px 10px;width:auto">🗺</button>
@@ -916,7 +935,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
   <button class="tab" data-tab="projets" onclick="switchTab('projets')">Projets</button>
   <button class="tab" data-tab="semaine" onclick="switchTab('semaine')">Semaine</button>
   <div style="flex:1"></div>
-  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px" class="ver-badge">v8.36</div>
+  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px" class="ver-badge">v8.37</div>
 </div>
 
 <main id="main-content">
@@ -1367,7 +1386,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
 // /!\ Garder en phase avec le commentaire <!-- LUMIIA Workspace vX.Y --> (ligne ~15),
 //     que deployer.command lit en texte brut (impossible à dériver d'ici).
 // ─────────────────────────────────────────────
-const APP_VERSION = 'v8.36';
+const APP_VERSION = 'v8.37';
 try { document.querySelectorAll('.ver-badge').forEach(e => e.textContent = APP_VERSION); } catch (e) {}
 // ─────────────────────────────────────────────
 // FIREBASE
