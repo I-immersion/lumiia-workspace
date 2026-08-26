@@ -12,7 +12,7 @@
 <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjogIkxVTUlJQSBXb3Jrc3BhY2UiLCAic2hvcnRfbmFtZSI6ICJXb3Jrc3BhY2UiLCAic3RhcnRfdXJsIjogIi4iLCAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwgImJhY2tncm91bmRfY29sb3IiOiAiIzBkMGQwZiIsICJ0aGVtZV9jb2xvciI6ICIjMGQwZDBmIiwgImljb25zIjogW3sic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzl6ZG1jaUlIWnBaWGRDYjNnOUlqQWdNQ0F5T1RBZ01qa3dJajQ4Y21WamRDQjNhV1IwYUQwaU1qa3dJaUJvWldsbmFIUTlJakk1TUNJZ2NuZzlJall3SWlCbWFXeHNQU0lqTUdRd1pEQm1JaTgrUEhSbGVIUWdlRDBpTlRBbElpQjVQU0kxTlNVaUlHWnZiblF0YzJsNlpUMGlNVFl3SWlCMFpYaDBMV0Z1WTJodmNqMGliV2xrWkd4bElpQmtiMjFwYm1GdWRDMWlZWE5sYkdsdVpUMGliV2xrWkd4bElqN3duNXFnUEM5MFpYaDBQand2YzNablBnPT0iLCAic2l6ZXMiOiAiMTkyeDE5MiA1MTJ4NTEyIiwgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
 <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOTAgMjkwIj48cmVjdCB3aWR0aD0iMjkwIiBoZWlnaHQ9IjI5MCIgcng9IjYwIiBmaWxsPSIjMGQwZDBmIi8+PHRleHQgeD0iNTAlIiB5PSI1NSUiIGZvbnQtc2l6ZT0iMTYwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn5qgPC90ZXh0Pjwvc3ZnPg==">
 
-<!-- LUMIIA Workspace v8.40 -->
+<!-- LUMIIA Workspace v8.41 -->
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 
@@ -887,7 +887,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
     <div style="text-align:center;margin-bottom:8px">
       <div style="font-family:Syne,sans-serif;font-weight:900;font-size:1.4rem;letter-spacing:0.04em;color:var(--text)">LUMIIA <span style="color:#38bdf8">●</span> Workspace</div>
       <div style="font-size:0.8rem;color:var(--text3);margin-top:6px;font-family:DM Sans,sans-serif">Connexion requise</div>
-      <div style="font-size:0.7rem;color:var(--text3);margin-top:4px;font-family:Syne,sans-serif;letter-spacing:0.05em" class="ver-badge">v8.40</div>
+      <div style="font-size:0.7rem;color:var(--text3);margin-top:4px;font-family:Syne,sans-serif;letter-spacing:0.05em" class="ver-badge">v8.41</div>
     </div>
     <div style="display:flex;flex-direction:column;gap:10px">
       <input id="login-email" type="email" placeholder="Email" autocomplete="email" style="
@@ -935,7 +935,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
   <button class="tab" data-tab="projets" onclick="switchTab('projets')">Projets</button>
   <button class="tab" data-tab="semaine" onclick="switchTab('semaine')">Semaine</button>
   <div style="flex:1"></div>
-  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px" class="ver-badge">v8.40</div>
+  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px" class="ver-badge">v8.41</div>
 </div>
 
 <main id="main-content">
@@ -1392,7 +1392,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
 // /!\ Garder en phase avec le commentaire <!-- LUMIIA Workspace vX.Y --> (ligne ~15),
 //     que deployer.command lit en texte brut (impossible à dériver d'ici).
 // ─────────────────────────────────────────────
-const APP_VERSION = 'v8.40';
+const APP_VERSION = 'v8.41';
 try { document.querySelectorAll('.ver-badge').forEach(e => e.textContent = APP_VERSION); } catch (e) {}
 // ─────────────────────────────────────────────
 // FIREBASE
@@ -2281,9 +2281,14 @@ window.renderInboxCard = function renderInboxCard() {
     } else {
       typeLabel = '💡 Idée';
       resume = it.label||'(sans nom)';
-      const cur = it.category||'wishlist';
-      const opts = CATS.map(c => '<option value="'+c[0]+'"'+(cur===c[0]?' selected':'')+'>'+c[1]+'</option>').join('');
-      control = '<label style="font-size:0.68rem;color:var(--text3)">Catégorie : <select id="inboxcat_'+id+'" style="'+selStyle+'">'+opts+'</select></label>';
+      // v8.41 : une idée peut soit créer un nouveau projet (choix de catégorie),
+      // soit rejoindre un projet existant sous forme de note. Un seul sélecteur, deux groupes.
+      const cur = 'cat:' + (it.category||'wishlist');
+      const optsCat = CATS.map(c => '<option value="cat:'+c[0]+'"'+(cur==='cat:'+c[0]?' selected':'')+'>'+c[1]+'</option>').join('');
+      const optsProj = projKeys.map(k => '<option value="proj:'+k+'">'+esc((roadmapData[k].emoji||'')+' '+roadmapData[k].label)+'</option>').join('');
+      const opts = '<optgroup label="Nouveau projet">'+optsCat+'</optgroup>'
+                 + (optsProj ? '<optgroup label="Ajouter à un projet existant">'+optsProj+'</optgroup>' : '');
+      control = '<label style="font-size:0.68rem;color:var(--text3)">Destination : <select id="inboxcat_'+id+'" style="'+selStyle+'">'+opts+'</select></label>';
     }
     const raw = (it.brief||it.content||it.note||'') + '';
     const preview = raw.slice(0,140);
@@ -2324,7 +2329,23 @@ window.integrateInboxItem = async function integrateInboxItem(id) {
       await fb.push(fb.ref(db, 'roadmap/'+target+'/'+coll), payload);
     } else {
       const sel = document.getElementById('inboxcat_'+id);
-      const cat = (sel && sel.value) || it.category || 'wishlist';
+      const dest = (sel && sel.value) || ('cat:' + (it.category || 'wishlist'));
+      // v8.41 : destination "proj:<cle>" -> l'idée devient une note du projet existant
+      if (dest.slice(0,5) === 'proj:') {
+        const target = dest.slice(5);
+        if (!roadmapData[target]) { alert('Projet cible introuvable.'); return; }
+        roadmapActiveTab = target;
+        const existingN = Object.values(roadmapData[target].notes || {});
+        const maxOrderN = existingN.reduce((m,x)=>Math.max(m, x.order||0), 0);
+        await fb.push(fb.ref(db, 'roadmap/'+target+'/notes'), {
+          title: (it.emoji||'💡') + ' ' + (it.label||'(sans nom)'),
+          content: it.brief||it.content||'',
+          order: maxOrderN+1, createdAt: now, updatedAt: now
+        });
+        await fb.remove(fb.ref(db, 'roadmap_inbox/'+id));
+        return;
+      }
+      const cat = dest.slice(4) || 'wishlist';
       let key = it.projectKey || ('wl_' + ((it.label||'idee').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'_').replace(/^_+|_+$/g,'').slice(0,30) || 'idee'));
       if (roadmapData[key]) key = key + '_' + Date.now().toString().slice(-4);
       roadmapActiveTab = key;
