@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<!-- LUMIIA IDEES REUNION - v1.0 -->
+<!-- LUMIIA IDEES REUNION - v1.3 -->
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <meta name="theme-color" content="#0d1117">
-<title>Boîte à idées — Réunion</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<title>LUMIIA — Boîte à idées — Rencontre du lundi 14 septembre</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#0d1117; --bg2:#141417; --bg3:#1c1c21;
@@ -25,15 +25,20 @@ body{
 }
 .wrap{width:100%; max-width:560px}
 
-h1{font-family:Syne,sans-serif; font-size:1.5rem; font-weight:800; letter-spacing:-0.02em; margin-bottom:6px}
+h1{font-family:Manrope,sans-serif; font-size:1.6rem; font-weight:800; letter-spacing:0; margin-bottom:6px}
 .sub{color:var(--text2); font-size:0.9rem; line-height:1.5; margin-bottom:28px}
+.meet{
+  display:inline-block; background:rgba(56,189,248,0.12); border:1px solid rgba(56,189,248,0.35);
+  color:var(--accent); font-family:Manrope,sans-serif; font-weight:700; font-size:0.92rem;
+  padding:9px 15px; border-radius:10px; margin-bottom:22px; line-height:1.4;
+}
 
 /* ── Écran choix du prénom ── */
 .who-grid{display:grid; grid-template-columns:1fr; gap:10px; margin-top:8px}
 .who-btn{
   background:var(--bg2); border:1px solid var(--border); border-radius:14px;
-  color:var(--text); font-family:Syne,sans-serif; font-weight:700; font-size:1.05rem;
-  padding:18px 20px; text-align:left; cursor:pointer;
+  color:var(--text); font-family:Manrope,sans-serif; font-weight:700; font-size:1.12rem;
+  padding:19px 20px; text-align:left; cursor:pointer;
   display:flex; align-items:center; gap:14px;
   transition:border-color .15s, background .15s, transform .1s;
 }
@@ -51,7 +56,7 @@ h1{font-family:Syne,sans-serif; font-size:1.5rem; font-weight:800; letter-spacin
   background:var(--bg2); border:1px solid var(--border); border-radius:14px;
   padding:12px 14px; margin-bottom:22px;
 }
-.bar-name{font-family:Syne,sans-serif; font-weight:700; font-size:1rem; flex:1}
+.bar-name{font-family:Manrope,sans-serif; font-weight:700; font-size:1.08rem; flex:1}
 .bar-sub{color:var(--text3); font-size:0.75rem; display:block; font-family:Inter,sans-serif; font-weight:400}
 .link{
   background:none; border:none; color:var(--text3); font-size:0.78rem;
@@ -70,14 +75,14 @@ textarea::placeholder{color:var(--text3)}
 .btn{
   width:100%; margin-top:12px; padding:16px;
   background:var(--accent); border:none; border-radius:14px;
-  color:#0d1117; font-family:Syne,sans-serif; font-weight:800; font-size:1rem;
+  color:#0d1117; font-family:Manrope,sans-serif; font-weight:800; font-size:1rem;
   letter-spacing:0.02em; cursor:pointer; transition:opacity .15s, transform .1s;
 }
 .btn:active{transform:scale(0.99)}
 .btn:disabled{opacity:0.35; cursor:default}
 
 .mine-head{
-  font-family:Syne,sans-serif; font-weight:700; font-size:0.8rem;
+  font-family:Manrope,sans-serif; font-weight:700; font-size:0.8rem;
   letter-spacing:0.08em; text-transform:uppercase; color:var(--text2);
   margin:34px 0 12px; display:flex; align-items:center; gap:10px;
 }
@@ -109,12 +114,12 @@ textarea::placeholder{color:var(--text3)}
 }
 .toast{
   position:fixed; left:50%; bottom:26px; transform:translateX(-50%) translateY(80px);
-  background:var(--ok); color:#0d1117; font-family:Syne,sans-serif; font-weight:700;
+  background:var(--ok); color:#0d1117; font-family:Manrope,sans-serif; font-weight:700;
   padding:13px 26px; border-radius:30px; font-size:0.9rem;
   opacity:0; transition:all .28s cubic-bezier(.2,.8,.3,1); pointer-events:none; z-index:50;
 }
 .toast.show{opacity:1; transform:translateX(-50%) translateY(0)}
-.ver{text-align:center; color:var(--text3); font-size:0.7rem; margin-top:34px; font-family:Syne,sans-serif; letter-spacing:0.08em}
+.ver{text-align:center; color:var(--text3); font-size:0.7rem; margin-top:34px; font-family:Manrope,sans-serif; letter-spacing:0.08em}
 .hidden{display:none}
 </style>
 </head>
@@ -123,13 +128,15 @@ textarea::placeholder{color:var(--text3)}
 
   <!-- ÉCRAN 1 — qui es-tu -->
   <div id="screen-who">
-    <h1>Boîte à idées</h1>
-    <div class="sub">Dépose ici tes idées pour la réunion, au fil de l'eau. Tu peux revenir autant de fois que tu veux jusqu'au jour J.<br><br>Commence par te reconnaître :</div>
+    <h1>LUMIIA — Boîte à idées</h1>
+    <div class="meet">Rencontre du lundi 14 septembre 18h30 au LUMIIA</div>
+    <div class="sub">Dépose ici tes idées pour la réunion, au fil de l'eau. Tu peux revenir autant de fois que tu veux jusqu'au jour J.<br><br>Qui êtes-vous ?</div>
     <div class="who-grid" id="who-grid"></div>
   </div>
 
   <!-- ÉCRAN 2 — saisie -->
   <div id="screen-main" class="hidden">
+    <div class="meet">Rencontre du lundi 14 septembre 18h30 au LUMIIA</div>
     <div class="bar">
       <div class="who-dot" id="bar-dot"></div>
       <div class="bar-name" id="bar-name">—<span class="bar-sub">tes idées, visibles de toi seul</span></div>
@@ -143,9 +150,9 @@ textarea::placeholder{color:var(--text3)}
     <div id="liste"></div>
 
     <div class="privacy">
-      🔒 Personne d'autre que toi ne voit tes idées dans cette page. Emmanuel les récupère de son côté pour préparer l'ordre du jour ; elles seront débattues le jour de la réunion.
+      🔒 Personne d'autre que toi ne voit tes idées dans cette page. Emmanuel les récupère de son côté pour préparer l'ordre du jour.
     </div>
-    <div class="ver">v1.0</div>
+    <div class="ver">v1.3</div>
   </div>
 
 </div>
@@ -155,7 +162,7 @@ textarea::placeholder{color:var(--text3)}
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
 import { getDatabase, ref, onValue, push, set, remove } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js';
 
-const VERSION = 'v1.0';
+const VERSION = 'v1.3';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBPgjVFKrP80qX_hlfUFqL168XONfNIBA4",
@@ -175,7 +182,8 @@ const MEMBRES = [
   { id: 'arthur',         nom: 'Arthur',            couleur: '#34d399' },
   { id: 'emmanuel',       nom: 'Emmanuel Exbrayat', couleur: '#fb923c' },
   { id: 'fred',           nom: 'Fred de Loukta',    couleur: '#60a5fa' },
-  { id: 'niko',           nom: 'Niko de Loukta',    couleur: '#c084fc' }
+  { id: 'niko',           nom: 'Niko de Loukta',    couleur: '#c084fc' },
+  { id: 'autre',          nom: 'Autre',             couleur: '#94a3b8' }
 ];
 
 const CLE_LOCALE = 'lumiia_idees_membre';

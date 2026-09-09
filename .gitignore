@@ -9,3 +9,5 @@ functions/
 
 # Scripts d'un autre projet (REDA-SPIN)
 write_v*.py
+.DS_Store
+_versions/
