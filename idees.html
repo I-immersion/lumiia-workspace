@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<!-- LUMIIA IDEES REUNION - v1.3 -->
+<!-- LUMIIA IDEES REUNION - v2.0 -->
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <meta name="theme-color" content="#0d1117">
-<title>LUMIIA — Boîte à idées — Rencontre du lundi 14 septembre</title>
+<title>LUMIIA — Boîte à idées</title>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -126,17 +126,23 @@ textarea::placeholder{color:var(--text3)}
 <body>
 <div class="wrap">
 
+  <!-- ÉCRAN 0 — lien invalide -->
+  <div id="screen-err" class="hidden">
+    <h1>LUMIIA — Boîte à idées</h1>
+    <div class="empty" style="margin-top:20px">Ce lien est incomplet ou la collecte n'existe plus.<br>Demande le bon lien à Emmanuel.</div>
+  </div>
+
   <!-- ÉCRAN 1 — qui es-tu -->
   <div id="screen-who">
     <h1>LUMIIA — Boîte à idées</h1>
-    <div class="meet">Rencontre du lundi 14 septembre 18h30 au LUMIIA</div>
+    <div class="meet" id="meet-1">…</div>
     <div class="sub">Dépose ici tes idées pour la réunion, au fil de l'eau. Tu peux revenir autant de fois que tu veux jusqu'au jour J.<br><br>Qui êtes-vous ?</div>
     <div class="who-grid" id="who-grid"></div>
   </div>
 
   <!-- ÉCRAN 2 — saisie -->
   <div id="screen-main" class="hidden">
-    <div class="meet">Rencontre du lundi 14 septembre 18h30 au LUMIIA</div>
+    <div class="meet" id="meet-2">…</div>
     <div class="bar">
       <div class="who-dot" id="bar-dot"></div>
       <div class="bar-name" id="bar-name">—<span class="bar-sub">tes idées, visibles de toi seul</span></div>
@@ -152,7 +158,7 @@ textarea::placeholder{color:var(--text3)}
     <div class="privacy">
       🔒 Personne d'autre que toi ne voit tes idées dans cette page. Emmanuel les récupère de son côté pour préparer l'ordre du jour.
     </div>
-    <div class="ver">v1.3</div>
+    <div class="ver">v2.0</div>
   </div>
 
 </div>
@@ -162,7 +168,7 @@ textarea::placeholder{color:var(--text3)}
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
 import { getDatabase, ref, onValue, push, set, remove } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js';
 
-const VERSION = 'v1.3';
+const VERSION = 'v2.0';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBPgjVFKrP80qX_hlfUFqL168XONfNIBA4",
@@ -174,19 +180,10 @@ const firebaseConfig = {
   appId: "1:823919513931:web:6f6f3c7c6d1699457b18ce"
 };
 
-const MEMBRES = [
-  { id: 'martin',         nom: 'Martin',            couleur: '#38bdf8' },
-  { id: 'mathieu',        nom: 'Mathieu',           couleur: '#a78bfa' },
-  { id: 'magalie_romain', nom: 'Magalie & Romain',  couleur: '#f472b6' },
-  { id: 'philippe',       nom: 'Philippe Guyennet', couleur: '#fbbf24' },
-  { id: 'arthur',         nom: 'Arthur',            couleur: '#34d399' },
-  { id: 'emmanuel',       nom: 'Emmanuel Exbrayat', couleur: '#fb923c' },
-  { id: 'fred',           nom: 'Fred de Loukta',    couleur: '#60a5fa' },
-  { id: 'niko',           nom: 'Niko de Loukta',    couleur: '#c084fc' },
-  { id: 'autre',          nom: 'Autre',             couleur: '#94a3b8' }
-];
-
-const CLE_LOCALE = 'lumiia_idees_membre';
+const SESSION = new URLSearchParams(location.search).get('s') || '';
+const CLE_LOCALE = 'lumiia_idees_' + SESSION;
+let MEMBRES = [];
+let TITRE = '';
 
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
@@ -243,7 +240,7 @@ function ouvrirSaisie() {
 }
 
 function ecouter() {
-  onValue(ref(db, 'idees_reunion/' + membre.id), (snap) => {
+  onValue(ref(db, 'idees_sessions/' + SESSION + '/reponses/' + membre.id), (snap) => {
     const data = snap.val() || {};
     mesIdees = Object.keys(data).map(k => Object.assign({ _id: k }, data[k]));
     mesIdees.sort((a, b) => (b.date || 0) - (a.date || 0));
@@ -308,7 +305,7 @@ async function ajouter() {
   const btn = document.getElementById('btn-add');
   btn.disabled = true;
   try {
-    const r = push(ref(db, 'idees_reunion/' + membre.id));
+    const r = push(ref(db, 'idees_sessions/' + SESSION + '/reponses/' + membre.id));
     await set(r, { texte: texte, date: Date.now(), nom: membre.nom });
     el.value = '';
     toast('Id\u00e9e enregistr\u00e9e');
@@ -322,7 +319,7 @@ async function ajouter() {
 async function supprimer(id) {
   if (!confirm('Supprimer cette id\u00e9e ?')) return;
   try {
-    await remove(ref(db, 'idees_reunion/' + membre.id + '/' + id));
+    await remove(ref(db, 'idees_sessions/' + SESSION + '/reponses/' + membre.id + '/' + id));
     toast('Supprim\u00e9e');
   } catch (e) {
     toast('\u00c9chec de la suppression');
@@ -340,13 +337,37 @@ window.ajouter = ajouter;
 window.majBouton = majBouton;
 window.changerPersonne = changerPersonne;
 
-// Démarrage
-rendreChoix();
-let memorise = null;
-try { memorise = localStorage.getItem(CLE_LOCALE); } catch (e) {}
-if (memorise) {
-  const m = MEMBRES.find(x => x.id === memorise);
-  if (m) { membre = m; ouvrirSaisie(); }
+// Démarrage — la configuration de la collecte est lue depuis Firebase
+function erreurLien() {
+  document.getElementById('screen-who').classList.add('hidden');
+  document.getElementById('screen-main').classList.add('hidden');
+  document.getElementById('screen-err').classList.remove('hidden');
+}
+
+if (!SESSION) {
+  erreurLien();
+} else {
+  onValue(ref(db, 'idees_sessions/' + SESSION + '/config'), (snap) => {
+    const cfg = snap.val();
+    if (!cfg || !cfg.membres) { erreurLien(); return; }
+    TITRE = cfg.titre || '';
+    const bruts = cfg.membres;
+    MEMBRES = Array.isArray(bruts) ? bruts.filter(Boolean) : Object.keys(bruts).map(k => bruts[k]).filter(Boolean);
+    document.title = 'LUMIIA \u2014 ' + (TITRE || 'Bo\u00eete \u00e0 id\u00e9es');
+    ['meet-1', 'meet-2'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = TITRE;
+    });
+    if (!membre) {
+      rendreChoix();
+      let memorise = null;
+      try { memorise = localStorage.getItem(CLE_LOCALE); } catch (e) {}
+      if (memorise) {
+        const m = MEMBRES.find(x => x.id === memorise);
+        if (m) { membre = m; ouvrirSaisie(); }
+      }
+    }
+  }, () => { erreurLien(); });
 }
 </script>
 </body>
