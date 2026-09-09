@@ -12,7 +12,7 @@
 <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjogIkxVTUlJQSBXb3Jrc3BhY2UiLCAic2hvcnRfbmFtZSI6ICJXb3Jrc3BhY2UiLCAic3RhcnRfdXJsIjogIi4iLCAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwgImJhY2tncm91bmRfY29sb3IiOiAiIzBkMGQwZiIsICJ0aGVtZV9jb2xvciI6ICIjMGQwZDBmIiwgImljb25zIjogW3sic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzl6ZG1jaUlIWnBaWGRDYjNnOUlqQWdNQ0F5T1RBZ01qa3dJajQ4Y21WamRDQjNhV1IwYUQwaU1qa3dJaUJvWldsbmFIUTlJakk1TUNJZ2NuZzlJall3SWlCbWFXeHNQU0lqTUdRd1pEQm1JaTgrUEhSbGVIUWdlRDBpTlRBbElpQjVQU0kxTlNVaUlHWnZiblF0YzJsNlpUMGlNVFl3SWlCMFpYaDBMV0Z1WTJodmNqMGliV2xrWkd4bElpQmtiMjFwYm1GdWRDMWlZWE5sYkdsdVpUMGliV2xrWkd4bElqN3duNXFnUEM5MFpYaDBQand2YzNablBnPT0iLCAic2l6ZXMiOiAiMTkyeDE5MiA1MTJ4NTEyIiwgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
 <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOTAgMjkwIj48cmVjdCB3aWR0aD0iMjkwIiBoZWlnaHQ9IjI5MCIgcng9IjYwIiBmaWxsPSIjMGQwZDBmIi8+PHRleHQgeD0iNTAlIiB5PSI1NSUiIGZvbnQtc2l6ZT0iMTYwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn5qgPC90ZXh0Pjwvc3ZnPg==">
 
-<!-- LUMIIA Workspace v8.49 -->
+<!-- LUMIIA Workspace v8.50 -->
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Manrope:wght@600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 
@@ -889,7 +889,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
     <div style="text-align:center;margin-bottom:8px">
       <div style="font-family:Syne,sans-serif;font-weight:900;font-size:1.4rem;letter-spacing:0.04em;color:var(--text)">LUMIIA <span style="color:#38bdf8">●</span> Workspace</div>
       <div style="font-size:0.8rem;color:var(--text3);margin-top:6px;font-family:DM Sans,sans-serif">Connexion requise</div>
-      <div style="font-size:0.7rem;color:var(--text3);margin-top:4px;font-family:Syne,sans-serif;letter-spacing:0.05em" class="ver-badge">v8.49</div>
+      <div style="font-size:0.7rem;color:var(--text3);margin-top:4px;font-family:Syne,sans-serif;letter-spacing:0.05em" class="ver-badge">v8.50</div>
     </div>
     <div style="display:flex;flex-direction:column;gap:10px">
       <input id="login-email" type="email" placeholder="Email" autocomplete="email" style="
@@ -938,7 +938,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
   <button class="tab" data-tab="projets" onclick="switchTab('projets')">Projets</button>
   <button class="tab" data-tab="semaine" onclick="switchTab('semaine')">Semaine</button>
   <div style="flex:1"></div>
-  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px" class="ver-badge">v8.49</div>
+  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px" class="ver-badge">v8.50</div>
 </div>
 
 <main id="main-content">
@@ -1395,7 +1395,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
 // /!\ Garder en phase avec le commentaire <!-- LUMIIA Workspace vX.Y --> (ligne ~15),
 //     que deployer.command lit en texte brut (impossible à dériver d'ici).
 // ─────────────────────────────────────────────
-const APP_VERSION = 'v8.49';
+const APP_VERSION = 'v8.50';
 try { document.querySelectorAll('.ver-badge').forEach(e => e.textContent = APP_VERSION); } catch (e) {}
 // ─────────────────────────────────────────────
 // FIREBASE
@@ -1426,8 +1426,8 @@ const PROSPECTS_REF = ref(db, 'workspace/prospects');
 const SETTINGS_REF = ref(db, 'workspace/settings');
 const ROADMAP_REF = ref(db, 'roadmap');
 let ideesData = {}; // idees_sessions
-let ideesSolutions = {}; // v8.49 : solutions admin
-let ideesEdit = null; // v8.49 : id de l'idee en cours d'edition
+let ideesSolutions = {}; // v8.50 : solutions admin
+let ideesEdit = null; // v8.50 : id de l'idee en cours d'edition
 
 // Mapping email Firebase → ID membre interne
 const EMAIL_TO_MEMBER = {
@@ -1497,16 +1497,16 @@ function initDataListeners() {
   }, () => { inboxData = {}; });
 
   // Sync boite aux lettres Workspace (notes/taches deposees par Claude ; lecture admin, erreur silencieuse sinon) — v8.28
-  // v8.49 : solutions d'Emmanuel, stockees sous /workspace (jamais lisibles par les membres)
+  // v8.50 : solutions d'Emmanuel, stockees sous /workspace (jamais lisibles par les membres)
   onValue(ref(db, 'workspace/idees_solutions'), (snapshot) => {
     ideesSolutions = snapshot.val() || {};
-    if (currentModule === 'idees' && !ideesEdit) render();
+    if (currentModule === 'idees' && !ideesEdit && !ideesForm) render();
   }, () => { ideesSolutions = {}; });
 
   // boite a idees reunion (lecture globale = admin uniquement par les regles)
   onValue(ref(db, 'idees_sessions'), (snapshot) => {
     ideesData = snapshot.val() || {};
-    if (currentModule === 'idees' && !ideesEdit) render();
+    if (currentModule === 'idees' && !ideesEdit && !ideesForm) render();
   }, () => { ideesData = {}; });
 
   onValue(ref(db, 'workspace_inbox'), (snapshot) => {
@@ -4320,7 +4320,7 @@ function switchModule(module, force) {
 }
 
 // ─────────────────────────────────────────────
-// BOITE A IDEES — sessions multiples (v8.49)
+// BOITE A IDEES — sessions multiples (v8.50)
 // /idees_sessions/{id}/config (public) + /reponses/{membre} (par membre)
 // Solutions privees : /workspace/idees_solutions/{ideeId}
 // ─────────────────────────────────────────────
@@ -4328,6 +4328,8 @@ function switchModule(module, force) {
 const IDEES_PALETTE = ['#38bdf8','#a78bfa','#f472b6','#fbbf24','#34d399','#fb923c','#60a5fa','#c084fc','#f87171','#2dd4bf','#facc15','#94a3b8'];
 const IDEES_URL = 'https://i-immersion.github.io/lumiia-workspace/idees.html';
 
+let ideesForm = null;      // { titre, noms[] } quand le formulaire de creation est ouvert
+const IDEES_DEFAUT = ['Martin','Mathieu','Magalie & Romain','Philippe Guyennet','Arthur','Emmanuel Exbrayat','Fred de Loukta','Niko de Loukta'];
 let ideesSession = null;   // id de la session affichee
 let ideesTri = 'personne'; // 'personne' | 'date'
 
@@ -4378,6 +4380,8 @@ function ideesPropositions(sid) {
 function renderIdees() {
   const isAdmin = currentUser === MEMBERS[0]?.id;
   if (!isAdmin) return '<div class="empty"><div class="empty-icon">\uD83D\uDCA1</div><div class="empty-text">Acc\u00e8s r\u00e9serv\u00e9 \u00e0 l\'administrateur.</div></div>';
+
+  if (ideesForm) return renderIdeesForm();
 
   const sessions = ideesSessionsTriees();
   if (ideesSession && !sessions.some(s => s._id === ideesSession)) ideesSession = null;
@@ -4514,13 +4518,75 @@ function ideesSlug(t) {
     .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 34) || 'collecte';
 }
 
-async function ideesNouvelleSession() {
-  const titre = prompt('Titre de la collecte (affich\u00e9 en haut de la page) :\n\nex. Rencontre du lundi 14 septembre 18h30 au LUMIIA');
-  if (!titre || !titre.trim()) return;
-  const brut = prompt('Participants, un par ligne :\n\nMartin\nMathieu\nMagalie & Romain');
-  if (!brut || !brut.trim()) return;
+function ideesNouvelleSession() {
+  ideesForm = { titre: '', noms: IDEES_DEFAUT.slice() };
+  render();
+}
 
-  const noms = brut.split('\n').map(x => x.trim()).filter(Boolean);
+function ideesFormLire() {
+  if (!ideesForm) return;
+  const t = document.getElementById('idees-form-titre');
+  if (t) ideesForm.titre = t.value;
+  const champs = document.querySelectorAll('.idees-form-nom');
+  if (champs.length) ideesForm.noms = Array.prototype.map.call(champs, e => e.value);
+}
+
+function ideesFormAjouter() { ideesFormLire(); ideesForm.noms.push(''); render();
+  setTimeout(() => { const c = document.querySelectorAll('.idees-form-nom'); if (c.length) c[c.length - 1].focus(); }, 30); }
+
+function ideesFormRetirer(i) { ideesFormLire(); ideesForm.noms.splice(i, 1); render(); }
+function ideesFormAnnuler() { ideesForm = null; render(); }
+
+function renderIdeesForm() {
+  let h = '<div class="section-head"><div class="section-title">Nouvelle collecte</div></div>';
+
+  h += '<div style="background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:18px;max-width:620px">';
+
+  h += '<label style="display:block;font-family:Manrope,sans-serif;font-weight:700;font-size:0.75rem;letter-spacing:0.06em;'
+    + 'text-transform:uppercase;color:var(--text2);margin-bottom:7px">Titre affich\u00e9 sur la page</label>'
+    + '<input id="idees-form-titre" value="' + ideesEchappe(ideesForm.titre) + '" '
+    + 'placeholder="Rencontre du lundi 14 septembre 18h30 au LUMIIA" '
+    + 'style="width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:10px;color:var(--text);'
+    + 'font-family:inherit;font-size:0.95rem;padding:12px;outline:none;margin-bottom:20px">';
+
+  h += '<label style="display:block;font-family:Manrope,sans-serif;font-weight:700;font-size:0.75rem;letter-spacing:0.06em;'
+    + 'text-transform:uppercase;color:var(--text2);margin-bottom:7px">Participants</label>';
+
+  ideesForm.noms.forEach((nom, i) => {
+    h += '<div style="display:flex;gap:8px;margin-bottom:8px;align-items:center">'
+      + '<span style="width:10px;height:10px;border-radius:50%;flex:none;background:' + IDEES_PALETTE[i % IDEES_PALETTE.length] + '"></span>'
+      + '<input class="idees-form-nom" value="' + ideesEchappe(nom) + '" placeholder="Pr\u00e9nom" '
+      + 'style="flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:10px;color:var(--text);'
+      + 'font-family:inherit;font-size:0.92rem;padding:10px 12px;outline:none">'
+      + '<button onclick="ideesFormRetirer(' + i + ')" title="Retirer" '
+      + 'style="background:none;border:none;color:var(--text3);font-size:1.2rem;cursor:pointer;padding:0 6px;line-height:1">\u00d7</button>'
+      + '</div>';
+  });
+
+  h += '<button class="btn-icon" onclick="ideesFormAjouter()" style="width:auto;margin-top:4px;padding:8px 16px;'
+    + 'font-size:0.82rem;font-family:Manrope,sans-serif;font-weight:700">+ Ajouter un participant</button>';
+
+  h += '<div style="color:var(--text3);font-size:0.78rem;margin-top:14px;line-height:1.5">'
+    + 'Une entr\u00e9e \u00ab Autre \u00bb est ajout\u00e9e automatiquement pour les invit\u00e9s hors liste.</div>';
+
+  h += '<div style="display:flex;gap:8px;margin-top:22px;padding-top:18px;border-top:1px solid var(--border)">'
+    + '<button class="btn-icon" onclick="ideesFormCreer()" style="width:auto;padding:10px 20px;font-size:0.85rem;'
+    + 'font-family:Manrope,sans-serif;font-weight:700;background:var(--idees-accent);color:#0d1117;border-color:var(--idees-accent)">'
+    + 'Cr\u00e9er et copier le lien</button>'
+    + '<button class="btn-icon" onclick="ideesFormAnnuler()" style="width:auto;padding:10px 20px;font-size:0.85rem;'
+    + 'font-family:Manrope,sans-serif;font-weight:700">Annuler</button>'
+    + '</div></div>';
+
+  return h;
+}
+
+async function ideesFormCreer() {
+  ideesFormLire();
+  const titre = (ideesForm.titre || '').trim();
+  if (!titre) { alert('Donne un titre \u00e0 cette collecte.'); return; }
+  const noms = ideesForm.noms.map(x => (x || '').trim()).filter(Boolean);
+  if (!noms.length) { alert('Ajoute au moins un participant.'); return; }
+
   const vus = {};
   const membres = noms.map((nom, i) => {
     let base = ideesSlug(nom).replace(/-/g, '_').slice(0, 18) || ('p' + i);
@@ -4534,13 +4600,14 @@ async function ideesNouvelleSession() {
   const sid = ideesSlug(titre) + '-' + Math.random().toString(36).slice(2, 6);
   try {
     await set(ref(db, 'idees_sessions/' + sid + '/config'), {
-      titre: titre.trim(), membres: membres, cree: Date.now()
+      titre: titre, membres: membres, cree: Date.now()
     });
+    ideesForm = null;
     ideesSession = sid;
     render();
     ideesCopierLien(sid);
   } catch (e) {
-    alert('Cr\u00e9ation impossible. V\u00e9rifie la r\u00e8gle Firebase idees_sessions.');
+    alert('Cr\u00e9ation impossible. V\u00e9rifie que la r\u00e8gle Firebase idees_sessions est publi\u00e9e.');
   }
 }
 
@@ -4591,6 +4658,10 @@ window.renderIdees = renderIdees;
 window.setIdeesTri = setIdeesTri;
 window.setIdeesSession = setIdeesSession;
 window.ideesNouvelleSession = ideesNouvelleSession;
+window.ideesFormAjouter = ideesFormAjouter;
+window.ideesFormRetirer = ideesFormRetirer;
+window.ideesFormAnnuler = ideesFormAnnuler;
+window.ideesFormCreer = ideesFormCreer;
 window.ideesCopierLien = ideesCopierLien;
 window.ideesSupprimerSession = ideesSupprimerSession;
 window.ideesSupprimer = ideesSupprimer;
