@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- LUMIIA IDEES REUNION - v2.0 -->
+<!-- LUMIIA IDEES REUNION - v2.1 -->
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
@@ -129,14 +129,14 @@ textarea::placeholder{color:var(--text3)}
   <!-- ÉCRAN 0 — lien invalide -->
   <div id="screen-err" class="hidden">
     <h1>LUMIIA — Boîte à idées</h1>
-    <div class="empty" style="margin-top:20px">Ce lien est incomplet ou la collecte n'existe plus.<br>Demande le bon lien à Emmanuel.</div>
+    <div class="empty" style="margin-top:20px">Ce lien est incomplet ou la collecte n'existe plus.<br>Demandez le bon lien à l'organisateur.</div>
   </div>
 
-  <!-- ÉCRAN 1 — qui es-tu -->
+  <!-- ÉCRAN 1 — identification -->
   <div id="screen-who">
     <h1>LUMIIA — Boîte à idées</h1>
     <div class="meet" id="meet-1">…</div>
-    <div class="sub">Dépose ici tes idées pour la réunion, au fil de l'eau. Tu peux revenir autant de fois que tu veux jusqu'au jour J.<br><br>Qui êtes-vous ?</div>
+    <div class="sub">Déposez ici vos idées, au fil de l'eau. Vous pouvez revenir autant de fois que vous le souhaitez jusqu'au jour J.<br><br>Qui êtes-vous ?</div>
     <div class="who-grid" id="who-grid"></div>
   </div>
 
@@ -145,7 +145,7 @@ textarea::placeholder{color:var(--text3)}
     <div class="meet" id="meet-2">…</div>
     <div class="bar">
       <div class="who-dot" id="bar-dot"></div>
-      <div class="bar-name" id="bar-name">—<span class="bar-sub">tes idées, visibles de toi seul</span></div>
+      <div class="bar-name" id="bar-name">—<span class="bar-sub">vos idées, visibles de vous seul</span></div>
       <button class="link" onclick="changerPersonne()">Ce n'est pas moi</button>
     </div>
 
@@ -156,9 +156,9 @@ textarea::placeholder{color:var(--text3)}
     <div id="liste"></div>
 
     <div class="privacy">
-      🔒 Personne d'autre que toi ne voit tes idées dans cette page. Emmanuel les récupère de son côté pour préparer l'ordre du jour.
+      🔒 Personne d'autre que vous ne voit vos idées dans cette page. Seul l'organisateur les consulte, pour préparer l'ordre du jour.
     </div>
-    <div class="ver">v2.0</div>
+    <div class="ver">v2.1</div>
   </div>
 
 </div>
@@ -168,7 +168,7 @@ textarea::placeholder{color:var(--text3)}
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
 import { getDatabase, ref, onValue, push, set, remove } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js';
 
-const VERSION = 'v2.0';
+const VERSION = 'v2.1';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBPgjVFKrP80qX_hlfUFqL168XONfNIBA4",
@@ -235,7 +235,7 @@ function ouvrirSaisie() {
   dot.style.background = membre.couleur;
   dot.textContent = initiales(membre.nom);
   document.getElementById('bar-name').innerHTML =
-    membre.nom.replace(/&/g, '&amp;') + '<span class="bar-sub">tes id\u00e9es, visibles de toi seul</span>';
+    membre.nom.replace(/&/g, '&amp;') + '<span class="bar-sub">vos id\u00e9es, visibles de vous seul</span>';
   ecouter();
 }
 
@@ -247,7 +247,7 @@ function ecouter() {
     rendreListe();
   }, () => {
     document.getElementById('liste').innerHTML =
-      '<div class="empty">Connexion impossible. V\u00e9rifie ta connexion internet et recharge la page.</div>';
+      '<div class="empty">Connexion impossible. V\u00e9rifiez votre connexion internet et rechargez la page.</div>';
   });
 }
 
