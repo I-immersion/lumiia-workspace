@@ -12,7 +12,7 @@
 <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjogIkxVTUlJQSBXb3Jrc3BhY2UiLCAic2hvcnRfbmFtZSI6ICJXb3Jrc3BhY2UiLCAic3RhcnRfdXJsIjogIi4iLCAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwgImJhY2tncm91bmRfY29sb3IiOiAiIzBkMGQwZiIsICJ0aGVtZV9jb2xvciI6ICIjMGQwZDBmIiwgImljb25zIjogW3sic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzl6ZG1jaUlIWnBaWGRDYjNnOUlqQWdNQ0F5T1RBZ01qa3dJajQ4Y21WamRDQjNhV1IwYUQwaU1qa3dJaUJvWldsbmFIUTlJakk1TUNJZ2NuZzlJall3SWlCbWFXeHNQU0lqTUdRd1pEQm1JaTgrUEhSbGVIUWdlRDBpTlRBbElpQjVQU0kxTlNVaUlHWnZiblF0YzJsNlpUMGlNVFl3SWlCMFpYaDBMV0Z1WTJodmNqMGliV2xrWkd4bElpQmtiMjFwYm1GdWRDMWlZWE5sYkdsdVpUMGliV2xrWkd4bElqN3duNXFnUEM5MFpYaDBQand2YzNablBnPT0iLCAic2l6ZXMiOiAiMTkyeDE5MiA1MTJ4NTEyIiwgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
 <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOTAgMjkwIj48cmVjdCB3aWR0aD0iMjkwIiBoZWlnaHQ9IjI5MCIgcng9IjYwIiBmaWxsPSIjMGQwZDBmIi8+PHRleHQgeD0iNTAlIiB5PSI1NSUiIGZvbnQtc2l6ZT0iMTYwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn5qgPC90ZXh0Pjwvc3ZnPg==">
 
-<!-- LUMIIA Workspace v8.46 -->
+<!-- LUMIIA Workspace v8.47 -->
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Manrope:wght@600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 
@@ -887,7 +887,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
     <div style="text-align:center;margin-bottom:8px">
       <div style="font-family:Syne,sans-serif;font-weight:900;font-size:1.4rem;letter-spacing:0.04em;color:var(--text)">LUMIIA <span style="color:#38bdf8">●</span> Workspace</div>
       <div style="font-size:0.8rem;color:var(--text3);margin-top:6px;font-family:DM Sans,sans-serif">Connexion requise</div>
-      <div style="font-size:0.7rem;color:var(--text3);margin-top:4px;font-family:Syne,sans-serif;letter-spacing:0.05em" class="ver-badge">v8.46</div>
+      <div style="font-size:0.7rem;color:var(--text3);margin-top:4px;font-family:Syne,sans-serif;letter-spacing:0.05em" class="ver-badge">v8.47</div>
     </div>
     <div style="display:flex;flex-direction:column;gap:10px">
       <input id="login-email" type="email" placeholder="Email" autocomplete="email" style="
@@ -936,7 +936,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
   <button class="tab" data-tab="projets" onclick="switchTab('projets')">Projets</button>
   <button class="tab" data-tab="semaine" onclick="switchTab('semaine')">Semaine</button>
   <div style="flex:1"></div>
-  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px" class="ver-badge">v8.46</div>
+  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px" class="ver-badge">v8.47</div>
 </div>
 
 <main id="main-content">
@@ -1393,7 +1393,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
 // /!\ Garder en phase avec le commentaire <!-- LUMIIA Workspace vX.Y --> (ligne ~15),
 //     que deployer.command lit en texte brut (impossible à dériver d'ici).
 // ─────────────────────────────────────────────
-const APP_VERSION = 'v8.46';
+const APP_VERSION = 'v8.47';
 try { document.querySelectorAll('.ver-badge').forEach(e => e.textContent = APP_VERSION); } catch (e) {}
 // ─────────────────────────────────────────────
 // FIREBASE
@@ -1423,7 +1423,9 @@ const PROJECTS_REF = ref(db, 'workspace/projects');
 const PROSPECTS_REF = ref(db, 'workspace/prospects');
 const SETTINGS_REF = ref(db, 'workspace/settings');
 const ROADMAP_REF = ref(db, 'roadmap');
-let ideesData = {}; // v8.46 : idees_reunion
+let ideesData = {}; // idees_reunion
+let ideesSolutions = {}; // v8.47 : solutions admin
+let ideesEdit = null; // v8.47 : id de l'idee en cours d'edition
 
 // Mapping email Firebase → ID membre interne
 const EMAIL_TO_MEMBER = {
@@ -1493,10 +1495,16 @@ function initDataListeners() {
   }, () => { inboxData = {}; });
 
   // Sync boite aux lettres Workspace (notes/taches deposees par Claude ; lecture admin, erreur silencieuse sinon) — v8.28
-  // v8.46 : boite a idees reunion (lecture globale = admin uniquement par les regles)
+  // v8.47 : solutions d'Emmanuel, stockees sous /workspace (jamais lisibles par les membres)
+  onValue(ref(db, 'workspace/idees_solutions'), (snapshot) => {
+    ideesSolutions = snapshot.val() || {};
+    if (currentModule === 'idees' && !ideesEdit) render();
+  }, () => { ideesSolutions = {}; });
+
+  // boite a idees reunion (lecture globale = admin uniquement par les regles)
   onValue(ref(db, 'idees_reunion'), (snapshot) => {
     ideesData = snapshot.val() || {};
-    if (currentModule === 'idees') render();
+    if (currentModule === 'idees' && !ideesEdit) render();
   }, () => { ideesData = {}; });
 
   onValue(ref(db, 'workspace_inbox'), (snapshot) => {
@@ -4310,7 +4318,7 @@ function switchModule(module, force) {
 }
 
 // ─────────────────────────────────────────────
-// IDEES REUNION — vue admin (v8.46)
+// IDEES REUNION — vue admin (v8.47)
 // Lecture seule de /idees_reunion, alimente par la page publique idees.html
 // ─────────────────────────────────────────────
 
@@ -4407,12 +4415,82 @@ function renderIdees() {
 }
 
 function ideesCarte(it, avecNom) {
-  return '<div class="card" style="border-left:3px solid ' + it.membre.couleur + '">'
-    + (avecNom ? '<div style="font-family:Manrope,sans-serif;font-weight:700;font-size:0.9rem;color:' + it.membre.couleur + ';margin-bottom:6px">' + ideesEchappe(it.membre.nom) + '</div>' : '')
-    + '<div style="white-space:pre-wrap;line-height:1.55;word-break:break-word">' + ideesEchappe(it.texte) + '</div>'
-    + '<div style="color:var(--text3);font-size:0.72rem;margin-top:8px">' + ideesDate(it.date) + '</div>'
-    + '</div>';
+  const sol = (ideesSolutions[it.id] || {}).texte || '';
+  const enEdition = ideesEdit === it.id;
+
+  let h = '<div style="background:var(--bg2);border:1px solid var(--border);border-left:3px solid '
+    + it.membre.couleur + ';border-radius:12px;padding:14px 16px;margin-bottom:10px">';
+
+  h += '<div style="display:flex;align-items:flex-start;gap:12px">';
+  h += '<div style="flex:1;min-width:0">';
+  if (avecNom) {
+    h += '<div style="font-family:Manrope,sans-serif;font-weight:700;font-size:0.9rem;color:'
+      + it.membre.couleur + ';margin-bottom:6px">' + ideesEchappe(it.membre.nom) + '</div>';
+  }
+  h += '<div style="white-space:pre-wrap;line-height:1.55;word-break:break-word">' + ideesEchappe(it.texte) + '</div>';
+  h += '<div style="color:var(--text3);font-size:0.72rem;margin-top:6px">' + ideesDate(it.date) + '</div>';
+  h += '</div>';
+  h += '<button onclick="ideesSupprimer(\'' + it.membre.id + '\',\'' + it.id + '\')" title="Supprimer cette proposition" '
+    + 'style="background:none;border:none;color:var(--text3);font-size:1.15rem;cursor:pointer;padding:0 4px;line-height:1;flex:none">\u00d7</button>';
+  h += '</div>';
+
+  if (enEdition) {
+    h += '<div style="margin-top:12px;padding-top:12px;border-top:1px dashed var(--border)">'
+      + '<textarea id="idees-sol-' + it.id + '" placeholder="Ta solution, ta r\u00e9ponse, ce que tu comptes dire le jour J\u2026" '
+      + 'style="width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:10px;color:var(--text);'
+      + 'font-family:inherit;font-size:0.9rem;line-height:1.5;padding:11px;min-height:80px;resize:vertical;outline:none">'
+      + ideesEchappe(sol) + '</textarea>'
+      + '<div style="display:flex;gap:8px;margin-top:8px">'
+      + '<button class="btn-icon" onclick="ideesEnregistrerSolution(\'' + it.id + '\')" '
+      + 'style="width:auto;padding:6px 14px;font-size:0.78rem;font-family:Manrope,sans-serif;font-weight:700;'
+      + 'background:var(--accent);color:#0d1117;border-color:var(--accent)">Enregistrer</button>'
+      + '<button class="btn-icon" onclick="ideesAnnulerSolution()" '
+      + 'style="width:auto;padding:6px 14px;font-size:0.78rem;font-family:Manrope,sans-serif;font-weight:700">Annuler</button>'
+      + '</div></div>';
+  } else if (sol) {
+    h += '<div onclick="ideesEditerSolution(\'' + it.id + '\')" title="Modifier" '
+      + 'style="margin-top:12px;padding:11px 13px;background:rgba(52,211,153,0.08);border:1px solid rgba(52,211,153,0.28);'
+      + 'border-radius:10px;cursor:pointer">'
+      + '<div style="font-family:Manrope,sans-serif;font-weight:700;font-size:0.72rem;letter-spacing:0.06em;'
+      + 'text-transform:uppercase;color:#34d399;margin-bottom:5px">\uD83D\uDD12 Ma solution</div>'
+      + '<div style="white-space:pre-wrap;line-height:1.5;font-size:0.9rem;word-break:break-word">' + ideesEchappe(sol) + '</div>'
+      + '</div>';
+  } else {
+    h += '<button class="btn-icon" onclick="ideesEditerSolution(\'' + it.id + '\')" '
+      + 'style="width:auto;margin-top:10px;padding:5px 12px;font-size:0.75rem;font-family:Manrope,sans-serif;font-weight:700">'
+      + '+ Ma solution</button>';
+  }
+
+  return h + '</div>';
 }
+
+async function ideesSupprimer(membreId, id) {
+  if (!confirm('Supprimer d\u00e9finitivement cette proposition ?')) return;
+  try {
+    await remove(ref(db, 'idees_reunion/' + membreId + '/' + id));
+    await remove(ref(db, 'workspace/idees_solutions/' + id));
+  } catch (e) { alert('Suppression impossible.'); }
+}
+
+function ideesEditerSolution(id) { ideesEdit = id; render(); }
+function ideesAnnulerSolution() { ideesEdit = null; render(); }
+
+async function ideesEnregistrerSolution(id) {
+  const el = document.getElementById('idees-sol-' + id);
+  if (!el) return;
+  const texte = el.value.trim();
+  ideesEdit = null;
+  try {
+    if (texte) await set(ref(db, 'workspace/idees_solutions/' + id), { texte: texte, updated: Date.now() });
+    else await remove(ref(db, 'workspace/idees_solutions/' + id));
+  } catch (e) { alert('Enregistrement impossible.'); }
+  render();
+}
+
+window.ideesSupprimer = ideesSupprimer;
+window.ideesEditerSolution = ideesEditerSolution;
+window.ideesAnnulerSolution = ideesAnnulerSolution;
+window.ideesEnregistrerSolution = ideesEnregistrerSolution;
 
 window.renderIdees = renderIdees;
 window.setIdeesTri = setIdeesTri;
