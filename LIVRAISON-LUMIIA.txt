@@ -1,0 +1,15 @@
+LUMIIA Workspace v8.43 + Boite a idees reunion v1.0
+Date : 2026-09-09
+
+DESTINATIONS (toutes dans le meme dossier) :
+  index.html  -> Dropbox/DB LUMIIA 2025/Outils APP Claude/lumiia-workspace/index.html
+  idees.html  -> Dropbox/DB LUMIIA 2025/Outils APP Claude/lumiia-workspace/idees.html
+
+CONTENU :
+- index.html : Workspace v8.43. Nouveau bouton 💡 dans le header (admin uniquement)
+  -> vue lecture des idees deposees, tri par personne ou chronologique,
+  + rappel des membres qui n'ont pas encore repondu.
+- idees.html : page publique de depot, sans compte. Lien a partager dans WhatsApp :
+  https://i-immersion.github.io/lumiia-workspace/idees.html
+
+PREREQUIS : la regle Firebase "idees_reunion" doit etre publiee.

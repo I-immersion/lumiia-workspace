@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<!-- LUMIIA IDEES REUNION - v1.0 -->
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="theme-color" content="#0d1117">
+<title>Boîte à idées — Réunion</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0d1117; --bg2:#141417; --bg3:#1c1c21;
+  --text:#e8e8ec; --text2:#888890; --text3:#5a5a63;
+  --border:#2a2a31;
+  --accent:#38bdf8;
+  --ok:#34d399;
+  --warn:#fbbf24;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{
+  background:var(--bg); color:var(--text);
+  font-family:Inter,-apple-system,BlinkMacSystemFont,sans-serif;
+  min-height:100vh; padding:20px 16px 60px;
+  display:flex; justify-content:center;
+}
+.wrap{width:100%; max-width:560px}
+
+h1{font-family:Syne,sans-serif; font-size:1.5rem; font-weight:800; letter-spacing:-0.02em; margin-bottom:6px}
+.sub{color:var(--text2); font-size:0.9rem; line-height:1.5; margin-bottom:28px}
+
+/* ── Écran choix du prénom ── */
+.who-grid{display:grid; grid-template-columns:1fr; gap:10px; margin-top:8px}
+.who-btn{
+  background:var(--bg2); border:1px solid var(--border); border-radius:14px;
+  color:var(--text); font-family:Syne,sans-serif; font-weight:700; font-size:1.05rem;
+  padding:18px 20px; text-align:left; cursor:pointer;
+  display:flex; align-items:center; gap:14px;
+  transition:border-color .15s, background .15s, transform .1s;
+}
+.who-btn:active{transform:scale(0.98)}
+.who-btn:hover{border-color:var(--accent); background:var(--bg3)}
+.who-dot{
+  width:36px; height:36px; border-radius:50%; flex:none;
+  display:flex; align-items:center; justify-content:center;
+  font-size:0.95rem; font-weight:800; color:#0d1117;
+}
+
+/* ── Écran saisie ── */
+.bar{
+  display:flex; align-items:center; gap:12px;
+  background:var(--bg2); border:1px solid var(--border); border-radius:14px;
+  padding:12px 14px; margin-bottom:22px;
+}
+.bar-name{font-family:Syne,sans-serif; font-weight:700; font-size:1rem; flex:1}
+.bar-sub{color:var(--text3); font-size:0.75rem; display:block; font-family:Inter,sans-serif; font-weight:400}
+.link{
+  background:none; border:none; color:var(--text3); font-size:0.78rem;
+  cursor:pointer; text-decoration:underline; padding:4px; font-family:Inter,sans-serif;
+}
+.link:hover{color:var(--text2)}
+
+textarea{
+  width:100%; background:var(--bg2); border:1px solid var(--border); border-radius:14px;
+  color:var(--text); font-family:Inter,sans-serif; font-size:1rem; line-height:1.5;
+  padding:16px; min-height:130px; resize:vertical; outline:none;
+}
+textarea:focus{border-color:var(--accent)}
+textarea::placeholder{color:var(--text3)}
+
+.btn{
+  width:100%; margin-top:12px; padding:16px;
+  background:var(--accent); border:none; border-radius:14px;
+  color:#0d1117; font-family:Syne,sans-serif; font-weight:800; font-size:1rem;
+  letter-spacing:0.02em; cursor:pointer; transition:opacity .15s, transform .1s;
+}
+.btn:active{transform:scale(0.99)}
+.btn:disabled{opacity:0.35; cursor:default}
+
+.mine-head{
+  font-family:Syne,sans-serif; font-weight:700; font-size:0.8rem;
+  letter-spacing:0.08em; text-transform:uppercase; color:var(--text2);
+  margin:34px 0 12px; display:flex; align-items:center; gap:10px;
+}
+.count{
+  background:var(--bg3); border:1px solid var(--border); border-radius:20px;
+  padding:2px 10px; font-size:0.75rem; color:var(--text2);
+}
+.idea{
+  background:var(--bg2); border:1px solid var(--border); border-left:3px solid var(--accent);
+  border-radius:12px; padding:14px 16px; margin-bottom:10px;
+  display:flex; gap:12px; align-items:flex-start;
+}
+.idea-txt{flex:1; font-size:0.95rem; line-height:1.55; white-space:pre-wrap; word-break:break-word}
+.idea-date{color:var(--text3); font-size:0.72rem; margin-top:8px; display:block}
+.idea-del{
+  background:none; border:none; color:var(--text3); font-size:1.1rem;
+  cursor:pointer; padding:2px 6px; flex:none; line-height:1;
+}
+.idea-del:hover{color:#f87171}
+
+.empty{
+  text-align:center; color:var(--text3); font-size:0.9rem;
+  padding:28px 20px; border:1px dashed var(--border); border-radius:14px; line-height:1.6;
+}
+.privacy{
+  margin-top:30px; padding:14px 16px; background:var(--bg2);
+  border:1px solid var(--border); border-radius:12px;
+  color:var(--text3); font-size:0.78rem; line-height:1.6;
+}
+.toast{
+  position:fixed; left:50%; bottom:26px; transform:translateX(-50%) translateY(80px);
+  background:var(--ok); color:#0d1117; font-family:Syne,sans-serif; font-weight:700;
+  padding:13px 26px; border-radius:30px; font-size:0.9rem;
+  opacity:0; transition:all .28s cubic-bezier(.2,.8,.3,1); pointer-events:none; z-index:50;
+}
+.toast.show{opacity:1; transform:translateX(-50%) translateY(0)}
+.ver{text-align:center; color:var(--text3); font-size:0.7rem; margin-top:34px; font-family:Syne,sans-serif; letter-spacing:0.08em}
+.hidden{display:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ÉCRAN 1 — qui es-tu -->
+  <div id="screen-who">
+    <h1>Boîte à idées</h1>
+    <div class="sub">Dépose ici tes idées pour la réunion, au fil de l'eau. Tu peux revenir autant de fois que tu veux jusqu'au jour J.<br><br>Commence par te reconnaître :</div>
+    <div class="who-grid" id="who-grid"></div>
+  </div>
+
+  <!-- ÉCRAN 2 — saisie -->
+  <div id="screen-main" class="hidden">
+    <div class="bar">
+      <div class="who-dot" id="bar-dot"></div>
+      <div class="bar-name" id="bar-name">—<span class="bar-sub">tes idées, visibles de toi seul</span></div>
+      <button class="link" onclick="changerPersonne()">Ce n'est pas moi</button>
+    </div>
+
+    <textarea id="txt" placeholder="Une idée, une remarque, un point à mettre à l'ordre du jour…" oninput="majBouton()"></textarea>
+    <button class="btn" id="btn-add" onclick="ajouter()" disabled>Ajouter cette idée</button>
+
+    <div class="mine-head">Mes idées <span class="count" id="count">0</span></div>
+    <div id="liste"></div>
+
+    <div class="privacy">
+      🔒 Personne d'autre que toi ne voit tes idées dans cette page. Emmanuel les récupère de son côté pour préparer l'ordre du jour ; elles seront débattues le jour de la réunion.
+    </div>
+    <div class="ver">v1.0</div>
+  </div>
+
+</div>
+<div class="toast" id="toast"></div>
+
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { getDatabase, ref, onValue, push, set, remove } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js';
+
+const VERSION = 'v1.0';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBPgjVFKrP80qX_hlfUFqL168XONfNIBA4",
+  authDomain: "lumiia-live.firebaseapp.com",
+  databaseURL: "https://lumiia-live-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "lumiia-live",
+  storageBucket: "lumiia-live.firebasestorage.app",
+  messagingSenderId: "823919513931",
+  appId: "1:823919513931:web:6f6f3c7c6d1699457b18ce"
+};
+
+const MEMBRES = [
+  { id: 'martin',         nom: 'Martin',            couleur: '#38bdf8' },
+  { id: 'mathieu',        nom: 'Mathieu',           couleur: '#a78bfa' },
+  { id: 'magalie_romain', nom: 'Magalie & Romain',  couleur: '#f472b6' },
+  { id: 'philippe',       nom: 'Philippe Guyennet', couleur: '#fbbf24' },
+  { id: 'arthur',         nom: 'Arthur',            couleur: '#34d399' },
+  { id: 'emmanuel',       nom: 'Emmanuel Exbrayat', couleur: '#fb923c' },
+  { id: 'fred',           nom: 'Fred de Loukta',    couleur: '#60a5fa' },
+  { id: 'niko',           nom: 'Niko de Loukta',    couleur: '#c084fc' }
+];
+
+const CLE_LOCALE = 'lumiia_idees_membre';
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+let membre = null;
+let mesIdees = [];
+
+function initiales(nom) {
+  return nom.split(/[\s&]+/).filter(Boolean).slice(0, 2).map(m => m[0]).join('').toUpperCase();
+}
+
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+function rendreChoix() {
+  const g = document.getElementById('who-grid');
+  g.innerHTML = '';
+  MEMBRES.forEach(m => {
+    const b = document.createElement('button');
+    b.className = 'who-btn';
+    const d = document.createElement('span');
+    d.className = 'who-dot';
+    d.style.background = m.couleur;
+    d.textContent = initiales(m.nom);
+    const n = document.createElement('span');
+    n.textContent = m.nom;
+    b.appendChild(d);
+    b.appendChild(n);
+    b.onclick = () => choisir(m.id);
+    g.appendChild(b);
+  });
+}
+
+function choisir(id) {
+  membre = MEMBRES.find(m => m.id === id);
+  if (!membre) return;
+  try { localStorage.setItem(CLE_LOCALE, id); } catch (e) {}
+  ouvrirSaisie();
+}
+
+function ouvrirSaisie() {
+  document.getElementById('screen-who').classList.add('hidden');
+  document.getElementById('screen-main').classList.remove('hidden');
+  const dot = document.getElementById('bar-dot');
+  dot.style.background = membre.couleur;
+  dot.textContent = initiales(membre.nom);
+  document.getElementById('bar-name').innerHTML =
+    membre.nom.replace(/&/g, '&amp;') + '<span class="bar-sub">tes id\u00e9es, visibles de toi seul</span>';
+  ecouter();
+}
+
+function ecouter() {
+  onValue(ref(db, 'idees_reunion/' + membre.id), (snap) => {
+    const data = snap.val() || {};
+    mesIdees = Object.keys(data).map(k => Object.assign({ _id: k }, data[k]));
+    mesIdees.sort((a, b) => (b.date || 0) - (a.date || 0));
+    rendreListe();
+  }, () => {
+    document.getElementById('liste').innerHTML =
+      '<div class="empty">Connexion impossible. V\u00e9rifie ta connexion internet et recharge la page.</div>';
+  });
+}
+
+function formatDate(ms) {
+  if (!ms) return '';
+  const d = new Date(ms);
+  const j = String(d.getDate()).padStart(2, '0');
+  const mo = String(d.getMonth() + 1).padStart(2, '0');
+  const h = String(d.getHours()).padStart(2, '0');
+  const mi = String(d.getMinutes()).padStart(2, '0');
+  return j + '/' + mo + ' \u00e0 ' + h + 'h' + mi;
+}
+
+function rendreListe() {
+  const l = document.getElementById('liste');
+  document.getElementById('count').textContent = mesIdees.length;
+  if (!mesIdees.length) {
+    l.innerHTML = '<div class="empty">Aucune id\u00e9e pour l\'instant.<br>La premi\u00e8re est souvent la meilleure.</div>';
+    return;
+  }
+  l.innerHTML = '';
+  mesIdees.forEach(it => {
+    const d = document.createElement('div');
+    d.className = 'idea';
+    d.style.borderLeftColor = membre.couleur;
+
+    const txt = document.createElement('div');
+    txt.className = 'idea-txt';
+    txt.textContent = it.texte || '';
+    const dt = document.createElement('span');
+    dt.className = 'idea-date';
+    dt.textContent = formatDate(it.date);
+    txt.appendChild(dt);
+
+    const del = document.createElement('button');
+    del.className = 'idea-del';
+    del.textContent = '\u00d7';
+    del.title = 'Supprimer';
+    del.onclick = () => supprimer(it._id);
+
+    d.appendChild(txt);
+    d.appendChild(del);
+    l.appendChild(d);
+  });
+}
+
+function majBouton() {
+  document.getElementById('btn-add').disabled = !document.getElementById('txt').value.trim();
+}
+
+async function ajouter() {
+  const el = document.getElementById('txt');
+  const texte = el.value.trim();
+  if (!texte || !membre) return;
+  const btn = document.getElementById('btn-add');
+  btn.disabled = true;
+  try {
+    const r = push(ref(db, 'idees_reunion/' + membre.id));
+    await set(r, { texte: texte, date: Date.now(), nom: membre.nom });
+    el.value = '';
+    toast('Id\u00e9e enregistr\u00e9e');
+  } catch (e) {
+    toast('\u00c9chec de l\'enregistrement');
+    btn.disabled = false;
+  }
+  majBouton();
+}
+
+async function supprimer(id) {
+  if (!confirm('Supprimer cette id\u00e9e ?')) return;
+  try {
+    await remove(ref(db, 'idees_reunion/' + membre.id + '/' + id));
+    toast('Supprim\u00e9e');
+  } catch (e) {
+    toast('\u00c9chec de la suppression');
+  }
+}
+
+function changerPersonne() {
+  try { localStorage.removeItem(CLE_LOCALE); } catch (e) {}
+  membre = null;
+  document.getElementById('screen-main').classList.add('hidden');
+  document.getElementById('screen-who').classList.remove('hidden');
+}
+
+window.ajouter = ajouter;
+window.majBouton = majBouton;
+window.changerPersonne = changerPersonne;
+
+// Démarrage
+rendreChoix();
+let memorise = null;
+try { memorise = localStorage.getItem(CLE_LOCALE); } catch (e) {}
+if (memorise) {
+  const m = MEMBRES.find(x => x.id === memorise);
+  if (m) { membre = m; ouvrirSaisie(); }
+}
+</script>
+</body>
+</html>
