@@ -12,7 +12,7 @@
 <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjogIkxVTUlJQSBXb3Jrc3BhY2UiLCAic2hvcnRfbmFtZSI6ICJXb3Jrc3BhY2UiLCAic3RhcnRfdXJsIjogIi4iLCAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwgImJhY2tncm91bmRfY29sb3IiOiAiIzBkMGQwZiIsICJ0aGVtZV9jb2xvciI6ICIjMGQwZDBmIiwgImljb25zIjogW3sic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzl6ZG1jaUlIWnBaWGRDYjNnOUlqQWdNQ0F5T1RBZ01qa3dJajQ4Y21WamRDQjNhV1IwYUQwaU1qa3dJaUJvWldsbmFIUTlJakk1TUNJZ2NuZzlJall3SWlCbWFXeHNQU0lqTUdRd1pEQm1JaTgrUEhSbGVIUWdlRDBpTlRBbElpQjVQU0kxTlNVaUlHWnZiblF0YzJsNlpUMGlNVFl3SWlCMFpYaDBMV0Z1WTJodmNqMGliV2xrWkd4bElpQmtiMjFwYm1GdWRDMWlZWE5sYkdsdVpUMGliV2xrWkd4bElqN3duNXFnUEM5MFpYaDBQand2YzNablBnPT0iLCAic2l6ZXMiOiAiMTkyeDE5MiA1MTJ4NTEyIiwgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
 <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOTAgMjkwIj48cmVjdCB3aWR0aD0iMjkwIiBoZWlnaHQ9IjI5MCIgcng9IjYwIiBmaWxsPSIjMGQwZDBmIi8+PHRleHQgeD0iNTAlIiB5PSI1NSUiIGZvbnQtc2l6ZT0iMTYwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn5qgPC90ZXh0Pjwvc3ZnPg==">
 
-<!-- LUMIIA Workspace v8.52 -->
+<!-- LUMIIA Workspace v8.54 -->
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Manrope:wght@600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 
@@ -872,6 +872,44 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
   .tabs { padding: 12px 32px; }
   .filter-bar { margin-bottom: 16px; }
 }
+
+/* ── v8.53 MA SEMAINE ── */
+.ms-date { font-family: Syne, sans-serif; font-weight: 800; font-size: 1.05rem; color: var(--text); margin: 2px 0 12px; }
+.ms-date::first-letter { text-transform: uppercase; }
+.ms-tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 14px; }
+.ms-tile { background: var(--bg2); border: 1px solid var(--border); border-top: 3px solid var(--tc); border-radius: 12px; padding: 10px 4px 9px; text-align: center; cursor: pointer; transition: transform .12s, opacity .2s; color: inherit; min-width: 0; }
+.ms-tile:active { transform: scale(.96); }
+.ms-tile b { display: block; font-family: Syne, sans-serif; font-weight: 800; font-size: 1.55rem; line-height: 1.1; color: var(--tc); }
+.ms-tile span { display: block; font-size: .66rem; color: var(--text2); font-family: Syne, sans-serif; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ms-tile.zero { opacity: .35; }
+.ms-sec { margin-bottom: 18px; scroll-margin-top: 130px; }
+.ms-sec.ms-late { background: rgba(244,63,94,.07); border: 1px solid rgba(244,63,94,.3); border-radius: 14px; padding: 12px 10px 6px; }
+.ms-sec-h { display: flex; align-items: center; gap: 8px; width: 100%; margin: 0 0 8px; padding: 0 2px; background: none; border: none; text-align: left; font-family: Syne, sans-serif; font-weight: 800; font-size: .86rem; color: var(--sc); cursor: default; }
+.ms-sec-h .n { font-size: .7rem; padding: 1px 8px; border-radius: 10px; background: color-mix(in srgb, var(--sc) 22%, transparent); }
+.ms-row { display: flex; align-items: flex-start; gap: 12px; padding: 11px 12px; background: var(--bg3); border-radius: 12px; margin-bottom: 6px; border-left: 3px solid var(--cc); max-height: 400px; overflow: hidden; transition: opacity .35s, transform .35s, max-height .35s, padding .35s, margin .35s; }
+.ms-check { position: relative; width: 26px; height: 26px; flex-shrink: 0; margin-top: 1px; border-radius: 50%; border: 2px solid var(--cc); background: transparent; cursor: pointer; transition: background .15s; }
+.ms-check:hover { background: color-mix(in srgb, var(--cc) 28%, transparent); }
+.ms-row.ms-leaving { opacity: 0; transform: translateX(28px); max-height: 0; padding-top: 0; padding-bottom: 0; margin-bottom: 0; }
+.ms-row.ms-leaving .ms-check { background: #4ade80; border-color: #4ade80; }
+.ms-row.ms-leaving .ms-check::after { content: '\2713'; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: #05210f; font-weight: 900; font-size: .8rem; }
+.ms-main { flex: 1; min-width: 0; cursor: pointer; }
+.ms-title { font-size: .93rem; font-weight: 600; color: var(--text); line-height: 1.35; word-break: break-word; }
+.ms-urg { margin-right: 5px; font-size: .7rem; }
+.ms-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 3px 10px; margin-top: 3px; font-size: .72rem; color: var(--text3); }
+.ms-due { font-family: Syne, sans-serif; font-weight: 700; }
+.ms-due::first-letter { text-transform: uppercase; }
+.ms-cat { display: inline-flex; align-items: center; gap: 5px; }
+.ms-cat i { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
+.ms-links { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 7px; }
+.ms-link { display: inline-flex; align-items: center; gap: 5px; max-width: 100%; padding: 4px 10px; border-radius: 20px; border: 1px solid color-mix(in srgb, var(--lc) 50%, transparent); background: color-mix(in srgb, var(--lc) 14%, transparent); color: var(--text); font-size: .72rem; text-decoration: none; }
+.ms-link:active { transform: scale(.97); }
+.ms-link-t { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 190px; }
+.ms-links.big { margin: 4px 0 16px; gap: 8px; }
+.ms-links.big .ms-link { font-size: .84rem; padding: 8px 13px; }
+.ms-links.big .ms-link-t { max-width: 240px; }
+.ms-toast { position: fixed; left: 50%; bottom: calc(96px + env(safe-area-inset-bottom)); transform: translateX(-50%); display: none; align-items: center; gap: 14px; max-width: calc(100vw - 32px); padding: 10px 10px 10px 16px; background: #13241a; border: 1px solid rgba(74,222,128,.45); border-radius: 12px; color: var(--text); font-size: .85rem; z-index: 3000; box-shadow: 0 8px 30px rgba(0,0,0,.55); }
+.ms-toast span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ms-toast button { flex-shrink: 0; background: none; border: 1px solid rgba(74,222,128,.45); color: #4ade80; border-radius: 8px; padding: 6px 12px; font-family: Syne, sans-serif; font-weight: 700; cursor: pointer; }
 </style>
 </head>
 <body>
@@ -889,7 +927,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
     <div style="text-align:center;margin-bottom:8px">
       <div style="font-family:Syne,sans-serif;font-weight:900;font-size:1.4rem;letter-spacing:0.04em;color:var(--text)">LUMIIA <span style="color:#38bdf8">●</span> Workspace</div>
       <div style="font-size:0.8rem;color:var(--text3);margin-top:6px;font-family:DM Sans,sans-serif">Connexion requise</div>
-      <div style="font-size:0.7rem;color:var(--text3);margin-top:4px;font-family:Syne,sans-serif;letter-spacing:0.05em" class="ver-badge">v8.52</div>
+      <div style="font-size:0.7rem;color:var(--text3);margin-top:4px;font-family:Syne,sans-serif;letter-spacing:0.05em" class="ver-badge">v8.54</div>
     </div>
     <div style="display:flex;flex-direction:column;gap:10px">
       <input id="login-email" type="email" placeholder="Email" autocomplete="email" style="
@@ -933,12 +971,12 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
 </header>
 
 <div class="tabs" id="tabs">
-  <button class="tab active" data-tab="notes" onclick="switchTab('notes')">Notes</button>
+  <button class="tab active" data-tab="semaine" onclick="switchTab('semaine')">Ma semaine</button>
   <button class="tab" data-tab="todo" onclick="switchTab('todo')">Tâches</button>
+  <button class="tab" data-tab="notes" onclick="switchTab('notes')">Notes</button>
   <button class="tab" data-tab="projets" onclick="switchTab('projets')">Projets</button>
-  <button class="tab" data-tab="semaine" onclick="switchTab('semaine')">Semaine</button>
   <div style="flex:1"></div>
-  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px" class="ver-badge">v8.52</div>
+  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px" class="ver-badge">v8.54</div>
 </div>
 
 <main id="main-content">
@@ -1254,8 +1292,9 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
       </div>
       <div class="field-label">Contenu (optionnel)</div>
       <textarea class="field-input" id="input-todo-content" placeholder="Description, contexte..." style="min-height:80px;resize:vertical"></textarea>
-      <div class="field-label">Lien (optionnel)</div>
-      <input type="url" class="field-input" id="input-todo-link" placeholder="https://...">
+      <div class="field-label">Liens (optionnel) — un par ligne</div>
+      <textarea class="field-input" id="input-todo-links" rows="3" placeholder="Contrat | https://claude.ai/…&#10;DB LUMIIA 2025/RH/contrat.pdf&#10;https://site.fr" style="min-height:70px;resize:vertical;font-size:0.84rem"></textarea>
+      <div style="font-size:0.7rem;color:var(--text3);margin:-8px 0 14px;line-height:1.45">Conversation ou doc Claude, chemin Dropbox, site web. Pour nommer un lien : « Libellé | adresse ».</div>
       <!-- Checklist dans to-do -->
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
         <button id="toggle-cl-todo-btn" onclick="toggleChecklistTodo()" style="display:flex;align-items:center;gap:6px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:7px 12px;color:var(--text2);font-size:0.78rem;font-family:Syne,sans-serif;font-weight:600;cursor:pointer;transition:all 0.15s">
@@ -1395,13 +1434,13 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
 // /!\ Garder en phase avec le commentaire <!-- LUMIIA Workspace vX.Y --> (ligne ~15),
 //     que deployer.command lit en texte brut (impossible à dériver d'ici).
 // ─────────────────────────────────────────────
-const APP_VERSION = 'v8.52';
+const APP_VERSION = 'v8.54';
 try { document.querySelectorAll('.ver-badge').forEach(e => e.textContent = APP_VERSION); } catch (e) {}
 // ─────────────────────────────────────────────
 // FIREBASE
 // ─────────────────────────────────────────────
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
-import { getDatabase, ref, onValue, set, remove } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js';
+import { getDatabase, ref, onValue, set, remove, update } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js';
 import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
 import { getMessaging, getToken, onMessage } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-messaging.js';
 
@@ -1448,8 +1487,7 @@ function initDataListeners() {
   onValue(NOTES_REF, (snapshot) => {
     const data = snapshot.val();
     items = data ? Object.values(data) : [];
-    if (items.length === 0) seedDemo();
-    else render();
+    render(); // v8.53 : plus de seedDemo() quand la base est vide
   });
 
   // Sync projets temps réel
@@ -1472,12 +1510,11 @@ function initDataListeners() {
   onValue(SETTINGS_REF, (snapshot) => {
     const data = snapshot.val();
     if (data?.cats) {
-      // Ne réinitialiser que si CATS est vide (chargement initial)
-      // pour éviter d'écraser une sauvegarde récente en attente de sync
-      if (Object.keys(CATS).length === 0) {
-        Object.entries(data.cats).forEach(([id, c]) => { CATS[id] = c; });
-        render();
-      }
+      // v8.53 : la base fait foi. Avant, CATS n'etant jamais vide, les categories de la base
+      // n'etaient jamais rechargees (RH, Events Lumiia... absents apres rechargement).
+      Object.keys(CATS).forEach(k => delete CATS[k]);
+      Object.entries(data.cats).forEach(([id, c]) => { CATS[id] = c; });
+      render();
     }
   });
 
@@ -1511,7 +1548,7 @@ function initDataListeners() {
 
   onValue(ref(db, 'workspace_inbox'), (snapshot) => {
     wsInboxData = snapshot.val() || {};
-    if (currentTab === 'notes' || currentTab === 'todo') render();
+    if (currentTab === 'notes' || currentTab === 'todo' || currentTab === 'semaine') render();
   }, () => { wsInboxData = {}; });
 }
 
@@ -1609,6 +1646,14 @@ function doLogout() {
 // FCM — Notifications push
 // ─────────────────────────────────────────────
 async function initFCM() {
+  // v8.54 : ?view=semaine (notification du matin) -> ouvre directement la vue, avant toute autre etape
+  try {
+    const vp = new URLSearchParams(location.search).get('view');
+    if (vp && ['semaine', 'todo', 'notes', 'projets'].includes(vp)) {
+      switchTab(vp);
+      history.replaceState({}, '', location.pathname);
+    }
+  } catch (e) {}
   try {
     if (!('serviceWorker' in navigator)) return;
     const reg = await navigator.serviceWorker.register('/lumiia-workspace/firebase-messaging-sw.js');
@@ -1629,6 +1674,11 @@ async function initFCM() {
 
     // Écouter les messages du Service Worker (clic sur notification background)
     navigator.serviceWorker.addEventListener('message', event => {
+      if (event.data?.type === 'OPEN_VIEW') { switchTab(event.data.view || 'semaine'); return; } // v8.54
+      if (event.data?.type === 'OPEN_XPRESS' && event.data.itemType === 'digest') { // v8.54 : recap du matin, app ouverte
+        showXpressAlertBanner(event.data.title || '', event.data.body || '', event.data.xpressId || '', 'digest');
+        return;
+      }
       if (event.data?.type === 'OPEN_XPRESS' && event.data.xpressId) {
         // Si le SW passe title/body (cas foreground), afficher la bannière
         if (event.data.title) {
@@ -1654,6 +1704,7 @@ async function initFCM() {
 }
 
 function openItemFromNotification(itemId, itemType) {
+  if (itemType === 'digest') { switchTab('semaine'); return; } // v8.54
   if (itemType === 'prospect') {
     if (typeof switchTab === 'function') switchTab('crm');
     setTimeout(() => {
@@ -1680,8 +1731,8 @@ function openXpressFromNotification(xpressId) {
 
 // Notifications en foreground (app ouverte)
 onMessage(messaging, payload => {
-  const title    = payload.notification?.title || '\u26a1 Rappel';
-  const body     = payload.notification?.body  || '';
+  const title    = payload.data?.title || payload.notification?.title || '\u26a1 Rappel'; // v8.54 : data only
+  const body     = payload.data?.body  || payload.notification?.body  || '';
   const itemId   = payload.data?.xpressId;
   const itemType = payload.data?.itemType || 'xpress';
   if (typeof showXpressAlertBanner === 'function') {
@@ -1765,7 +1816,7 @@ function getCatInfo(item) {
 // USERS supprimé — utiliser MEMBERS
 
 let currentUser = 'em';
-let currentTab = 'notes';
+let currentTab = 'semaine'; // v8.53 : Ma semaine = page d'ouverture
 let currentType = 'note';
 let currentCat = 'perso';      // catégorie globale sélectionnée
 let currentProjectId = null;   // projet sélectionné dans la modale
@@ -2426,7 +2477,8 @@ window.renderWsInboxCard = function renderWsInboxCard(kind) {
       const noteTxt = ('' + (it.note || it.content || ''));
       if (noteTxt) metaBits.push('\ud83d\udcdd ' + esc(noteTxt.slice(0,60)) + (noteTxt.length > 60 ? '\u2026' : ''));
       const metaLine = metaBits.length ? '<div style="font-size:0.68rem;color:var(--text3);margin-top:3px">'+metaBits.join(' \u00b7 ')+'</div>' : '';
-      const chkClasser = classerSelect(id, it.cat || (tgtTask ? 'courant' : 'perso'), it.projectId || null);
+      const _rcc = wsResolveClasse(it, tgtTask ? 'courant' : 'perso');
+      const chkClasser = classerSelect(id, _rcc.cat, _rcc.projectId);
       let chkAssignee = '';
       if (tgtTask) {
         const curA = it.assignee || (MEMBERS[0] && MEMBERS[0].id);
@@ -2465,8 +2517,9 @@ window.renderWsInboxCard = function renderWsInboxCard(kind) {
     const resume = it.title || it.label || (isTask ? '(sans libell\u00e9)' : '(sans titre)');
     const raw = (it.content || it.note || it.brief || '') + '';
     const preview = raw.slice(0,140);
-    const curCat = it.cat || (isTask ? 'courant' : 'perso');
-    const curProj = it.projectId || null;
+    const _rc = wsResolveClasse(it, isTask ? 'courant' : 'perso');
+    const curCat = _rc.cat;
+    const curProj = _rc.projectId;
     let control = classerSelect(id, curCat, curProj);
     if (isTask) {
       const cur = it.assignee || (MEMBERS[0] && MEMBERS[0].id);
@@ -2478,6 +2531,8 @@ window.renderWsInboxCard = function renderWsInboxCard(kind) {
       + '<div style="font-size:0.68rem;color:#facc15;font-weight:700;margin-bottom:2px">'+typeLabel+'</div>'
       + '<div style="font-size:0.82rem;font-weight:600;color:var(--text2)">'+esc(resume)+'</div>'
       + (preview ? '<div style="font-size:0.7rem;color:var(--text3);margin-top:2px;line-height:1.35">'+esc(preview)+(raw.length>140?'\u2026':'')+'</div>' : '')
+      + ((it.due || it.dueTime) ? '<div style="font-size:0.7rem;color:var(--text3);margin-top:3px">\ud83d\udcc5 '+esc([it.due, it.dueTime].filter(Boolean).join(' '))+'</div>' : '')
+      + wsLinkChips(it)
       + '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:8px">'
       +   control
       +   '<span style="flex:1;min-width:8px"></span>'
@@ -2535,7 +2590,7 @@ window.integrateWsInboxItem = async function integrateWsInboxItem(id) {
         else if (cv.indexOf('cat:') === 0) { cCat = cv.slice(4); cProj = null; }
         const base = {
           id: newId, cat: cProj ? null : cCat, projectId: cProj, subcat: null,
-          title: it.title || 'Check-list', content: it.note || it.content || '', link: it.link || '',
+          title: it.title || 'Check-list', content: it.note || it.content || '', links: wsLinksForStore(it), link: '',
           owner: currentUser, checklist: cells, triggerAt: null, created: now, updated: now
         };
         if (tgtTask) Object.assign(base, { type: 'todo', assignee: currentUser, prio: it.prio || 'normal', due: it.due || null, dueTime: it.dueTime || null, done: false, shared: false, validateBy: null, validated: false });
@@ -2573,14 +2628,14 @@ window.integrateWsInboxItem = async function integrateWsInboxItem(id) {
     const cv = classerEl ? classerEl.value : '';
     if (cv.indexOf('proj:') === 0) { projectId = cv.slice(5); cat = null; }
     else if (cv.indexOf('cat:') === 0) { cat = cv.slice(4); projectId = null; }
-    else { projectId = it.projectId || null; cat = it.cat || (isTask ? 'courant' : 'perso'); }
+    else { const _r = wsResolveClasse(it, isTask ? 'courant' : 'perso'); projectId = _r.projectId; cat = _r.cat; }
     let item;
     if (isTask) {
       const aEl = document.getElementById('wsinbox_assignee_'+id);
       const assignee = (aEl && aEl.value) || it.assignee || (MEMBERS[0] && MEMBERS[0].id);
       item = {
         id: newId, type: 'todo', cat: projectId ? null : (cat || 'courant'), projectId: projectId, subcat: null,
-        title: it.title || it.label || '(sans libell\u00e9)', content: it.content || it.note || '', link: '',
+        title: it.title || it.label || '(sans libell\u00e9)', content: it.content || it.note || '', links: wsLinksForStore(it), link: '',
         owner: currentUser, assignee: assignee, prio: it.prio || 'normal',
         due: it.due || null, dueTime: it.dueTime || null, done: false, shared: assignee !== currentUser,
         validateBy: null, validated: false, checklist: toCells(it.checklist), triggerAt: null,
@@ -2590,7 +2645,7 @@ window.integrateWsInboxItem = async function integrateWsInboxItem(id) {
     } else {
       item = {
         id: newId, type: 'note', cat: projectId ? null : (cat || 'perso'), projectId: projectId, subcat: null,
-        title: it.title || '(sans titre)', content: it.content || it.brief || '', link: it.link || '',
+        title: it.title || '(sans titre)', content: it.content || it.brief || '', links: wsLinksForStore(it), link: '',
         owner: currentUser, shared: !!it.shared, prio: it.prio || 'later',
         noteDate: it.noteDate || null, noteTime: it.noteTime || null, checklist: toCells(it.checklist), triggerAt: null,
         created: now, updated: now
@@ -2826,188 +2881,352 @@ window.renderRoadmapProject = function renderRoadmapProject(key) {
   return html;
 }
 
-function renderSemaine() {
-  const today = new Date();
-  today.setHours(0,0,0,0);
-  const jours = ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'];
-  const mois = ['jan','f\u00e9v','mar','avr','mai','jun','jul','ao\u00fb','sep','oct','nov','d\u00e9c'];
-  const isAdmin = currentUser === MEMBERS[0]?.id;
-  const todayStr = localDateStr(today);
+// ─────────────────────────────────────────────
+// v8.53 — MA SEMAINE (page d'accueil) + LIENS TYPÉS
+// Une seule source : /workspace/items (type 'todo'). Aucune synchro externe.
+// ─────────────────────────────────────────────
+function wsEsc(s) {
+  return ('' + (s == null ? '' : s)).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
 
-  // Items visibles
-  const allTodos = isAdmin
-    ? items.filter(i => i.type === 'todo' && !i.done)
-    : items.filter(i => i.type === 'todo' && !i.done && (i.assignee === currentUser || i.validateBy === currentUser || i.owner === currentUser));
-  const allNotes = items.filter(i => (i.type === 'note' || i.type === 'checklist') && (i.owner === currentUser || i.shared));
-
-  // Appliquer le filtre semaine
-  function matchFilter(item) {
-    if (semaineFiltreProj === 'all') return true;
-    if (semaineFiltreProj.startsWith('__proj_')) return item.projectId === semaineFiltreProj.slice(7);
-    return item.cat === semaineFiltreProj;
+// Adresse brute (URL, chemin Dropbox, domaine) -> URL ouvrable sur le Mac comme sur le téléphone
+function wsLinkUrl(raw) {
+  const s = ('' + (raw || '')).trim();
+  if (!s) return '';
+  if (/^https?:\/\//i.test(s)) return s;
+  let p = null;
+  const m = s.match(/(?:^|\/)Dropbox\/(.+)$/i);
+  if (m) p = m[1];
+  else if (/^dropbox:/i.test(s)) p = s.replace(/^dropbox:\s*\/?/i, '');
+  else if (/^\/?DB LUMIIA/i.test(s)) p = s.replace(/^\//, '');
+  if (p !== null) {
+    const parts = p.replace(/\/+$/, '').split('/').filter(Boolean);
+    if (!parts.length) return 'https://www.dropbox.com/home';
+    const last = parts[parts.length - 1];
+    const enc = arr => arr.map(encodeURIComponent).join('/');
+    if (/\.[a-z0-9]{2,5}$/i.test(last)) {
+      return 'https://www.dropbox.com/home/' + enc(parts.slice(0, -1)) + '?preview=' + encodeURIComponent(last);
+    }
+    return 'https://www.dropbox.com/home/' + enc(parts);
   }
-  const myTodos = allTodos.filter(matchFilter);
-  const myNotes = allNotes.filter(matchFilter);
+  if (/^[\w-]+(\.[\w-]+)+(\/|$)/.test(s)) return 'https://' + s;
+  return '';
+}
 
-  // Construire la barre de filtres
-  const usedProjIds = [...new Set([...allTodos, ...allNotes].map(i => i.projectId).filter(Boolean))];
-  const usedCats = [...new Set([...allTodos, ...allNotes].map(i => i.cat).filter(Boolean))];
-  let filterBar = '';
-  if (usedProjIds.length + usedCats.length > 0) {
-    filterBar = '<div class="filter-bar" style="margin-bottom:16px;flex-wrap:wrap">'
+function wsLinkKind(url) {
+  const u = ('' + url).toLowerCase();
+  if (/claude\.ai\/chat\//.test(u)) return { icon: '💬', kind: 'Conversation Claude', color: '#d97757' };
+  if (/claude\.ai\/project\//.test(u)) return { icon: '🗂️', kind: 'Projet Claude', color: '#d97757' };
+  if (/claude\.ai\//.test(u)) return { icon: '📄', kind: 'Doc Claude', color: '#d97757' };
+  if (/dropbox\.com/.test(u)) return { icon: '📦', kind: 'Dropbox', color: '#3d9ae8' };
+  return { icon: '🌐', kind: 'Site', color: '#94a3b8' };
+}
+
+// Liste normalisée [{label, url (ouvrable), raw (tel que saisi)}] — reprend l'ancien champ unique `link`
+function wsLinks(item) {
+  const out = [];
+  const seen = {};
+  const push = (label, raw) => {
+    const url = wsLinkUrl(raw);
+    if (!url || seen[url]) return;
+    seen[url] = 1;
+    out.push({ label: ('' + (label || '')).trim(), url: url, raw: ('' + raw).trim() });
+  };
+  const L = item && item.links;
+  const arr = Array.isArray(L) ? L : (L && typeof L === 'object' ? Object.values(L) : []);
+  arr.forEach(x => {
+    if (!x) return;
+    if (typeof x === 'string') push('', x);
+    else push(x.label, x.url || x.path || x.href || '');
+  });
+  if (item && item.link) push('', item.link);
+  return out;
+}
+
+// Pour l'écriture en base : on garde l'adresse telle que saisie (un chemin Dropbox reste un chemin)
+function wsLinksForStore(item) {
+  return wsLinks(item).map(l => ({ label: l.label, url: l.raw }));
+}
+
+function wsLinkLabel(l) {
+  if (l.label) return l.label;
+  const k = wsLinkKind(l.url);
+  if (k.kind === 'Dropbox') {
+    const m = l.url.match(/[?&]preview=([^&]+)/);
+    let seg = '';
+    try { seg = decodeURIComponent(m ? m[1] : (l.url.split('?')[0].split('/').pop() || '')); } catch (e) { seg = ''; }
+    return seg || 'Dropbox';
+  }
+  if (k.kind === 'Site') {
+    try { return new URL(l.url).hostname.replace(/^www\./, ''); } catch (e) { return 'Lien'; }
+  }
+  return k.kind;
+}
+
+function wsLinkChips(item, big) {
+  const L = wsLinks(item);
+  if (!L.length) return '';
+  return '<div class="ms-links' + (big ? ' big' : '') + '">' + L.map(l => {
+    const k = wsLinkKind(l.url);
+    return '<a class="ms-link" href="' + wsEsc(l.url) + '" target="_blank" rel="noopener" onclick="event.stopPropagation()"'
+      + ' title="' + wsEsc(k.kind + ' — ' + (l.raw || l.url)) + '" style="--lc:' + k.color + '">'
+      + '<span>' + k.icon + '</span><span class="ms-link-t">' + wsEsc(wsLinkLabel(l)) + '</span></a>';
+  }).join('') + '</div>';
+}
+
+// Formulaire : une ligne = « libellé | adresse » ou juste « adresse »
+function wsLinksFromText(txt) {
+  return ('' + (txt || '')).split('\n').map(s => s.trim()).filter(Boolean).map(line => {
+    const i = line.indexOf('|');
+    return { label: i >= 0 ? line.slice(0, i).trim() : '', url: i >= 0 ? line.slice(i + 1).trim() : line };
+  }).filter(x => wsLinkUrl(x.url));
+}
+
+function wsLinksToText(item) {
+  return wsLinks(item).map(l => (l.label ? l.label + ' | ' : '') + (l.raw || l.url)).join('\n');
+}
+
+// Classement d'un dépôt /workspace_inbox : projet par id ou par nom, catégorie par clé ou par nom (« RH »)
+function wsResolveClasse(it, defCat) {
+  const norm = s => ('' + (s || '')).trim().toLowerCase();
+  let projectId = null, cat = null;
+  const pv = it.projectId || it.project || it.projet;
+  if (pv) {
+    const p = PROJECTS.find(x => x.id === pv || norm(x.label) === norm(pv));
+    if (p) projectId = p.id;
+  }
+  const cv = it.cat || it.categorie || it.category;
+  if (!projectId && cv) {
+    if (CATS[cv]) cat = cv;
+    else {
+      const k = Object.keys(CATS).find(key => norm(CATS[key].label) === norm(cv));
+      if (k) cat = k;
+      else {
+        const p = PROJECTS.find(x => norm(x.label) === norm(cv));
+        if (p) projectId = p.id;
+      }
+    }
+  }
+  if (!projectId && !cat) cat = defCat;
+  return { cat: cat, projectId: projectId };
+}
+
+// ── Dates
+function wsWeekEndStr() {
+  const d = new Date();
+  d.setHours(12, 0, 0, 0);
+  const dow = d.getDay(); // 0 = dimanche
+  d.setDate(d.getDate() + (dow === 0 ? 0 : 7 - dow));
+  return localDateStr(d);
+}
+
+function wsDueLabel(i, t) {
+  if (!i.due) return '';
+  const d = new Date(i.due + 'T12:00:00');
+  const n = new Date(t + 'T12:00:00');
+  const diff = Math.round((d - n) / 86400000);
+  let s;
+  if (diff < 0) s = (-diff === 1 ? 'Hier' : (-diff) + ' j de retard');
+  else if (diff === 0) s = 'Aujourd’hui';
+  else if (diff === 1) s = 'Demain';
+  else if (diff < 7) s = d.toLocaleDateString('fr-FR', { weekday: 'long' });
+  else s = d.toLocaleDateString('fr-FR', { weekday: 'short', day: 'numeric', month: 'short' });
+  if (i.dueTime) s += ' · ' + i.dueTime;
+  return s;
+}
+
+// Mes tâches actives (Workspace utilisé en solo : assignées à moi, ou créées par moi sans assignation)
+function wsMyTodos() {
+  return items.filter(i => i && i.type === 'todo' && !i.done
+    && (i.assignee === currentUser || (!i.assignee && i.owner === currentUser)));
+}
+
+function wsBucket(i, t, we) {
+  if (i.due && i.due < t) return 'late';
+  if (i.due === t || i.todayFlag) return 'today';
+  if (i.due && i.due <= we) return 'week';
+  if (i.due) return 'later';
+  return 'nodate';
+}
+
+const MS_BUCKETS = [
+  { k: 'late',   label: 'En retard',             color: '#f43f5e' },
+  { k: 'today',  label: 'Aujourd’hui',      color: '#38bdf8' },
+  { k: 'week',   label: 'Cette semaine',         color: '#2dd4bf' },
+  { k: 'later',  label: 'Plus tard',             color: '#94a3b8' },
+  { k: 'nodate', label: 'Sans échéance', color: '#6b7280' },
+];
+window.msOpenNoDate = window.msOpenNoDate || false;
+
+function msSort(a, b) {
+  const pr = { urgent: 0, normal: 1, later: 2 };
+  if ((a.due || '') !== (b.due || '')) return (a.due || '9999').localeCompare(b.due || '9999');
+  if ((a.dueTime || '') !== (b.dueTime || '')) return (a.dueTime || '99').localeCompare(b.dueTime || '99');
+  const pa = pr[a.prio] != null ? pr[a.prio] : 1, pb = pr[b.prio] != null ? pr[b.prio] : 1;
+  if (pa !== pb) return pa - pb;
+  return (a.created || 0) - (b.created || 0);
+}
+
+function msRow(i, t, bucketColor) {
+  const c = getCatInfo(i);
+  const prio = i.prio === 'urgent' ? '<span class="ms-urg" title="Urgent">🔴</span>' : '';
+  const due = wsDueLabel(i, t);
+  const needsPopup = i.validateBy && !i.validated;
+  const check = needsPopup ? 'openDetail(\'' + i.id + '\')' : 'msDone(\'' + i.id + '\')';
+  const cl = (i.checklist && i.checklist.length)
+    ? '<span>☑ ' + i.checklist.filter(x => x && x.done).length + '/' + i.checklist.length + '</span>' : '';
+  return '<div class="ms-row" id="msrow_' + i.id + '" style="--cc:' + c.color + '">'
+    + '<button class="ms-check" onclick="event.stopPropagation();' + check + '" title="Marquer comme fait" aria-label="Marquer comme fait"></button>'
+    + '<div class="ms-main" onclick="openDetail(\'' + i.id + '\')">'
+    +   '<div class="ms-title">' + prio + wsEsc(i.title) + '</div>'
+    +   '<div class="ms-meta">'
+    +     (due ? '<span class="ms-due" style="color:' + bucketColor + '">' + due + '</span>' : '')
+    +     '<span class="ms-cat"><i style="background:' + c.color + '"></i>' + wsEsc(c.label) + '</span>'
+    +     cl
+    +   '</div>'
+    +   wsLinkChips(i)
+    + '</div>'
+    + '</div>';
+}
+
+function renderSemaine() {
+  const t = localDateStr(new Date());
+  const we = wsWeekEndStr();
+  const mine = wsMyTodos();
+
+  // Filtre par catégorie / projet (pastilles de couleur)
+  const usedProjIds = [...new Set(mine.map(i => i.projectId).filter(Boolean))];
+  const usedCats = [...new Set(mine.filter(i => !i.projectId).map(i => i.cat).filter(Boolean))];
+  if (semaineFiltreProj !== 'all') {
+    const still = semaineFiltreProj.startsWith('__proj_')
+      ? usedProjIds.includes(semaineFiltreProj.slice(7))
+      : usedCats.includes(semaineFiltreProj);
+    if (!still) semaineFiltreProj = 'all';
+  }
+  const match = i => semaineFiltreProj === 'all'
+    || (semaineFiltreProj.startsWith('__proj_') ? i.projectId === semaineFiltreProj.slice(7) : (!i.projectId && i.cat === semaineFiltreProj));
+  const list = mine.filter(match);
+
+  const groups = { late: [], today: [], week: [], later: [], nodate: [] };
+  list.forEach(i => groups[wsBucket(i, t, we)].push(i));
+  Object.keys(groups).forEach(k => groups[k].sort(msSort));
+
+  let html = renderWsInboxCard('task');
+
+  const dateTitle = new Date().toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
+  html += '<div class="ms-date">' + dateTitle + '</div>';
+
+  // Vue d'ensemble : 4 compteurs
+  html += '<div class="ms-tiles">' + MS_BUCKETS.filter(b => b.k !== 'nodate').map(b => {
+    const n = groups[b.k].length;
+    return '<button class="ms-tile' + (n ? '' : ' zero') + '" style="--tc:' + b.color + '" onclick="msGoto(\'' + b.k + '\')">'
+      + '<b>' + n + '</b><span>' + b.label + '</span></button>';
+  }).join('') + '</div>';
+
+  // Pastilles de filtre
+  if (usedProjIds.length + usedCats.length > 1 || semaineFiltreProj !== 'all') {
+    html += '<div class="filter-bar" style="margin-bottom:14px;flex-wrap:wrap;gap:6px">'
       + '<button class="filter-chip' + (semaineFiltreProj === 'all' ? ' active' : '') + '" onclick="setSemaineFiltre(\'all\')">Tout</button>';
+    usedCats.forEach(catId => {
+      const c = CATS[catId];
+      const lab = c ? c.label : catId, col = c ? c.color : '#888';
+      const on = semaineFiltreProj === catId;
+      html += '<button class="filter-chip' + (on ? ' active' : '') + '" onclick="setSemaineFiltre(\'' + catId + '\')" style="'
+        + (on ? 'background:' + col + ';color:#000;border-color:transparent' : 'border-color:' + col + '70') + '">'
+        + '<span style="width:7px;height:7px;border-radius:50%;background:' + col + ';display:inline-block"></span> ' + wsEsc(lab) + '</button>';
+    });
     usedProjIds.forEach(pid => {
       const p = getProject(pid);
       if (!p) return;
       const key = '__proj_' + pid;
-      const isActive = semaineFiltreProj === key;
-      filterBar += '<button class="filter-chip' + (isActive ? ' active' : '') + '" onclick="setSemaineFiltre(\'' + key + '\')" style="' + (isActive ? 'background:' + p.color + ';color:#000;border-color:transparent' : 'border-color:' + p.color + '60') + '">'
-        + '<span style="width:6px;height:6px;border-radius:50%;background:' + p.color + ';display:inline-block"></span> ' + p.label + '</button>';
-    });
-    usedCats.forEach(catId => {
-      const c = CATS[catId];
-      if (!c) return;
-      filterBar += '<button class="filter-chip' + (semaineFiltreProj === catId ? ' active' : '') + '" onclick="setSemaineFiltre(\'' + catId + '\')">'
-        + '<span style="width:6px;height:6px;border-radius:50%;background:' + c.color + ';display:inline-block"></span> ' + c.label + '</button>';
-    });
-    filterBar += '</div>';
-  }
-
-  // Tâches en retard
-  const overdue = myTodos.filter(i => i.due && i.due < todayStr);
-
-  // Items d'un jour
-  function getDayItems(dayStr) {
-    const isToday = dayStr === todayStr;
-    // Tâches : celles avec cette date OU flaggées aujourd'hui (si c'est aujourd'hui)
-    const todos = myTodos.filter(i => {
-      if (i.done) return false;
-      if (i.due === dayStr) return true;
-      if (isToday && i.todayFlag && !i.due) return true; // sans date mais flaggée aujourd'hui
-      if (isToday && i.todayFlag && i.due !== todayStr) return true; // date différente mais flaggée aujourd'hui
-      return false;
-    });
-    const notes = myNotes.filter(i => {
-      const d = i.noteDate || localDateStr(new Date(i.created));
-      return d === dayStr;
-    });
-    const all = [
-      ...todos.map(i => ({ ...i, _time: i.dueTime || '', _order: i.dueTime ? 0 : 1 })),
-      ...notes.map(i => ({ ...i, _time: i.noteTime || '', _order: i.noteTime ? 0 : 2 }))
-    ];
-    return all.sort((a, b) => {
-      if (a._time && b._time) return a._time.localeCompare(b._time);
-      if (a._time) return -1;
-      if (b._time) return 1;
-      return a._order - b._order;
-    });
-  }
-
-  let html = filterBar;
-
-  // ── Focus du jour ──
-  const allTodosForFocus = items.filter(i => i.type === 'todo');
-  const focusTasks = allTodosForFocus.filter(i => i.todayFlag && !i.done);
-  const focusDone = allTodosForFocus.filter(i => i.todayFlag && i.done);
-  const focusTotal = focusTasks.length + focusDone.length;
-  if (focusTotal > 0) {
-    const pct = Math.round(focusDone.length / focusTotal * 100);
-    const msg = pct === 100 ? 'Mission accomplie \uD83C\uDF89'
-      : pct >= 75 ? 'Presque l\u00e0 ! \uD83D\uDCAA'
-      : pct >= 50 ? '\u00c0 mi-chemin, continue !'
-      : pct >= 25 ? 'Bon d\u00e9part, lance-toi !'
-      : 'C\'est parti pour aujourd\'hui !';
-    html += '<div style="background:var(--bg2);border:1px solid rgba(251,191,36,0.3);border-radius:14px;padding:16px 18px;margin-bottom:20px;border-left:3px solid #fbbf24">'
-      + '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">'
-      + '<div style="font-family:Syne,sans-serif;font-weight:800;font-size:0.88rem;color:#fbbf24">\u2600\uFE0F Focus du jour</div>'
-      + '<div style="font-size:0.8rem;color:var(--text2)">' + focusDone.length + ' / ' + focusTotal + ' faites</div>'
-      + '</div>'
-      + '<div style="height:7px;background:var(--bg3);border-radius:4px;overflow:hidden;margin-bottom:10px">'
-      + '<div style="height:100%;width:' + pct + '%;background:linear-gradient(90deg,#fbbf24,#f59e0b);border-radius:4px;transition:width 0.4s"></div>'
-      + '</div>'
-      + '<div style="font-size:0.8rem;color:var(--text2);margin-bottom:12px;font-style:italic">' + msg + '</div>'
-      + '<div style="display:flex;flex-direction:column;gap:5px">';
-    allTodosForFocus.filter(i => i.todayFlag).sort((a,b) => (a.done?1:0)-(b.done?1:0)).forEach(i => {
-      const catInfo = getCatInfo(i);
-      html += '<div onclick="toggleTodo(\'' + i.id + '\')" style="display:flex;align-items:center;gap:10px;cursor:pointer;padding:8px 10px;background:var(--bg3);border-radius:10px;border-left:3px solid ' + (i.done ? '#4ade80' : catInfo.color) + '">'
-        + '<div style="width:18px;height:18px;border-radius:50%;border:2px solid ' + (i.done?'#4ade80':'#fbbf24') + ';background:' + (i.done?'#4ade80':'transparent') + ';flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:0.65rem;color:#000;font-weight:900">' + (i.done?'✓':'') + '</div>'
-        + '<div style="flex:1;font-size:0.85rem;color:' + (i.done?'var(--text3)':'var(--text)') + ';' + (i.done?'text-decoration:line-through;':'font-weight:600;') + '">' + i.title + '</div>'
-        + (i.prio === 'urgent' ? '<div style="font-size:0.75rem">\uD83D\uDD34</div>' : '')
-        + '</div>';
-    });
-    html += '</div></div>';
-  } else {
-    html += '<div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:14px 18px;margin-bottom:20px;border-left:3px solid var(--border);opacity:0.7">'
-      + '<div style="font-family:Syne,sans-serif;font-weight:700;font-size:0.82rem;color:var(--text3)">\u2600\uFE0F Focus du jour</div>'
-      + '<div style="font-size:0.78rem;color:var(--text3);margin-top:6px">Aucune t\u00e2che marqu\u00e9e \u2600 pour aujourd\'hui.<br>Appuie sur \u2600 sur une t\u00e2che pour l\'ajouter ici.</div>'
-      + '</div>';
-  }
-
-  // Bloc retards
-  if (overdue.length > 0) {
-    html += '<div style="margin-bottom:20px;padding:14px 16px;background:rgba(244,63,94,0.08);border:1px solid rgba(244,63,94,0.3);border-radius:14px">'
-      + '<div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">'
-      + '<div style="font-family:Syne,sans-serif;font-size:0.85rem;font-weight:800;color:var(--cat-urgent)">\u26a0\ufe0f En retard</div>'
-      + '<div style="font-size:0.72rem;background:rgba(244,63,94,0.2);color:var(--cat-urgent);font-family:Syne,sans-serif;font-weight:700;padding:2px 7px;border-radius:10px">' + overdue.length + '</div>'
-      + '</div>';
-    overdue.sort((a,b) => (a.due||'').localeCompare(b.due||'')).forEach(item => {
-      const catInfo = getCatInfo(item);
-      const prioIcon = {'urgent':'\uD83D\uDD34','normal':'\uD83D\uDFE1','later':'\u26AA'}[item.prio] || '';
-      const dueDate = new Date(item.due + 'T12:00:00').toLocaleDateString('fr-FR', { day:'numeric', month:'short' });
-      html += '<div onclick="openDetail(\'' + item.id + '\')" style="display:flex;align-items:center;gap:8px;padding:10px 12px;background:var(--bg3);border-radius:10px;margin-bottom:6px;cursor:pointer;border-left:3px solid var(--cat-urgent)">'
-        + '<div style="font-size:0.75rem">' + prioIcon + '</div>'
-        + '<div style="flex:1;min-width:0"><div style="font-size:0.88rem;font-weight:600;color:var(--text)">' + item.title + '</div>'
-        + '<div style="font-size:0.72rem;color:var(--cat-urgent)">' + dueDate + '</div></div>'
-        + '<div style="width:6px;height:6px;border-radius:50%;background:' + catInfo.color + ';flex-shrink:0"></div></div>';
+      const on = semaineFiltreProj === key;
+      html += '<button class="filter-chip' + (on ? ' active' : '') + '" onclick="setSemaineFiltre(\'' + key + '\')" style="'
+        + (on ? 'background:' + p.color + ';color:#000;border-color:transparent' : 'border-color:' + p.color + '70') + '">'
+        + '<span style="width:7px;height:7px;border-radius:50%;background:' + p.color + ';display:inline-block"></span> ' + wsEsc(p.label) + '</button>';
     });
     html += '</div>';
   }
 
-  // 7 jours
-  for (let d = 0; d < 7; d++) {
-    const day = new Date(today);
-    day.setDate(today.getDate() + d);
-    const isToday = d === 0;
-    const dayStr = localDateStr(day);
-    const jourLabel = jours[day.getDay()];
-    const dateLabel = day.getDate() + ' ' + mois[day.getMonth()];
-    const dayItems = getDayItems(dayStr);
-    const count = dayItems.length;
-
-    if (isToday) {
-      html += '<div style="margin-bottom:20px;padding:16px;border-radius:16px;background:rgba(56,189,248,0.06);border:1px solid rgba(56,189,248,0.25)">'
-        + '<div style="display:flex;align-items:center;gap:8px;margin-bottom:' + (count ? '12px' : '4px') + '">'
-        + '<div style="font-family:Syne,sans-serif;font-size:0.95rem;font-weight:800;color:#38bdf8">' + jourLabel + '</div>'
-        + '<div style="font-family:Syne,sans-serif;font-size:0.85rem;font-weight:600;color:var(--text2)">' + dateLabel + '</div>'
-        + '<div style="font-size:0.65rem;background:#38bdf8;color:#000;font-family:Syne,sans-serif;font-weight:800;padding:2px 7px;border-radius:10px;letter-spacing:0.08em">AUJOURD\'HUI</div>'
-        + (count ? '<div style="margin-left:auto;font-size:0.7rem;color:var(--text3)">' + count + ' \u00e9l\u00e9m.</div>' : '')
-        + '</div>';
-      if (count === 0) {
-        html += '<div style="font-size:0.82rem;color:var(--text3)">Rien de pr\u00e9vu aujourd\'hui</div>';
-      } else {
-        dayItems.forEach(item => { html += renderDayItem(item, true); });
-      }
-      html += '</div>';
-    } else {
-      const uid = 'day_' + d;
-      html += '<div style="margin-bottom:8px;border-radius:12px;background:var(--bg2);border:1px solid var(--border);overflow:hidden">'
-        + '<button onclick="toggleDayAccordion(\'' + uid + '\')" style="width:100%;display:flex;align-items:center;gap:8px;padding:11px 14px;background:transparent;border:none;cursor:pointer;text-align:left">'
-        + '<div style="font-family:Syne,sans-serif;font-size:0.82rem;font-weight:700;color:var(--text2)">' + jourLabel + '</div>'
-        + '<div style="font-family:Syne,sans-serif;font-size:0.75rem;color:var(--text3)">' + dateLabel + '</div>'
-        + (count > 0 ? '<div style="font-size:0.68rem;background:var(--bg3);color:var(--text2);font-family:Syne,sans-serif;font-weight:700;padding:2px 6px;border-radius:8px">' + count + '</div>' : '')
-        + '<div id="' + uid + '_arrow" style="margin-left:auto;font-size:0.7rem;color:var(--text3);transition:transform 0.2s">\u203a</div>'
-        + '</button>'
-        + '<div id="' + uid + '" style="display:none;padding:0 12px 12px">';
-      if (count === 0) {
-        html += '<div style="font-size:0.78rem;color:var(--text3);padding:4px 0">Rien de pr\u00e9vu</div>';
-      } else {
-        dayItems.forEach(item => { html += renderDayItem(item, false); });
-      }
-      html += '</div></div>';
-    }
+  if (!list.length) {
+    return html + '<div class="empty"><div class="empty-icon">✅</div><div class="empty-text">'
+      + (mine.length ? 'Rien dans ce filtre.' : 'Aucune tâche en cours.<br>Appuie sur + pour en créer une.')
+      + '</div></div>';
   }
 
-  return html || '<div class="empty"><div class="empty-icon">\uD83D\uDCC5</div><div class="empty-text">Aucun \u00e9l\u00e9ment cette semaine.</div></div>';
+  MS_BUCKETS.forEach(b => {
+    const arr = groups[b.k];
+    if (!arr.length) return;
+    const collapsible = b.k === 'nodate';
+    const open = !collapsible || window.msOpenNoDate;
+    html += '<section class="ms-sec ms-' + b.k + '" id="mssec_' + b.k + '" style="--sc:' + b.color + '">'
+      + '<button class="ms-sec-h"' + (collapsible ? ' onclick="msToggleNoDate()" style="cursor:pointer"' : ' tabindex="-1"') + '>'
+      + (b.k === 'late' ? '⚠️ ' : '') + b.label + ' <span class="n">' + arr.length + '</span>'
+      + (collapsible ? '<span style="margin-left:auto;font-size:0.75rem;color:var(--text3);transition:transform .2s;' + (open ? 'transform:rotate(90deg)' : '') + '">›</span>' : '')
+      + '</button>';
+    if (open) html += arr.map(i => msRow(i, t, b.color)).join('');
+    html += '</section>';
+  });
+
+  return html;
+}
+
+function msGoto(k) {
+  const el = document.getElementById('mssec_' + k);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function msToggleNoDate() {
+  window.msOpenNoDate = !window.msOpenNoDate;
+  render();
+}
+
+// ── Coche « fait » : écriture CIBLÉE sur la tâche (jamais de réécriture de toute la liste)
+async function wsSetDone(id, done) {
+  const it = items.find(x => x.id === id);
+  const patch = { done: !!done, doneAt: done ? Date.now() : null, updated: Date.now() };
+  if (it) Object.assign(it, patch);
+  render();
+  try {
+    await update(ref(db, 'workspace/items/' + id), patch);
+  } catch (e) {
+    alert('Erreur d’enregistrement : ' + ((e && e.message) || e));
+  }
+}
+
+let msToastTimer = null;
+function msDone(id) {
+  const row = document.getElementById('msrow_' + id);
+  if (row) {
+    if (row.classList.contains('ms-leaving')) return;
+    row.classList.add('ms-leaving');
+  }
+  const it = items.find(x => x.id === id);
+  setTimeout(() => {
+    wsSetDone(id, true);
+    msShowToast(id, it ? it.title : '');
+  }, row ? 380 : 0);
+}
+
+function msShowToast(id, title) {
+  let el = document.getElementById('ms-toast');
+  if (!el) {
+    el = document.createElement('div');
+    el.id = 'ms-toast';
+    el.className = 'ms-toast';
+    document.body.appendChild(el);
+  }
+  el.innerHTML = '<span>✅ <b>Fait</b> — ' + wsEsc(('' + (title || '')).slice(0, 40)) + '</span>'
+    + '<button onclick="msUndo(\'' + id + '\')">Annuler</button>';
+  el.style.display = 'flex';
+  clearTimeout(msToastTimer);
+  msToastTimer = setTimeout(() => { el.style.display = 'none'; }, 5000);
+}
+
+function msUndo(id) {
+  const el = document.getElementById('ms-toast');
+  if (el) el.style.display = 'none';
+  clearTimeout(msToastTimer);
+  wsSetDone(id, false);
 }
 
 function setSemaineFiltre(val) {
@@ -3362,7 +3581,7 @@ function rebuildCatPicker() {
 
   // Restaurer la sélection courante
   if (currentProjectId) selectProject(currentProjectId, currentSubcatId);
-  else { selectProject(null); if (currentCat) selectGlobalCat(currentCat); }
+  else { const keepCat = currentCat; selectProject(null); if (keepCat) selectGlobalCat(keepCat); } // v8.53 : categorie conservee
 }
 
 function selectProject(projectId, subcatId = null) {
@@ -3645,7 +3864,7 @@ function openCreateModal() {
   document.getElementById('input-title').value = '';
   document.getElementById('input-content').value = '';
   document.getElementById('input-link').value = '';
-  document.getElementById('input-todo-link').value = '';
+  document.getElementById('input-todo-links').value = '';
   document.getElementById('input-todo-content').value = '';
   document.getElementById('input-prio').value = 'normal';
   document.getElementById('input-due').value = '';
@@ -3669,7 +3888,7 @@ function openCreateModal() {
   if (btnTodo) { btnTodo.textContent = '+ Checklist'; btnTodo.style.color = 'var(--text2)'; }
   rebuildCatPicker();
   updateMemberSelects();
-  setType(currentTab === 'todo' ? 'todo' : 'note');
+  setType((currentTab === 'todo' || currentTab === 'semaine') ? 'todo' : 'note');
   renderClEditor();
   renderClEditorTodo();
   openModal('modal-create');
@@ -3792,7 +4011,9 @@ function saveItem() {
   const title = document.getElementById('input-title').value.trim();
   if (!title) { document.getElementById('input-title').focus(); return; }
 
-  const item = {
+  // v8.53 : a l'edition, on part de l'item existant (sinon todayFlag, doneAt, validatedBy... etaient perdus)
+  const prevItem = editingId ? items.find(i => i.id === editingId) : null;
+  const item = Object.assign({}, prevItem || {}, {
     id: editingId || genId(),
     type: currentType,
     cat: currentProjectId ? null : (currentCat || 'perso'),
@@ -3802,7 +4023,7 @@ function saveItem() {
     owner: currentUser,
     created: editingId ? (items.find(i => i.id === editingId)?.created || Date.now()) : Date.now(),
     updated: Date.now(),
-  };
+  });
 
   if (currentType === 'note') {
     // v8.19 : flag de partage avec l'equipe — uniquement l'owner peut le modifier
@@ -3833,7 +4054,8 @@ function saveItem() {
     item.due = document.getElementById('input-due').value || null;
     item.dueTime = document.getElementById('input-time').value || null;
     item.content = document.getElementById('input-todo-content').value.trim();
-    item.link = document.getElementById('input-todo-link').value.trim();
+    item.links = wsLinksFromText(document.getElementById('input-todo-links').value); // v8.53
+    item.link = '';
     item.done = editingId ? (items.find(i => i.id === editingId)?.done || false) : false;
     item.shared = item.assignee !== currentUser;
     item.validateBy = document.getElementById('input-validate-by').value || null;
@@ -3868,7 +4090,7 @@ function saveItem() {
     if (d.getTime() > Date.now()) item.triggerAt = d.getTime();
   }
 
-  save();
+  set(ref(db, 'workspace/items/' + item.id), JSON.parse(JSON.stringify(item))); // v8.53 : ecriture ciblee
   closeModal('modal-create');
   render();
 }
@@ -3980,9 +4202,11 @@ function openDetail(id) {
     }
 
     // Séparateur si contenu
-    if (item.content || item.checklist?.length || item.link) {
+    if (item.content || item.checklist?.length || wsLinks(item).length) {
       html += `<div style="height:1px;background:var(--border);margin-bottom:16px"></div>`;
     }
+    // v8.53 : documents lies, en tete pour y acceder sans chercher
+    html += wsLinkChips(item, true);
 
     // Contenu texte
     if (item.content) {
@@ -4012,12 +4236,7 @@ function openDetail(id) {
       html += `</div>`;
     }
 
-    // Lien
-    if (item.link) {
-      html += `<a href="${item.link}" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:8px;background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:10px 13px;color:var(--cat-signal);font-size:0.82rem;text-decoration:none;word-break:break-all">
-        🔗 <span>${item.link}</span>
-      </a>`;
-    }
+    // (v8.53 : liens affiches plus haut, sous forme de pastilles)
 
   } else {
     // ── MODALE NOTE ──
@@ -4090,33 +4309,37 @@ function toggleClItem(itemId, ciId) {
   const item = items.find(i => i.id === itemId);
   if (!item?.checklist) return;
   const ci = item.checklist.find(c => c.id === ciId);
-  if (ci) { ci.done = !ci.done; save(); openDetail(itemId); render(); }
+  if (ci) {
+    ci.done = !ci.done;
+    update(ref(db, 'workspace/items/' + itemId), { checklist: item.checklist, updated: Date.now() }); // v8.53 : cible
+    openDetail(itemId); render();
+  }
 }
 
 async function toggleTodo(id) {
+  // v8.53 : ecriture ciblee sur la tache (save() reecrivait toute la liste)
   const item = items.find(i => i.id === id);
   if (!item) return;
-  item.done = !item.done;
-  if (item.done && item.validateBy === currentUser && !item.validated) {
-    item.validated = true;
-    item.validatedBy = currentUser;
-    item.validatedAt = Date.now();
+  const patch = { done: !item.done, updated: Date.now() };
+  patch.doneAt = patch.done ? Date.now() : null;
+  if (patch.done && item.validateBy === currentUser && !item.validated) {
+    patch.validated = true; patch.validatedBy = currentUser; patch.validatedAt = Date.now();
   }
-  if (!item.done && item.validatedBy === currentUser) {
-    item.validated = false;
-    item.validatedBy = null;
-    item.validatedAt = null;
+  if (!patch.done && item.validatedBy === currentUser) {
+    patch.validated = false; patch.validatedBy = null; patch.validatedAt = null;
   }
-  await save();
+  Object.assign(item, patch);
   render();
+  await update(ref(db, 'workspace/items/' + id), patch);
 }
 
 async function toggleTodayFlag(id) {
   const item = items.find(i => i.id === id);
   if (!item) return;
-  item.todayFlag = !item.todayFlag;
-  await save();
+  const patch = { todayFlag: !item.todayFlag, updated: Date.now() };
+  Object.assign(item, patch);
   render();
+  await update(ref(db, 'workspace/items/' + id), patch);
 }
 
 async function validateTaskAndUpdate(id) {
@@ -4164,7 +4387,7 @@ function editItem(id) {
   document.getElementById('input-content').value = item.content || '';
   document.getElementById('input-link').value = item.link || '';
   document.getElementById('input-todo-content').value = (item.type === 'todo' ? item.content : '') || '';
-  document.getElementById('input-todo-link').value = (item.type === 'todo' ? item.link : '') || '';
+  document.getElementById('input-todo-links').value = item.type === 'todo' ? wsLinksToText(item) : '';
   if (item.prio) document.getElementById('input-prio').value = item.prio;
   if (item.assignee) document.getElementById('input-assignee').value = item.assignee;
   if (item.due) document.getElementById('input-due').value = item.due;
@@ -5670,14 +5893,14 @@ function showXpressAlertBanner(title, body, itemId, itemType) {
   banner.innerHTML =
     '<div style="flex:1;display:flex;flex-direction:column;gap:3px;cursor:pointer" class="fcm-banner-body">'
     + '<div style="font-family:Syne,sans-serif;font-weight:700;font-size:0.95rem;color:#38bdf8">' + title + '</div>'
-    + (body ? '<div style="font-size:0.82rem;color:var(--text2);font-family:DM Sans,sans-serif">' + body + '</div>' : '')
-    + (itemId ? '<div style="font-size:0.72rem;color:var(--text3);font-family:DM Sans,sans-serif;margin-top:2px">Appuie pour ouvrir</div>' : '')
+    + (body ? '<div style="font-size:0.82rem;color:var(--text2);font-family:DM Sans,sans-serif;white-space:pre-line">' + body + '</div>' : '')
+    + ((itemId || itemType === 'digest') ? '<div style="font-size:0.72rem;color:var(--text3);font-family:DM Sans,sans-serif;margin-top:2px">Appuie pour ouvrir</div>' : '')
     + '</div>'
     + '<button style="background:transparent;border:none;color:var(--text3);font-size:1.1rem;cursor:pointer;padding:0;line-height:1;flex-shrink:0;margin-top:1px" class="fcm-banner-close">✕</button>';
 
   banner.querySelector('.fcm-banner-body').onclick = () => {
     banner.remove();
-    if (itemId) openItemFromNotification(itemId, itemType);
+    if (itemId || itemType === 'digest') openItemFromNotification(itemId, itemType);
   };
   banner.querySelector('.fcm-banner-close').onclick = () => banner.remove();
   container.appendChild(banner);
@@ -5985,6 +6208,11 @@ window.removeMember = removeMember;
 window.copyMemberLink = copyMemberLink;
 window.toggleDayAccordion = toggleDayAccordion;
 window.setSemaineFiltre = setSemaineFiltre;
+// v8.53 Ma semaine
+window.msDone = msDone;
+window.msUndo = msUndo;
+window.msGoto = msGoto;
+window.msToggleNoDate = msToggleNoDate;
 window.updateTimeFromSelects = updateTimeFromSelects;
 window.selectTime = selectTime;
 window.selectNoteTime = selectNoteTime;
@@ -6013,6 +6241,20 @@ window.selectProspectRelance = selectProspectRelance;
 window.selectProspectRelanceDate = selectProspectRelanceDate;
 window.doLogin = doLogin;
 window.doLogout = doLogout;
+</script>
+<!-- Signature I-IMMERSION : sur toutes les apps (regle d'Emmanuel du 14/10/2026), jamais dans une iframe -->
+<style> .sig-iimm{display:block;width:100%;text-align:center;font:400 11.5px/1.4 system-ui,sans-serif;color:inherit;opacity:.5;padding:14px 16px calc(14px + env(safe-area-inset-bottom))} .sig-iimm a{color:inherit;text-decoration:underline dotted} .sig-iimm.sig-fixe{position:fixed;left:0;right:0;bottom:0;z-index:2147483000;pointer-events:none} .sig-iimm.sig-fixe a{pointer-events:auto} </style>
+<div class="sig-iimm" id="sigIimm">Une application conçue par <a href="mailto:contact@i-immersion.fr">I-IMMERSION / Emmanuel Exbrayat</a></div>
+<script>
+(function () {
+  var sig = document.getElementById('sigIimm');
+  if (!sig) return;
+  try { if (window.self !== window.top) { sig.remove(); return; } } catch (e) { sig.remove(); return; }
+  var login = document.getElementById('login-screen');
+  function caler() { sig.classList.toggle('sig-fixe', !!login && getComputedStyle(login).display !== 'none'); }
+  caler();
+  if (login && window.MutationObserver) new MutationObserver(caler).observe(login, { attributes: true, attributeFilter: ['style', 'class'] });
+})();
 </script>
 </body>
   </html>
