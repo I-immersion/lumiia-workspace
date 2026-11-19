@@ -12,7 +12,7 @@
 <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjogIkxVTUlJQSBXb3Jrc3BhY2UiLCAic2hvcnRfbmFtZSI6ICJXb3Jrc3BhY2UiLCAic3RhcnRfdXJsIjogIi4iLCAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwgImJhY2tncm91bmRfY29sb3IiOiAiIzBkMGQwZiIsICJ0aGVtZV9jb2xvciI6ICIjMGQwZDBmIiwgImljb25zIjogW3sic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzl6ZG1jaUlIWnBaWGRDYjNnOUlqQWdNQ0F5T1RBZ01qa3dJajQ4Y21WamRDQjNhV1IwYUQwaU1qa3dJaUJvWldsbmFIUTlJakk1TUNJZ2NuZzlJall3SWlCbWFXeHNQU0lqTUdRd1pEQm1JaTgrUEhSbGVIUWdlRDBpTlRBbElpQjVQU0kxTlNVaUlHWnZiblF0YzJsNlpUMGlNVFl3SWlCMFpYaDBMV0Z1WTJodmNqMGliV2xrWkd4bElpQmtiMjFwYm1GdWRDMWlZWE5sYkdsdVpUMGliV2xrWkd4bElqN3duNXFnUEM5MFpYaDBQand2YzNablBnPT0iLCAic2l6ZXMiOiAiMTkyeDE5MiA1MTJ4NTEyIiwgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
 <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOTAgMjkwIj48cmVjdCB3aWR0aD0iMjkwIiBoZWlnaHQ9IjI5MCIgcng9IjYwIiBmaWxsPSIjMGQwZDBmIi8+PHRleHQgeD0iNTAlIiB5PSI1NSUiIGZvbnQtc2l6ZT0iMTYwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn5qgPC90ZXh0Pjwvc3ZnPg==">
 
-<!-- LUMIIA Workspace v8.56 -->
+<!-- LUMIIA Workspace v8.57 -->
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
 /* v8.55 — charte Cosmos : Geometos Soft Ultra pour les titres, Poppins pour le reste */
@@ -936,7 +936,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
     <div style="text-align:center;margin-bottom:8px">
       <div style="font-family:var(--font-title);font-weight:400;font-size:1.4rem;letter-spacing:0.04em;color:var(--text)">LUMIIA <span style="color:#38bdf8">●</span> Workspace</div>
       <div style="font-size:0.8rem;color:var(--text3);margin-top:6px;font-family:var(--font-ui)">Connexion requise</div>
-      <div style="font-size:0.7rem;color:var(--text3);margin-top:4px;font-family:var(--font-ui);letter-spacing:0.05em" class="ver-badge">v8.56</div>
+      <div style="font-size:0.7rem;color:var(--text3);margin-top:4px;font-family:var(--font-ui);letter-spacing:0.05em" class="ver-badge">v8.57</div>
     </div>
     <div style="display:flex;flex-direction:column;gap:10px">
       <input id="login-email" type="email" placeholder="Email" autocomplete="email" style="
@@ -985,7 +985,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
   <button class="tab" data-tab="notes" onclick="switchTab('notes')">Notes</button>
   <button class="tab" data-tab="projets" onclick="switchTab('projets')">Projets</button>
   <div style="flex:1"></div>
-  <div style="font-size:0.72rem;color:var(--text2);font-family:var(--font-ui);font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px" class="ver-badge">v8.56</div>
+  <div style="font-size:0.72rem;color:var(--text2);font-family:var(--font-ui);font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px" class="ver-badge">v8.57</div>
 </div>
 
 <main id="main-content">
@@ -1443,7 +1443,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
 // /!\ Garder en phase avec le commentaire <!-- LUMIIA Workspace vX.Y --> (ligne ~15),
 //     que deployer.command lit en texte brut (impossible à dériver d'ici).
 // ─────────────────────────────────────────────
-const APP_VERSION = 'v8.56';
+const APP_VERSION = 'v8.57'; // v8.57 : service worker — notification du rappel Diary
 try { document.querySelectorAll('.ver-badge').forEach(e => e.textContent = APP_VERSION); } catch (e) {}
 // ─────────────────────────────────────────────
 // FIREBASE

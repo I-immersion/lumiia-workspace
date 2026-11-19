@@ -1,4 +1,5 @@
-// LUMIIA Workspace — service worker des notifications — v8.54
+// LUMIIA Workspace — service worker des notifications — v8.57
+// v8.57 (19/11/2026) : notification « Diary — ton moment du jour » (itemType 'diary') : boutons Raconter / +1 h, ouvre hub.lumiia.fr/diary/
 importScripts('https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js');
 importScripts('https://www.gstatic.com/firebasejs/10.12.0/firebase-messaging-compat.js');
 
@@ -17,6 +18,7 @@ const APP_URL = 'https://i-immersion.github.io/lumiia-workspace/';
 const DB_URL = 'https://lumiia-live-default-rtdb.europe-west1.firebasedatabase.app';
 const ACTION_URL = 'https://europe-west1-lumiia-live.cloudfunctions.net/workspaceNotifAction';
 const ICON = '/lumiia-workspace/icon-192.png';
+const DIARY_URL = 'https://hub.lumiia.fr/diary/?rappel=1'; // v8.57
 
 // La nouvelle version prend la main tout de suite
 self.addEventListener('install', () => self.skipWaiting());
@@ -69,6 +71,7 @@ function readPayload(payload) {
 }
 
 function actionsFor(p) {
+  if (p.itemType === 'diary') return [{ action: 'open', title: '🎙 Raconter' }, { action: 'snooze1h', title: '🕐 +1 h' }]; // v8.57
   if (p.itemType === 'digest') return p.code ? [{ action: 'done', title: '✅ Fait' }, { action: 'open', title: '📋 Ma semaine' }] : [];
   if (p.itemType === 'todo' && p.code) return [{ action: 'done', title: '✅ Fait' }, { action: 'snooze1h', title: '🕐 +1 h' }];
   return [{ action: 'snooze5', title: '⏰ +5 min' }, { action: 'snooze1h', title: '🕐 +1 h' }];
@@ -78,7 +81,7 @@ messaging.onBackgroundMessage(async payload => {
   const p = readPayload(payload);
   const clientList = await clients.matchAll({ type: 'window', includeUncontrolled: true });
   const appOpen = clientList.some(c => c.url.startsWith(APP_URL) && c.visibilityState === 'visible');
-  if (appOpen) {
+  if (appOpen && p.itemType !== 'diary') { // v8.57 : le rappel Diary s'affiche toujours
     clientList.forEach(c => {
       if (c.url.startsWith(APP_URL)) c.postMessage({ type: 'OPEN_XPRESS', xpressId: p.itemId, itemType: p.itemType, title: p.title, body: p.body, view: p.view });
     });
@@ -105,6 +108,7 @@ async function confirmNotif(title, body, tag) {
 }
 
 async function openApp(p, forceView) {
+  if (p.itemType === 'diary') return clients.openWindow(DIARY_URL); // v8.57
   const view = forceView || p.view || '';
   const list = await clients.matchAll({ type: 'window', includeUncontrolled: true });
   for (const c of list) {
