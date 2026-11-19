@@ -12,9 +12,12 @@
 <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjogIkxVTUlJQSBXb3Jrc3BhY2UiLCAic2hvcnRfbmFtZSI6ICJXb3Jrc3BhY2UiLCAic3RhcnRfdXJsIjogIi4iLCAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwgImJhY2tncm91bmRfY29sb3IiOiAiIzBkMGQwZiIsICJ0aGVtZV9jb2xvciI6ICIjMGQwZDBmIiwgImljb25zIjogW3sic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzl6ZG1jaUlIWnBaWGRDYjNnOUlqQWdNQ0F5T1RBZ01qa3dJajQ4Y21WamRDQjNhV1IwYUQwaU1qa3dJaUJvWldsbmFIUTlJakk1TUNJZ2NuZzlJall3SWlCbWFXeHNQU0lqTUdRd1pEQm1JaTgrUEhSbGVIUWdlRDBpTlRBbElpQjVQU0kxTlNVaUlHWnZiblF0YzJsNlpUMGlNVFl3SWlCMFpYaDBMV0Z1WTJodmNqMGliV2xrWkd4bElpQmtiMjFwYm1GdWRDMWlZWE5sYkdsdVpUMGliV2xrWkd4bElqN3duNXFnUEM5MFpYaDBQand2YzNablBnPT0iLCAic2l6ZXMiOiAiMTkyeDE5MiA1MTJ4NTEyIiwgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
 <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOTAgMjkwIj48cmVjdCB3aWR0aD0iMjkwIiBoZWlnaHQ9IjI5MCIgcng9IjYwIiBmaWxsPSIjMGQwZDBmIi8+PHRleHQgeD0iNTAlIiB5PSI1NSUiIGZvbnQtc2l6ZT0iMTYwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn5qgPC90ZXh0Pjwvc3ZnPg==">
 
-<!-- LUMIIA Workspace v8.54 -->
+<!-- LUMIIA Workspace v8.56 -->
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Manrope:wght@600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+/* v8.55 — charte Cosmos : Geometos Soft Ultra pour les titres, Poppins pour le reste */
+@font-face { font-family: 'Geometos Soft Ultra'; src: url('fonts/GeometosSoftUltra.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+:root { --font-title: 'Geometos Soft Ultra', 'Poppins', sans-serif; --font-ui: 'Poppins', sans-serif; }
 
 :root {
   --bg: #0d0d0f;
@@ -42,7 +45,7 @@
 
 html { overflow-x: hidden; }
 body {
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--font-ui);
   background: var(--bg);
   color: var(--text);
   min-height: 100dvh;
@@ -66,7 +69,7 @@ header {
 .header-left { display: flex; align-items: center; gap: 10px; }
 
 .logo {
-  font-family: 'Syne', sans-serif;
+  font-family: var(--font-ui);
   font-weight: 800;
   font-size: 1.1rem;
   letter-spacing: 0.08em;
@@ -75,7 +78,7 @@ header {
 .logo span { color: var(--cat-lumiia); }
 
 .user-badge {
-  font-family: 'Syne', sans-serif;
+  font-family: var(--font-ui);
   font-size: 0.72rem;
   font-weight: 800;
   letter-spacing: 0.12em;
@@ -117,7 +120,7 @@ header {
 
 .tab {
   flex-shrink: 0;
-  font-family: 'Syne', sans-serif;
+  font-family: var(--font-ui);
   font-size: 0.78rem;
   font-weight: 600;
   letter-spacing: 0.06em;
@@ -151,7 +154,7 @@ main {
   margin-top: 8px;
 }
 .section-title {
-  font-family: 'Syne', sans-serif;
+  font-family: var(--font-ui);
   font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.14em;
@@ -190,7 +193,7 @@ main {
 }
 
 .card-title {
-  font-family: 'Syne', sans-serif;
+  font-family: var(--font-ui);
   font-size: 0.95rem;
   font-weight: 700;
   line-height: 1.3;
@@ -255,7 +258,7 @@ main {
   flex-shrink: 0;
 }
 .todo-cat-label {
-  font-family: 'Syne', sans-serif;
+  font-family: var(--font-ui);
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.12em;
@@ -327,7 +330,7 @@ main {
   border-radius: 10px;
   background: var(--bg3);
   color: var(--text2);
-  font-family: 'Syne', sans-serif;
+  font-family: var(--font-ui);
   letter-spacing: 0.05em;
 }
 
@@ -383,7 +386,7 @@ main {
   justify-content: flex-end;
 }
 .fab-menu-label {
-  font-family: 'Syne', sans-serif;
+  font-family: var(--font-ui);
   font-size: 0.8rem;
   font-weight: 700;
   color: var(--text);
@@ -438,7 +441,7 @@ main {
 }
 .xpress-close:hover { background: rgba(244,63,94,0.2); color: var(--cat-urgent); }
 .xpress-timer {
-  font-family: 'Syne', sans-serif;
+  font-family: var(--font-ui);
   font-size: 0.72rem;
   font-weight: 700;
   color: #38bdf8;
@@ -488,7 +491,7 @@ main {
 }
 
 .modal-title {
-  font-family: 'Syne', sans-serif;
+  font-family: var(--font-ui);
   font-size: 1rem;
   font-weight: 700;
   margin-bottom: 18px;
@@ -501,7 +504,7 @@ main {
   text-transform: uppercase;
   color: var(--text3);
   margin-bottom: 7px;
-  font-family: 'Syne', sans-serif;
+  font-family: var(--font-ui);
 }
 
 .field-input {
@@ -511,7 +514,7 @@ main {
   border-radius: var(--radius-sm);
   padding: 11px 13px;
   color: var(--text);
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--font-ui);
   font-size: 0.9rem;
   outline: none;
   transition: border-color 0.15s;
@@ -534,7 +537,7 @@ textarea.field-input { resize: none; min-height: 80px; }
   background: transparent;
   color: var(--text2);
   font-size: 0.78rem;
-  font-family: 'Syne', sans-serif;
+  font-family: var(--font-ui);
   font-weight: 600;
   cursor: pointer;
   transition: all 0.15s;
@@ -558,7 +561,7 @@ textarea.field-input { resize: none; min-height: 80px; }
   background: transparent;
   color: var(--text2);
   font-size: 0.8rem;
-  font-family: 'Syne', sans-serif;
+  font-family: var(--font-ui);
   font-weight: 600;
   cursor: pointer;
   transition: all 0.15s;
@@ -578,7 +581,7 @@ textarea.field-input { resize: none; min-height: 80px; }
   border-radius: 8px;
   padding: 8px 11px;
   color: var(--text);
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--font-ui);
   font-size: 0.85rem;
   outline: none;
 }
@@ -600,7 +603,7 @@ textarea.field-input { resize: none; min-height: 80px; }
   cursor: pointer;
   width: 100%;
   transition: all 0.15s;
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--font-ui);
 }
 .add-cl-item:hover { border-color: rgba(255,255,255,0.2); color: var(--text2); }
 
@@ -617,7 +620,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
   border: none;
   background: var(--cat-lumiia);
   color: #000;
-  font-family: 'Syne', sans-serif;
+  font-family: var(--font-ui);
   font-weight: 700;
   font-size: 0.85rem;
   letter-spacing: 0.06em;
@@ -631,7 +634,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
   border: 1px solid var(--border);
   background: transparent;
   color: var(--text2);
-  font-family: 'Syne', sans-serif;
+  font-family: var(--font-ui);
   font-weight: 600;
   font-size: 0.85rem;
   cursor: pointer;
@@ -646,7 +649,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
   margin-bottom: 16px;
 }
 .note-detail-title {
-  font-family: 'Syne', sans-serif;
+  font-family: var(--font-ui);
   font-size: 1.15rem;
   font-weight: 700;
   flex: 1;
@@ -680,7 +683,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
 /* ── CHECK-LIST XPRESS (v8.36) — édition live, enregistrement auto ── */
 .xcl-block { margin-bottom: 18px; }
 .xcl-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:6px; }
-.xcl-title { font-size:0.7rem; color:var(--text3); font-family:Syne,sans-serif; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; }
+.xcl-title { font-size:0.7rem; color:var(--text3); font-family:var(--font-ui); font-weight:700; letter-spacing:0.1em; text-transform:uppercase; }
 .xcl-count { font-size:0.72rem; color:var(--text3); }
 .xcl-bar { height:3px; background:var(--bg3); border-radius:2px; margin-bottom:10px; }
 .xcl-bar-fill { height:3px; background:#38bdf8; border-radius:2px; width:0; transition:width 0.3s; }
@@ -689,13 +692,13 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
 .xcl-check { width:22px; height:22px; border-radius:7px; border:2px solid var(--text3); flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:0.8rem; cursor:pointer; transition:all 0.15s; }
 .xcl-row.done .xcl-check { background:#38bdf8; border-color:transparent; color:var(--bg); }
 .xcl-row.done .xcl-input { text-decoration:line-through; color:var(--text3); }
-.xcl-input { flex:1; min-width:0; background:var(--bg3); border:1px solid var(--border); border-radius:8px; padding:8px 11px; color:var(--text); font-family:'DM Sans',sans-serif; font-size:0.85rem; outline:none; }
+.xcl-input { flex:1; min-width:0; background:var(--bg3); border:1px solid var(--border); border-radius:8px; padding:8px 11px; color:var(--text); font-family:var(--font-ui); font-size:0.85rem; outline:none; }
 .xcl-input:focus { border-color:rgba(56,189,248,0.5); }
 .xcl-del { background:none; border:none; color:var(--text3); font-size:0.9rem; cursor:pointer; padding:4px; transition:color 0.15s; }
 .xcl-del:hover { color:var(--cat-urgent); }
-.xcl-add { display:flex; align-items:center; justify-content:center; gap:6px; background:none; border:1px dashed var(--border); border-radius:8px; padding:8px 11px; color:var(--text3); font-size:0.8rem; cursor:pointer; width:100%; font-family:'DM Sans',sans-serif; transition:all 0.15s; }
+.xcl-add { display:flex; align-items:center; justify-content:center; gap:6px; background:none; border:1px dashed var(--border); border-radius:8px; padding:8px 11px; color:var(--text3); font-size:0.8rem; cursor:pointer; width:100%; font-family:var(--font-ui); transition:all 0.15s; }
 .xcl-add:hover { border-color:rgba(56,189,248,0.45); color:#38bdf8; }
-.xcl-status { font-size:0.68rem; color:var(--text3); margin-top:8px; text-align:right; font-family:Syne,sans-serif; letter-spacing:0.04em; min-height:14px; }
+.xcl-status { font-size:0.68rem; color:var(--text3); margin-top:8px; text-align:right; font-family:var(--font-ui); letter-spacing:0.04em; min-height:14px; }
 
 .note-footer {
   display: flex; justify-content: space-between; align-items: center;
@@ -733,7 +736,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
 .filter-chip {
   flex-shrink: 0;
   font-size: 0.72rem;
-  font-family: 'Syne', sans-serif;
+  font-family: var(--font-ui);
   font-weight: 600;
   letter-spacing: 0.06em;
   padding: 5px 11px;
@@ -779,7 +782,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
   background: var(--bg3);
   color: var(--text3);
   font-size: 0.75rem;
-  font-family: 'Syne', sans-serif;
+  font-family: var(--font-ui);
   font-weight: 600;
   cursor: pointer;
   transition: all 0.15s;
@@ -874,17 +877,17 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
 }
 
 /* ── v8.53 MA SEMAINE ── */
-.ms-date { font-family: Syne, sans-serif; font-weight: 800; font-size: 1.05rem; color: var(--text); margin: 2px 0 12px; }
+.ms-date { font-family: var(--font-ui); font-weight: 800; font-size: 1.05rem; color: var(--text); margin: 2px 0 12px; }
 .ms-date::first-letter { text-transform: uppercase; }
 .ms-tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 14px; }
 .ms-tile { background: var(--bg2); border: 1px solid var(--border); border-top: 3px solid var(--tc); border-radius: 12px; padding: 10px 4px 9px; text-align: center; cursor: pointer; transition: transform .12s, opacity .2s; color: inherit; min-width: 0; }
 .ms-tile:active { transform: scale(.96); }
-.ms-tile b { display: block; font-family: Syne, sans-serif; font-weight: 800; font-size: 1.55rem; line-height: 1.1; color: var(--tc); }
-.ms-tile span { display: block; font-size: .66rem; color: var(--text2); font-family: Syne, sans-serif; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ms-tile b { display: block; font-family: var(--font-ui); font-weight: 800; font-size: 1.55rem; line-height: 1.1; color: var(--tc); }
+.ms-tile span { display: block; font-size: .66rem; color: var(--text2); font-family: var(--font-ui); font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .ms-tile.zero { opacity: .35; }
 .ms-sec { margin-bottom: 18px; scroll-margin-top: 130px; }
 .ms-sec.ms-late { background: rgba(244,63,94,.07); border: 1px solid rgba(244,63,94,.3); border-radius: 14px; padding: 12px 10px 6px; }
-.ms-sec-h { display: flex; align-items: center; gap: 8px; width: 100%; margin: 0 0 8px; padding: 0 2px; background: none; border: none; text-align: left; font-family: Syne, sans-serif; font-weight: 800; font-size: .86rem; color: var(--sc); cursor: default; }
+.ms-sec-h { display: flex; align-items: center; gap: 8px; width: 100%; margin: 0 0 8px; padding: 0 2px; background: none; border: none; text-align: left; font-family: var(--font-ui); font-weight: 800; font-size: .86rem; color: var(--sc); cursor: default; }
 .ms-sec-h .n { font-size: .7rem; padding: 1px 8px; border-radius: 10px; background: color-mix(in srgb, var(--sc) 22%, transparent); }
 .ms-row { display: flex; align-items: flex-start; gap: 12px; padding: 11px 12px; background: var(--bg3); border-radius: 12px; margin-bottom: 6px; border-left: 3px solid var(--cc); max-height: 400px; overflow: hidden; transition: opacity .35s, transform .35s, max-height .35s, padding .35s, margin .35s; }
 .ms-check { position: relative; width: 26px; height: 26px; flex-shrink: 0; margin-top: 1px; border-radius: 50%; border: 2px solid var(--cc); background: transparent; cursor: pointer; transition: background .15s; }
@@ -896,7 +899,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
 .ms-title { font-size: .93rem; font-weight: 600; color: var(--text); line-height: 1.35; word-break: break-word; }
 .ms-urg { margin-right: 5px; font-size: .7rem; }
 .ms-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 3px 10px; margin-top: 3px; font-size: .72rem; color: var(--text3); }
-.ms-due { font-family: Syne, sans-serif; font-weight: 700; }
+.ms-due { font-family: var(--font-ui); font-weight: 700; }
 .ms-due::first-letter { text-transform: uppercase; }
 .ms-cat { display: inline-flex; align-items: center; gap: 5px; }
 .ms-cat i { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
@@ -909,7 +912,13 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
 .ms-links.big .ms-link-t { max-width: 240px; }
 .ms-toast { position: fixed; left: 50%; bottom: calc(96px + env(safe-area-inset-bottom)); transform: translateX(-50%); display: none; align-items: center; gap: 14px; max-width: calc(100vw - 32px); padding: 10px 10px 10px 16px; background: #13241a; border: 1px solid rgba(74,222,128,.45); border-radius: 12px; color: var(--text); font-size: .85rem; z-index: 3000; box-shadow: 0 8px 30px rgba(0,0,0,.55); }
 .ms-toast span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.ms-toast button { flex-shrink: 0; background: none; border: 1px solid rgba(74,222,128,.45); color: #4ade80; border-radius: 8px; padding: 6px 12px; font-family: Syne, sans-serif; font-weight: 700; cursor: pointer; }
+.ms-toast button { flex-shrink: 0; background: none; border: 1px solid rgba(74,222,128,.45); color: #4ade80; border-radius: 8px; padding: 6px 12px; font-family: var(--font-ui); font-weight: 700; cursor: pointer; }
+
+/* v8.55 — titres en Geometos Soft Ultra (une seule graisse) */
+.logo, .section-title, .modal-title, .note-detail-title, .ms-date, .ms-sec-h, .ms-tile b {
+  font-family: var(--font-title) !important; font-weight: 400 !important; letter-spacing: .01em;
+}
+.ms-tile b { font-size: 1.45rem; }
 </style>
 </head>
 <body>
@@ -925,29 +934,29 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
 ">
   <div style="width:100%;max-width:360px;display:flex;flex-direction:column;gap:20px">
     <div style="text-align:center;margin-bottom:8px">
-      <div style="font-family:Syne,sans-serif;font-weight:900;font-size:1.4rem;letter-spacing:0.04em;color:var(--text)">LUMIIA <span style="color:#38bdf8">●</span> Workspace</div>
-      <div style="font-size:0.8rem;color:var(--text3);margin-top:6px;font-family:DM Sans,sans-serif">Connexion requise</div>
-      <div style="font-size:0.7rem;color:var(--text3);margin-top:4px;font-family:Syne,sans-serif;letter-spacing:0.05em" class="ver-badge">v8.54</div>
+      <div style="font-family:var(--font-title);font-weight:400;font-size:1.4rem;letter-spacing:0.04em;color:var(--text)">LUMIIA <span style="color:#38bdf8">●</span> Workspace</div>
+      <div style="font-size:0.8rem;color:var(--text3);margin-top:6px;font-family:var(--font-ui)">Connexion requise</div>
+      <div style="font-size:0.7rem;color:var(--text3);margin-top:4px;font-family:var(--font-ui);letter-spacing:0.05em" class="ver-badge">v8.56</div>
     </div>
     <div style="display:flex;flex-direction:column;gap:10px">
       <input id="login-email" type="email" placeholder="Email" autocomplete="email" style="
         background:var(--bg2);border:1px solid var(--border);border-radius:10px;
-        padding:13px 16px;color:var(--text);font-family:DM Sans,sans-serif;font-size:0.95rem;outline:none;
+        padding:13px 16px;color:var(--text);font-family:var(--font-ui);font-size:0.95rem;outline:none;
         width:100%;box-sizing:border-box;
       ">
       <input id="login-password" type="password" placeholder="Mot de passe" autocomplete="current-password" style="
         background:var(--bg2);border:1px solid var(--border);border-radius:10px;
-        padding:13px 16px;color:var(--text);font-family:DM Sans,sans-serif;font-size:0.95rem;outline:none;
+        padding:13px 16px;color:var(--text);font-family:var(--font-ui);font-size:0.95rem;outline:none;
         width:100%;box-sizing:border-box;
       ">
     </div>
     <div id="login-error" style="
       display:none;background:rgba(255,80,80,0.12);border:1px solid rgba(255,80,80,0.3);
-      border-radius:8px;padding:10px 14px;color:#ff5050;font-size:0.82rem;font-family:DM Sans,sans-serif;
+      border-radius:8px;padding:10px 14px;color:#ff5050;font-size:0.82rem;font-family:var(--font-ui);
     "></div>
     <button id="login-btn" onclick="doLogin()" style="
       background:#38bdf8;border:none;border-radius:10px;
-      padding:14px;color:#000;font-family:Syne,sans-serif;font-weight:700;font-size:0.95rem;
+      padding:14px;color:#000;font-family:var(--font-ui);font-weight:700;font-size:0.95rem;
       cursor:pointer;width:100%;
     ">Se connecter</button>
   </div>
@@ -962,7 +971,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
     <button class="btn-icon" id="sort-date-btn" onclick="toggleSortDate()" title="↓ Plus récent">📅</button>
     <button class="btn-icon" id="sort-prio-btn" onclick="toggleSortPrio()" title="Trier par priorité">⚡</button>
     <div class="hdr-sep" style="width:1px;height:20px;background:var(--border);margin:0 2px"></div>
-    <button class="btn-icon" id="module-crm-btn" onclick="switchModule('crm')" title="CRM Prospects" style="font-size:0.72rem;font-family:Syne,sans-serif;font-weight:700;letter-spacing:0.03em;padding:6px 10px;width:auto">CRM</button>
+    <button class="btn-icon" id="module-crm-btn" onclick="switchModule('crm')" title="CRM Prospects" style="font-size:0.72rem;font-family:var(--font-ui);font-weight:700;letter-spacing:0.03em;padding:6px 10px;width:auto">CRM</button>
     <button class="btn-icon" id="module-dash-btn" onclick="switchModule('dashboard')" title="Dashboard" style="padding:6px 10px;width:auto">📊</button>
     <button class="btn-icon" id="module-roadmap-btn" onclick="switchTab('roadmap')" title="Roadmap" style="padding:6px 10px;width:auto">🗺</button>
     <button class="btn-icon" id="module-idees-btn" onclick="switchModule('idees')" title="Bo\u00eete \u00e0 id\u00e9es r\u00e9union" style="padding:6px 10px;width:auto">💡</button>
@@ -976,7 +985,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
   <button class="tab" data-tab="notes" onclick="switchTab('notes')">Notes</button>
   <button class="tab" data-tab="projets" onclick="switchTab('projets')">Projets</button>
   <div style="flex:1"></div>
-  <div style="font-size:0.72rem;color:var(--text2);font-family:Syne,sans-serif;font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px" class="ver-badge">v8.54</div>
+  <div style="font-size:0.72rem;color:var(--text2);font-family:var(--font-ui);font-weight:600;letter-spacing:0.06em;align-self:center;padding-right:8px" class="ver-badge">v8.56</div>
 </div>
 
 <main id="main-content">
@@ -1085,7 +1094,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
     </div>
     <div style="display:flex;align-items:center;gap:8px;margin-top:6px;margin-bottom:4px">
       <div style="font-size:0.72rem;color:var(--text3);white-space:nowrap">Ou date précise :</div>
-      <input type="date" id="prospect-echeance-date" onclick="this.showPicker && this.showPicker()" onchange="selectProspectRelanceDate(this.value)" style="flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:6px 10px;color:var(--text);font-family:DM Sans,sans-serif;font-size:0.82rem;outline:none;cursor:pointer">
+      <input type="date" id="prospect-echeance-date" onclick="this.showPicker && this.showPicker()" onchange="selectProspectRelanceDate(this.value)" style="flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:6px 10px;color:var(--text);font-family:var(--font-ui);font-size:0.82rem;outline:none;cursor:pointer">
     </div>
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
       <div style="font-size:0.72rem;color:var(--text3)" id="prospect-relance-label"></div>
@@ -1132,7 +1141,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
 <div class="modal-overlay" id="modal-xpress">
   <div class="modal" style="padding-bottom:8px">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
-      <div style="font-family:Syne,sans-serif;font-weight:800;font-size:1.1rem;color:#38bdf8">⚡ Xpress</div>
+      <div style="font-family:var(--font-title);font-weight:400;font-size:1.1rem;color:#38bdf8">⚡ Xpress</div>
       <button onclick="closeModal('modal-xpress')" style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;width:32px;height:32px;color:var(--text2);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center">✕</button>
     </div>
 
@@ -1147,16 +1156,16 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
     <!-- Ligne 1 : sélecteur H:MM direct -->
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
       <div style="display:flex;align-items:center;gap:4px;background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:6px 12px">
-        <select id="xpress-h" onchange="onXpressHourChange()" style="background:transparent;border:none;color:var(--text);font-family:Syne,sans-serif;font-weight:700;font-size:1rem;cursor:pointer;outline:none;-webkit-appearance:none;width:40px;text-align:center">
+        <select id="xpress-h" onchange="onXpressHourChange()" style="background:transparent;border:none;color:var(--text);font-family:var(--font-ui);font-weight:700;font-size:1rem;cursor:pointer;outline:none;-webkit-appearance:none;width:40px;text-align:center">
           <option value="">--</option>
           <option>00</option><option>01</option><option>02</option><option>03</option><option>04</option><option>05</option><option>06</option><option>07</option><option>08</option><option>09</option><option>10</option><option>11</option><option>12</option><option>13</option><option>14</option><option>15</option><option>16</option><option>17</option><option>18</option><option>19</option><option>20</option><option>21</option><option>22</option><option>23</option>
         </select>
         <span style="color:var(--text2);font-weight:700;font-size:1.1rem">:</span>
-        <select id="xpress-m" onchange="onXpressHourChange()" style="background:transparent;border:none;color:var(--text);font-family:Syne,sans-serif;font-weight:700;font-size:1rem;cursor:pointer;outline:none;-webkit-appearance:none;width:40px;text-align:center">
+        <select id="xpress-m" onchange="onXpressHourChange()" style="background:transparent;border:none;color:var(--text);font-family:var(--font-ui);font-weight:700;font-size:1rem;cursor:pointer;outline:none;-webkit-appearance:none;width:40px;text-align:center">
           <option>00</option><option>05</option><option>10</option><option>15</option><option>20</option><option>25</option><option>30</option><option>35</option><option>40</option><option>45</option><option>50</option><option>55</option>
         </select>
       </div>
-      <div id="xpress-time-display" style="font-family:Syne,sans-serif;font-size:0.8rem;color:var(--text3)">heure fixe</div>
+      <div id="xpress-time-display" style="font-family:var(--font-ui);font-size:0.8rem;color:var(--text3)">heure fixe</div>
     </div>
 
     <!-- Ligne 2 : compte à rebours -->
@@ -1214,16 +1223,16 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
         <input type="hidden" id="input-note-time" value="">
       </div>
       <div id="note-time-picker-section" style="margin-bottom:14px">
-        <div style="font-size:0.68rem;color:var(--text3);font-family:Syne,sans-serif;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px">Heure (optionnel)</div>
+        <div style="font-size:0.68rem;color:var(--text3);font-family:var(--font-ui);font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px">Heure (optionnel)</div>
         <div style="display:flex;align-items:center;gap:8px">
           <button type="button" onclick="selectNoteTime('')" id="note-time-clear-btn" class="time-btn active" style="flex-shrink:0">Journée</button>
           <div style="display:flex;align-items:center;gap:4px;background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:4px 8px">
-            <select id="note-time-hour" onchange="updateTimeFromSelects('note')" style="background:transparent;border:none;color:var(--text);font-family:Syne,sans-serif;font-weight:700;font-size:0.9rem;cursor:pointer;outline:none;-webkit-appearance:none;text-align:center;width:36px">
+            <select id="note-time-hour" onchange="updateTimeFromSelects('note')" style="background:transparent;border:none;color:var(--text);font-family:var(--font-ui);font-weight:700;font-size:0.9rem;cursor:pointer;outline:none;-webkit-appearance:none;text-align:center;width:36px">
               <option value="">--</option>
               <option>00</option><option>01</option><option>02</option><option>03</option><option>04</option><option>05</option><option>06</option><option>07</option><option>08</option><option>09</option><option>10</option><option>11</option><option>12</option><option>13</option><option>14</option><option>15</option><option>16</option><option>17</option><option>18</option><option>19</option><option>20</option><option>21</option><option>22</option><option>23</option>
             </select>
             <span style="color:var(--text2);font-weight:700">:</span>
-            <select id="note-time-min" onchange="updateTimeFromSelects('note')" style="background:transparent;border:none;color:var(--text);font-family:Syne,sans-serif;font-weight:700;font-size:0.9rem;cursor:pointer;outline:none;-webkit-appearance:none;text-align:center;width:36px">
+            <select id="note-time-min" onchange="updateTimeFromSelects('note')" style="background:transparent;border:none;color:var(--text);font-family:var(--font-ui);font-weight:700;font-size:0.9rem;cursor:pointer;outline:none;-webkit-appearance:none;text-align:center;width:36px">
               <option value="">--</option>
               <option>00</option><option>05</option><option>10</option><option>15</option><option>20</option><option>25</option><option>30</option><option>35</option><option>40</option><option>45</option><option>50</option><option>55</option>
             </select>
@@ -1232,14 +1241,14 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
       </div>
       <!-- v8.19 : Toggle partage avec l'équipe (notes, owner uniquement) -->
       <div id="field-note-shared" style="margin-bottom:10px">
-        <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:0.82rem;color:var(--text2);font-family:DM Sans,sans-serif;padding:8px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:8px">
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:0.82rem;color:var(--text2);font-family:var(--font-ui);padding:8px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:8px">
           <input type="checkbox" id="input-note-shared" style="cursor:pointer;width:16px;height:16px;accent-color:#38bdf8">
           <span>👥 Partager cette note avec l'équipe</span>
         </label>
       </div>
       <!-- Toggle checklist -->
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
-        <button id="toggle-cl-btn" onclick="toggleChecklist()" style="display:flex;align-items:center;gap:6px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:7px 12px;color:var(--text2);font-size:0.78rem;font-family:Syne,sans-serif;font-weight:600;cursor:pointer;transition:all 0.15s">
+        <button id="toggle-cl-btn" onclick="toggleChecklist()" style="display:flex;align-items:center;gap:6px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:7px 12px;color:var(--text2);font-size:0.78rem;font-family:var(--font-ui);font-weight:600;cursor:pointer;transition:all 0.15s">
           ☑️ Ajouter une checklist
         </button>
       </div>
@@ -1264,7 +1273,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
         </div>
         <div>
           <div class="field-label">Édité par</div>
-          <div id="assignee-display" style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:11px 13px;color:var(--text3);font-size:0.88rem;font-family:DM Sans,sans-serif">—</div>
+          <div id="assignee-display" style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:11px 13px;color:var(--text3);font-size:0.88rem;font-family:var(--font-ui)">—</div>
           <input type="hidden" id="input-assignee" value="">
         </div>
       </div>
@@ -1274,16 +1283,16 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
         <input type="hidden" id="input-time" value="">
       </div>
       <div id="time-picker-section" style="margin-bottom:14px">
-        <div style="font-size:0.68rem;color:var(--text3);font-family:Syne,sans-serif;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px">Heure (optionnel)</div>
+        <div style="font-size:0.68rem;color:var(--text3);font-family:var(--font-ui);font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px">Heure (optionnel)</div>
         <div style="display:flex;align-items:center;gap:8px">
           <button type="button" onclick="selectTime('')" id="time-clear-btn" class="time-btn active" style="flex-shrink:0">Journée</button>
           <div style="display:flex;align-items:center;gap:4px;background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:4px 8px">
-            <select id="time-hour" onchange="updateTimeFromSelects('time')" style="background:transparent;border:none;color:var(--text);font-family:Syne,sans-serif;font-weight:700;font-size:0.9rem;cursor:pointer;outline:none;-webkit-appearance:none;text-align:center;width:36px">
+            <select id="time-hour" onchange="updateTimeFromSelects('time')" style="background:transparent;border:none;color:var(--text);font-family:var(--font-ui);font-weight:700;font-size:0.9rem;cursor:pointer;outline:none;-webkit-appearance:none;text-align:center;width:36px">
               <option value="">--</option>
               <option>00</option><option>01</option><option>02</option><option>03</option><option>04</option><option>05</option><option>06</option><option>07</option><option>08</option><option>09</option><option>10</option><option>11</option><option>12</option><option>13</option><option>14</option><option>15</option><option>16</option><option>17</option><option>18</option><option>19</option><option>20</option><option>21</option><option>22</option><option>23</option>
             </select>
             <span style="color:var(--text2);font-weight:700">:</span>
-            <select id="time-min" onchange="updateTimeFromSelects('time')" style="background:transparent;border:none;color:var(--text);font-family:Syne,sans-serif;font-weight:700;font-size:0.9rem;cursor:pointer;outline:none;-webkit-appearance:none;text-align:center;width:36px">
+            <select id="time-min" onchange="updateTimeFromSelects('time')" style="background:transparent;border:none;color:var(--text);font-family:var(--font-ui);font-weight:700;font-size:0.9rem;cursor:pointer;outline:none;-webkit-appearance:none;text-align:center;width:36px">
               <option value="">--</option>
               <option>00</option><option>05</option><option>10</option><option>15</option><option>20</option><option>25</option><option>30</option><option>35</option><option>40</option><option>45</option><option>50</option><option>55</option>
             </select>
@@ -1297,7 +1306,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
       <div style="font-size:0.7rem;color:var(--text3);margin:-8px 0 14px;line-height:1.45">Conversation ou doc Claude, chemin Dropbox, site web. Pour nommer un lien : « Libellé | adresse ».</div>
       <!-- Checklist dans to-do -->
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
-        <button id="toggle-cl-todo-btn" onclick="toggleChecklistTodo()" style="display:flex;align-items:center;gap:6px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:7px 12px;color:var(--text2);font-size:0.78rem;font-family:Syne,sans-serif;font-weight:600;cursor:pointer;transition:all 0.15s">
+        <button id="toggle-cl-todo-btn" onclick="toggleChecklistTodo()" style="display:flex;align-items:center;gap:6px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:7px 12px;color:var(--text2);font-size:0.78rem;font-family:var(--font-ui);font-weight:600;cursor:pointer;transition:all 0.15s">
           ☑️ Ajouter une checklist
         </button>
       </div>
@@ -1370,7 +1379,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
     </div>
     <div id="user-picker-list" style="display:flex;flex-direction:column;gap:10px;"></div>
     <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border)">
-      <button onclick="doLogout();closeModal('modal-user')" style="width:100%;background:transparent;border:1px solid rgba(244,63,94,0.3);border-radius:10px;padding:11px;color:var(--cat-urgent);font-family:Syne,sans-serif;font-weight:700;font-size:0.85rem;cursor:pointer">
+      <button onclick="doLogout();closeModal('modal-user')" style="width:100%;background:transparent;border:1px solid rgba(244,63,94,0.3);border-radius:10px;padding:11px;color:var(--cat-urgent);font-family:var(--font-ui);font-weight:700;font-size:0.85rem;cursor:pointer">
         Se d&#233;connecter
       </button>
     </div>
@@ -1434,7 +1443,7 @@ select.field-input { margin-bottom: 0; cursor: pointer; }
 // /!\ Garder en phase avec le commentaire <!-- LUMIIA Workspace vX.Y --> (ligne ~15),
 //     que deployer.command lit en texte brut (impossible à dériver d'ici).
 // ─────────────────────────────────────────────
-const APP_VERSION = 'v8.54';
+const APP_VERSION = 'v8.56';
 try { document.querySelectorAll('.ver-badge').forEach(e => e.textContent = APP_VERSION); } catch (e) {}
 // ─────────────────────────────────────────────
 // FIREBASE
@@ -1882,10 +1891,10 @@ function showUserPicker() {
       const isActive = m.id === currentUser;
       const bg = isActive ? 'rgba(56,189,248,0.1)' : 'var(--bg3)';
       const border = isActive ? 'rgba(56,189,248,0.4)' : 'var(--border)';
-      const badge = isActive ? '<div style="font-size:0.7rem;color:#38bdf8;font-family:Syne,sans-serif;font-weight:700">ACTIF</div>' : '';
+      const badge = isActive ? '<div style="font-size:0.7rem;color:#38bdf8;font-family:var(--font-ui);font-weight:700">ACTIF</div>' : '';
       return '<button onclick="setUser(\'' + m.id + '\')" style="display:flex;align-items:center;gap:12px;background:' + bg + ';border:1px solid ' + border + ';border-radius:12px;padding:12px 16px;cursor:pointer;width:100%;text-align:left">'
-        + '<div style="width:36px;height:36px;border-radius:50%;background:' + colors[i % colors.length] + ';display:flex;align-items:center;justify-content:center;font-family:Syne,sans-serif;font-weight:800;font-size:0.8rem;color:#000;flex-shrink:0">' + m.name.slice(0,2).toUpperCase() + '</div>'
-        + '<div style="flex:1"><div style="font-family:Syne,sans-serif;font-weight:700;font-size:0.95rem;color:var(--text)">' + m.name + '</div>'
+        + '<div style="width:36px;height:36px;border-radius:50%;background:' + colors[i % colors.length] + ';display:flex;align-items:center;justify-content:center;font-family:var(--font-ui);font-weight:800;font-size:0.8rem;color:#000;flex-shrink:0">' + m.name.slice(0,2).toUpperCase() + '</div>'
+        + '<div style="flex:1"><div style="font-family:var(--font-ui);font-weight:700;font-size:0.95rem;color:var(--text)">' + m.name + '</div>'
         + '<div style="font-size:0.72rem;color:var(--text3)">' + m.id + '</div></div>'
         + badge + '</button>';
     }).join('');
@@ -2055,7 +2064,7 @@ function renderXpressCard(item) {
   }
   return '<div class="xpress-card" onclick="openDetail(\'' + item.id + '\')">'
     + '<button class="xpress-close" onclick="deleteXpress(\'' + item.id + '\',event)">✕</button>'
-    + '<div style="font-family:Syne,sans-serif;font-weight:700;font-size:0.92rem;color:var(--text);padding-right:20px">' + item.title + '</div>'
+    + '<div style="font-family:var(--font-ui);font-weight:700;font-size:0.92rem;color:var(--text);padding-right:20px">' + item.title + '</div>'
     + xclBadge(item)
     + timerHtml
     + '</div>';
@@ -2169,13 +2178,13 @@ function renderTodoItem(item, idx, showDelete = false) {
   let validationBadge = '';
   if (needsValidation) {
     validationBadge = canValidate
-      ? `<button onclick="event.stopPropagation();validateTask('${item.id}')" style="background:rgba(255,107,53,0.2);border:1px solid var(--cat-lumiia);border-radius:8px;padding:3px 8px;font-size:0.72rem;color:var(--cat-lumiia);font-family:Syne,sans-serif;font-weight:700;cursor:pointer;white-space:nowrap">✓ Valider</button>`
-      : `<div style="font-size:0.7rem;color:var(--cat-admin);font-family:Syne,sans-serif;font-weight:600;white-space:nowrap">⏳ ${item.validateBy.toUpperCase()}</div>`;
+      ? `<button onclick="event.stopPropagation();validateTask('${item.id}')" style="background:rgba(255,107,53,0.2);border:1px solid var(--cat-lumiia);border-radius:8px;padding:3px 8px;font-size:0.72rem;color:var(--cat-lumiia);font-family:var(--font-ui);font-weight:700;cursor:pointer;white-space:nowrap">✓ Valider</button>`
+      : `<div style="font-size:0.7rem;color:var(--cat-admin);font-family:var(--font-ui);font-weight:600;white-space:nowrap">⏳ ${item.validateBy.toUpperCase()}</div>`;
   }
   if (item.validated) {
     const validator = MEMBERS.find(m => m.id === item.validatedBy);
     const initials = validator ? validator.name.slice(0,3).toUpperCase() : (item.validatedBy||'?').toUpperCase();
-    validationBadge = `<div style="font-size:0.7rem;color:var(--cat-perso);font-family:Syne,sans-serif;font-weight:700;white-space:nowrap">✓ ${initials}</div>`;
+    validationBadge = `<div style="font-size:0.7rem;color:var(--cat-perso);font-family:var(--font-ui);font-weight:700;white-space:nowrap">✓ ${initials}</div>`;
   }
 
   let extraClass = '';
@@ -2185,7 +2194,7 @@ function renderTodoItem(item, idx, showDelete = false) {
 
   let waitingLabel = '';
   if (isWaiting) {
-    waitingLabel = `<div style="font-size:0.7rem;color:var(--cat-admin);font-family:Syne,sans-serif;font-weight:600;white-space:nowrap">⏳ ${assigneeLabel}</div>`;
+    waitingLabel = `<div style="font-size:0.7rem;color:var(--cat-admin);font-family:var(--font-ui);font-weight:600;white-space:nowrap">⏳ ${assigneeLabel}</div>`;
   }
 
   // Case à cocher : ouvre le popup si validation en attente, sinon toggle normal
@@ -2291,8 +2300,8 @@ function renderDayItem(item, isToday) {
   const catInfo = getCatInfo(item);
   const isTodo = item.type === 'todo';
   const prioIcon = isTodo ? ({'urgent':'🔴','normal':'🟡','later':'⚪'}[item.prio] || '') : '📝';
-  const timeStr = item.dueTime ? '<span style="font-size:0.7rem;color:#38bdf8;font-weight:700;font-family:Syne,sans-serif"> ' + item.dueTime + '</span>'
-    : (item.noteTime ? '<span style="font-size:0.7rem;color:#38bdf8;font-weight:700;font-family:Syne,sans-serif"> ' + item.noteTime + '</span>' : '');
+  const timeStr = item.dueTime ? '<span style="font-size:0.7rem;color:#38bdf8;font-weight:700;font-family:var(--font-ui)"> ' + item.dueTime + '</span>'
+    : (item.noteTime ? '<span style="font-size:0.7rem;color:#38bdf8;font-weight:700;font-family:var(--font-ui)"> ' + item.noteTime + '</span>' : '');
   const pad = isToday ? '10px 12px' : '8px 10px';
   const fs = isToday ? '0.88rem' : '0.82rem';
   return '<div onclick="openDetail(\'' + item.id + '\')" style="display:flex;align-items:center;gap:8px;padding:' + pad + ';background:var(--bg3);border-radius:10px;margin-bottom:6px;cursor:pointer;border-left:3px solid ' + catInfo.color + (isTodo ? '' : ';opacity:0.9') + '">'
@@ -2326,7 +2335,7 @@ function fmtRoadmapTimestamps(item) {
   const c = fmtRoadmapDate(item && item.createdAt);
   const u = fmtRoadmapDate(item && item.updatedAt);
   if (!c && !u) return '';
-  const style = 'font-size:0.62rem;color:var(--text3);opacity:0.65;font-family:DM Sans,sans-serif;margin-top:5px';
+  const style = 'font-size:0.62rem;color:var(--text3);opacity:0.65;font-family:var(--font-ui);margin-top:5px';
   if (!c) return `<div style="${style}">maj ${u}</div>`;
   if (!u || u === c) return `<div style="${style}">cr\u00e9\u00e9 ${c}</div>`;
   return `<div style="${style}">cr\u00e9\u00e9 ${c} \u00b7 maj ${u}</div>`;
@@ -2337,7 +2346,7 @@ window.renderInboxCard = function renderInboxCard() {
   const ids = Object.keys(inboxData || {});
   if (!ids.length) return '';
   const esc = s => (''+ (s==null?'':s)).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-  const CATS = [['wishlist','💡 Wishlist'],['admin','⚙️ Admin'],['com','📣 Com'],['game','🎮 Game'],['teambuilding','🎯 Team Building'],['design','🎨 Design'],['spectacle','🎭 Spectacle'],['meta','🔧 Global']];
+  const CATS = [['wishlist','💡 Wishlist'],['admin','⚙️ Admin'],['com','📣 Com'],['game','🎮 Game'],['teambuilding','🎯 Team Building'],['design','🎨 Design'],['spectacle','🎭 Spectacle'],['bienetre','🌱 Bien-être'],['meta','🔧 Global']];
   const projKeys = Object.keys(roadmapData).filter(k=>roadmapData[k]&&roadmapData[k].label).sort((a,b)=>(roadmapData[a].label||a).localeCompare(roadmapData[b].label||b));
   const selStyle = 'padding:4px 6px;border-radius:6px;border:1px solid var(--border);background:var(--bg3);color:var(--text2);font-size:0.72rem;max-width:180px';
   const rows = ids.map(id => {
@@ -2375,7 +2384,7 @@ window.renderInboxCard = function renderInboxCard() {
       + '</div>';
   }).join('');
   return '<div style="margin-bottom:18px;padding:12px 14px;background:rgba(250,204,21,0.06);border:1px solid rgba(250,204,21,0.3);border-radius:10px">'
-    + '<div style="font-family:Syne,sans-serif;font-size:0.9rem;font-weight:700;color:#facc15;margin-bottom:8px">📥 À intégrer ('+ids.length+')</div>'
+    + '<div style="font-family:var(--font-ui);font-size:0.9rem;font-weight:700;color:#facc15;margin-bottom:8px">📥 À intégrer ('+ids.length+')</div>'
     + rows
     + '</div>';
 };
@@ -2541,7 +2550,7 @@ window.renderWsInboxCard = function renderWsInboxCard(kind) {
       + '</div></div>';
   }).join('');
   return '<div style="margin-bottom:14px;padding:12px 14px;background:rgba(250,204,21,0.06);border:1px solid rgba(250,204,21,0.3);border-radius:10px">'
-    + '<div style="font-family:Syne,sans-serif;font-size:0.9rem;font-weight:700;color:#facc15;margin-bottom:8px">\ud83d\udce5 \u00c0 int\u00e9grer ('+ids.length+')</div>'
+    + '<div style="font-family:var(--font-ui);font-size:0.9rem;font-weight:700;color:#facc15;margin-bottom:8px">\ud83d\udce5 \u00c0 int\u00e9grer ('+ids.length+')</div>'
     + rows + '</div>';
 };
 
@@ -2690,7 +2699,7 @@ window.renderCrmInboxCard = function renderCrmInboxCard() {
       + '</div></div>';
   }).join('');
   return '<div style="margin-bottom:16px;padding:12px 14px;background:rgba(250,204,21,0.06);border:1px solid rgba(250,204,21,0.3);border-radius:10px">'
-    + '<div style="font-family:Syne,sans-serif;font-size:0.9rem;font-weight:700;color:#facc15;margin-bottom:8px">\ud83d\udce5 \u00c0 int\u00e9grer ('+ids.length+')</div>'
+    + '<div style="font-family:var(--font-ui);font-size:0.9rem;font-weight:700;color:#facc15;margin-bottom:8px">\ud83d\udce5 \u00c0 int\u00e9grer ('+ids.length+')</div>'
     + rows + '</div>';
 };
 
@@ -2756,10 +2765,11 @@ function renderRoadmap() {
     teambuilding: { label: '🎯 Team Building', color: '#fb923c' },
     design:{ label: '🎨 Design', color: '#34d399' },
     spectacle: { label: '🎭 Spectacle', color: '#f43f5e' },
+    bienetre: { label: '🌱 Bien-être', color: '#2dd4bf' }, // v8.56
     meta:  { label: '🔧 Global', color: 'var(--text3)' },
     wishlist: { label: '💡 Wishlist', color: '#facc15' }
   };
-  const CAT_ORDER = ['admin', 'com', 'spectacle', 'game', 'teambuilding', 'design', 'meta', 'wishlist'];
+  const CAT_ORDER = ['admin', 'com', 'spectacle', 'game', 'teambuilding', 'design', 'bienetre', 'meta', 'wishlist'];
   const allKeys = Object.keys(roadmapData).filter(k => roadmapData[k] && roadmapData[k].label);
   const groups = {};
   CAT_ORDER.forEach(c => groups[c] = []);
@@ -2789,7 +2799,7 @@ function renderRoadmap() {
           + '</div>';
     }
     return '<button onclick="roadmapActiveTab=\''+k+'\';document.getElementById(\'roadmap-content\').innerHTML=renderRoadmapProject(\''+k+'\')"'
-      +' style="display:flex;flex-direction:column;align-items:stretch;gap:2px;padding:6px 12px;border-radius:8px;cursor:pointer;font-size:0.78rem;font-family:Syne,sans-serif;font-weight:'+(isActive?'700':'500')+';background:'+(isActive?'rgba(74,222,128,0.12)':'var(--bg2)')+';color:'+(isActive?'var(--accent)':'var(--text3)')+';border:1px solid '+(isActive?'rgba(74,222,128,0.2)':'var(--border)')+';min-width:132px">'
+      +' style="display:flex;flex-direction:column;align-items:stretch;gap:2px;padding:6px 12px;border-radius:8px;cursor:pointer;font-size:0.78rem;font-family:var(--font-ui);font-weight:'+(isActive?'700':'500')+';background:'+(isActive?'rgba(74,222,128,0.12)':'var(--bg2)')+';color:'+(isActive?'var(--accent)':'var(--text3)')+';border:1px solid '+(isActive?'rgba(74,222,128,0.2)':'var(--border)')+';min-width:132px">'
       +'<div style="display:flex;align-items:center;gap:5px;white-space:nowrap"><span>'+(p.emoji||'📁')+'</span><span>'+p.label+'</span>'+badge+'</div>'
       + bar
       +'</button>';
@@ -2800,7 +2810,7 @@ function renderRoadmap() {
     return '<div style="margin-bottom:12px"><div style="font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;color:'+cm.color+';font-weight:700;margin-bottom:5px;padding-left:2px">'+cm.label+'</div><div style="display:flex;flex-wrap:wrap;gap:5px">'+keys.map(makeRdBtn).join('')+'</div></div>';
   }).join('');
   return '<div style="padding:20px 24px 40px">'
-    + '<div style="font-family:Syne,sans-serif;font-size:1.1rem;font-weight:700;letter-spacing:0.04em;margin-bottom:4px">Roadmap LUMIIA</div>'
+    + '<div style="font-family:var(--font-ui);font-size:1.1rem;font-weight:700;letter-spacing:0.04em;margin-bottom:4px">Roadmap LUMIIA</div>'
     + '<div style="font-size:0.75rem;color:var(--text3);margin-bottom:16px">Synchronisé en temps réel · mis à jour par Claude</div>'
     + renderInboxCard()
     + '<div style="margin-bottom:20px">'+tabsHtml+'</div>'
@@ -2831,7 +2841,7 @@ window.renderRoadmapProject = function renderRoadmapProject(key) {
   html += `<div style="padding:14px 18px 12px;border-bottom:1px solid ${borderColor};display:flex;align-items:center;justify-content:space-between;${isGlobal?'background:rgba(168,139,250,0.04)':''}">
     <div style="display:flex;align-items:center;gap:10px">
       <span style="font-size:1.1rem">${proj.emoji||'\ud83d\udcc1'}</span>
-      <span style="font-family:Syne,sans-serif;font-weight:700;font-size:0.9rem;letter-spacing:0.03em;color:${accentColor}">${proj.label}</span>
+      <span style="font-family:var(--font-ui);font-weight:700;font-size:0.9rem;letter-spacing:0.03em;color:${accentColor}">${proj.label}</span>
       ${isGlobal ? `<span style="font-size:0.65rem;padding:2px 7px;border-radius:10px;background:rgba(168,139,250,0.15);color:#a78bfa;font-weight:600">Commun \u00e0 tous les projets</span>` : ''}
     </div>
     ${!isGlobal ? `<span style="display:flex;align-items:center;gap:10px">
@@ -2850,12 +2860,12 @@ window.renderRoadmapProject = function renderRoadmapProject(key) {
     html += `<div style="display:flex;align-items:center;gap:12px;padding:9px 18px;border-bottom:1px solid var(--border)">
       <span style="flex-shrink:0;width:7px;height:7px;border-radius:50%;background:${color};display:inline-block"></span>
       <span style="flex:1;font-size:0.8rem;${strike}color:var(--text1)">
-        ${task._id ? `<span style="font-size:0.65rem;font-family:Syne,sans-serif;color:var(--text3);margin-right:6px;opacity:0.7">${task._id}</span>` : ''}${task.label}
+        ${task._id ? `<span style="font-size:0.65rem;font-family:var(--font-ui);color:var(--text3);margin-right:6px;opacity:0.7">${task._id}</span>` : ''}${task.label}
         ${task.note ? `<div style="font-size:0.7rem;color:var(--text3);margin-top:3px;font-weight:400;line-height:1.5;text-decoration:none;opacity:1">${task.note}</div>` : ''}
         ${fmtRoadmapTimestamps(task)}
       </span>
       <span style="display:flex;align-items:center;gap:6px;flex-shrink:0">
-        ${task.version ? `<span style="font-size:0.68rem;color:var(--text3);font-family:Syne,sans-serif">${task.version}</span>` : ''}
+        ${task.version ? `<span style="font-size:0.68rem;color:var(--text3);font-family:var(--font-ui)">${task.version}</span>` : ''}
         <span style="font-size:0.68rem;padding:2px 8px;border-radius:20px;background:${bg};color:${color};font-weight:600">${lbl}</span>
       </span>
     </div>`;
@@ -2865,7 +2875,7 @@ window.renderRoadmapProject = function renderRoadmapProject(key) {
   if (notes.length) {
     const notesLabel = isGlobal ? 'Philosophie & r\u00e8gles communes' : 'Notes techniques';
     html += `<div style="padding:12px 18px 6px;border-top:1px solid ${borderColor};background:rgba(255,255,255,0.02)">
-      <div style="font-size:0.68rem;color:${isGlobal?'#a78bfa':'var(--text3)'};font-family:Syne,sans-serif;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:10px">${notesLabel}</div>
+      <div style="font-size:0.68rem;color:${isGlobal?'#a78bfa':'var(--text3)'};font-family:var(--font-ui);font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:10px">${notesLabel}</div>
       <div style="display:flex;flex-direction:column;gap:8px;padding-bottom:6px">`;
     for (const note of notes) {
       html += `<div style="background:var(--bg3);border:1px solid ${isGlobal?'rgba(168,139,250,0.15)':'var(--border)'};border-radius:8px;padding:10px 12px">
@@ -3257,14 +3267,14 @@ function renderProjets() {
     return `<div class="empty">
       <div class="empty-icon">📁</div>
       <div class="empty-text">Aucun projet.<br>
-        <button onclick="openNewProjectModal()" style="margin-top:12px;background:var(--cat-lumiia);border:none;border-radius:10px;padding:10px 18px;color:#000;font-family:Syne,sans-serif;font-weight:700;font-size:0.85rem;cursor:pointer">+ Créer un projet</button>
+        <button onclick="openNewProjectModal()" style="margin-top:12px;background:var(--cat-lumiia);border:none;border-radius:10px;padding:10px 18px;color:#000;font-family:var(--font-ui);font-weight:700;font-size:0.85rem;cursor:pointer">+ Créer un projet</button>
       </div>
     </div>`;
   }
 
   let html = `<div class="section-head">
     <div class="section-title">${visibleProjects.length} projet${visibleProjects.length > 1 ? 's' : ''}</div>
-    <button onclick="openNewProjectModal()" style="font-size:0.72rem;color:#38bdf8;background:none;border:none;cursor:pointer;font-family:Syne,sans-serif;font-weight:700">+ Nouveau</button>
+    <button onclick="openNewProjectModal()" style="font-size:0.72rem;color:#38bdf8;background:none;border:none;cursor:pointer;font-family:var(--font-ui);font-weight:700">+ Nouveau</button>
   </div>`;
   html += `<div class="cards-grid">`;
 
@@ -3277,7 +3287,7 @@ function renderProjets() {
     html += `<div class="card projet-card" onclick="openProject('${proj.id}')" style="animation-delay:${idx*0.05}s;min-height:140px;border-left:3px solid ${proj.color}">
       <div style="display:flex;align-items:center;justify-content:space-between">
         <div style="width:10px;height:10px;border-radius:50%;background:${proj.color}"></div>
-        ${urgentCount > 0 ? `<div style="font-size:0.7rem;color:var(--cat-urgent);font-family:Syne,sans-serif;font-weight:700">🔴 ${urgentCount}</div>` : ''}
+        ${urgentCount > 0 ? `<div style="font-size:0.7rem;color:var(--cat-urgent);font-family:var(--font-ui);font-weight:700">🔴 ${urgentCount}</div>` : ''}
       </div>
       <div class="card-title" style="font-size:1.05rem;color:${proj.color}">${proj.label}</div>
       ${proj.subcats?.length ? `<div style="font-size:0.7rem;color:var(--text3)">${proj.subcats.map(s=>`<span style="background:rgba(255,255,255,0.06);border-radius:4px;padding:1px 5px">${s.label}</span>`).join(' ')}</div>` : ''}
@@ -3306,10 +3316,10 @@ function renderProjetDetail(projectId) {
 
   let html = `
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
-      <button onclick="closeProject()" style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:6px 12px;color:var(--text2);font-size:0.8rem;font-family:Syne,sans-serif;font-weight:600;cursor:pointer">← Projets</button>
+      <button onclick="closeProject()" style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:6px 12px;color:var(--text2);font-size:0.8rem;font-family:var(--font-ui);font-weight:600;cursor:pointer">← Projets</button>
       <div style="width:12px;height:12px;border-radius:50%;background:${proj.color}"></div>
-      <div style="font-family:Syne,sans-serif;font-weight:800;font-size:1.1rem;color:${proj.color}">${proj.label}</div>
-      <button onclick="editProject('${proj.id}')" style="margin-left:auto;background:none;border:none;color:var(--text3);font-size:0.8rem;cursor:pointer;font-family:Syne,sans-serif">⚙️</button>
+      <div style="font-family:var(--font-title);font-weight:400;font-size:1.1rem;color:${proj.color}">${proj.label}</div>
+      <button onclick="editProject('${proj.id}')" style="margin-left:auto;background:none;border:none;color:var(--text3);font-size:0.8rem;cursor:pointer;font-family:var(--font-ui)">⚙️</button>
     </div>`;
 
   // Chips sous-catégories
@@ -3325,7 +3335,7 @@ function renderProjetDetail(projectId) {
   // Notes
   html += `<div class="section-head">
     <div class="section-title">📝 Notes · ${notes.length}</div>
-    <button onclick="openCreateModalForProject('${projectId}','note')" style="font-size:0.72rem;color:#38bdf8;background:none;border:none;cursor:pointer;font-family:Syne,sans-serif;font-weight:700">+ Note</button>
+    <button onclick="openCreateModalForProject('${projectId}','note')" style="font-size:0.72rem;color:#38bdf8;background:none;border:none;cursor:pointer;font-family:var(--font-ui);font-weight:700">+ Note</button>
   </div>`;
 
   if (notes.length === 0) {
@@ -3340,7 +3350,7 @@ function renderProjetDetail(projectId) {
   const sorted = [...activeTodos].sort((a,b) => ({'urgent':0,'normal':1,'later':2}[a.prio]??1) - ({'urgent':0,'normal':1,'later':2}[b.prio]??1));
   html += `<div class="section-head">
     <div class="section-title">✅ Tâches · ${activeTodos.length}</div>
-    <button onclick="openCreateModalForProject('${projectId}','todo')" style="font-size:0.72rem;color:#38bdf8;background:none;border:none;cursor:pointer;font-family:Syne,sans-serif;font-weight:700">+ Tâche</button>
+    <button onclick="openCreateModalForProject('${projectId}','todo')" style="font-size:0.72rem;color:#38bdf8;background:none;border:none;cursor:pointer;font-family:var(--font-ui);font-weight:700">+ Tâche</button>
   </div>`;
 
   if (activeTodos.length === 0) {
@@ -3442,7 +3452,7 @@ function _renderProjSubcats() {
     <div style="display:flex;align-items:center;gap:8px">
       <div style="width:18px;height:18px;border-radius:50%;background:${s.color};flex-shrink:0;cursor:pointer" onclick="_cycleSubcatColor(${i})"></div>
       <input type="text" value="${s.label}" placeholder="Nom..." oninput="_editingProjectSubcats[${i}].label=this.value"
-        style="flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:8px 11px;color:var(--text);font-family:DM Sans,sans-serif;font-size:0.85rem;outline:none">
+        style="flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:8px 11px;color:var(--text);font-family:var(--font-ui);font-size:0.85rem;outline:none">
       <button onclick="_editingProjectSubcats.splice(${i},1);_renderProjSubcats()" style="background:none;border:none;color:var(--text3);font-size:1rem;cursor:pointer;padding:4px" onmouseover="this.style.color='var(--cat-urgent)'" onmouseout="this.style.color='var(--text3)'">✕</button>
     </div>
   `).join('');
@@ -3509,7 +3519,7 @@ function renderCatEditor() {
     <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
       <div style="width:20px;height:20px;border-radius:50%;background:${cat.color};flex-shrink:0;cursor:pointer" onclick="cycleCatColor(${i})" title="Changer la couleur"></div>
       <input type="text" value="${cat.label}" oninput="updateCatLabel(${i}, this.value)"
-        style="flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:8px 11px;color:var(--text);font-family:DM Sans,sans-serif;font-size:0.85rem;outline:none">
+        style="flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:8px 11px;color:var(--text);font-family:var(--font-ui);font-size:0.85rem;outline:none">
       <button onclick="removeCat(${i})" style="background:none;border:none;color:var(--text3);font-size:1rem;cursor:pointer;padding:4px;" onmouseover="this.style.color='var(--cat-urgent)'" onmouseout="this.style.color='var(--text3)'">✕</button>
     </div>`;
 
@@ -3755,9 +3765,9 @@ function renderMembersList() {
   const colors = ['var(--cat-lumiia)','var(--cat-signal)','var(--cat-raffines)','var(--cat-perso)'];
   el.innerHTML = MEMBERS.map((m, i) => `
     <div style="display:flex;align-items:center;gap:10px;background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:10px 12px">
-      <div style="width:32px;height:32px;border-radius:50%;background:${colors[i%4]};display:flex;align-items:center;justify-content:center;font-family:Syne,sans-serif;font-weight:800;font-size:0.72rem;color:#000;flex-shrink:0">${m.name.slice(0,2).toUpperCase()}</div>
+      <div style="width:32px;height:32px;border-radius:50%;background:${colors[i%4]};display:flex;align-items:center;justify-content:center;font-family:var(--font-ui);font-weight:800;font-size:0.72rem;color:#000;flex-shrink:0">${m.name.slice(0,2).toUpperCase()}</div>
       <div style="flex:1;min-width:0">
-        <div style="font-size:0.88rem;font-weight:600;font-family:Syne,sans-serif">${m.name}</div>
+        <div style="font-size:0.88rem;font-weight:600;font-family:var(--font-ui)">${m.name}</div>
         <div style="font-size:0.65rem;color:var(--text3)">id : ${m.id}</div>
       </div>
     </div>
@@ -4118,16 +4128,16 @@ function openDetail(id) {
       alarmStr = item.xpressTimer + ' min (expir\u00e9)';
     }
     html += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:14px">'
-      + '<div style="font-size:0.75rem;color:#38bdf8;font-family:Syne,sans-serif;font-weight:700;background:rgba(56,189,248,0.12);border:1px solid rgba(56,189,248,0.3);border-radius:8px;padding:3px 10px">\u26a1 XPRESS</div>'
+      + '<div style="font-size:0.75rem;color:#38bdf8;font-family:var(--font-ui);font-weight:700;background:rgba(56,189,248,0.12);border:1px solid rgba(56,189,248,0.3);border-radius:8px;padding:3px 10px">\u26a1 XPRESS</div>'
       + (alarmStr ? '<div style="font-size:0.75rem;color:var(--text3)">⏰ ' + alarmStr + '</div>' : '')
       + '</div>';
-    html += '<div style="font-family:Syne,sans-serif;font-weight:800;font-size:1.2rem;color:var(--text);margin-bottom:16px">' + item.title + '</div>';
+    html += '<div style="font-family:var(--font-title);font-weight:400;font-size:1.2rem;color:var(--text);margin-bottom:16px">' + item.title + '</div>';
     // v8.36 : check-list editable, enregistrement automatique
     html += renderXpressChecklistHTML(item);
     // Boutons de conversion
     html += '<div style="display:flex;gap:8px;margin-bottom:16px">'
-      + '<button onclick="convertXpress(\'' + item.id + '\',\'note\')" style="flex:1;padding:10px;background:var(--bg3);border:1px solid var(--border);border-radius:10px;color:var(--text2);font-family:Syne,sans-serif;font-weight:700;font-size:0.8rem;cursor:pointer">📝 Envoyer vers Note</button>'
-      + '<button onclick="convertXpress(\'' + item.id + '\',\'todo\')" style="flex:1;padding:10px;background:var(--bg3);border:1px solid var(--border);border-radius:10px;color:var(--text2);font-family:Syne,sans-serif;font-weight:700;font-size:0.8rem;cursor:pointer">✅ Envoyer vers T\u00e2ches</button>'
+      + '<button onclick="convertXpress(\'' + item.id + '\',\'note\')" style="flex:1;padding:10px;background:var(--bg3);border:1px solid var(--border);border-radius:10px;color:var(--text2);font-family:var(--font-ui);font-weight:700;font-size:0.8rem;cursor:pointer">📝 Envoyer vers Note</button>'
+      + '<button onclick="convertXpress(\'' + item.id + '\',\'todo\')" style="flex:1;padding:10px;background:var(--bg3);border:1px solid var(--border);border-radius:10px;color:var(--text2);font-family:var(--font-ui);font-weight:700;font-size:0.8rem;cursor:pointer">✅ Envoyer vers T\u00e2ches</button>'
       + '</div>';
     html += '<div class="modal-actions" style="margin-top:8px">'
       + '<button class="btn-delete" onclick="deleteItem(\'' + item.id + '\',true)">Supprimer</button>'
@@ -4152,10 +4162,10 @@ function openDetail(id) {
     html += `<div style="margin-bottom:18px">
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
         <div style="width:10px;height:10px;border-radius:50%;background:${catInfo.color};flex-shrink:0"></div>
-        <div style="font-size:0.72rem;color:var(--text3);font-family:Syne,sans-serif;font-weight:700;letter-spacing:0.1em;text-transform:uppercase">${catInfo.label}</div>
-        ${item.done ? `<div style="margin-left:auto;font-size:0.7rem;color:var(--cat-perso);font-family:Syne,sans-serif;font-weight:700;background:rgba(74,222,128,0.1);border:1px solid rgba(74,222,128,0.25);border-radius:20px;padding:3px 10px">✓ Terminée</div>` : ''}
+        <div style="font-size:0.72rem;color:var(--text3);font-family:var(--font-ui);font-weight:700;letter-spacing:0.1em;text-transform:uppercase">${catInfo.label}</div>
+        ${item.done ? `<div style="margin-left:auto;font-size:0.7rem;color:var(--cat-perso);font-family:var(--font-ui);font-weight:700;background:rgba(74,222,128,0.1);border:1px solid rgba(74,222,128,0.25);border-radius:20px;padding:3px 10px">✓ Terminée</div>` : ''}
       </div>
-      <div style="font-family:Syne,sans-serif;font-weight:800;font-size:1.2rem;line-height:1.3;color:var(--text);${item.done ? 'text-decoration:line-through;opacity:0.6' : ''}">${item.title}</div>
+      <div style="font-family:var(--font-title);font-weight:400;font-size:1.2rem;line-height:1.3;color:var(--text);${item.done ? 'text-decoration:line-through;opacity:0.6' : ''}">${item.title}</div>
     </div>`;
 
     // Bloc méta — grille 2 colonnes
@@ -4163,20 +4173,20 @@ function openDetail(id) {
 
     // Priorité
     html += `<div style="background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:10px 14px">
-      <div style="font-size:0.65rem;color:var(--text3);font-family:Syne,sans-serif;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:4px">Priorité</div>
+      <div style="font-size:0.65rem;color:var(--text3);font-family:var(--font-ui);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:4px">Priorité</div>
       <div style="font-size:0.88rem;font-weight:600;color:${prioColor}">${prioLabel}</div>
     </div>`;
 
     // Assigné à
     html += `<div style="background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:10px 14px">
-      <div style="font-size:0.65rem;color:var(--text3);font-family:Syne,sans-serif;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:4px">Édité par</div>
+      <div style="font-size:0.65rem;color:var(--text3);font-family:var(--font-ui);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:4px">Édité par</div>
       <div style="font-size:0.88rem;font-weight:600;color:var(--text)">${assigneeName || '—'}</div>
     </div>`;
 
     // Échéance
     if (dueStr) {
       html += `<div style="background:${isOverdue ? 'rgba(244,63,94,0.1)' : 'var(--bg3)'};border:1px solid ${isOverdue ? 'rgba(244,63,94,0.3)' : 'var(--border)'};border-radius:12px;padding:10px 14px;grid-column:1/-1">
-        <div style="font-size:0.65rem;color:${isOverdue ? 'var(--cat-urgent)' : 'var(--text3)'};font-family:Syne,sans-serif;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:4px">${isOverdue ? '\u26a0\ufe0f En retard' : '📅 \u00c9ch\u00e9ance'}</div>
+        <div style="font-size:0.65rem;color:${isOverdue ? 'var(--cat-urgent)' : 'var(--text3)'};font-family:var(--font-ui);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:4px">${isOverdue ? '\u26a0\ufe0f En retard' : '📅 \u00c9ch\u00e9ance'}</div>
         <div style="font-size:0.88rem;font-weight:600;color:${isOverdue ? 'var(--cat-urgent)' : 'var(--text)'}">${dueStr}</div>
       </div>`;
     }
@@ -4188,7 +4198,7 @@ function openDetail(id) {
       html += `<div style="display:flex;align-items:center;gap:10px;background:rgba(74,222,128,0.08);border:1px solid rgba(74,222,128,0.25);border-radius:12px;padding:12px 16px;margin-bottom:16px">
         <div style="width:28px;height:28px;border-radius:50%;background:rgba(74,222,128,0.2);display:flex;align-items:center;justify-content:center;font-size:0.85rem;flex-shrink:0">✓</div>
         <div>
-          <div style="font-size:0.8rem;font-weight:700;color:var(--cat-perso);font-family:Syne,sans-serif">Validée par ${validatorName}</div>
+          <div style="font-size:0.8rem;font-weight:700;color:var(--cat-perso);font-family:var(--font-ui)">Validée par ${validatorName}</div>
           ${item.validatedAt ? `<div style="font-size:0.72rem;color:var(--text3)">${new Date(item.validatedAt).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long' })}</div>` : ''}
         </div>
       </div>`;
@@ -4196,7 +4206,7 @@ function openDetail(id) {
 
     // Bouton valider si nécessaire
     if (needsMyValidation) {
-      html += `<button id="btn-validate-${item.id}" onclick="validateTaskAndUpdate('${item.id}')" style="width:100%;padding:12px;background:rgba(255,107,53,0.15);border:1px solid rgba(255,107,53,0.4);border-radius:12px;color:var(--cat-lumiia);font-family:Syne,sans-serif;font-weight:700;font-size:0.88rem;cursor:pointer;margin-bottom:16px;transition:all 0.3s">
+      html += `<button id="btn-validate-${item.id}" onclick="validateTaskAndUpdate('${item.id}')" style="width:100%;padding:12px;background:rgba(255,107,53,0.15);border:1px solid rgba(255,107,53,0.4);border-radius:12px;color:var(--cat-lumiia);font-family:var(--font-ui);font-weight:700;font-size:0.88rem;cursor:pointer;margin-bottom:16px;transition:all 0.3s">
         ✓ Valider cette tâche
       </button>`;
     }
@@ -4219,7 +4229,7 @@ function openDetail(id) {
       const pct = Math.round((done / item.checklist.length) * 100);
       html += `<div style="margin-bottom:6px">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
-          <div style="font-size:0.7rem;color:var(--text3);font-family:Syne,sans-serif;font-weight:700;letter-spacing:0.1em;text-transform:uppercase">Checklist</div>
+          <div style="font-size:0.7rem;color:var(--text3);font-family:var(--font-ui);font-weight:700;letter-spacing:0.1em;text-transform:uppercase">Checklist</div>
           <div style="font-size:0.72rem;color:var(--text3)">${done}/${item.checklist.length}</div>
         </div>
         <div style="height:3px;background:var(--bg3);border-radius:2px;margin-bottom:10px">
@@ -4244,7 +4254,7 @@ function openDetail(id) {
       <div style="width:10px;height:10px;border-radius:50%;background:${cat.color};flex-shrink:0;margin-top:4px"></div>
       <div class="note-detail-title">${item.title}</div>
     </div>`;
-    html += `<div style="font-size:0.72rem;color:var(--text3);margin-bottom:14px;font-family:Syne,sans-serif;letter-spacing:0.08em;text-transform:uppercase">${cat.label}</div>`;
+    html += `<div style="font-size:0.72rem;color:var(--text3);margin-bottom:14px;font-family:var(--font-ui);letter-spacing:0.08em;text-transform:uppercase">${cat.label}</div>`;
 
     if (item.content) {
       const lines = item.content.split('\n').filter(l => l.trim());
@@ -4256,7 +4266,7 @@ function openDetail(id) {
             const match = line.match(/^([A-ZÀÉÈÊËÎÏÔÙÛÜ][A-ZÀÉÈÊËÎÏÔÙÛÜ\s']+?)\s*—\s*(.+)$/);
             if (match) {
               return `<li style="display:flex;gap:8px;align-items:baseline">
-                <span style="color:${cat.color};font-family:Syne,sans-serif;font-weight:700;font-size:0.8rem;letter-spacing:0.06em;white-space:nowrap;flex-shrink:0">${match[1]}</span>
+                <span style="color:${cat.color};font-family:var(--font-ui);font-weight:700;font-size:0.8rem;letter-spacing:0.06em;white-space:nowrap;flex-shrink:0">${match[1]}</span>
                 <span style="color:var(--text2);font-size:0.88rem">— ${match[2]}</span>
               </li>`;
             }
@@ -4271,7 +4281,7 @@ function openDetail(id) {
     // Checklist dans note fusionnée
     if (item.checklist?.length) {
       const done = item.checklist.filter(i => i.done).length;
-      html += `<div style="font-size:0.72rem;color:var(--text3);margin-bottom:10px;margin-top:12px;font-family:Syne,sans-serif;letter-spacing:0.06em">${done}/${item.checklist.length} COMPLÉTÉS</div>`;
+      html += `<div style="font-size:0.72rem;color:var(--text3);margin-bottom:10px;margin-top:12px;font-family:var(--font-ui);letter-spacing:0.06em">${done}/${item.checklist.length} COMPLÉTÉS</div>`;
       html += `<div class="checklist-full">`;
       item.checklist.forEach(ci => {
         html += `<div class="cl-item-full${ci.done ? ' done' : ''}" onclick="toggleClItem('${item.id}','${ci.id}')">
@@ -4285,7 +4295,7 @@ function openDetail(id) {
     if (item.qrCode) {
       html += `<div style="margin:16px 0;display:flex;flex-direction:column;align-items:center;gap:10px">
         <img src="data:image/png;base64,${item.qrCode}" style="width:160px;height:160px;border-radius:12px;background:#fff;padding:8px">
-        <div style="font-size:0.75rem;color:var(--text3);font-family:Syne,sans-serif;letter-spacing:0.06em">Scanner pour ouvrir l'app</div>
+        <div style="font-size:0.75rem;color:var(--text3);font-family:var(--font-ui);letter-spacing:0.06em">Scanner pour ouvrir l'app</div>
       </div>`;
     }
 
@@ -4612,7 +4622,7 @@ function renderIdees() {
 
   let html = '<div class="section-head"><div class="section-title">Bo\u00eete \u00e0 id\u00e9es</div>'
     + '<button class="btn-icon" onclick="ideesNouvelleSession()" style="width:auto;padding:6px 14px;font-size:0.78rem;'
-    + 'font-family:Manrope,sans-serif;font-weight:700;background:var(--idees-accent);color:#0d1117;border-color:var(--idees-accent)">+ Nouvelle collecte</button></div>';
+    + 'font-family:var(--font-ui);font-weight:700;background:var(--idees-accent);color:#0d1117;border-color:var(--idees-accent)">+ Nouvelle collecte</button></div>';
 
   if (!sessions.length) {
     return html + '<div class="empty"><div class="empty-icon">\uD83D\uDCA1</div><div class="empty-text">Aucune collecte pour l\'instant.<br>Cr\u00e9es-en une, tu obtiendras un lien \u00e0 partager.</div></div>';
@@ -4623,7 +4633,7 @@ function renderIdees() {
   sessions.forEach(s => {
     const actif = s._id === ideesSession;
     html += '<button class="btn-icon" onclick="setIdeesSession(\'' + s._id + '\')" '
-      + 'style="width:auto;padding:7px 14px;font-size:0.78rem;font-family:Manrope,sans-serif;font-weight:700;text-align:left'
+      + 'style="width:auto;padding:7px 14px;font-size:0.78rem;font-family:var(--font-ui);font-weight:700;text-align:left'
       + (actif ? ';background:var(--idees-accent);color:#0d1117;border-color:var(--idees-accent)' : '') + '">'
       + ideesEchappe(s.titre || 'Sans titre') + '</button>';
   });
@@ -4637,24 +4647,24 @@ function renderIdees() {
 
   // Bandeau lien + suppression de la collecte
   html += '<div style="background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin-bottom:18px">'
-    + '<div style="font-family:Manrope,sans-serif;font-weight:700;font-size:1rem;margin-bottom:4px">' + ideesEchappe(cfg.titre || '') + '</div>'
+    + '<div style="font-family:var(--font-ui);font-weight:700;font-size:1rem;margin-bottom:4px">' + ideesEchappe(cfg.titre || '') + '</div>'
     + '<div style="color:var(--text2);font-size:0.82rem;margin-bottom:10px">' + toutes.length + ' proposition' + (toutes.length !== 1 ? 's' : '')
     + ' \u00b7 ' + nbPersonnes + '/' + membres.length + ' participant' + (membres.length !== 1 ? 's' : '') + '</div>'
     + '<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">'
     + '<code style="flex:1;min-width:220px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:8px 11px;'
     + 'font-size:0.74rem;color:var(--idees-accent);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + ideesLien(ideesSession) + '</code>'
     + '<button class="btn-icon" onclick="ideesCopierLien(\'' + ideesSession + '\')" style="width:auto;padding:7px 13px;font-size:0.76rem;'
-    + 'font-family:Manrope,sans-serif;font-weight:700">\uD83D\uDCCB Copier</button>'
+    + 'font-family:var(--font-ui);font-weight:700">\uD83D\uDCCB Copier</button>'
     + '<button class="btn-icon" onclick="ideesModifierSession(\'' + ideesSession + '\')" title="Modifier le titre et les participants" '
-    + 'style="width:auto;padding:7px 13px;font-size:0.76rem;font-family:Manrope,sans-serif;font-weight:700">\u270E Participants</button>'
+    + 'style="width:auto;padding:7px 13px;font-size:0.76rem;font-family:var(--font-ui);font-weight:700">\u270E Participants</button>'
     + '<button class="btn-icon" onclick="ideesSupprimerSession(\'' + ideesSession + '\')" title="Supprimer cette collecte" '
     + 'style="width:auto;padding:7px 11px;font-size:0.76rem">\uD83D\uDDD1</button>'
     + '</div></div>';
 
   html += '<div style="display:flex;gap:8px;margin-bottom:16px">'
-    + '<button class="btn-icon" onclick="setIdeesTri(\'personne\')" style="width:auto;padding:6px 12px;font-size:0.75rem;font-family:Manrope,sans-serif;font-weight:700'
+    + '<button class="btn-icon" onclick="setIdeesTri(\'personne\')" style="width:auto;padding:6px 12px;font-size:0.75rem;font-family:var(--font-ui);font-weight:700'
     + (ideesTri === 'personne' ? ';background:var(--idees-accent);color:#0d1117;border-color:var(--idees-accent)' : '') + '">Par personne</button>'
-    + '<button class="btn-icon" onclick="setIdeesTri(\'date\')" style="width:auto;padding:6px 12px;font-size:0.75rem;font-family:Manrope,sans-serif;font-weight:700'
+    + '<button class="btn-icon" onclick="setIdeesTri(\'date\')" style="width:auto;padding:6px 12px;font-size:0.75rem;font-family:var(--font-ui);font-weight:700'
     + (ideesTri === 'date' ? ';background:var(--idees-accent);color:#0d1117;border-color:var(--idees-accent)' : '') + '">Chronologique</button>'
     + '</div>';
 
@@ -4670,7 +4680,7 @@ function renderIdees() {
       if (!lot.length) return;
       html += '<div style="display:flex;align-items:center;gap:10px;margin:22px 0 10px">'
         + '<span style="width:10px;height:10px;border-radius:50%;background:' + (m.couleur || '#94a3b8') + '"></span>'
-        + '<span style="font-family:Manrope,sans-serif;font-weight:700;font-size:1.02rem">' + ideesEchappe(m.nom) + '</span>'
+        + '<span style="font-family:var(--font-ui);font-weight:700;font-size:1.02rem">' + ideesEchappe(m.nom) + '</span>'
         + '<span style="color:var(--text3);font-size:0.78rem">' + lot.length + ' id\u00e9e' + (lot.length !== 1 ? 's' : '') + '</span>'
         + '</div>';
       lot.forEach(it => { html += ideesCarte(it, false); });
@@ -4695,7 +4705,7 @@ function ideesCarte(it, avecNom) {
 
   h += '<div style="display:flex;align-items:flex-start;gap:12px"><div style="flex:1;min-width:0">';
   if (avecNom) {
-    h += '<div style="font-family:Manrope,sans-serif;font-weight:700;font-size:0.9rem;color:'
+    h += '<div style="font-family:var(--font-ui);font-weight:700;font-size:0.9rem;color:'
       + (it.membre.couleur || '#94a3b8') + ';margin-bottom:6px">' + ideesEchappe(it.membre.nom) + '</div>';
   }
   h += '<div style="white-space:pre-wrap;line-height:1.55;word-break:break-word">' + ideesEchappe(it.texte) + '</div>';
@@ -4713,22 +4723,22 @@ function ideesCarte(it, avecNom) {
       + ideesEchappe(sol) + '</textarea>'
       + '<div style="display:flex;gap:8px;margin-top:8px">'
       + '<button class="btn-icon" onclick="ideesEnregistrerSolution(\'' + it.id + '\')" '
-      + 'style="width:auto;padding:6px 14px;font-size:0.78rem;font-family:Manrope,sans-serif;font-weight:700;'
+      + 'style="width:auto;padding:6px 14px;font-size:0.78rem;font-family:var(--font-ui);font-weight:700;'
       + 'background:var(--idees-accent);color:#0d1117;border-color:var(--idees-accent)">Enregistrer</button>'
       + '<button class="btn-icon" onclick="ideesAnnulerSolution()" '
-      + 'style="width:auto;padding:6px 14px;font-size:0.78rem;font-family:Manrope,sans-serif;font-weight:700">Annuler</button>'
+      + 'style="width:auto;padding:6px 14px;font-size:0.78rem;font-family:var(--font-ui);font-weight:700">Annuler</button>'
       + '</div></div>';
   } else if (sol) {
     h += '<div onclick="ideesEditerSolution(\'' + it.id + '\')" title="Modifier" '
       + 'style="margin-top:12px;padding:11px 13px;background:rgba(52,211,153,0.08);border:1px solid rgba(52,211,153,0.28);'
       + 'border-radius:10px;cursor:pointer">'
-      + '<div style="font-family:Manrope,sans-serif;font-weight:700;font-size:0.72rem;letter-spacing:0.06em;'
+      + '<div style="font-family:var(--font-ui);font-weight:700;font-size:0.72rem;letter-spacing:0.06em;'
       + 'text-transform:uppercase;color:#34d399;margin-bottom:5px">\uD83D\uDD12 Ma solution</div>'
       + '<div style="white-space:pre-wrap;line-height:1.5;font-size:0.9rem;word-break:break-word">' + ideesEchappe(sol) + '</div>'
       + '</div>';
   } else {
     h += '<button class="btn-icon" onclick="ideesEditerSolution(\'' + it.id + '\')" '
-      + 'style="width:auto;margin-top:10px;padding:5px 12px;font-size:0.75rem;font-family:Manrope,sans-serif;font-weight:700">'
+      + 'style="width:auto;margin-top:10px;padding:5px 12px;font-size:0.75rem;font-family:var(--font-ui);font-weight:700">'
       + '+ Ma solution</button>';
   }
 
@@ -4796,14 +4806,14 @@ function renderIdeesForm() {
 
   h += '<div style="background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:18px;max-width:620px">';
 
-  h += '<label style="display:block;font-family:Manrope,sans-serif;font-weight:700;font-size:0.75rem;letter-spacing:0.06em;'
+  h += '<label style="display:block;font-family:var(--font-ui);font-weight:700;font-size:0.75rem;letter-spacing:0.06em;'
     + 'text-transform:uppercase;color:var(--text2);margin-bottom:7px">Titre affich\u00e9 sur la page</label>'
     + '<input id="idees-form-titre" value="' + ideesEchappe(ideesForm.titre) + '" '
     + 'placeholder="Rencontre du lundi 14 septembre 18h30 au LUMIIA" '
     + 'style="width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:10px;color:var(--text);'
     + 'font-family:inherit;font-size:0.95rem;padding:12px;outline:none;margin-bottom:20px">';
 
-  h += '<label style="display:block;font-family:Manrope,sans-serif;font-weight:700;font-size:0.75rem;letter-spacing:0.06em;'
+  h += '<label style="display:block;font-family:var(--font-ui);font-weight:700;font-size:0.75rem;letter-spacing:0.06em;'
     + 'text-transform:uppercase;color:var(--text2);margin-bottom:7px">Participants</label>';
 
   ideesForm.noms.forEach((nom, i) => {
@@ -4818,7 +4828,7 @@ function renderIdeesForm() {
   });
 
   h += '<button class="btn-icon" onclick="ideesFormAjouter()" style="width:auto;margin-top:4px;padding:8px 16px;'
-    + 'font-size:0.82rem;font-family:Manrope,sans-serif;font-weight:700">+ Ajouter un participant</button>';
+    + 'font-size:0.82rem;font-family:var(--font-ui);font-weight:700">+ Ajouter un participant</button>';
 
   h += '<div style="color:var(--text3);font-size:0.78rem;margin-top:14px;line-height:1.5">'
     + (edition
@@ -4827,10 +4837,10 @@ function renderIdeesForm() {
 
   h += '<div style="display:flex;gap:8px;margin-top:22px;padding-top:18px;border-top:1px solid var(--border)">'
     + '<button class="btn-icon" onclick="ideesFormCreer()" style="width:auto;padding:10px 20px;font-size:0.85rem;'
-    + 'font-family:Manrope,sans-serif;font-weight:700;background:var(--idees-accent);color:#0d1117;border-color:var(--idees-accent)">'
+    + 'font-family:var(--font-ui);font-weight:700;background:var(--idees-accent);color:#0d1117;border-color:var(--idees-accent)">'
     + (edition ? 'Enregistrer' : 'Cr\u00e9er et copier le lien') + '</button>'
     + '<button class="btn-icon" onclick="ideesFormAnnuler()" style="width:auto;padding:10px 20px;font-size:0.85rem;'
-    + 'font-family:Manrope,sans-serif;font-weight:700">Annuler</button>'
+    + 'font-family:var(--font-ui);font-weight:700">Annuler</button>'
     + '</div></div>';
 
   return h;
@@ -4967,8 +4977,8 @@ function renderCRM() {
   let html = '<div class="section-head">'
     + '<div class="section-title">CRM \u2014 ' + all.length + ' prospect' + (all.length !== 1 ? 's' : '') + '</div>'
     + '<div style="display:flex;gap:8px;align-items:center">'
-    + '<button onclick="openProspectModal()" style="background:var(--cat-lumiia);border:none;border-radius:10px;padding:7px 14px;color:#000;font-family:Syne,sans-serif;font-weight:700;font-size:0.78rem;cursor:pointer">+ Nouveau</button>'
-    + '<button onclick="setCrmView(\'' + (crmView === 'table' ? 'cards' : 'table') + '\')" style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:6px 12px;color:var(--text2);font-size:0.78rem;font-family:Syne,sans-serif;font-weight:700;cursor:pointer">Vue ' + (crmView === 'table' ? '\u25a6 Cartes' : '\u2261 Tableau') + '</button>'
+    + '<button onclick="openProspectModal()" style="background:var(--cat-lumiia);border:none;border-radius:10px;padding:7px 14px;color:#000;font-family:var(--font-ui);font-weight:700;font-size:0.78rem;cursor:pointer">+ Nouveau</button>'
+    + '<button onclick="setCrmView(\'' + (crmView === 'table' ? 'cards' : 'table') + '\')" style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:6px 12px;color:var(--text2);font-size:0.78rem;font-family:var(--font-ui);font-weight:700;cursor:pointer">Vue ' + (crmView === 'table' ? '\u25a6 Cartes' : '\u2261 Tableau') + '</button>'
     + '</div></div>';
 
   html += renderCrmInboxCard();
@@ -4997,13 +5007,13 @@ function renderCRM() {
   html += '<div style="overflow-x:auto;margin-bottom:24px">'
     + '<table style="width:100%;border-collapse:collapse;font-size:0.82rem">'
     + '<thead><tr style="border-bottom:1px solid var(--border)">'
-    + '<th style="text-align:left;padding:8px 10px;font-family:Syne,sans-serif;font-size:0.7rem;letter-spacing:0.06em;color:var(--text3);font-weight:700">CONTACT</th>'
-    + '<th style="text-align:left;padding:8px 10px;font-family:Syne,sans-serif;font-size:0.7rem;letter-spacing:0.06em;color:var(--text3);font-weight:700">SUJET</th>'
-    + '<th style="text-align:left;padding:8px 10px;font-family:Syne,sans-serif;font-size:0.7rem;letter-spacing:0.06em;color:var(--text3);font-weight:700">\u00c9V\u00c9NEMENT</th>'
-    + '<th style="text-align:left;padding:8px 10px;font-family:Syne,sans-serif;font-size:0.7rem;letter-spacing:0.06em;color:var(--text3);font-weight:700">STATUT</th>'
-    + '<th style="text-align:left;padding:8px 10px;font-family:Syne,sans-serif;font-size:0.7rem;letter-spacing:0.06em;color:var(--text3);font-weight:700">DERNI\u00c8RE ACTION</th>'
-    + '<th style="text-align:left;padding:8px 10px;font-family:Syne,sans-serif;font-size:0.7rem;letter-spacing:0.06em;color:var(--text3);font-weight:700">RELANCE</th>'
-    + '<th style="text-align:right;padding:8px 10px;font-family:Syne,sans-serif;font-size:0.7rem;letter-spacing:0.06em;color:var(--text3);font-weight:700">MONTANT</th>'
+    + '<th style="text-align:left;padding:8px 10px;font-family:var(--font-ui);font-size:0.7rem;letter-spacing:0.06em;color:var(--text3);font-weight:700">CONTACT</th>'
+    + '<th style="text-align:left;padding:8px 10px;font-family:var(--font-ui);font-size:0.7rem;letter-spacing:0.06em;color:var(--text3);font-weight:700">SUJET</th>'
+    + '<th style="text-align:left;padding:8px 10px;font-family:var(--font-ui);font-size:0.7rem;letter-spacing:0.06em;color:var(--text3);font-weight:700">\u00c9V\u00c9NEMENT</th>'
+    + '<th style="text-align:left;padding:8px 10px;font-family:var(--font-ui);font-size:0.7rem;letter-spacing:0.06em;color:var(--text3);font-weight:700">STATUT</th>'
+    + '<th style="text-align:left;padding:8px 10px;font-family:var(--font-ui);font-size:0.7rem;letter-spacing:0.06em;color:var(--text3);font-weight:700">DERNI\u00c8RE ACTION</th>'
+    + '<th style="text-align:left;padding:8px 10px;font-family:var(--font-ui);font-size:0.7rem;letter-spacing:0.06em;color:var(--text3);font-weight:700">RELANCE</th>'
+    + '<th style="text-align:right;padding:8px 10px;font-family:var(--font-ui);font-size:0.7rem;letter-spacing:0.06em;color:var(--text3);font-weight:700">MONTANT</th>'
     + '</tr></thead><tbody>';
 
   all.forEach(p => {
@@ -5019,7 +5029,7 @@ function renderCRM() {
     const echeanceStr = p.echeance ? new Date(p.echeance+'T12:00:00').toLocaleDateString('fr-FR',{day:'numeric',month:'short'}) : '—';
 
     html += '<tr onclick="openProspectDetail(\'' + p.id + '\')" style="border-bottom:1px solid rgba(255,255,255,0.05);cursor:pointer" onmouseover="this.style.background=\'var(--bg2)\'" onmouseout="this.style.background=\'transparent\'">'
-      + '<td style="padding:10px 10px"><div style="font-family:Syne,sans-serif;font-weight:700;color:var(--text)">' + (p.prenom||'') + ' ' + (p.nom||'') + '</div>'
+      + '<td style="padding:10px 10px"><div style="font-family:var(--font-ui);font-weight:700;color:var(--text)">' + (p.prenom||'') + ' ' + (p.nom||'') + '</div>'
         + (proj ? '<div style="font-size:0.68rem;padding:1px 6px;border-radius:4px;background:'+proj.color+'20;color:'+proj.color+';display:inline-block;margin-top:2px">' + proj.label + '</div>' : '') + '</td>'
       + '<td style="padding:10px 10px;color:var(--text2);max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + (p.sujet||'—') + '</td>'
       + '<td style="padding:10px 10px;color:var(--text2);white-space:nowrap">' + (p.dateEvent ? new Date(p.dateEvent+'T12:00:00').toLocaleDateString('fr-FR',{day:'numeric',month:'short',year:'numeric'}) : '—') + '</td>'
@@ -5104,8 +5114,8 @@ function renderDashboard() {
   kpis.forEach(k => {
     html += '<div onclick="' + k.action + '" style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:16px 18px;border-left:3px solid ' + k.color + ';cursor:pointer;transition:background 0.15s" onmouseover="this.style.background=\'var(--bg3)\'" onmouseout="this.style.background=\'var(--bg2)\'">'
       + '<div style="font-size:1.5rem;margin-bottom:4px">' + k.icon + '</div>'
-      + '<div style="font-family:Syne,sans-serif;font-weight:900;font-size:1.6rem;color:var(--text)">' + k.value + '</div>'
-      + '<div style="font-size:0.72rem;color:var(--text3);font-family:DM Sans,sans-serif;margin-top:2px">' + k.label + '</div>'
+      + '<div style="font-family:var(--font-title);font-weight:400;font-size:1.6rem;color:var(--text)">' + k.value + '</div>'
+      + '<div style="font-size:0.72rem;color:var(--text3);font-family:var(--font-ui);margin-top:2px">' + k.label + '</div>'
       + '</div>';
   });
   html += '</div>';
@@ -5122,7 +5132,7 @@ function renderDashboard() {
     { v: todoWaiting, c: '#fbbf24', l: 'En attente' },
   ].filter(s => s.v > 0);
   html += '<div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:16px">'
-    + '<div style="font-family:Syne,sans-serif;font-weight:700;font-size:0.75rem;letter-spacing:0.06em;color:var(--text3);margin-bottom:12px">TÂCHES</div>'
+    + '<div style="font-family:var(--font-ui);font-weight:700;font-size:0.75rem;letter-spacing:0.06em;color:var(--text3);margin-bottom:12px">TÂCHES</div>'
     + '<div style="display:flex;align-items:center;gap:16px">'
     + '<div style="flex-shrink:0">' + donut(todoSegs) + '</div>'
     + '<div style="display:flex;flex-direction:column;gap:5px;font-size:0.75rem">';
@@ -5133,7 +5143,7 @@ function renderDashboard() {
 
   // Barres Projets
   html += '<div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:16px">'
-    + '<div style="font-family:Syne,sans-serif;font-weight:700;font-size:0.75rem;letter-spacing:0.06em;color:var(--text3);margin-bottom:12px">PROJETS</div>';
+    + '<div style="font-family:var(--font-ui);font-weight:700;font-size:0.75rem;letter-spacing:0.06em;color:var(--text3);margin-bottom:12px">PROJETS</div>';
   if (projStats.length === 0) {
     html += '<div style="color:var(--text3);font-size:0.82rem">Aucune tâche par projet</div>';
   } else {
@@ -5141,7 +5151,7 @@ function renderDashboard() {
       const pct = p.total ? Math.round(p.done / p.total * 100) : 0;
       html += '<div style="margin-bottom:10px">'
         + '<div style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:4px">'
-        + '<span style="color:var(--text2);font-family:Syne,sans-serif;font-weight:700">' + p.label + '</span>'
+        + '<span style="color:var(--text2);font-family:var(--font-ui);font-weight:700">' + p.label + '</span>'
         + '<span style="color:var(--text3)">' + p.done + '/' + p.total + '</span>'
         + '</div>'
         + '<div style="height:6px;background:var(--bg3);border-radius:3px;overflow:hidden">'
@@ -5160,7 +5170,7 @@ function renderDashboard() {
     { v: pArchive, c: '#6b7280', l: 'Archivé' },
   ].filter(s => s.v > 0);
   html += '<div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:16px">'
-    + '<div style="font-family:Syne,sans-serif;font-weight:700;font-size:0.75rem;letter-spacing:0.06em;color:var(--text3);margin-bottom:12px">PROSPECTS</div>'
+    + '<div style="font-family:var(--font-ui);font-weight:700;font-size:0.75rem;letter-spacing:0.06em;color:var(--text3);margin-bottom:12px">PROSPECTS</div>'
     + (montantTotal > 0 ? '<div style="font-size:0.8rem;color:#4ade80;font-weight:700;margin-bottom:10px">' + montantTotal.toLocaleString('fr-FR') + '\u00a0\u20ac de devis actifs</div>' : '')
     + '<div style="display:flex;align-items:center;gap:16px">'
     + '<div style="flex-shrink:0">' + donut(pSegs) + '</div>'
@@ -5177,7 +5187,7 @@ function renderDashboard() {
 
   // Tâches en retard + prospects en retard
   html += '<div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:16px">'
-    + '<div style="font-family:Syne,sans-serif;font-weight:700;font-size:0.75rem;letter-spacing:0.06em;color:var(--text3);margin-bottom:12px">\u26a0\uFE0F À TRAITER EN PRIORITÉ</div>';
+    + '<div style="font-family:var(--font-ui);font-weight:700;font-size:0.75rem;letter-spacing:0.06em;color:var(--text3);margin-bottom:12px">\u26a0\uFE0F À TRAITER EN PRIORITÉ</div>';
   if (overdueTodos.length === 0 && overdueProspects.length === 0) {
     html += '<div style="color:#4ade80;font-size:0.82rem">\u2714 Rien en retard \u2014 bravo\u00a0!</div>';
   } else {
@@ -5198,7 +5208,7 @@ function renderDashboard() {
 
   // Activité récente
   html += '<div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:16px">'
-    + '<div style="font-family:Syne,sans-serif;font-weight:700;font-size:0.75rem;letter-spacing:0.06em;color:var(--text3);margin-bottom:12px">\uD83D\uDD52 ACTIVITÉ RÉCENTE</div>';
+    + '<div style="font-family:var(--font-ui);font-weight:700;font-size:0.75rem;letter-spacing:0.06em;color:var(--text3);margin-bottom:12px">\uD83D\uDD52 ACTIVITÉ RÉCENTE</div>';
   const typeIcon = { note: '📝', checklist: '☑️', todo: '✅', xpress: '⚡' };
   recent.forEach(i => {
     const d = new Date(i.updated||i.created).toLocaleDateString('fr-FR',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'});
@@ -5229,7 +5239,7 @@ function renderProspects() {
   const overdueCount = prospects.filter(p => p.echeance && p.echeance < today && p.statut !== 'archive' && p.statut !== 'cloture').length;
 
   let html = '<div class="section-head"><div class="section-title">' + filtered.length + ' prospect' + (filtered.length !== 1 ? 's' : '') + '</div>'
-    + '<button onclick="openProspectModal()" style="background:var(--cat-lumiia);border:none;border-radius:10px;padding:7px 14px;color:#000;font-family:Syne,sans-serif;font-weight:700;font-size:0.78rem;cursor:pointer">+ Nouveau</button>'
+    + '<button onclick="openProspectModal()" style="background:var(--cat-lumiia);border:none;border-radius:10px;padding:7px 14px;color:#000;font-family:var(--font-ui);font-weight:700;font-size:0.78rem;cursor:pointer">+ Nouveau</button>'
     + '</div>';
 
   // Filtres statut
@@ -5281,11 +5291,11 @@ function renderProspectCard(p, today) {
     + '<div onclick="openProspectDetail(\'' + p.id + '\')" style="cursor:pointer">'
     + '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:6px">'
     + '<div style="flex:1;min-width:0">'
-    + (p.sujet ? '<div style="font-family:Syne,sans-serif;font-weight:700;font-size:0.95rem;color:var(--text);margin-bottom:2px">' + p.sujet + '</div>' : '')
+    + (p.sujet ? '<div style="font-family:var(--font-ui);font-weight:700;font-size:0.95rem;color:var(--text);margin-bottom:2px">' + p.sujet + '</div>' : '')
     + '<div style="font-size:0.82rem;color:var(--text2)">' + (p.prenom || '') + ' ' + (p.nom || '') + '</div>'
     + '</div>'
     + '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0">'
-    + '<div style="font-size:0.68rem;font-family:Syne,sans-serif;font-weight:700;padding:3px 8px;border-radius:8px;background:' + statut.color + '20;color:' + statut.color + '">' + statut.label + '</div>'
+    + '<div style="font-size:0.68rem;font-family:var(--font-ui);font-weight:700;padding:3px 8px;border-radius:8px;background:' + statut.color + '20;color:' + statut.color + '">' + statut.label + '</div>'
     + '<div style="font-size:0.68rem;color:var(--text3);background:var(--bg3);border-radius:6px;padding:2px 7px">' + typeLabel + '</div>'
     + '</div></div>'
     // Date événement (grande)
@@ -5311,9 +5321,9 @@ function renderProspectCard(p, today) {
     + '</div>'
     // Boutons action
     + '<div style="display:flex;gap:8px;margin-top:10px;padding-top:10px;border-top:1px solid var(--border)">'
-    + (p.tel ? '<a href="tel:' + p.tel + '" onclick="event.stopPropagation()" style="flex:1;display:flex;align-items:center;justify-content:center;gap:5px;padding:7px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--cat-signal);font-size:0.78rem;text-decoration:none;font-family:Syne,sans-serif;font-weight:700">\uD83D\uDCDE Appeler</a>' : '')
-    + '<button onclick="event.stopPropagation();openProspectModal(\'' + p.id + '\')" style="flex:1;padding:7px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text2);font-size:0.78rem;cursor:pointer;font-family:Syne,sans-serif;font-weight:700">\u270F\uFE0F Modifier</button>'
-    + '<a href="' + waUrl + '" target="_blank" rel="noopener" onclick="event.stopPropagation()" style="flex:1;display:flex;align-items:center;justify-content:center;gap:5px;padding:7px;background:rgba(37,211,102,0.15);border:1px solid rgba(37,211,102,0.3);border-radius:8px;color:#25D366;font-size:0.78rem;text-decoration:none;font-family:Syne,sans-serif;font-weight:700">\uD83D\uDCF1 WA</a>'
+    + (p.tel ? '<a href="tel:' + p.tel + '" onclick="event.stopPropagation()" style="flex:1;display:flex;align-items:center;justify-content:center;gap:5px;padding:7px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--cat-signal);font-size:0.78rem;text-decoration:none;font-family:var(--font-ui);font-weight:700">\uD83D\uDCDE Appeler</a>' : '')
+    + '<button onclick="event.stopPropagation();openProspectModal(\'' + p.id + '\')" style="flex:1;padding:7px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text2);font-size:0.78rem;cursor:pointer;font-family:var(--font-ui);font-weight:700">\u270F\uFE0F Modifier</button>'
+    + '<a href="' + waUrl + '" target="_blank" rel="noopener" onclick="event.stopPropagation()" style="flex:1;display:flex;align-items:center;justify-content:center;gap:5px;padding:7px;background:rgba(37,211,102,0.15);border:1px solid rgba(37,211,102,0.3);border-radius:8px;color:#25D366;font-size:0.78rem;text-decoration:none;font-family:var(--font-ui);font-weight:700">\uD83D\uDCF1 WA</a>'
     + '</div>'
     + '</div>';
 }
@@ -5551,12 +5561,12 @@ function openProspectDetail(id) {
     : 'https://wa.me/?text=' + encodeURIComponent(waText);
 
   let html = '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:14px">'
-    + '<div style="font-size:0.72rem;font-family:Syne,sans-serif;font-weight:700;padding:3px 10px;border-radius:8px;background:' + statut.color + '20;color:' + statut.color + '">' + statut.label + '</div>'
+    + '<div style="font-size:0.72rem;font-family:var(--font-ui);font-weight:700;padding:3px 10px;border-radius:8px;background:' + statut.color + '20;color:' + statut.color + '">' + statut.label + '</div>'
     + '<div style="font-size:0.72rem;color:var(--text3);background:var(--bg3);border-radius:6px;padding:2px 8px">' + typeLabel + '</div>'
     + (projet ? '<div style="font-size:0.72rem;font-weight:700;padding:2px 8px;border-radius:6px;background:' + projet.color + '20;color:' + projet.color + '">' + projet.label + '</div>' : '')
     + (p.montant ? '<div style="font-size:0.72rem;font-weight:700;color:#4ade80;background:rgba(74,222,128,0.1);padding:2px 8px;border-radius:6px">' + p.montant.toLocaleString('fr-FR') + '\u00a0\u20ac</div>' : '')
     + '</div>'
-    + '<div style="font-family:Syne,sans-serif;font-weight:800;font-size:1.2rem;color:var(--text);margin-bottom:4px">' + (p.prenom || '') + ' ' + (p.nom || '') + '</div>'
+    + '<div style="font-family:var(--font-title);font-weight:400;font-size:1.2rem;color:var(--text);margin-bottom:4px">' + (p.prenom || '') + ' ' + (p.nom || '') + '</div>'
     + (p.sujet ? '<div style="font-size:0.88rem;color:var(--text2);margin-bottom:16px">' + p.sujet + '</div>' : '<div style="height:16px"></div>');
 
   // Contacts
@@ -5583,7 +5593,7 @@ function openProspectDetail(id) {
   // Historique
   const history = p.history || [];
   html += '<div style="margin-bottom:16px">'
-    + '<div style="font-family:Syne,sans-serif;font-weight:700;font-size:0.75rem;letter-spacing:0.06em;color:var(--text3);text-transform:uppercase;margin-bottom:8px">Historique</div>';
+    + '<div style="font-family:var(--font-ui);font-weight:700;font-size:0.75rem;letter-spacing:0.06em;color:var(--text3);text-transform:uppercase;margin-bottom:8px">Historique</div>';
   if (history.length > 0) {
     html += '<div style="display:flex;flex-direction:column;gap:6px;margin-bottom:10px">';
     [...history].reverse().forEach(entry => {
@@ -5597,13 +5607,13 @@ function openProspectDetail(id) {
   }
   // Zone de saisie nouvelle entrée
   html += '<div style="display:flex;gap:8px">'
-    + '<input type="text" id="history-input-' + id + '" placeholder="Ajouter une note..." style="flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:8px 12px;color:var(--text);font-family:DM Sans,sans-serif;font-size:0.83rem;outline:none" onkeydown="if(event.key===\'Enter\')addProspectHistory(\'' + id + '\')">'
-    + '<button onclick="addProspectHistory(\'' + id + '\')" style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:8px 12px;color:var(--text2);font-family:Syne,sans-serif;font-weight:700;font-size:0.8rem;cursor:pointer">+ Ajouter</button>'
+    + '<input type="text" id="history-input-' + id + '" placeholder="Ajouter une note..." style="flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:8px 12px;color:var(--text);font-family:var(--font-ui);font-size:0.83rem;outline:none" onkeydown="if(event.key===\'Enter\')addProspectHistory(\'' + id + '\')">'
+    + '<button onclick="addProspectHistory(\'' + id + '\')" style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:8px 12px;color:var(--text2);font-family:var(--font-ui);font-weight:700;font-size:0.8rem;cursor:pointer">+ Ajouter</button>'
     + '</div>'
     + '</div>';
 
   // Bouton WhatsApp
-  html += '<a href="' + waUrl + '" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:12px;background:#25D366;border-radius:12px;color:#000;font-family:Syne,sans-serif;font-weight:700;font-size:0.88rem;text-decoration:none;margin-bottom:16px">'
+  html += '<a href="' + waUrl + '" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:12px;background:#25D366;border-radius:12px;color:#000;font-family:var(--font-ui);font-weight:700;font-size:0.88rem;text-decoration:none;margin-bottom:16px">'
     + '<span style="font-size:1.1rem">\uD83D\uDCF1</span> Partager sur WhatsApp</a>';
 
   // Actions
@@ -5892,9 +5902,9 @@ function showXpressAlertBanner(title, body, itemId, itemType) {
   banner.style.cssText = 'background:var(--bg3);border:1px solid rgba(56,189,248,0.4);border-radius:14px;padding:14px 18px 14px 20px;box-shadow:0 8px 32px rgba(0,0,0,0.5);display:flex;flex-direction:row;align-items:flex-start;gap:12px;pointer-events:all';
   banner.innerHTML =
     '<div style="flex:1;display:flex;flex-direction:column;gap:3px;cursor:pointer" class="fcm-banner-body">'
-    + '<div style="font-family:Syne,sans-serif;font-weight:700;font-size:0.95rem;color:#38bdf8">' + title + '</div>'
-    + (body ? '<div style="font-size:0.82rem;color:var(--text2);font-family:DM Sans,sans-serif;white-space:pre-line">' + body + '</div>' : '')
-    + ((itemId || itemType === 'digest') ? '<div style="font-size:0.72rem;color:var(--text3);font-family:DM Sans,sans-serif;margin-top:2px">Appuie pour ouvrir</div>' : '')
+    + '<div style="font-family:var(--font-ui);font-weight:700;font-size:0.95rem;color:#38bdf8">' + title + '</div>'
+    + (body ? '<div style="font-size:0.82rem;color:var(--text2);font-family:var(--font-ui);white-space:pre-line">' + body + '</div>' : '')
+    + ((itemId || itemType === 'digest') ? '<div style="font-size:0.72rem;color:var(--text3);font-family:var(--font-ui);margin-top:2px">Appuie pour ouvrir</div>' : '')
     + '</div>'
     + '<button style="background:transparent;border:none;color:var(--text3);font-size:1.1rem;cursor:pointer;padding:0;line-height:1;flex-shrink:0;margin-top:1px" class="fcm-banner-close">✕</button>';
 
